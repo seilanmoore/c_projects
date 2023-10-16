@@ -6,7 +6,7 @@
 /*   By: smoore-a <smoore-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/10 16:00:15 by smoore-a          #+#    #+#             */
-/*   Updated: 2023/10/12 12:56:03 by smoore-a         ###   ########.fr       */
+/*   Updated: 2023/10/16 19:51:03 by smoore-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,11 +15,8 @@
 char	**crt_mtrx(char **mtrx, char *fname)
 {
 	int		fdes;
-	char	buffer[1];
-	int		bytes_read;
 
 	fdes = open(fname, O_RDONLY);
-	bytes_read = read(fdes, buffer, sizeof(buffer));
 	mtrx = read_matrix(mtrx, fdes);
 	close(fdes);
 	return (mtrx);

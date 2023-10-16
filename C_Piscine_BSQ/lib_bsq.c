@@ -6,7 +6,7 @@
 /*   By: smoore-a <smoore-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/09 10:19:54 by smoore-a          #+#    #+#             */
-/*   Updated: 2023/10/12 12:56:18 by smoore-a         ###   ########.fr       */
+/*   Updated: 2023/10/16 19:50:12 by smoore-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,11 +24,9 @@ int	ft_strlen(char *str)
 
 int	ft_atoi(char *str)
 {
-	int	sign;
 	int	nbr;
 	int	i;
 
-	sign = 1;
 	nbr = 0;
 	i = 0;
 	while (str[i] < 48 || str[i] > 57)
