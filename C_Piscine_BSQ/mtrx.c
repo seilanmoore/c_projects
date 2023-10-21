@@ -6,7 +6,7 @@
 /*   By: smoore-a <smoore-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/10 16:00:15 by smoore-a          #+#    #+#             */
-/*   Updated: 2023/10/16 19:51:03 by smoore-a         ###   ########.fr       */
+/*   Updated: 2023/10/20 20:19:29 by smoore-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,47 +17,17 @@ char	**crt_mtrx(char **mtrx, char *fname)
 	int		fdes;
 
 	fdes = open(fname, O_RDONLY);
-	mtrx = read_matrix(mtrx, fdes);
+	mtrx = read_matrix(mtrx, fdes, 0, 0);
 	close(fdes);
 	return (mtrx);
 }
 
-int	**create_matrix(int rows, int columns)
-{
-	int	**matrix;
-	int	i;
-	int	j;
-
-	i = 0;
-	matrix = (int **)malloc(rows * sizeof(int *));
-	while (i < rows)
-	{
-		matrix[i] = (int *)malloc(columns * sizeof(int));
-		i++;
-	}
-	i = 0;
-	while (i < rows)
-	{
-		j = 0;
-		while (j < columns)
-		{
-			matrix[i][j] = 0;
-			j++;
-		}
-		i++;
-	}
-	return (matrix);
-}
-
-char	**read_matrix(char **mtrx, int fdes)
+char	**read_matrix(char **mtrx, int fdes, int row, int col)
 {
 	char	buffer[1];
 	int		bytes_read;
-	int		row;
-	int		col;
 
-	row = 0;
-	col = 0;
+	bytes_read = read(fdes, buffer, sizeof(buffer));
 	while (*buffer != '\n')
 		bytes_read = read(fdes, buffer, sizeof(buffer));
 	bytes_read = read(fdes, buffer, sizeof(buffer));

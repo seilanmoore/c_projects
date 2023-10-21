@@ -6,13 +6,13 @@
 /*   By: smoore-a <smoore-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/10 15:58:47 by smoore-a          #+#    #+#             */
-/*   Updated: 2023/10/12 12:56:07 by smoore-a         ###   ########.fr       */
+/*   Updated: 2023/10/20 13:37:05 by smoore-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lib_bsq.h"
 
-char	*read_line(char *line, char *fname)
+char	*read_line(char *fname, char *line)
 {
 	int		fdes;
 	char	buffer[1];
@@ -33,32 +33,32 @@ char	*read_line(char *line, char *fname)
 	return (line);
 }
 
-int	frow(char *line, char *fname)
+int	frow(char *line)
 {
 	int		m_row;
 
-	m_row = ft_atoi(read_line(line, fname));
+	m_row = ft_atoi(line);
 	return (m_row);
 }
 
-int	fcol(const char *fname, int row)
+int	fcol(const char *fname, int i)
 {
 	int		fdes;
 	int		bytes_read;
-	int		col;
+	int		j;
 	char	buffer[1];
 
 	fdes = open(fname, O_RDONLY);
 	if (opcl_error(fdes) == -1)
 		return (-1);
 	bytes_read = read(fdes, buffer, sizeof(buffer));
-	col = 0;
-	while (bytes_read > 0 && row != 3)
+	j = 0;
+	while (bytes_read > 0 && i != 2)
 	{
-		if (*buffer != '\n' && row == 2)
-			col++;
+		if (*buffer != '\n' && i == 1)
+			j++;
 		if (*buffer == '\n')
-			row++;
+			i++;
 		bytes_read = read(fdes, buffer, sizeof(buffer));
 	}
 	if (rd_error(bytes_read, fdes) == -1)
@@ -66,5 +66,5 @@ int	fcol(const char *fname, int row)
 	if (opcl_error(close(fdes)) == -1)
 		return (-1);
 	close(fdes);
-	return (col);
+	return (j);
 }

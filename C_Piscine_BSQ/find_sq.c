@@ -6,93 +6,85 @@
 /*   By: smoore-a <smoore-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/10 16:52:41 by smoore-a          #+#    #+#             */
-/*   Updated: 2023/10/16 19:49:03 by smoore-a         ###   ########.fr       */
+/*   Updated: 2023/10/21 00:08:10 by smoore-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lib_bsq.h"
 
-void	createsqmtrx(char **mtrx, int rows, int cols, char *line)
+void	find_square(char **mtrx, int row, int col, struct s_getv *v)
 {
-	int	msize;
-	int	x;
-	int	y;
-	int	**dp;
-	int	i;
-	int	j;
-	int	minvalue;
-
-	dp = (int **)malloc(rows * sizeof(int *));
-	i = 0;
-	while (i < rows)
+	v->maxsize = 1;
+	v->i = row - 1;
+	while (v->i >= 0)
 	{
-		dp[i] = (int *)malloc(cols * sizeof(int));
-		i++;
-	}
-	msize = 0;
-	x = 0;
-	y = 0;
-	i = 0;
-	while (i < rows)
-	{
-		j = 0;
-		while (j < cols)
+		v->j = col - 1;
+		while (v->j >= 0)
 		{
-			if (mtrx[i][j] == obstaclec(line))
-			{
-				dp[i][j] = 0;
-			}
-			else
-			{
-				dp[i][j] = 1;
-				if (i > 0 && j > 0)
-				{
-					minvalue = dp[i - 1][j - 1];
-					if (dp[i - 1][j] < minvalue)
-					{
-						minvalue = dp[i - 1][j];
-					}
-					if (dp[i][j - 1] < minvalue)
-					{
-						minvalue = dp[i][j - 1];
-					}
-					dp[i][j] += minvalue;
-				}
-				if (dp[i][j] > msize)
-				{
-					msize = dp[i][j];
-					x = i - msize + 1;
-					y = j - msize + 1;
-				}
-			}
-			j++;
+			v->size = v->maxsize;
+			v->b = 1;
+			check_square(mtrx, v, row, col);
+			v->j--;
 		}
-		i++;
+		v->i--;
 	}
-	i = 0;
-	while (i < rows)
-	{
-		free(dp[i]);
-		i++;
-	}
-	free(dp);
-	markmaxsquare(mtrx, x, y, msize, fillc(line));
+	print_result(v);
+	mark_max_square(mtrx, v, 'x');
 }
 
-void	markmaxsquare(char **mtrx, int x, int y, int size, char fill)
+void	check_square(char **mtrx, struct s_getv *v, int row, int col)
+{
+	while (v->size <= row && v->size <= col && v->b == 1)
+	{
+		v->k = v->i;
+		while (v->k > (v->i - v->size) && v->k >= 0
+			&& v->b == 1)
+		{
+			v->l = v->j;
+			while (v->l > (v->j - v->size) && v->l >= 0
+				&& v->b == 1)
+			{
+				if (mtrx[v->k][v->l] == 'o')
+					v->b = 0;
+				else if (v->k == (v->i - v->size + 1)
+					&& v->l == (v->j - v->size + 1))
+					update_values(v);
+				v->l--;
+			}
+			v->k--;
+		}
+		v->size++;
+	}
+}
+
+void	update_values(struct s_getv *v)
+{
+	v->x = v->i;
+	v->y = v->j;
+	v->maxsize = v->size;
+}
+
+void	print_result(struct s_getv *v)
+{
+	printf("The row is: %d\n", v->x);
+	printf("The column is: %d\n", v->y);
+	printf("The size is: %d\n", v->maxsize);
+}
+
+void	mark_max_square(char **mtrx, struct s_getv *v, char fill)
 {
 	int	i;
 	int	j;
 
-	i = x;
-	while (i < x + size)
+	i = v->x;
+	while (i > v->x - v->maxsize)
 	{
-		j = y;
-		while (j < y + size)
+		j = v->y;
+		while (j > v->y - v->maxsize)
 		{
 			mtrx[i][j] = fill;
-			j++;
+			j--;
 		}
-		i++;
+		i--;
 	}
 }
