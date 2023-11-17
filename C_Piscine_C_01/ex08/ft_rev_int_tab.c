@@ -6,7 +6,7 @@
 /*   By: smoore-a <smoore-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/25 11:03:36 by smoore-a          #+#    #+#             */
-/*   Updated: 2023/09/27 14:35:22 by smoore-a         ###   ########.fr       */
+/*   Updated: 2023/11/12 14:13:58 by smoore-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,13 +46,11 @@ void	escr(int *tab, int size)
 
 int	main(void)
 {
-	int	arr[3];
-	
-	arr[0] = {1, 3, 4};
-	int	size = sizeof(arr) / sizeof(arr[0]);
+	int	arr[] = {1, 3, 4, 0, 2, 8, 2, 5, 3, 9, 7, 0, 12};
+	int	size = sizeof(arr) / sizeof(arr);
 
-	escr(arr, size);
-	ft_sort_int_tab(arr, size);
-	escr (arr, size);	
+	escr(arr, 13);
+	ft_sort_int_tab(arr, 13);
+	escr (arr, 13);	
 	return (0);
 }

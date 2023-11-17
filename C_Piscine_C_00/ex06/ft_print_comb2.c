@@ -6,7 +6,7 @@
 /*   By: smoore-a <smoore-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/30 07:21:20 by smoore-a          #+#    #+#             */
-/*   Updated: 2023/10/30 08:47:52 by smoore-a         ###   ########.fr       */
+/*   Updated: 2023/10/30 09:21:10 by smoore-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,13 +26,8 @@ void	check_nb(char i, char j, char k, char l)
 	}
 }
 
-void	ft_print_comb2(void)
+void	loop_nb(char i, char j, char k, char l)
 {
-	char	i;
-	char	j;
-	char	k;
-	char	l;
-
 	i = 48;
 	while (i <= 57)
 	{
@@ -54,6 +49,11 @@ void	ft_print_comb2(void)
 		}
 		i++;
 	}
+}
+
+void	ft_print_comb2(void)
+{
+	loop_nb(48, 48, 48, 48);
 }
 
 int	main(void)

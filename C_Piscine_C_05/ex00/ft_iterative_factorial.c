@@ -1,57 +1,47 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_print_comb.c                                    :+:      :+:    :+:   */
+/*   ft_iterative_factorial.c                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: smoore-a <smoore-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/10/29 23:00:40 by smoore-a          #+#    #+#             */
-/*   Updated: 2023/10/30 15:41:47 by smoore-a         ###   ########.fr       */
+/*   Created: 2023/11/10 13:14:57 by smoore-a          #+#    #+#             */
+/*   Updated: 2023/11/10 16:08:21 by smoore-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <unistd.h>
+#include <stdio.h>
 
-void	check_nb(char i, char j, char k)
+#define MIN -2147483648
+#define MAX 2147483647
+#define NB -5
+
+int	ft_iterative_factorial(int nb)
 {
-	if (i != j && j != k && k != i)
+	int	res;
+
+	res = nb;
+	if (nb <= 0 || nb > MAX)
 	{
-		write (1, &i, 1);
-		write (1, &j, 1);
-		write (1, &k, 1);
-		if (i != 55)
-			write (1, ", ", 2);
+		if (nb < 0 || nb > MAX)
+			write(1, "Error. Valor inválido.", 24);
+		return (1);
 	}
-}
-
-void	ft_print_comb(void)
-{
-	char	i;
-	char	j;
-	char	k;
-
-	i = 48;
-	j = 48;
-	k = 48;
-	while (i <= 57)
+	else
 	{
-		j = i + 1;
-		while (j <= 57)
-		{
-			k = j + 1;
-			while (k <= 57)
-			{
-				check_nb(i, j, k);
-				k++;
-			}
-			j++;
-		}
-		i++;
+		while (--nb > 0)
+			res *= nb;
+		return (res);
 	}
 }
 
 int	main(void)
 {
-	ft_print_comb();
+	int a = 0;
+
+	if (a == 0)
+		return (2);
+	printf("El factorial de %d es: %d.\n", NB, ft_iterative_factorial(NB));
 	return (0);
 }

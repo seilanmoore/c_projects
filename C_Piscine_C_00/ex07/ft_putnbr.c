@@ -1,57 +1,46 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_print_comb.c                                    :+:      :+:    :+:   */
+/*   ft_putnbr.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: smoore-a <smoore-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/10/29 23:00:40 by smoore-a          #+#    #+#             */
-/*   Updated: 2023/10/30 15:41:47 by smoore-a         ###   ########.fr       */
+/*   Created: 2023/10/30 09:30:56 by smoore-a          #+#    #+#             */
+/*   Updated: 2023/10/30 17:08:28 by smoore-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <unistd.h>
 
-void	check_nb(char i, char j, char k)
+void	ft_putnbr(int nb)
 {
-	if (i != j && j != k && k != i)
-	{
-		write (1, &i, 1);
-		write (1, &j, 1);
-		write (1, &k, 1);
-		if (i != 55)
-			write (1, ", ", 2);
-	}
-}
+	int		i;
+	char	num[10];
 
-void	ft_print_comb(void)
-{
-	char	i;
-	char	j;
-	char	k;
-
-	i = 48;
-	j = 48;
-	k = 48;
-	while (i <= 57)
+	*num = '\0';
+	i = 0;
+	if (nb == -2147483648)
+		write(1, "-2147483648", 11);
+	if (nb == 0)
+		write (1, "0", 1);
+	if (nb < 0 && nb != -2147483648)
 	{
-		j = i + 1;
-		while (j <= 57)
-		{
-			k = j + 1;
-			while (k <= 57)
-			{
-				check_nb(i, j, k);
-				k++;
-			}
-			j++;
-		}
-		i++;
+		write (1, "-", 1);
+		nb = -nb;
 	}
+	while (nb > 0)
+	{
+		num[i++] = nb % 10 + '0';
+		nb = nb / 10;
+	}
+	while (--i >= 0)
+		write(1, &num[i], 1);
 }
 
 int	main(void)
 {
-	ft_print_comb();
+	int	nb = 0000;
+
+	ft_putnbr(nb);
 	return (0);
 }
