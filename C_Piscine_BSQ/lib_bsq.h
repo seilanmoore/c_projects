@@ -6,7 +6,7 @@
 /*   By: smoore-a <smoore-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/09 10:18:22 by smoore-a          #+#    #+#             */
-/*   Updated: 2023/10/20 23:48:49 by smoore-a         ###   ########.fr       */
+/*   Updated: 2023/11/18 11:17:32 by smoore-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,10 +46,6 @@ int		ft_strlen(char *str);
 char	emptyc(char *line);
 char	obstaclec(char *line);
 char	fillc(char *line);
-// int		**create_matrix(int rows, int columns);
-// void	findsq(char **mtrx, int row, int col);
-void	markmaxsquare(char **mtrx, int x, int y, int size, char fill);
-
 void	find_square(char **mtrx, int row, int col, struct s_getv *valof);
 void	check_square(char **mtrx, struct s_getv *valof, int row, int col);
 void	update_values(struct s_getv *valof);

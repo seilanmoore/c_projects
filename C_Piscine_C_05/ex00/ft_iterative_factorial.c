@@ -6,7 +6,7 @@
 /*   By: smoore-a <smoore-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/10 13:14:57 by smoore-a          #+#    #+#             */
-/*   Updated: 2023/11/10 16:08:21 by smoore-a         ###   ########.fr       */
+/*   Updated: 2023/11/17 14:49:39 by smoore-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ int	ft_iterative_factorial(int nb)
 
 int	main(void)
 {
-	int a = 0;
+	int	a = 0;
 
 	if (a == 0)
 		return (2);

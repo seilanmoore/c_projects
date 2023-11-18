@@ -6,13 +6,13 @@
 /*   By: smoore-a <smoore-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/15 22:57:35 by smoore-a          #+#    #+#             */
-/*   Updated: 2023/11/15 23:37:33 by smoore-a         ###   ########.fr       */
+/*   Updated: 2023/11/17 18:05:28 by smoore-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdio.h>
 
-#define INDEX 6
+#define INDEX 13
 
 int	ft_fibonacci(int index)
 {
@@ -32,5 +32,7 @@ int	ft_fibonacci(int index)
 
 int	main(void)
 {
-	printf("The %dth index of the fibonacci sequence is: %d.\n", INDEX, ft_fibonacci(INDEX));
+	printf("The %dth index,\n"
+		"of the fibonacci sequence is: %d.\n",
+		INDEX, ft_fibonacci(INDEX));
 }
