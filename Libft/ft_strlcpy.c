@@ -6,7 +6,7 @@
 /*   By: smoore-a <smoore-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/29 14:50:37 by smoore-a          #+#    #+#             */
-/*   Updated: 2023/11/29 18:21:37 by smoore-a         ###   ########.fr       */
+/*   Updated: 2023/11/29 18:23:38 by smoore-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,15 +18,15 @@ size_t	ft_strlcpy(char *dst, const char *src, size_t dstsize)
 	size_t	i;
 
 	i = 0;
-	while (src[i] && i < (dstsize - 1))
+	while (src[i])
 	{
 		dst[i] = src[i];
 		i++;
 	}
-	if (dstsize > 0)
+	if (i >= dstsize - 1)
+		dst[dstsize - 1] = '\0';
+	else
 		dst[i] = '\0';
-	while (src[i])
-		i++;
 	return (i);
 }
 
