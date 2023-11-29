@@ -6,7 +6,7 @@
 /*   By: smoore-a <smoore-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/29 14:50:37 by smoore-a          #+#    #+#             */
-/*   Updated: 2023/11/29 18:23:38 by smoore-a         ###   ########.fr       */
+/*   Updated: 2023/11/29 18:25:36 by smoore-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,8 @@ size_t	ft_strlcpy(char *dst, const char *src, size_t dstsize)
 	i = 0;
 	while (src[i])
 	{
-		dst[i] = src[i];
+		if (dstsize != 0)
+			dst[i] = src[i];
 		i++;
 	}
 	if (i >= dstsize - 1)
@@ -43,6 +44,6 @@ int	main(void)
 	strlcpy(dst2, src2, 0); */
 	printf("Using strlcpy, the string looks like this: %s. "
 		"Size of the src is : %lu.\n",
-		dst2, ft_strlcpy(dst2, src2, 0));
+		dst2, strlcpy(dst2, src2, 0));
 	return (0);
 }
