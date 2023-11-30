@@ -6,7 +6,7 @@
 #    By: smoore-a <smoore-a@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/11/27 15:26:15 by smoore-a          #+#    #+#              #
-#    Updated: 2023/11/28 14:46:11 by smoore-a         ###   ########.fr        #
+#    Updated: 2023/11/30 17:48:59 by smoore-a         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,7 +16,14 @@ CC = cc
 
 CFLAGS = -Wall -Werror -Wextra -g
 
-SRCS = ft_isalpha.c ft_isdigit.c ft_isalnum.c
+SRCS =	ft_isalpha.c\
+		ft_isdigit.c\
+		ft_isalnum.c\
+		ft_isascii.c\
+		ft_strlen.c\
+		ft_memset.c\
+		ft_bzero.c\
+		ft_memcpy.c
 
 OBJS = $(SRCS:%.c=%.o)
 
