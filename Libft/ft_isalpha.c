@@ -6,15 +6,11 @@
 /*   By: smoore-a <smoore-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/28 13:42:53 by smoore-a          #+#    #+#             */
-/*   Updated: 2023/11/28 14:07:28 by smoore-a         ###   ########.fr       */
+/*   Updated: 2023/12/01 17:16:29 by smoore-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
-/* #include <stdio.h>
-#include <ctype.h>
-
-#define FTCHAR '-' */
 
 int	ft_isalpha(int c)
 {

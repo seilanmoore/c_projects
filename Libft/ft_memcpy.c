@@ -6,19 +6,18 @@
 /*   By: smoore-a <smoore-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/29 13:47:46 by smoore-a          #+#    #+#             */
-/*   Updated: 2023/11/29 14:23:29 by smoore-a         ###   ########.fr       */
+/*   Updated: 2023/12/01 17:18:27 by smoore-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
-//#include <stdio.h>
 
 void	*ft_memcpy(void *dst, const void *src, size_t n)
 {
 	unsigned char	*ptr;
 
 	ptr = dst;
-	while (n-- > 0)
+	while (n-- > 0 && (dst != NULL || src != NULL))
 		*ptr++ = *(unsigned char *) src++;
 	return (dst);
 }

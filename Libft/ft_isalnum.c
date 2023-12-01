@@ -6,15 +6,11 @@
 /*   By: smoore-a <smoore-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/28 14:33:43 by smoore-a          #+#    #+#             */
-/*   Updated: 2023/11/28 16:30:53 by smoore-a         ###   ########.fr       */
+/*   Updated: 2023/12/01 17:16:25 by smoore-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
-/* #include <stdio.h>
-#include <ctype.h>
-
-#define FTALNUM '-' */
 
 int	ft_isalnum(int c)
 {

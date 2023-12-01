@@ -6,61 +6,47 @@
 /*   By: smoore-a <smoore-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/29 14:50:37 by smoore-a          #+#    #+#             */
-/*   Updated: 2023/11/30 13:09:19 by smoore-a         ###   ########.fr       */
+/*   Updated: 2023/12/01 17:21:54 by smoore-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
-#include <stdio.h>
-
-/* unsigned int	ft_strlcpy(char *dest, char *src, unsigned int size)
-{
-	unsigned int	i;
-
-	i = 0;
-	while (src[i])
-	{
-		dest[i] = src[i];
-		i++;
-	}
-	if (i >= size - 1)
-		dest[size - 1] = '\0';
-	else
-		dest[i] = '\0';
-	return (i);
-} */
 
 size_t	ft_strlcpy(char *dst, const char *src, size_t dstsize)
 {
 	size_t	i;
+	size_t	src_len;
 
-	i = 0;
-	while (src[i])
+	src_len = ft_strlen(src);
+	if (dstsize > 0)
 	{
-		if (dstsize != 0)
+		i = 0;
+		while (i < src_len && i < dstsize - 1)
+		{
 			dst[i] = src[i];
-		i++;
-	}
-	if (i >= dstsize - 1)
-		dst[dstsize - 1] = '\0';
-	else
+			i++;
+		}
 		dst[i] = '\0';
-	return (i);
+	}
+	return (src_len);
 }
 
-int	main(void)
+/* int	main(void)
 {
-	char	*src1 = "aaa";
+	char	*src1;
 	char	dst1[0] = "";
-	char	*src2 = "aaa";
+	char	*src2;
 	char	dst2[0] = "";
 
-	/* ft_strlcpy(dst1, src1, 0);
+	src1 = "aaa";
+	src2 = "aaa";
+	ft_strlcpy(dst1, src1, 0);
 	printf("Using ft_strlcpy, the string looks like this: %s. "
 		"And the size of the src is : %lu.\n", dst1, ft_strlcpy(dst1, src1, 0));
-	strlcpy(dst2, src2, 0); */
+	strlcpy(dst2, src2, 0);
 	printf("Using strlcpy, the string looks like this: %s. "
-		"Size of the src is : %lu.\n",
-		dst2, strlcpy(dst2, src2, 0));
+			"Size of the src is : %lu.\n",
+			dst2,
+			strlcpy(dst2, src2, 0));
 	return (0);
-}
+} */

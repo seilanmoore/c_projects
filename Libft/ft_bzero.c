@@ -6,21 +6,15 @@
 /*   By: smoore-a <smoore-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/29 13:12:28 by smoore-a          #+#    #+#             */
-/*   Updated: 2023/11/29 14:03:32 by smoore-a         ###   ########.fr       */
+/*   Updated: 2023/12/01 17:20:02 by smoore-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
-/* #include <stdio.h>
-#include <strings.h> */
 
 void	ft_bzero(void *s, size_t n)
 {
-	unsigned char	*ptr;
-
-	ptr = s;
-	while (n-- > 0)
-		*ptr++ = '\0';
+	ft_memset (s, 0, n);
 }
 
 /* int	main(void)

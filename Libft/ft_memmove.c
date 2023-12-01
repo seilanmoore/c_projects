@@ -6,21 +6,11 @@
 /*   By: smoore-a <smoore-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/30 13:10:25 by smoore-a          #+#    #+#             */
-/*   Updated: 2023/11/30 17:13:41 by smoore-a         ###   ########.fr       */
+/*   Updated: 2023/12/01 17:17:09 by smoore-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
-
-static void	*s_ft_memcpy(void *dst, const void *src, size_t n)
-{
-	unsigned char	*ptr;
-
-	ptr = dst;
-	while (n-- > 0)
-		*ptr++ = *(unsigned char *) src++;
-	return (dst);
-}
 
 void	*ft_memmove(void *dst, const void *src, size_t len)
 {
@@ -44,7 +34,7 @@ void	*ft_memmove(void *dst, const void *src, size_t len)
 			*(ptr_dst++) = *(ptr_src++);
 	}
 	else
-		s_ft_memcpy(dst, src, len);
+		ft_memcpy(dst, src, len);
 	return (dst);
 }
 
