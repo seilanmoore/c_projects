@@ -6,7 +6,7 @@
 /*   By: smoore-a <smoore-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/28 16:28:17 by smoore-a          #+#    #+#             */
-/*   Updated: 2023/12/01 17:19:38 by smoore-a         ###   ########.fr       */
+/*   Updated: 2023/12/01 17:45:41 by smoore-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,12 +18,3 @@ int	ft_isprint(int c)
 		return (1);
 	return (0);
 }
-
-/* int	main(void)
-{
-	printf("Using ft_isprint \'%c\' returns: %d.\n",
-		FTALNUM, ft_isprint(FTALNUM));
-	printf("Using ft_isprint \'%c\' returns: %d.\n",
-		FTALNUM, isprint(FTALNUM));
-	return (0);
-} */

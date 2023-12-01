@@ -6,7 +6,7 @@
 /*   By: smoore-a <smoore-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/30 13:10:25 by smoore-a          #+#    #+#             */
-/*   Updated: 2023/12/01 17:17:09 by smoore-a         ###   ########.fr       */
+/*   Updated: 2023/12/01 17:44:44 by smoore-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,17 +37,3 @@ void	*ft_memmove(void *dst, const void *src, size_t len)
 		ft_memcpy(dst, src, len);
 	return (dst);
 }
-
-/* int	main(void)
-{
-	char	src[] = "0123456789";
-	char	src1[] = "0123456789";
-
-	printf("The prev srt is: %s.\n", src);
-	ft_memmove(src, src + 3, 2);
-	printf("The next srt is: %s.\n", src);
-	printf("The prev srt is: %s.\n", src1);
-	memmove(src1, src1 + 3, 2);
-	printf("The next srt is: %s.\n", src1);
-	return (0);
-} */

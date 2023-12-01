@@ -6,7 +6,7 @@
 /*   By: smoore-a <smoore-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/28 13:42:53 by smoore-a          #+#    #+#             */
-/*   Updated: 2023/12/01 17:16:29 by smoore-a         ###   ########.fr       */
+/*   Updated: 2023/12/01 17:46:19 by smoore-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,12 +18,3 @@ int	ft_isalpha(int c)
 		return (1);
 	return (0);
 }
-
-/* int	main(void)
-{
-	printf("Using ft_isalpha \'%c\' returns: %d.\n",
-		FTCHAR, ft_isalpha(FTCHAR));
-	printf("Using isalpha \'%c\' returns: %d.\n",
-		FTCHAR, isalpha(FTCHAR));
-	return (0);
-} */
