@@ -6,7 +6,7 @@
 /*   By: smoore-a <smoore-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/01 17:42:05 by smoore-a          #+#    #+#             */
-/*   Updated: 2023/12/01 18:23:26 by smoore-a         ###   ########.fr       */
+/*   Updated: 2023/12/02 13:42:52 by smoore-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,15 +71,10 @@
 
 /* int	main(void) //ft_memcpy
 {
-	char	src1[30] = "Hello my name ";
-	char	dst1[30] = "Is Manolo.";
-	char	src2[30] = "Hello my name ";
-	char	dst2[30] = "Is Manolo.";
+	char	src[30] = "Start stop";
 
-	printf("Using ft_memcpy, the string looks like this: %s.\n",
-		ft_memcpy(dst1, src1, 10));
-	printf("Using memcpy, the string looks like this: %s.\n",
-		memcpy(dst2, src2, 10));
+	ft_memcpy(src + 2, src, 3);
+	printf("Using memcpy, the string looks like this: %s.\n", src);
 	return (0);
 } */
 
@@ -138,12 +133,12 @@
 	return (0);
 } */
 
-/* int	main(void)
+/* int	main(void) //ft_strlcat
 {
 	char	dest[10] = "Hello, ";
-	char	*src = "world!";
+	char	src[] = "Start stop";
 	char	dest1[10] = "Hello, ";
-	char	*src1 = "world!";
+	char	src1[] = "Start stop";
 	unsigned int full_len = ft_strlcat(dest, src, sizeof(dest));
 	unsigned int full_len1;
 

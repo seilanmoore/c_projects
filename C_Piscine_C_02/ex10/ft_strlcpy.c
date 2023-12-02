@@ -6,13 +6,13 @@
 /*   By: smoore-a <smoore-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/31 20:16:42 by smoore-a          #+#    #+#             */
-/*   Updated: 2023/11/01 07:34:22 by smoore-a         ###   ########.fr       */
+/*   Updated: 2023/12/02 13:46:13 by smoore-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdio.h>
 // #include <bsd/string.h>
-////cc -Wall -Wextra -std=c11 ft_strlcpy.c -lbsd.
+////cc -Wall -Wextra ft_strlcpy.c -lbsd.
 ////Para compilar incluyendo esta biblioteca.
 
 unsigned int	ft_strlcpy(char *dest, char *src, unsigned int size)
