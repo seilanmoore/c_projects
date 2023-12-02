@@ -6,7 +6,7 @@
 /*   By: smoore-a <smoore-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/01 17:42:05 by smoore-a          #+#    #+#             */
-/*   Updated: 2023/12/02 13:42:52 by smoore-a         ###   ########.fr       */
+/*   Updated: 2023/12/02 20:17:42 by smoore-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -135,16 +135,16 @@
 
 /* int	main(void) //ft_strlcat
 {
-	char	dest[10] = "Hello, ";
-	char	src[] = "Start stop";
-	char	dest1[10] = "Hello, ";
-	char	src1[] = "Start stop";
-	unsigned int full_len = ft_strlcat(dest, src, sizeof(dest));
+	char	dest[] = "";
+	char	src[] = "";
+	char	dest1[] = "";
+	char	src1[] = "";
+	unsigned int full_len = ft_strlcat(dest, src, 0);
 	unsigned int full_len1;
 
 	printf("Concatenated string: %s\n", dest);
 	printf("Total size if not truncated: %d\n", full_len);
-	full_len1 = strlcat(dest1, src1, sizeof(dest1));
+	full_len1 = strlcat(dest1, src1, 0);
 	printf("Concatenated string: %s\n", dest1);
 	printf("Total size if not truncated: %d\n", full_len1);
 	return (0);
