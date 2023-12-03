@@ -6,7 +6,7 @@
 /*   By: smoore-a <smoore-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/01 17:42:05 by smoore-a          #+#    #+#             */
-/*   Updated: 2023/12/02 20:17:42 by smoore-a         ###   ########.fr       */
+/*   Updated: 2023/12/03 09:42:48 by smoore-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -135,17 +135,10 @@
 
 /* int	main(void) //ft_strlcat
 {
-	char	dest[] = "";
-	char	src[] = "";
-	char	dest1[] = "";
-	char	src1[] = "";
-	unsigned int full_len = ft_strlcat(dest, src, 0);
-	unsigned int full_len1;
+	char	dest[10] = "A";
+	size_t	full_len = ft_strlcat(dest, "lorem ipsum dolor sit amet", 0);
 
-	printf("Concatenated string: %s\n", dest);
-	printf("Total size if not truncated: %d\n", full_len);
-	full_len1 = strlcat(dest1, src1, 0);
-	printf("Concatenated string: %s\n", dest1);
-	printf("Total size if not truncated: %d\n", full_len1);
+	printf("Concatenated string: \"%s\"\n", dest);
+	printf("Total size if not truncated: %lu\n", full_len);
 	return (0);
 } */
