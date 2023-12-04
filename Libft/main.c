@@ -6,7 +6,7 @@
 /*   By: smoore-a <smoore-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/01 17:42:05 by smoore-a          #+#    #+#             */
-/*   Updated: 2023/12/04 13:31:19 by smoore-a         ###   ########.fr       */
+/*   Updated: 2023/12/04 14:32:04 by smoore-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -170,5 +170,21 @@
 		i++;
 	}
 	printf("Returns: %s\n", str);
+	return (0);
+} */
+
+/* int	main(void) //ft_strchr
+{
+	char	str[] = "teste";
+	char	stro[] = "teste";
+
+	printf("Using ft_strchr want to find \'%c\' in the"
+		" string \'%s\'\n", 'a', str);
+	printf("Returns: %s\n", ft_strchr(str, 1024));
+	printf("Using strchr want to find \'%c\' in the"
+		" string \'%s\'\n", 'a', str);
+	printf("Returns: %s\n", strchr(stro, 1024));
+
+	printf("%c\n", 357);
 	return (0);
 } */
