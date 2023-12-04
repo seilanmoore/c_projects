@@ -6,7 +6,7 @@
 #    By: smoore-a <smoore-a@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/11/27 15:26:15 by smoore-a          #+#    #+#              #
-#    Updated: 2023/12/01 18:13:36 by smoore-a         ###   ########.fr        #
+#    Updated: 2023/12/04 13:32:48 by smoore-a         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -27,7 +27,10 @@ SRCS =	ft_isalpha.c\
 		ft_memcpy.c\
 		ft_memmove.c\
 		ft_strlcpy.c\
-		ft_strlcat.c
+		ft_strlcat.c\
+		ft_toupper.c\
+		ft_tolower.c\
+		ft_strchr.c\
 
 OBJS = $(SRCS:%.c=%.o)
 

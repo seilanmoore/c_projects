@@ -6,7 +6,7 @@
 /*   By: smoore-a <smoore-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/01 17:42:05 by smoore-a          #+#    #+#             */
-/*   Updated: 2023/12/03 09:42:48 by smoore-a         ###   ########.fr       */
+/*   Updated: 2023/12/04 13:31:19 by smoore-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -140,5 +140,35 @@
 
 	printf("Concatenated string: \"%s\"\n", dest);
 	printf("Total size if not truncated: %lu\n", full_len);
+	return (0);
+} */
+
+/* int	main(void) //ft_toupper
+{
+	char	str[] = "What eVeR.";
+	int		i = 0;
+
+	printf("Using ft_toupper \'%s\'\n", str);
+	while (str[i])
+	{
+		str[i] = ft_toupper(str[i]);
+		i++;
+	}
+	printf("Returns: %s\n", str);
+	return (0);
+} */
+
+/* int	main(void) //ft_tolower
+{
+	char	str[] = "What eVeR.";
+	int		i = 0;
+
+	printf("Using ft_tolower \'%s\'\n", str);
+	while (str[i])
+	{
+		str[i] = ft_tolower(str[i]);
+		i++;
+	}
+	printf("Returns: %s\n", str);
 	return (0);
 } */
