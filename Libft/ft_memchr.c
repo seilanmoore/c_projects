@@ -1,37 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strrchr.c                                       :+:      :+:    :+:   */
+/*   ft_memchr.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: smoore-a <smoore-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/12/04 17:04:38 by smoore-a          #+#    #+#             */
-/*   Updated: 2023/12/04 22:06:46 by smoore-a         ###   ########.fr       */
+/*   Created: 2023/12/04 22:08:17 by smoore-a          #+#    #+#             */
+/*   Updated: 2023/12/04 22:46:51 by smoore-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-char	*ft_strrchr(const char *s, int c)
+void	*ft_memchr(const void *s, int c, size_t n)
 {
-	unsigned char		*str;
-	unsigned char		*pos;
-	unsigned char		ch;
+	unsigned char	*ptr;
 
-	ch = (unsigned char)c;
-	if (ch == '\0' && *s == '\0')
-		return ((char *)s);
-	str = (unsigned char *)s;
-	pos = NULL;
-	while (*str)
+	ptr = (unsigned char *) s;
+	if (n == 0)
+		return (NULL);
+	while (n-- > 0)
 	{
-		if (*str == ch)
-			pos = str;
-		str++;
+		if (*ptr == (unsigned char) c)
+			return (ptr);
+		ptr++;
 	}
-	if (pos)
-		return ((char *)pos);
-	if (ch == 0)
-		return ((char *)str);
 	return (NULL);
 }

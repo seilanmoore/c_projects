@@ -6,7 +6,7 @@
 /*   By: smoore-a <smoore-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/01 17:42:05 by smoore-a          #+#    #+#             */
-/*   Updated: 2023/12/04 17:25:05 by smoore-a         ###   ########.fr       */
+/*   Updated: 2023/12/04 22:47:45 by smoore-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -207,5 +207,25 @@
 
 	printf("%s, %d, %d\n", z, z[0], (unsigned char)z[0]);
 	return (0);
-}
- */
+} */
+
+/* int	main(void) //ft_strncmp
+{
+	char	str[] = "C";
+	char	str1[] = "";
+
+	printf("Using ft_strncmp return: \'%d\'\n", ft_strncmp(str, str1, 0));
+	printf("Using strncmp return: \'%d\'\n", strncmp(str, str1, 0));
+	return (0);
+} */
+
+/* int	main(void)
+{
+	char	str[] = "/|\x12\xff\x09\0\x42\042\0\42|\\";
+
+	printf("Using ft_memchr, mem dir is:	%p\n",
+		ft_memchr(str, '\0', 12));
+	printf("Using memchr, mem dir is:   	%p\n",
+		memchr(str, '\0', 12));
+	return (0);
+} */

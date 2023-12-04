@@ -1,37 +1,32 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strrchr.c                                       :+:      :+:    :+:   */
+/*   ft_strncmp.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: smoore-a <smoore-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/12/04 17:04:38 by smoore-a          #+#    #+#             */
-/*   Updated: 2023/12/04 22:06:46 by smoore-a         ###   ########.fr       */
+/*   Created: 2023/12/04 21:45:10 by smoore-a          #+#    #+#             */
+/*   Updated: 2023/12/04 22:00:56 by smoore-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-char	*ft_strrchr(const char *s, int c)
+int	ft_strncmp(const char *s1, const char *s2, size_t n)
 {
-	unsigned char		*str;
-	unsigned char		*pos;
-	unsigned char		ch;
+	unsigned char	*str1;
+	unsigned char	*str2;
 
-	ch = (unsigned char)c;
-	if (ch == '\0' && *s == '\0')
-		return ((char *)s);
-	str = (unsigned char *)s;
-	pos = NULL;
-	while (*str)
+	if (n == 0)
+		return (0);
+	str1 = (unsigned char *)s1;
+	str2 = (unsigned char *)s2;
+	while ((*str1 || *str2) && n--)
 	{
-		if (*str == ch)
-			pos = str;
-		str++;
+		if (*str1 != *str2)
+			return (*str1 - *str2);
+		str1++;
+		str2++;
 	}
-	if (pos)
-		return ((char *)pos);
-	if (ch == 0)
-		return ((char *)str);
-	return (NULL);
+	return (*(str1 - 1) - *(str2 - 1));
 }
