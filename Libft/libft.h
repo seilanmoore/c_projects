@@ -6,14 +6,14 @@
 /*   By: smoore-a <smoore-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/28 13:36:34 by smoore-a          #+#    #+#             */
-/*   Updated: 2023/12/02 13:56:44 by smoore-a         ###   ########.fr       */
+/*   Updated: 2023/12/04 13:15:36 by smoore-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef LIBFT_H
 # define LIBFT_H
 
-# include <bsd/string.h>
+//# include <bsd/string.h>
 //Para compilar strlcpy y strlcat incluyendo
 //esta biblioteca con -lbsd (para windows).
 # include <string.h>
