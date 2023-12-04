@@ -6,7 +6,7 @@
 /*   By: smoore-a <smoore-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/01 17:42:05 by smoore-a          #+#    #+#             */
-/*   Updated: 2023/12/04 23:12:41 by smoore-a         ###   ########.fr       */
+/*   Updated: 2023/12/04 23:43:59 by smoore-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -237,7 +237,19 @@
 
 	printf("Using ft_memchr, the diff is:	%d\n",
 		ft_memcmp(str1, str2, 12));
-	printf("Using memchr, mem dir is:   	%d\n",
+	printf("Using memchr, the diff is:   	%d\n",
 		memcmp(str1, str2, 12));
+	return (0);
+} */
+
+/* int	main(void) //ft_strnstr
+{
+	char	str1[] = "";
+	char	str2[] = "uiop";
+
+	printf("Using ft_strnstr:	%s\n",
+		ft_strnstr(str1, str2, 12));
+	printf("Using strnstr:   	%s\n",
+		strnstr(str1, str2, 12));
 	return (0);
 } */
