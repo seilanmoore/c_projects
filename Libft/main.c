@@ -6,7 +6,7 @@
 /*   By: smoore-a <smoore-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/01 17:42:05 by smoore-a          #+#    #+#             */
-/*   Updated: 2023/12/04 14:32:04 by smoore-a         ###   ########.fr       */
+/*   Updated: 2023/12/04 17:25:05 by smoore-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -175,16 +175,37 @@
 
 /* int	main(void) //ft_strchr
 {
-	char	str[] = "teste";
-	char	stro[] = "teste";
+	char	str[] = "tes7ñte";
 
 	printf("Using ft_strchr want to find \'%c\' in the"
 		" string \'%s\'\n", 'a', str);
-	printf("Returns: %s\n", ft_strchr(str, 1024));
+	printf("Returns: %p\n", ft_strchr(str, -61));
 	printf("Using strchr want to find \'%c\' in the"
 		" string \'%s\'\n", 'a', str);
-	printf("Returns: %s\n", strchr(stro, 1024));
+	printf("Returns: %p\n", strchr(str, -61));
+	char	z[100];
 
-	printf("%c\n", 357);
+	z[0] =  -61;
+
+	printf("%s, %d, %d\n", z, z[0], (unsigned char)z[0]);
 	return (0);
 } */
+
+/* int	main(void) //ft_strrchr
+{
+	char	str[] = "tes7ñte";
+
+	printf("Using ft_strchr want to find \'%c\' in the"
+		" string \'%s\'\n", 'a', str);
+	printf("Returns: %p\n", ft_strrchr(str, 'e'));
+	printf("Using strchr want to find \'%c\' in the"
+		" string \'%s\'\n", 'a', str);
+	printf("Returns: %p\n", strrchr(str, 'e'));
+	char	z[100];
+
+	z[0] =  -61;
+
+	printf("%s, %d, %d\n", z, z[0], (unsigned char)z[0]);
+	return (0);
+}
+ */
