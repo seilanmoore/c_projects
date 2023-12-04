@@ -6,7 +6,7 @@
 /*   By: smoore-a <smoore-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/01 17:42:05 by smoore-a          #+#    #+#             */
-/*   Updated: 2023/12/04 22:47:45 by smoore-a         ###   ########.fr       */
+/*   Updated: 2023/12/04 23:12:41 by smoore-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -219,7 +219,7 @@
 	return (0);
 } */
 
-/* int	main(void)
+/* int	main(void) //ft_memchr
 {
 	char	str[] = "/|\x12\xff\x09\0\x42\042\0\42|\\";
 
@@ -227,5 +227,17 @@
 		ft_memchr(str, '\0', 12));
 	printf("Using memchr, mem dir is:   	%p\n",
 		memchr(str, '\0', 12));
+	return (0);
+} */
+
+/* int	main(void) //ft_memcmp
+{
+	char	str1[] = "/|\x12\xff\0\x42\042\0\42|\\";
+	char	str2[] = "/|\x12\xff\0\x42\042\0\42|\\";
+
+	printf("Using ft_memchr, the diff is:	%d\n",
+		ft_memcmp(str1, str2, 12));
+	printf("Using memchr, mem dir is:   	%d\n",
+		memcmp(str1, str2, 12));
 	return (0);
 } */
