@@ -6,34 +6,51 @@
 /*   By: smoore-a <smoore-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/04 23:14:57 by smoore-a          #+#    #+#             */
-/*   Updated: 2023/12/04 23:54:12 by smoore-a         ###   ########.fr       */
+/*   Updated: 2023/12/05 14:48:07 by smoore-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-char	*ft_strnstr(const char *big, const char *little, size_t len)
+static int	find_needle(char *pos, char *str2, size_t len, size_t j)
+{
+	size_t	i;
+
+	i = 0;
+	while (*pos == str2[i] && *pos != '\0' && str2[i] && j < len)
+	{
+		pos++;
+		i++;
+		j++;
+	}
+	if (str2[i] == '\0')
+		return (0);
+	return (1);
+}
+
+char	*ft_strnstr(const char *haystack, const char *needle, size_t len)
 {
 	unsigned char	*str1;
 	unsigned char	*str2;
+	unsigned char	*pos;
+	size_t			i;
 	size_t			j;
-	int				i;
 
-	j = len;
-	str1 = (unsigned char *)big;
-	str2 = (unsigned char *)little;
-	if (*str1)
+	str2 = (unsigned char *)needle;
+	str1 = (unsigned char *)haystack;
+	i = 0;
+	j = 0;
+	if (*str2 == '\0')
+		return ((char *)str1);
+	if (*str1 != '\0')
 	{
-		if (*str2 == '\0')
-			return ((char *)str1);
-		while (len-- > 0)
+		while (*str1 != '\0' && i < len)
 		{
-			i = 0;
-			while (str1[i] == str2[i] && str2[i] != '\0')
-				i++;
-			if (str2[i] == '\0')
+			pos = str1;
+			if (find_needle((char *)pos, (char *)str2, len, i) == 0)
 				return ((char *)str1);
 			str1++;
+			i++;
 		}
 	}
 	return (0);

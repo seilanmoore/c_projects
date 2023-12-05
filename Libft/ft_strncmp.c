@@ -6,7 +6,7 @@
 /*   By: smoore-a <smoore-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/04 21:45:10 by smoore-a          #+#    #+#             */
-/*   Updated: 2023/12/04 22:00:56 by smoore-a         ###   ########.fr       */
+/*   Updated: 2023/12/05 15:19:33 by smoore-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,8 @@ int	ft_strncmp(const char *s1, const char *s2, size_t n)
 		return (0);
 	str1 = (unsigned char *)s1;
 	str2 = (unsigned char *)s2;
+	if (*str1 == '\0' || *str2 == '\0')
+		return (*str1 - *str2);
 	while ((*str1 || *str2) && n--)
 	{
 		if (*str1 != *str2)
