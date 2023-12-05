@@ -6,7 +6,7 @@
 /*   By: smoore-a <smoore-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/01 17:42:05 by smoore-a          #+#    #+#             */
-/*   Updated: 2023/12/05 15:08:28 by smoore-a         ###   ########.fr       */
+/*   Updated: 2023/12/05 16:23:09 by smoore-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -251,5 +251,14 @@
 		ft_strnstr(str1, str2, 5));
 	printf("Using strnstr:   	%s\n",
 		strnstr(str1, str2, 5));
+	return (0);
+} */
+
+/* int	main(void)
+{
+	printf("Passed the string with ft_atoi\n"
+		"Returns:	\'%d\'\n", ft_atoi("1209"));
+	printf("Passed the string with atoi\n"
+		"Returns:	\'%d\'\n", atoi("1209"));
 	return (0);
 } */
