@@ -6,7 +6,7 @@
 #    By: smoore-a <smoore-a@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/11/27 15:26:15 by smoore-a          #+#    #+#              #
-#    Updated: 2023/12/05 15:44:04 by smoore-a         ###   ########.fr        #
+#    Updated: 2023/12/05 15:45:51 by smoore-a         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -36,8 +36,6 @@ SRCS =	ft_isalpha.c\
 		ft_memchr.c\
 		ft_memcmp.c\
 		ft_strnstr.c\
-
-#SRCS = $(wildcard %.c)
 
 OBJS = $(SRCS:%.c=%.o)
 
