@@ -6,7 +6,7 @@
 /*   By: smoore-a <smoore-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/01 17:42:05 by smoore-a          #+#    #+#             */
-/*   Updated: 2023/12/06 15:44:25 by smoore-a         ###   ########.fr       */
+/*   Updated: 2023/12/06 16:19:22 by smoore-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -269,5 +269,21 @@
 		"Returns:	\'%p\'\n", ft_calloc(5, 4));
 	printf("Calling calloc: \n"
 		"Returns:	\'%p\'\n", calloc(5, 4));
+	return (0);
+} */
+
+/* int	main(void) //ft_strdup
+{
+	char	str[] = "Hello my name is ...";
+	char	*cpy;
+	char	*cpy_o;
+
+	cpy = ft_strdup(str);
+	cpy_o =strdup(str);
+	printf("Calling ft_strdup for the string \'%s\' whose pointer is : \'%p\'\n"
+		"Returns:	'\%s\' whose pointer is"
+		" \'%p\'\n", str, str, cpy, cpy);
+	printf("Calling strdup for the string \'%s\' whose pointer is \'%p\': \n"
+		"Returns:	'\%s\' whose pointer is \'%p\'\n", str, str, cpy_o, cpy_o);
 	return (0);
 } */
