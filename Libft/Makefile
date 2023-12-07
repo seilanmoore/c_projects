@@ -6,7 +6,7 @@
 #    By: smoore-a <smoore-a@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/11/27 15:26:15 by smoore-a          #+#    #+#              #
-#    Updated: 2023/12/06 16:02:40 by smoore-a         ###   ########.fr        #
+#    Updated: 2023/12/07 15:20:56 by smoore-a         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -38,7 +38,9 @@ SRCS =	ft_isalpha.c\
 		ft_strnstr.c\
 		ft_atoi.c\
 		ft_calloc.c\
-		ft_strdup.c
+		ft_strdup.c\
+		ft_substr.c\
+		ft_strjoin.c
 
 OBJS = $(SRCS:%.c=%.o)
 
