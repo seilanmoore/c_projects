@@ -6,7 +6,7 @@
 /*   By: smoore-a <smoore-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/01 17:42:05 by smoore-a          #+#    #+#             */
-/*   Updated: 2023/12/07 15:19:48 by smoore-a         ###   ########.fr       */
+/*   Updated: 2023/12/07 15:48:17 by smoore-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -278,5 +278,14 @@
 
 	printf("Using ft_substr:	%1$s\nPointer:    %1$p\n",
 		ft_substr(str, 20, 10));
+	return (0);
+} */
+
+/* int	main(void) //ft_strjoin
+{
+	char	str[] = "Nico ";
+	char	str1[] = "esta malito";
+
+	printf("Using ft_strjoin return:\n\"%s\"\n", ft_strjoin(str, str1));
 	return (0);
 } */
