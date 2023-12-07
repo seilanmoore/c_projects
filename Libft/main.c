@@ -6,7 +6,7 @@
 /*   By: smoore-a <smoore-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/01 17:42:05 by smoore-a          #+#    #+#             */
-/*   Updated: 2023/12/07 15:48:17 by smoore-a         ###   ########.fr       */
+/*   Updated: 2023/12/07 21:44:46 by smoore-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -244,13 +244,13 @@
 
 /* int	main(void) //ft_strnstr
 {
-	char	str1[] = "abc";
-	char	str2[] = "abcdef";
+	char	str1[] = "aaabcdbc";
+	char	str2[] = "aabcd";
 
 	printf("Using ft_strnstr:	%s\n",
-		ft_strnstr(str1, str2, 5));
+		ft_strnstr(str1, str2, 7));
 	printf("Using strnstr:   	%s\n",
-		strnstr(str1, str2, 5));
+		strnstr(str1, str2, 7));
 	return (0);
 } */
 
