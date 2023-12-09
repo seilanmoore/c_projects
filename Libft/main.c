@@ -6,7 +6,7 @@
 /*   By: smoore-a <smoore-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/01 17:42:05 by smoore-a          #+#    #+#             */
-/*   Updated: 2023/12/07 21:44:46 by smoore-a         ###   ########.fr       */
+/*   Updated: 2023/12/09 19:41:03 by smoore-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -287,5 +287,13 @@
 	char	str1[] = "esta malito";
 
 	printf("Using ft_strjoin return:\n\"%s\"\n", ft_strjoin(str, str1));
+	return (0);
+} */
+
+/* int	main(void) //ft_strtrim
+{
+	char	str[] = "lorem ipsum dolor sit amet";
+
+	printf("Using ft_strtrim return:\n\"%s\"\n", ft_strtrim(str, "aemt"));
 	return (0);
 } */
