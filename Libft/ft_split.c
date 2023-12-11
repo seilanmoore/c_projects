@@ -6,50 +6,114 @@
 /*   By: smoore-a <smoore-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/09 22:16:43 by smoore-a          #+#    #+#             */
-/*   Updated: 2023/12/11 13:29:47 by smoore-a         ###   ########.fr       */
+/*   Updated: 2023/12/11 17:51:05 by smoore-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-char	*create_word(char const *s, size_t *i, char c)
+static size_t	count_items(const char *s, char c)
 {
-	size_t	k;
-	char	*word;
+	size_t	i;
+	size_t	items;
 
-	k = 0;
-	word = (char *)malloc(sizeof(char) * (strlen(s) + 1));
-	if (!word)
-		return (NULL);
-	while (s[*i] && s[*i] != c)
-		word[k++] = s[(*i)++];
-	word[k] = '\0';
-	return (word);
+	i = 0;
+	items = 0;
+	while (s[i])
+	{
+		while (s[i] == c)
+			i++;
+		while (s[i] != c && s[i])
+			i++;
+		if (i && s[i - 1] != c)
+			items++;
+	}
+	return (items);
 }
+
+static char	*extract_substring(char *str, char c)
+{
+	size_t	len;
+
+	len = 0;
+	while (*str && *str == c)
+		str++;
+	while (str[len] && str[len] != c)
+		len++;
+	return (ft_substr(str, 0, len));
+}
+
+static char	**allocate_mem(char **mtrx, char *s, char c)
+{
+	char	*str;
+	size_t	i;
+	size_t	items;
+
+	i = 0;
+	str = s;
+	items = count_items(str, c);
+	while (items-- > 0)
+	{
+		mtrx[i] = extract_substring(str, c);
+		if (!mtrx[i])
+		{
+			while (i > 0)
+				free(mtrx[--i]);
+			free(mtrx);
+			return (NULL);
+		}
+		str += ft_strlen(mtrx[i]);
+		while (*str == c)
+			str++;
+		i++;
+	}
+	mtrx[i] = NULL;
+	return (mtrx);
+}
+
+/* static char	**allocate_mem(char **mtrx, char *s, char c)
+{
+	size_t	i;
+	size_t	len;
+	char	*str;
+	size_t	items;
+
+	i = 0;
+	len = 0;
+	str = s;
+	items = count_items(str, c);
+	while (items-- > 0)
+	{
+		while (*str && *str == c)
+			str++;
+		len = 0;
+		while (str[len] && str[len] != c)
+			len++;
+		mtrx[i] = ft_substr(str, 0, len);
+		if (!mtrx[i])
+			return (NULL);
+		i++;
+		str += len;
+	}
+	mtrx[i] = NULL;
+	return (mtrx);
+} */
 
 char	**ft_split(char const *s, char c)
 {
-	char	**split;
-	size_t	i;
-	size_t	j;
+	char	*str;
+	char	**mtrx;
+	char	**temp;
 
-	i = 0;
-	j = 0;
-	split = (char **)malloc(sizeof(char *) * (strlen(s) + 1));
-	if (!s || !(split))
+	str = (char *) s;
+	mtrx = (char **)malloc((count_items(str, c) + 1) * sizeof(char *));
+	if (!mtrx)
 		return (NULL);
-	while (s[i])
+	temp = allocate_mem(mtrx, str, c);
+	if (!temp)
 	{
-		if (s[i] != c)
-		{
-			split[j] = create_word(s, &i, c);
-			if (!(split[j]))
-				return (NULL);
-			j++;
-		}
-		else
-			i++;
+		free(mtrx);
+		return (NULL);
 	}
-	split[j] = NULL;
-	return (split);
+	return (temp);
 }

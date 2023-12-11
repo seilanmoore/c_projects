@@ -6,7 +6,7 @@
 /*   By: smoore-a <smoore-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/01 17:42:05 by smoore-a          #+#    #+#             */
-/*   Updated: 2023/12/09 19:41:03 by smoore-a         ###   ########.fr       */
+/*   Updated: 2023/12/11 17:39:13 by smoore-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -295,5 +295,13 @@
 	char	str[] = "lorem ipsum dolor sit amet";
 
 	printf("Using ft_strtrim return:\n\"%s\"\n", ft_strtrim(str, "aemt"));
+	return (0);
+} */
+
+/* int	main(void) //ft_split
+{
+	char	str[] = "l";
+
+	ft_split(str, ' ');
 	return (0);
 } */
