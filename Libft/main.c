@@ -6,7 +6,7 @@
 /*   By: smoore-a <smoore-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/01 17:42:05 by smoore-a          #+#    #+#             */
-/*   Updated: 2023/12/11 17:39:13 by smoore-a         ###   ########.fr       */
+/*   Updated: 2023/12/12 17:48:06 by smoore-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -303,5 +303,13 @@
 	char	str[] = "l";
 
 	ft_split(str, ' ');
+	return (0);
+} */
+
+/* int	main(void) //ft_split
+{
+	int	n = 9;
+
+	printf("For the nb \'%d\' returns:	\'%s\'\n", n, ft_itoa(n));
 	return (0);
 } */
