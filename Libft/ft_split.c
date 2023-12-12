@@ -6,7 +6,7 @@
 /*   By: smoore-a <smoore-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/09 22:16:43 by smoore-a          #+#    #+#             */
-/*   Updated: 2023/12/12 12:15:08 by smoore-a         ###   ########.fr       */
+/*   Updated: 2023/12/12 23:04:33 by smoore-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,16 +29,10 @@ static size_t	count_items(const char *s, char c)
 	return (items);
 }
 
-char	**ft_split(char const *s, char c)
+static char	**cpy_to_mtrx(char const *s, char c, char **mtrx, size_t i)
 {
-	char	**mtrx;
-	size_t	i;
 	size_t	item_len;
 
-	mtrx = (char **)malloc((count_items(s, c) + 1) * sizeof(char *));
-	if (!mtrx || !s)
-		return (NULL);
-	i = 0;
 	while (*s)
 	{
 		while (*s == c && *s)
@@ -50,9 +44,26 @@ char	**ft_split(char const *s, char c)
 			else
 				item_len = ft_strchr(s, c) - s;
 			mtrx[i++] = ft_substr(s, 0, item_len);
+			if (!mtrx[i - 1])
+			{
+				while (i > 0)
+					free(mtrx[--i]);
+				free(mtrx);
+				return (NULL);
+			}
 			s += item_len;
 		}
 	}
 	mtrx[i] = NULL;
 	return (mtrx);
+}
+
+char	**ft_split(char const *s, char c)
+{
+	char	**mtrx;
+
+	mtrx = (char **)malloc((count_items(s, c) + 1) * sizeof(char *));
+	if (!mtrx || !s)
+		return (NULL);
+	return (cpy_to_mtrx(s, c, mtrx, 0));
 }
