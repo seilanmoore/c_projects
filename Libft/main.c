@@ -6,7 +6,7 @@
 /*   By: smoore-a <smoore-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/01 17:42:05 by smoore-a          #+#    #+#             */
-/*   Updated: 2023/12/12 21:50:55 by smoore-a         ###   ########.fr       */
+/*   Updated: 2023/12/13 09:40:21 by smoore-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -314,19 +314,7 @@
 	return (0);
 } */
 
-/* int	main(int argc, char **argv)
-{
-	int	fd;
-
-	if (!argc)
-		return (-1);
-	fd = open(argv[1], O_RDWR);
-	ft_putstr_fd("\"Hello\"", fd);
-	close(fd);
-	return (0);
-} */
-
-/* int	main(int argc, char **argv)
+/* int	main(int argc, char **argv) //ft_putstr_fd
 {
 	int	fd;
 
