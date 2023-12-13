@@ -6,7 +6,7 @@
 /*   By: smoore-a <smoore-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/01 18:13:47 by smoore-a          #+#    #+#             */
-/*   Updated: 2023/12/03 09:40:28 by smoore-a         ###   ########.fr       */
+/*   Updated: 2023/12/13 10:47:12 by smoore-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,6 @@
 	return (dest_len + src_len);
 } */
 
-//size es el tamaño del buffer
 size_t	ft_strlcat(char *dst, const char *src, size_t size)
 {
 	size_t	cat_len;

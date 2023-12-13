@@ -6,7 +6,7 @@
 /*   By: smoore-a <smoore-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/30 09:30:56 by smoore-a          #+#    #+#             */
-/*   Updated: 2023/10/30 17:08:28 by smoore-a         ###   ########.fr       */
+/*   Updated: 2023/12/12 20:54:34 by smoore-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,10 +37,10 @@ void	ft_putnbr(int nb)
 		write(1, &num[i], 1);
 }
 
-int	main(void)
+/* int	main(void)
 {
 	int	nb = 0000;
 
 	ft_putnbr(nb);
 	return (0);
-}
+} */

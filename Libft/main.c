@@ -6,7 +6,7 @@
 /*   By: smoore-a <smoore-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/01 17:42:05 by smoore-a          #+#    #+#             */
-/*   Updated: 2023/12/13 09:40:21 by smoore-a         ###   ########.fr       */
+/*   Updated: 2023/12/13 11:13:37 by smoore-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -300,7 +300,7 @@
 
 /* int	main(void) //ft_split
 {
-	char	str[] = "l";
+	char	str[] = "Hola muy buenas";
 
 	ft_split(str, ' ');
 	return (0);
