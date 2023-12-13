@@ -6,7 +6,7 @@
 /*   By: smoore-a <smoore-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/01 17:42:05 by smoore-a          #+#    #+#             */
-/*   Updated: 2023/12/13 11:38:50 by smoore-a         ###   ########.fr       */
+/*   Updated: 2023/12/13 16:18:08 by smoore-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -326,5 +326,60 @@
 	fd = open(argv[1], O_RDWR);
 	ft_putstr_fd("\"Hello\"", fd);
 	close(fd);
+	return (0);
+} */
+
+/* int	main(void) //lst_new
+{
+	t_list *node;
+	int content = 42;
+
+	node = ft_lstnew(&content);
+	if (node == NULL)
+	{
+		printf("Failed to allocate memory for node\n");
+		return (1);
+	}
+	if (node->content != NULL)
+		printf("Content of the node: %d\n", *(int *)(node->content));
+	else
+		printf("Node content is NULL\n");
+	if (node->next != NULL)
+		printf("Next node exists\n");
+	else
+		printf("Next node is NULL\n");
+	free(node);
+	return (0);
+} */
+
+/* int	main(void) //ft_lstadd_front_bonus
+{
+	t_list	*node1;
+	t_list	*node2;
+	t_list	*current;
+	t_list	*new_node;
+	char	a[] = " My";
+	char	b[] = " Name";
+	char	c[] = "Hello";
+	
+	node1 = ft_lstnew(&a);
+	node2 = ft_lstnew(&b);
+	node1->next = node2;
+	new_node = ft_lstnew(&c);
+	current = node1;
+	while (current)
+	{
+		printf("%s", (char *)current->content);
+        current = current->next;
+	}
+	ft_lstadd_front(&node1, new_node);
+	current = node1;
+	while (current)
+	{
+		printf("%s", (char *)current->content);
+        t_list *tmp = current;
+        current = current->next;
+        free(tmp);
+	}
 	return (0);
 } */

@@ -6,7 +6,7 @@
 #    By: smoore-a <smoore-a@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/11/27 15:26:15 by smoore-a          #+#    #+#              #
-#    Updated: 2023/12/13 11:54:14 by smoore-a         ###   ########.fr        #
+#    Updated: 2023/12/13 15:25:42 by smoore-a         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -24,7 +24,7 @@ SRCS =	ft_isalpha.c ft_isdigit.c ft_isalnum.c ft_isascii.c ft_isprint.c\
 		ft_strtrim.c ft_split.c ft_itoa.c ft_strmapi.c ft_striteri.c\
 		ft_putchar_fd.c ft_putstr_fd.c ft_putendl_fd.c ft_putnbr_fd.c
 
-BONUS_SRCS = ft_lstnew_bonus.c
+BONUS_SRCS = ft_lstnew_bonus.c ft_lstadd_front_bonus.c
 
 OBJS = $(SRCS:%.c=%.o)
 
