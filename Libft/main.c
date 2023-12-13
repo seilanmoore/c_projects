@@ -6,7 +6,7 @@
 /*   By: smoore-a <smoore-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/01 17:42:05 by smoore-a          #+#    #+#             */
-/*   Updated: 2023/12/13 11:13:37 by smoore-a         ###   ########.fr       */
+/*   Updated: 2023/12/13 11:38:50 by smoore-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -300,9 +300,12 @@
 
 /* int	main(void) //ft_split
 {
-	char	str[] = "Hola muy buenas";
+	char	str[] = "Hola muy buenas tardes";
+	char	**mtrx = ft_split(str, ' ');
+	int		i = -1;
 
-	ft_split(str, ' ');
+	while (++i < 4)
+		printf("The %dth word is \'%s\'\n", i + 1, mtrx[i]);
 	return (0);
 } */
 
