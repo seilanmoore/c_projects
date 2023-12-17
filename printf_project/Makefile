@@ -6,12 +6,12 @@
 #    By: smoore-a <smoore-a@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/12/16 19:38:03 by smoore-a          #+#    #+#              #
-#    Updated: 2023/12/16 19:42:37 by smoore-a         ###   ########.fr        #
+#    Updated: 2023/12/17 20:56:34 by smoore-a         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 .PHONY: all
 
 all:
-	$(MAKE) -C Libft
+	$(MAKE) -C libft
 	$(MAKE) -C printf_lib
