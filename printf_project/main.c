@@ -6,14 +6,15 @@
 /*   By: smoore-a <smoore-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/16 20:08:02 by smoore-a          #+#    #+#             */
-/*   Updated: 2023/12/16 20:28:59 by smoore-a         ###   ########.fr       */
+/*   Updated: 2023/12/17 21:58:46 by smoore-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "printf_lib/libftprintf.h"
 
-int main(void)
+int	main(void)
 {
-	ft_printf("fdsfdfd%sdfs%fds%aaf");
+	ft_printf("Hola %10$s %s %0$s %3$sthrsht %6$s %8$s %7$s %9$s %1$s %4$s.\n", "1aaaaaa", "2", "3", "4", "5dddd", "6", "7", "8", "9", "10");
+	printf("Hola %10$s %s %0$s %3$sthrsht %6$s %8$s %7$s %9$s %1$s %4$s.\n", "1aaaaaa", "2", "3", "4", "5dddd", "6", "7", "8", "9", "10");
 	return (0);
 }
