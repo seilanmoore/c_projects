@@ -8,9 +8,9 @@
             "args": [
                 "-g", // Include debugging information
                 "-O0", // Disable optimizations
-                // "-Wall", // Enable all warning messages
-                // "-Werror", // Treat warnings as errors
-                // "-Wextra", // Enable extra warning messages
+                //"-Wall", // Enable all warning messages
+                //"-Werror", // Treat warnings as errors
+                //"-Wextra", // Enable extra warning messages
                 "${file}", // The file to compile
                 "-o",
                 "${fileDirname}/${fileBasenameNoExtension}", // The output file

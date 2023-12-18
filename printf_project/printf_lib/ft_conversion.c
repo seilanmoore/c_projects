@@ -1,22 +1,35 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   libftprintf.h                                      :+:      :+:    :+:   */
+/*   ft_conversion.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: smoore-a <smoore-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/12/16 09:50:24 by smoore-a          #+#    #+#             */
-/*   Updated: 2023/12/18 16:57:19 by smoore-a         ###   ########.fr       */
+/*   Created: 2023/12/18 16:33:58 by smoore-a          #+#    #+#             */
+/*   Updated: 2023/12/18 17:02:56 by smoore-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef LIBFTPRINTF_H
-# define LIBFTPRINTF_H
+#include "libftprintf.h"
 
-# include "../libft/libft.h"
-# include <stdarg.h>
+void	ft_conversion(char format, va_list ap)
+{
+	if (format == 'c')
+		ft_putchar_fd(*va_arg(ap, char *), 1);
+	else if (format == 's')
+		ft_putstr_fd(va_arg(ap, char *), 1);
+}
 
-int		ft_printf(const char *arg, ...);
-void	ft_conversion(char format, va_list ap);
+/* 	else if (format == 'p')
+		
+	else if (format == 'd')
 
-#endif
+	else if (format == 'i')
+
+	else if (format == 'u')
+
+	else if (format == 'x')
+
+	else if (format == 'X')
+
+	else if (format == '%') */

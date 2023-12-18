@@ -6,7 +6,7 @@
 /*   By: smoore-a <smoore-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/16 20:08:02 by smoore-a          #+#    #+#             */
-/*   Updated: 2023/12/17 21:58:46 by smoore-a         ###   ########.fr       */
+/*   Updated: 2023/12/18 18:06:56 by smoore-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 int	main(void)
 {
-	ft_printf("Hola %10$s %s %0$s %3$sthrsht %6$s %8$s %7$s %9$s %1$s %4$s.\n", "1aaaaaa", "2", "3", "4", "5dddd", "6", "7", "8", "9", "10");
-	printf("Hola %10$s %s %0$s %3$sthrsht %6$s %8$s %7$s %9$s %1$s %4$s.\n", "1aaaaaa", "2", "3", "4", "5dddd", "6", "7", "8", "9", "10");
+	ft_printf("Hola %s %s %s %s thrsht %s %s %s %s %s %s.\n", "Aaa", "B", "C", "D", "F", "G", "H", "I", "J", "K");
+	printf("Hola %s %s %s %s thrsht %s %s %s %s %s %s.\n", "Aaa", "B", "C", "D", "F", "G", "H", "I", "J", "K");
 	return (0);
 }
