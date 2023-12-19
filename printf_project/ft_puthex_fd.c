@@ -1,67 +1,56 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_itoa.c                                          :+:      :+:    :+:   */
+/*   ft_puthex_fd.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: smoore-a <smoore-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/12/12 14:40:52 by smoore-a          #+#    #+#             */
-/*   Updated: 2023/12/19 10:22:14 by smoore-a         ###   ########.fr       */
+/*   Created: 2023/12/19 13:37:04 by smoore-a          #+#    #+#             */
+/*   Updated: 2023/12/19 14:52:39 by smoore-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "ft_printf.h"
 
-static size_t	count_digit(int n)
+static size_t	count_digit(unsigned int n)
 {
 	size_t	len;
 
 	len = 0;
-	if (n <= 0)
+	if (n == 0)
 		len++;
 	while (n != 0)
 	{
-		n /= 10;
+		n /= 16;
 		len++;
 	}
 	return (len);
 }
 
-static	char	*int_min(void)
+char	*hexconv(unsigned int n, int low_upper)
 {
-	char	*nbr;
-
-	nbr = ft_strdup("-2147483648");
-	if (!nbr)
-		return (NULL);
-	return (nbr);
-}
-
-char	*ft_itoa(int n)
-{
-	int		sign;
 	size_t	len;
 	char	*nbr;
 
-	sign = 0;
 	len = count_digit(n);
-	if (n == -2147483648)
-		return (int_min());
 	nbr = (char *)malloc((len + 1) * sizeof(char));
 	if (!nbr)
 		return (NULL);
 	nbr[len] = '\0';
-	if (n < 0)
-	{
-		n = -n;
-		sign = 1;
-	}
 	while (len-- > 0)
 	{
-		nbr[len] = '0' + (n % 10);
-		n /= 10;
+		if (n % 16 < 10)
+			nbr[len] = '0' + (n % 16);
+		else if (!low_upper)
+			nbr[len] = 'a' + (n % 16) - 10;
+		else if (low_upper)
+			nbr[len] = 'A' + (n % 16) - 10;
+		n /= 16;
 	}
-	if (sign)
-		nbr[0] = '-';
 	return (nbr);
+}
+
+void	ft_puthex_fd(unsigned int n, int low_upper)
+{
+	ft_putstr_fd(hexconv(n, low_upper), 1);
 }

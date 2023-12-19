@@ -6,11 +6,11 @@
 /*   By: smoore-a <smoore-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/16 09:55:29 by smoore-a          #+#    #+#             */
-/*   Updated: 2023/12/18 18:04:19 by smoore-a         ###   ########.fr       */
+/*   Updated: 2023/12/19 14:52:27 by smoore-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libftprintf.h"
+#include "ft_printf.h"
 
 static size_t	count_digit(int n)
 {
@@ -27,7 +27,7 @@ static size_t	count_digit(int n)
 	return (len);
 }
 
-static const char *arginpos(const char *p, va_list ap_cpy)
+static const char	*arginpos(const char *p, va_list ap_cpy)
 {
 	int	argn;
 
@@ -39,7 +39,7 @@ static const char *arginpos(const char *p, va_list ap_cpy)
 	if (!argn)
 		return (0);
 	p += count_digit(argn) + 1;
-	while(argn-- > 1)
+	while (argn-- > 1)
 		va_arg(ap_cpy, char *);
 	ft_conversion(*p, ap_cpy);
 	return (p);
