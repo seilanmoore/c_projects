@@ -6,7 +6,7 @@
 /*   By: smoore-a <smoore-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/16 20:08:02 by smoore-a          #+#    #+#             */
-/*   Updated: 2023/12/18 18:06:56 by smoore-a         ###   ########.fr       */
+/*   Updated: 2023/12/19 09:15:24 by smoore-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,9 @@
 
 int	main(void)
 {
-	ft_printf("Hola %s %s %s %s thrsht %s %s %s %s %s %s.\n", "Aaa", "B", "C", "D", "F", "G", "H", "I", "J", "K");
-	printf("Hola %s %s %s %s thrsht %s %s %s %s %s %s.\n", "Aaa", "B", "C", "D", "F", "G", "H", "I", "J", "K");
+	char p[] = "Adios.";
+
+	ft_printf("Hola %p %s %s %s thrsht %s %s %s %s %s %s.\n", p, "B", "C", "D", "F", "G", "H", "I", "J", "K");
+	printf("Hola %p %s %s %s thrsht %s %s %s %s %s %s.\n", p, "B", "C", "D", "F", "G", "H", "I", "J", "K");
 	return (0);
 }

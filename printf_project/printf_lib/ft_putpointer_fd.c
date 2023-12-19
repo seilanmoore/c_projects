@@ -1,23 +1,19 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   libftprintf.h                                      :+:      :+:    :+:   */
+/*   ft_putpointer_fd.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: smoore-a <smoore-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/12/16 09:50:24 by smoore-a          #+#    #+#             */
-/*   Updated: 2023/12/19 09:08:05 by smoore-a         ###   ########.fr       */
+/*   Created: 2023/12/19 09:06:39 by smoore-a          #+#    #+#             */
+/*   Updated: 2023/12/19 09:21:25 by smoore-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef LIBFTPRINTF_H
-# define LIBFTPRINTF_H
+#include "libftprintf.h"
 
-# include "../libft/libft.h"
-# include <stdarg.h>
-
-int		ft_printf(const char *arg, ...);
-void	ft_conversion(char format, va_list ap);
-void	ft_putpointer_fd(void *p, int fd);
-
-#endif
+void	ft_putpointer_fd(void *p, int fd)
+{
+	write(fd, &p, 8);
+	fd++;
+}
