@@ -3,5 +3,4 @@
 *.out
 *.dSYM
 .DS_Store
-.vscode
 a.out
