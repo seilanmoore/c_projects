@@ -6,7 +6,7 @@
 /*   By: smoore-a <smoore-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/15 20:42:37 by smoore-a          #+#    #+#             */
-/*   Updated: 2023/11/15 22:55:37 by smoore-a         ###   ########.fr       */
+/*   Updated: 2023/12/20 10:18:53 by smoore-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,8 +34,3 @@ int	ft_iterative_power(int nb, int power)
 	}
 	return (aux);
 }
-
-// int	main(void)
-// {
-// 	printf("The %dth power of %d is: %d.\n", POWER, NUM, ft_iterative_power(NUM, POWER));
-// }

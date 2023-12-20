@@ -6,7 +6,7 @@
 /*   By: smoore-a <smoore-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/22 13:34:07 by smoore-a          #+#    #+#             */
-/*   Updated: 2023/09/27 14:46:43 by smoore-a         ###   ########.fr       */
+/*   Updated: 2023/12/20 10:20:36 by smoore-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ void	ft_ultimate_ft(int *********nbr)
 	*********nbr = 42;
 }
 
-int	main(void)
+/* int	main(void)
 {
 	int	v;
 	int	*p1;
@@ -44,4 +44,4 @@ int	main(void)
 	ft_ultimate_ft(p8);
 	printf("%d", v);
 	return (0);
-}
+} */

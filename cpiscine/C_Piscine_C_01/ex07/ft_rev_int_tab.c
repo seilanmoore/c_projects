@@ -6,7 +6,7 @@
 /*   By: smoore-a <smoore-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/24 16:01:20 by smoore-a          #+#    #+#             */
-/*   Updated: 2023/09/27 12:15:51 by smoore-a         ###   ########.fr       */
+/*   Updated: 2023/12/20 10:20:48 by smoore-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ void	ft_rev_int_tab(int *tab, int size)
 	}
 }
 
-int	main(void)
+/* int	main(void)
 {
 	int	arr[] = {1, 2, 3, 4, 5, 6 , 7, 8, 9};
 	int	size = 9;
@@ -42,4 +42,4 @@ int	main(void)
 		printf("MyArray[%d] = %d\n", i, arr[i]);
 	}	
 	return (0);
-}
+} */

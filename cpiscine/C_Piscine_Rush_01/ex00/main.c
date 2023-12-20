@@ -6,7 +6,7 @@
 /*   By: smoore-a <smoore-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/30 12:35:46 by smoore-a          #+#    #+#             */
-/*   Updated: 2023/09/30 20:37:47 by smoore-a         ###   ########.fr       */
+/*   Updated: 2023/12/20 10:22:53 by smoore-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ void	ft_putstr(char *str);
 int	main(int argc, char **argv)
 {
 	char	*str;
-	
+
 	str = (char *)malloc((unsigned long)ft_strlen(argv[1]));
 	if (argc > 1 && str != NULL)
 	{

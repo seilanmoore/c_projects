@@ -6,7 +6,7 @@
 /*   By: smoore-a <smoore-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/31 19:41:01 by smoore-a          #+#    #+#             */
-/*   Updated: 2023/10/31 20:15:41 by smoore-a         ###   ########.fr       */
+/*   Updated: 2023/12/20 10:21:12 by smoore-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,11 +33,3 @@ char	*ft_strcapitalize(char *str)
 	}
 	return (str);
 }
-
-/* int	main(void)
-{
-	char	str[62] = "salut, ¡Omment tu vAs ? 42mOts Quarante-deux; cinquante+et+un";
-
-	printf("%s.\n", str);
-	printf("%s.\n", ft_strcapitalize(str));
-} */

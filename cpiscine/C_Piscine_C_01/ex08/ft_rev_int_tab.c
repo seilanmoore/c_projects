@@ -6,7 +6,7 @@
 /*   By: smoore-a <smoore-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/25 11:03:36 by smoore-a          #+#    #+#             */
-/*   Updated: 2023/11/12 14:13:58 by smoore-a         ###   ########.fr       */
+/*   Updated: 2023/12/20 10:20:07 by smoore-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,15 +36,7 @@ void	ft_sort_int_tab(int *tab, int size)
 	}
 }
 
-void	escr(int *tab, int size)
-{
-	for (int i = 0; i < size; i++)
-	{
-		printf("MyArray[%d] = %d\n", i, tab[i]);
-	}
-}
-
-int	main(void)
+/* int	main(void)
 {
 	int	arr[] = {1, 3, 4, 0, 2, 8, 2, 5, 3, 9, 7, 0, 12};
 	int	size = sizeof(arr) / sizeof(arr);
@@ -53,4 +45,4 @@ int	main(void)
 	ft_sort_int_tab(arr, 13);
 	escr (arr, 13);	
 	return (0);
-}
+} */

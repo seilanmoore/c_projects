@@ -6,7 +6,7 @@
 /*   By: smoore-a <smoore-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/01 11:43:43 by smoore-a          #+#    #+#             */
-/*   Updated: 2023/11/07 21:29:45 by smoore-a         ###   ########.fr       */
+/*   Updated: 2023/12/20 10:22:09 by smoore-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,26 +86,17 @@ void	*ft_print_memory(void *addr, unsigned int size)
 
 	i = 0;
 	str_addr = addr;
-	printf("La dir. es: %p.\n", &str_addr[15]);
-	// while (i < size)
-	// {
-	// 	j = 0;
-	// 	strcpy(str_addr, addr);
-	// 	while (str_addr[j])
-	// 	{
-	// 		write(1, &str_addr[j], 1);
-	// 		j++;
-	// 	}
-	// 	write(1, ":\n", 2);
-	// 	i++;
-	// }
+	while (i < size)
+	{
+		j = 0;
+		strcpy(str_addr, addr);
+		while (str_addr[j])
+		{
+			write(1, &str_addr[j], 1);
+			j++;
+		}
+		write(1, ":\n", 2);
+		i++;
+	}
 	return (addr);
-}
-
-int	main(void)
-{
-	char	str[100] = "Bonjour les aminches\011\012\011c\007 est fou\011tout\011ce qu on peut faire avec\011\012\011print_memory\012\012\012\011lol.lol\012 ";
-	// char	str[100] = "Bonjour les aminches\011\012\011c\007 est fou\011tout\011ce qu on";
-	ft_print_memory(str, 91);
-	// print_hex(str, 91);
 }

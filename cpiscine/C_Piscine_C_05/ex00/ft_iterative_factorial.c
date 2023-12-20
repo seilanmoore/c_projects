@@ -6,7 +6,7 @@
 /*   By: smoore-a <smoore-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/10 13:14:57 by smoore-a          #+#    #+#             */
-/*   Updated: 2023/11/17 14:49:39 by smoore-a         ###   ########.fr       */
+/*   Updated: 2023/12/20 10:19:20 by smoore-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,14 +34,4 @@ int	ft_iterative_factorial(int nb)
 			res *= nb;
 		return (res);
 	}
-}
-
-int	main(void)
-{
-	int	a = 0;
-
-	if (a == 0)
-		return (2);
-	printf("El factorial de %d es: %d.\n", NB, ft_iterative_factorial(NB));
-	return (0);
 }

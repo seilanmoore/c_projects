@@ -6,7 +6,7 @@
 /*   By: smoore-a <smoore-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/11 12:07:09 by smoore-a          #+#    #+#             */
-/*   Updated: 2023/11/15 20:41:50 by smoore-a         ###   ########.fr       */
+/*   Updated: 2023/12/20 10:19:05 by smoore-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,14 +25,3 @@ int	ft_recursive_factorial(int nb)
 	else
 		return (nb * ft_recursive_factorial(nb - 1));
 }
-
-// int	main(void)
-// {
-// 	if (ft_recursive_factorial(NUM) != 0)
-// 	{
-// 		printf("El factorial de %d es: %d.\n", NUM, ft_recursive_factorial(NUM));
-// 	}
-// 	else
-// 		printf("No existe el factorial de %d.\n", NUM);
-// 	return (0);
-// }

@@ -6,7 +6,7 @@
 /*   By: smoore-a <smoore-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/29 10:48:24 by smoore-a          #+#    #+#             */
-/*   Updated: 2023/10/01 17:10:06 by smoore-a         ###   ########.fr       */
+/*   Updated: 2023/12/20 10:22:30 by smoore-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ char	*ft_strcpy(char *dest, char *src)
 	return (dest);
 }
 
-int	main(void)
+/* int	main(void)
 {
 	char	src[] = "This is source";
 	char	dest[] = "This is ...";
@@ -43,4 +43,4 @@ int	main(void)
 	write (1, &ft_strcpy(dest, src)[0], 14);
 	write (1, "\n", 1);
 	return (0);
-}
+} */

@@ -6,7 +6,7 @@
 /*   By: smoore-a <smoore-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/15 22:40:36 by smoore-a          #+#    #+#             */
-/*   Updated: 2023/11/15 22:56:21 by smoore-a         ###   ########.fr       */
+/*   Updated: 2023/12/20 10:18:43 by smoore-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,8 +26,3 @@ int	ft_recursive_power(int nb, int power)
 	else
 		return (nb * ft_recursive_power(nb, power - 1));
 }
-
-// int	main(void)
-// {
-// 	printf("The %dth power of the %d is: %d.\n", POWER, NUM, ft_recursive_power(NUM, POWER));
-// }
