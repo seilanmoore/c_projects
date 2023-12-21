@@ -6,7 +6,7 @@
 /*   By: smoore-a <smoore-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/19 13:37:04 by smoore-a          #+#    #+#             */
-/*   Updated: 2023/12/19 22:13:21 by smoore-a         ###   ########.fr       */
+/*   Updated: 2023/12/21 16:25:57 by smoore-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ int	ft_puthex_fd(unsigned int n, int low_upper)
 	if (!nbr)
 	{
 		free(nbr);
-		return (0);
+		return (-1);
 	}
 	nbr[len] = '\0';
 	while (len-- > 0)

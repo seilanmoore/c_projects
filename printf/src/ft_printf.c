@@ -6,7 +6,7 @@
 /*   By: smoore-a <smoore-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/16 09:55:29 by smoore-a          #+#    #+#             */
-/*   Updated: 2023/12/19 22:14:23 by smoore-a         ###   ########.fr       */
+/*   Updated: 2023/12/21 18:09:14 by smoore-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,6 +71,8 @@ int	ft_printf(const char *format, ...)
 	va_list		ap_cpy;
 	int			count;
 
+	if (write(1, "", 0) == -1)
+		return (-1);
 	count = 0;
 	va_start(ap, format);
 	va_start(ap_cpy, format);
@@ -78,6 +80,8 @@ int	ft_printf(const char *format, ...)
 	while (*p)
 	{
 		p = read_str(&ap, &ap_cpy, p, &count);
+		if (count == -1)
+			return (-1);
 		va_start(ap_cpy, format);
 	}
 	va_end(ap);

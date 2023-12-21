@@ -6,7 +6,7 @@
 /*   By: smoore-a <smoore-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/12 14:40:52 by smoore-a          #+#    #+#             */
-/*   Updated: 2023/12/19 23:24:08 by smoore-a         ###   ########.fr       */
+/*   Updated: 2023/12/21 16:24:51 by smoore-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,11 @@ int	ft_itoa(int n)
 
 	len = count_digit(n);
 	nbr = (char *)malloc((len + 1) * sizeof(char));
+	if (!nbr)
+	{
+		free(nbr);
+		return (-1);
+	}
 	if (n == -2147483648)
 		ft_strlcpy(nbr, "-2147483648", len + 1);
 	else
