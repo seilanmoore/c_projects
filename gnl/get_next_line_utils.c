@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: smoore-a <smoore-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/12/20 11:58:37 by smoore-a          #+#    #+#             */
-/*   Updated: 2023/12/20 21:20:14 by smoore-a         ###   ########.fr       */
+/*   Created: 2023/12/27 09:50:17 by smoore-a          #+#    #+#             */
+/*   Updated: 2023/12/27 22:15:07 by smoore-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,19 @@ size_t	ft_strlen(const char *s)
 	while (s[i])
 		i++;
 	return (i);
+}
+
+char	*ft_strchr(const char *s, int c)
+{
+	while (*s)
+	{
+		if (*s == (char)c)
+			return ((char *)s);
+		s++;
+	}
+	if ((char)c == '\0')
+		return ((char *)s);
+	return (NULL);
 }
 
 size_t	ft_strlcpy(char *dst, const char *src, size_t size)
@@ -61,40 +74,26 @@ size_t	ft_strlcat(char *dst, const char *src, size_t size)
 	return (cat_len);
 }
 
-char	*ft_strjoin(char const *s1, char const *s2)
+char	*ft_strjoin(char *line, char *buffer)
 {
-	unsigned char	*res_str;
-	size_t			full_size;
-	size_t			buffer_len;
+	char	*next_line;
+	size_t	full_size;
+	int		i;
 
-	buffer_len = 0;
-	while (s2[buffer_len] != '\n' && s2[buffer_len])
-		buffer_len++;
-	full_size = ft_strlen(s1) + buffer_len + 1;
-	res_str = (unsigned char *) malloc(sizeof(char) * full_size);
-	if (!res_str)
+	i = 0;
+	full_size = ft_strlen(line) + ft_strlen(buffer) + 1;
+	next_line = (char *)malloc(full_size * sizeof(char));
+	if (!next_line)
 		return (NULL);
-	ft_strlcpy((char *) res_str, s1, ft_strlen(s1) + 1);
-	ft_strlcat((char *) res_str, s2, full_size);
-	return ((char *) res_str);
-}
-
-char	*ft_strchr(const char *s, int c)
-{
-	char	*str;
-	char	ch;
-
-	ch = (char)c;
-	str = (char *)s;
-	if (ch == '\0' && *s == '\0')
-		return (str);
-	while (*str)
+	else
 	{
-		if (*str == ch)
-			return (str);
-		str++;
+		while (next_line[i])
+			next_line[i++] = '\0';
+		ft_strlcpy(next_line, line, full_size);
+		free(line);
+		ft_strlcat(next_line, buffer, full_size);
+		while (*buffer)
+			*buffer++ = '\0';
+		return (next_line);
 	}
-	if (ch == 0)
-		return (str);
-	return (NULL);
 }
