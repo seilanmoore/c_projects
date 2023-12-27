@@ -6,7 +6,7 @@
 /*   By: smoore-a <smoore-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/19 13:20:02 by smoore-a          #+#    #+#             */
-/*   Updated: 2023/12/19 22:13:12 by smoore-a         ###   ########.fr       */
+/*   Updated: 2023/12/21 16:25:31 by smoore-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ int	ft_uitoa(unsigned int n)
 	if (!nbr)
 	{
 		free(nbr);
-		return (0);
+		return (-1);
 	}
 	nbr[len] = '\0';
 	while (len-- > 0)

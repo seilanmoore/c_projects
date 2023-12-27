@@ -6,7 +6,7 @@
 /*   By: smoore-a <smoore-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/18 16:33:58 by smoore-a          #+#    #+#             */
-/*   Updated: 2023/12/19 22:31:47 by smoore-a         ###   ########.fr       */
+/*   Updated: 2023/12/21 16:23:21 by smoore-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,10 @@
 
 static void	counter(int *sum, int c)
 {
-	*sum += c;
+	if (c == -1)
+		*sum = -1;
+	else
+		*sum += c;
 }
 
 void	ft_conversion(char format, va_list ap, int *count)
