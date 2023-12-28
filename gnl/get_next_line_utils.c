@@ -6,7 +6,7 @@
 /*   By: smoore-a <smoore-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/27 09:50:17 by smoore-a          #+#    #+#             */
-/*   Updated: 2023/12/28 13:24:52 by smoore-a         ###   ########.fr       */
+/*   Updated: 2023/12/28 22:08:26 by smoore-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,24 +82,17 @@ char	*ft_strjoin(char *line, char *buffer)
 {
 	char	*next_line;
 	size_t	full_size;
-	size_t	i;
 
-	i = 0;
 	full_size = ft_strlen(line) + ft_strlen(buffer) + 1;
-	next_line = ft_calloc(full_size * sizeof(char), 1);
+	next_line = ft_calloc(full_size, sizeof(char));
 	if (!next_line)
-		return (NULL);
-	else
 	{
-		while (next_line[i] != '\0')
-			next_line[i++] = '\0';
-		ft_strlcpy(next_line, line, full_size);
+		free(buffer);
 		free(line);
-		line = NULL;
-		ft_strlcat(next_line, buffer, full_size);
-		i = 0;
-		while (buffer[i] != '\0')
-			buffer[i++] = '\0';
-		return (next_line);
+		return (NULL);
 	}
+	ft_strlcpy(next_line, line, full_size);
+	free(line);
+	ft_strlcat(next_line, buffer, full_size);
+	return (next_line);
 }

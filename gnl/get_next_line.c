@@ -6,7 +6,7 @@
 /*   By: smoore-a <smoore-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/27 08:51:54 by smoore-a          #+#    #+#             */
-/*   Updated: 2023/12/28 13:27:52 by smoore-a         ###   ########.fr       */
+/*   Updated: 2023/12/28 22:08:16 by smoore-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,52 +28,60 @@ static char	*ft_strchr(const char *s, int c)
 static char	*ft_substr(char const *s, unsigned int start, size_t len)
 {
 	char	*sub_s;
+	size_t	i;
 
+	i = 0;
 	if (!s)
 		return (NULL);
-	sub_s = ft_calloc((len + 1) * sizeof(char), 1);
+	sub_s = ft_calloc(len + 1, sizeof(char));
 	if (!sub_s)
 		return (NULL);
-	while (len-- > 0 && (sub_s[start] || s[start]))
-	{
-		sub_s[start] = s[start];
-		start++;
-	}
-	sub_s[start] = '\0';
+	while (i < len && (sub_s[i] || s[start]))
+		sub_s[i++] = s[start++];
+	sub_s[i] = '\0';
 	return (sub_s);
 }
 
-static char	*eol(char	*line)
+static char	*right_str(char	*line, int read_bytes)
 {
+	char	*right_str;
 	size_t	i;
 
-	if (line)
+	if (read_bytes > 0)
 	{
 		i = 0;
 		while (line[i] && line[i] != '\n')
 			i++;
 		if (line[i] == '\n')
 			i++;
-		return (ft_substr(line, 0, i));
+		right_str = ft_substr(line, i, (ft_strlen(line) - i) + 1);
+		free(line);
+		line = NULL;
+		return (right_str);
 	}
+	free(line);
 	return (NULL);
 }
 
-static char	*clean_line(char *line)
+static char	*left_str(char	*line, char *next_line, int read_bytes)
 {
-	if (!line)
-		line = ft_calloc(1 * sizeof(char), 1);
-	else
+	size_t	i;
+
+	if (line)
 	{
-		if (ft_strchr(line, '\n') && *(ft_strchr(line, '\n') + 1) != '\0')
-			line = ft_strchr(line, '\n') + 1;
-		else
+		if (read_bytes > 0)
 		{
-			free(line);
-			line = NULL;
+			i = 0;
+			while (line[i] && line[i] != '\n')
+				i++;
+			if (line[i] == '\n')
+				i++;
+			next_line = ft_substr(line, 0, i);
+			return (next_line);
 		}
+		free(next_line);
 	}
-	return (line);
+	return (NULL);
 }
 
 char	*get_next_line(int fd)
@@ -81,31 +89,27 @@ char	*get_next_line(int fd)
 	static char	*line;
 	char		*buffer;
 	int			read_bytes;
+	char		*next_line;
 
-	line = clean_line(line);
-	buffer = ft_calloc((BUFFER_SIZE + 1) * sizeof(char), 1);
-	if (fd < 0 || BUFFER_SIZE <= 0 || read(fd, buffer, 0) < 0 || !buffer)
+	if (fd < 0 || BUFFER_SIZE <= 0)
 		return (NULL);
-	if (line)
+	if (!line)
+		line = ft_calloc(1, sizeof(char));
+	read_bytes = BUFFER_SIZE;
+	while (!ft_strchr(line, '\n') && read_bytes == BUFFER_SIZE)
 	{
-		read_bytes = 1;
-		while (!ft_strchr(line, '\n') && read_bytes > 0)
-		{
-			read_bytes = read(fd, buffer, BUFFER_SIZE);
-			if (read_bytes < 0)
-			{
-				free(buffer);
-				return (NULL);
-			}
-			buffer[read_bytes] = '\0';
-			line = ft_strjoin(line, buffer);
-		}
+		buffer = ft_calloc(BUFFER_SIZE + 1, sizeof(char));
+		read_bytes = read(fd, buffer, BUFFER_SIZE);
+		line = ft_strjoin(line, buffer);
+		free(buffer);
 	}
-	free(buffer);
-	return (eol(line));
+	next_line = ft_calloc(1, sizeof(char));
+	next_line = left_str(line, next_line, read_bytes);
+	line = right_str(line, read_bytes);
+	return (next_line);
 }
 
-/* int	main(void)
+int	main(void)
 {
 	int		fname;
 	char	*next_line;
@@ -115,9 +119,8 @@ char	*get_next_line(int fd)
 	while (next_line)
 	{
 		printf("%s", next_line);
-		free(next_line);
 		next_line = get_next_line(fname);
 	}
 	close(fname);
 	return (0);
-} */
+}
