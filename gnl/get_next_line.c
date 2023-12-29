@@ -6,7 +6,7 @@
 /*   By: smoore-a <smoore-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/27 08:51:54 by smoore-a          #+#    #+#             */
-/*   Updated: 2023/12/29 15:39:40 by smoore-a         ###   ########.fr       */
+/*   Updated: 2023/12/29 16:26:13 by smoore-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,13 +63,13 @@ static char	*right_str(char	*line, int read_bytes)
 	return (NULL);
 }
 
-static char	*left_str(char	*line, char *next_line)
+static char	*left_str(char	*line, char *next_line, int read_bytes)
 {
 	size_t	i;
 
 	free(next_line);
 	next_line = NULL;
-	if (*line != '\0')
+	if (*line != '\0' && read_bytes != -1)
 	{
 		i = 0;
 		while (line[i] && line[i] != '\n')
@@ -102,19 +102,19 @@ char	*get_next_line(int fd)
 		free(buffer);
 	}
 	next_line = ft_calloc(1, sizeof(char));
-	next_line = left_str(line, next_line);
+	next_line = left_str(line, next_line, read_bytes);
 	line = right_str(line, read_bytes);
 	return (next_line);
 }
 
-/* int	main(void)
+int	main(void)
 {
 	int		i;
 	int		fname;
 	char	**next_line;
 
 	i = 0;
-	fname = open("a.txt", O_RDONLY);
+	fname = open("empty.txt", O_RDONLY);
 	next_line = (char **)malloc(100 * sizeof(char *));
 	next_line[i] = get_next_line(fname);
 	while (next_line[i])
@@ -127,4 +127,4 @@ char	*get_next_line(int fd)
 	free(next_line);
 	close(fname);
 	return (0);
-} */
+}
