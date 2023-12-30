@@ -6,7 +6,7 @@
 /*   By: smoore-a <smoore-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/30 20:00:20 by smoore-a          #+#    #+#             */
-/*   Updated: 2023/12/30 20:10:17 by smoore-a         ###   ########.fr       */
+/*   Updated: 2023/12/30 20:19:49 by smoore-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,7 +83,7 @@ static char	*left_str(char	*line, char *next_line, int read_bytes)
 
 char	*get_next_line(int fd)
 {
-	static char	*line[4096];
+	static char	*line[977];
 	char		*buffer;
 	char		*next_line;
 	int			read_bytes;
