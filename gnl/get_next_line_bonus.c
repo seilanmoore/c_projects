@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_next_line.c                                    :+:      :+:    :+:   */
+/*   get_next_line_bonus.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: smoore-a <smoore-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/12/27 08:51:54 by smoore-a          #+#    #+#             */
-/*   Updated: 2023/12/29 19:49:07 by smoore-a         ###   ########.fr       */
+/*   Created: 2023/12/30 20:00:20 by smoore-a          #+#    #+#             */
+/*   Updated: 2023/12/30 20:10:17 by smoore-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "get_next_line.h"
+#include "get_next_line_bonus.h"
 
 static char	*ft_strchr(const char *s, int c)
 {
@@ -83,27 +83,27 @@ static char	*left_str(char	*line, char *next_line, int read_bytes)
 
 char	*get_next_line(int fd)
 {
-	static char	*line;
+	static char	*line[4096];
 	char		*buffer;
 	char		*next_line;
 	int			read_bytes;
 
 	if (fd < 0 || BUFFER_SIZE <= 0)
 		return (NULL);
-	if (!line)
-		line = ft_calloc(1, sizeof(char));
+	if (!line[fd])
+		line[fd] = ft_calloc(1, sizeof(char));
 	read_bytes = BUFFER_SIZE;
-	while (!ft_strchr(line, '\n') && read_bytes == BUFFER_SIZE)
+	while (!ft_strchr(line[fd], '\n') && read_bytes == BUFFER_SIZE)
 	{
 		buffer = ft_calloc(BUFFER_SIZE + 1, sizeof(char));
 		read_bytes = read(fd, buffer, BUFFER_SIZE);
 		if (read_bytes > 0)
-			line = ft_strjoin(line, buffer);
+			line[fd] = ft_strjoin(line[fd], buffer);
 		free(buffer);
 	}
 	next_line = ft_calloc(1, sizeof(char));
-	next_line = left_str(line, next_line, read_bytes);
-	line = right_str(line, read_bytes);
+	next_line = left_str(line[fd], next_line, read_bytes);
+	line[fd] = right_str(line[fd], read_bytes);
 	return (next_line);
 }
 
