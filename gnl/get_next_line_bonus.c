@@ -6,7 +6,7 @@
 /*   By: smoore-a <smoore-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/30 20:00:20 by smoore-a          #+#    #+#             */
-/*   Updated: 2023/12/30 20:19:49 by smoore-a         ###   ########.fr       */
+/*   Updated: 2023/12/31 09:03:07 by smoore-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,6 +100,8 @@ char	*get_next_line(int fd)
 		if (read_bytes > 0)
 			line[fd] = ft_strjoin(line[fd], buffer);
 		free(buffer);
+		if (!line[fd])
+			return (NULL);
 	}
 	next_line = ft_calloc(1, sizeof(char));
 	next_line = left_str(line[fd], next_line, read_bytes);
