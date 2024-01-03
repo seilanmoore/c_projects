@@ -6,7 +6,7 @@
 /*   By: smoore-a <smoore-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/31 14:33:58 by smoore-a          #+#    #+#             */
-/*   Updated: 2024/01/03 10:53:08 by smoore-a         ###   ########.fr       */
+/*   Updated: 2024/01/03 12:11:19 by smoore-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,9 @@ char	*found_nl(char *cache)
 	i = 0;
 	while (cache[i] && cache[i] != '\n')
 		i++;
-	return (&cache[i]);
+	if (cache[i] == '\n')
+		return (&cache[i]);
+	return (NULL);
 }
 
 char	*create_cache(char *cache, char *buffer)

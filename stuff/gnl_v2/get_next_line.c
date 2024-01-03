@@ -6,7 +6,7 @@
 /*   By: smoore-a <smoore-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/31 14:00:16 by smoore-a          #+#    #+#             */
-/*   Updated: 2024/01/03 11:05:01 by smoore-a         ###   ########.fr       */
+/*   Updated: 2024/01/03 12:26:27 by smoore-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,14 +32,15 @@ static char	*get_new_cache(char *cache)
 	char	*new_cache;
 	char	*temp;
 
-	temp = found_nl(cache);
-	if (*temp == '\n')
-		temp++;
-	if (*temp != '\0')
+	if (found_nl(cache))
 	{
-		new_cache = ft_strdup(temp);
-		free(cache);
-		return (new_cache);
+		temp = found_nl(cache) + 1;
+		if (*temp != '\0')
+		{
+			new_cache = ft_strdup(temp);
+			free(cache);
+			return (new_cache);
+		}
 	}
 	free(cache);
 	return (NULL);
@@ -53,7 +54,10 @@ static char	*get_new_line(char *cache)
 
 	if (*cache != '\0')
 	{
-		end = found_nl(cache) - cache + 1;
+		if (found_nl(cache))
+			end = found_nl(cache) - cache + 1;
+		else
+			end = ft_strlen(cache);
 		new_line = (char *)malloc((end + 1) * sizeof(char));
 		if (!new_line)
 			return (NULL);
@@ -101,7 +105,7 @@ char	*get_next_line(int fd)
 	cache = get_buffer(fd, cache, buffer, &read_bytes);
 	if (!cache)
 		return (NULL);
-	while (*found_nl(cache) == '\0' && read_bytes > 0)
+	while (!found_nl(cache) && read_bytes > 0)
 	{
 		cache = get_buffer(fd, cache, buffer, &read_bytes);
 		if (!cache)
