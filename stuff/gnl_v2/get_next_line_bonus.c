@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_next_line.c                                    :+:      :+:    :+:   */
+/*   get_next_line_bonus.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: smoore-a <smoore-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/31 14:00:16 by smoore-a          #+#    #+#             */
-/*   Updated: 2024/01/03 11:05:01 by smoore-a         ###   ########.fr       */
+/*   Updated: 2024/01/03 11:10:25 by smoore-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,29 +86,29 @@ static char	*get_buffer(int fd, char *cache, char *buffer, int *read_bytes)
 
 char	*get_next_line(int fd)
 {
-	static char	*cache = NULL;
+	static char	*cache[1024];
 	char		*line;
 	char		buffer[BUFFER_SIZE + 1];
 	int			read_bytes;
 
 	if (fd < 0 || BUFFER_SIZE <= 0)
 	{
-		if (cache)
-			free(cache);
+		if (cache[fd])
+			free(cache[fd]);
 		return (NULL);
 	}
 	read_bytes = 1;
-	cache = get_buffer(fd, cache, buffer, &read_bytes);
-	if (!cache)
+	cache[fd] = get_buffer(fd, cache[fd], buffer, &read_bytes);
+	if (!cache[fd])
 		return (NULL);
-	while (*found_nl(cache) == '\0' && read_bytes > 0)
+	while (*found_nl(cache[fd]) == '\0' && read_bytes > 0)
 	{
-		cache = get_buffer(fd, cache, buffer, &read_bytes);
-		if (!cache)
+		cache[fd] = get_buffer(fd, cache[fd], buffer, &read_bytes);
+		if (!cache[fd])
 			return (NULL);
 	}
-	line = get_new_line(cache);
-	cache = get_new_cache(cache);
+	line = get_new_line(cache[fd]);
+	cache[fd] = get_new_cache(cache[fd]);
 	return (line);
 }
 
