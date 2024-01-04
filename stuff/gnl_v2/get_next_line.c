@@ -6,7 +6,7 @@
 /*   By: smoore-a <smoore-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/31 14:00:16 by smoore-a          #+#    #+#             */
-/*   Updated: 2024/01/03 12:26:27 by smoore-a         ###   ########.fr       */
+/*   Updated: 2024/01/04 14:34:36 by smoore-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,11 +27,16 @@ static char	*ft_strdup(char *str)
 	return (dup);
 }
 
-static char	*get_new_cache(char *cache)
+static char	*get_new_cache(char *cache, char *line)
 {
 	char	*new_cache;
 	char	*temp;
 
+	if (!line)
+	{
+		free(cache);
+		return (NULL);
+	}
 	if (found_nl(cache))
 	{
 		temp = found_nl(cache) + 1;
@@ -112,7 +117,7 @@ char	*get_next_line(int fd)
 			return (NULL);
 	}
 	line = get_new_line(cache);
-	cache = get_new_cache(cache);
+	cache = get_new_cache(cache, line);
 	return (line);
 }
 
