@@ -5,93 +5,74 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: smoore-a <smoore-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/12/30 20:01:01 by smoore-a          #+#    #+#             */
-/*   Updated: 2023/12/31 09:02:34 by smoore-a         ###   ########.fr       */
+/*   Created: 2023/12/31 14:33:58 by smoore-a          #+#    #+#             */
+/*   Updated: 2024/01/04 16:50:11 by smoore-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line_bonus.h"
 
-size_t	ft_strlen(const char *s)
+size_t	ft_strlen(char *str)
 {
 	size_t	i;
 
+	if (!str)
+		return (-1);
 	i = 0;
-	while (s[i])
+	while (str[i])
 		i++;
 	return (i);
 }
 
-void	*ft_calloc(size_t count, size_t size)
+char	*found_nl(char *cache)
 {
-	size_t	i;
-	char	*ptr;
-	size_t	full_size;
+	int	i;
 
 	i = 0;
-	ptr = NULL;
-	full_size = count * size;
-	ptr = (char *)malloc(full_size * sizeof(char));
-	if (!ptr)
-		return (NULL);
-	while (i < full_size)
-		ptr[i++] = '\0';
-	return (ptr);
-}
-
-size_t	ft_strlcpy(char *dst, const char *src, size_t size)
-{
-	size_t	i;
-
-	if (size > 0)
-	{
-		i = 0;
-		while (src[i] && i < size - 1)
-		{
-			dst[i] = src[i];
-			i++;
-		}
-		dst[i] = '\0';
-	}
-	return (ft_strlen(src));
-}
-
-size_t	ft_strlcat(char *dst, const char *src, size_t size)
-{
-	size_t	cat_len;
-	size_t	dst_len;
-	size_t	i;
-
-	cat_len = ft_strlen(src) + ft_strlen(dst);
-	dst_len = 0;
-	while (dst[dst_len] && dst_len < size)
-		dst_len++;
-	i = 0;
-	if (dst_len >= size)
-		return (size + ft_strlen(src));
-	while (src[i] && dst_len + i + 1 < size)
-	{
-		dst[dst_len + i] = src[i];
+	while (cache[i] && cache[i] != '\n')
 		i++;
-	}
-	dst[dst_len + i] = '\0';
-	return (cat_len);
+	return (&cache[i]);
 }
 
-char	*ft_strjoin(char *line, char *buffer)
+char	*create_cache(char *cache, char *buffer)
 {
-	char	*next_line;
-	size_t	full_size;
+	size_t	final_size;
+	int		i;
 
-	full_size = ft_strlen(line) + ft_strlen(buffer) + 1;
-	next_line = ft_calloc(full_size, sizeof(char));
-	if (!next_line)
+	final_size = ft_strlen(buffer) + 1;
+	cache = (char *)malloc(final_size * sizeof(char));
+	if (!cache)
+		return (NULL);
+	i = -1;
+	while (buffer[++i])
+		cache[i] = buffer[i];
+	cache[i] = '\0';
+	return (cache);
+}
+
+char	*extend_cache(char *cache, char *buffer)
+{
+	size_t	final_size;
+	int		i;
+	int		j;
+	char	*temp;
+
+	if (!cache)
+		return (create_cache(cache, buffer));
+	final_size = ft_strlen(cache) + ft_strlen(buffer) + 1;
+	temp = (char *)malloc(final_size * sizeof(char));
+	if (!temp)
 	{
-		free(line);
+		free(cache);
 		return (NULL);
 	}
-	ft_strlcpy(next_line, line, full_size);
-	free(line);
-	ft_strlcat(next_line, buffer, full_size);
-	return (next_line);
+	i = -1;
+	while (cache[++i])
+		temp[i] = cache[i];
+	j = -1;
+	while (buffer[++j])
+		temp[i++] = buffer[j];
+	temp[i] = '\0';
+	free(cache);
+	return (temp);
 }

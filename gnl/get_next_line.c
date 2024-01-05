@@ -5,128 +5,138 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: smoore-a <smoore-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/12/27 08:51:54 by smoore-a          #+#    #+#             */
-/*   Updated: 2023/12/31 08:44:30 by smoore-a         ###   ########.fr       */
+/*   Created: 2023/12/31 14:00:16 by smoore-a          #+#    #+#             */
+/*   Updated: 2024/01/04 14:34:36 by smoore-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 
-static char	*ft_strchr(const char *s, int c)
+static char	*ft_strdup(char *str)
 {
-	while (*s)
+	char	*dup;
+	size_t	i;
+
+	dup = (char *)malloc((ft_strlen(str) + 1) * sizeof(char));
+	if (!dup)
+		return (NULL);
+	i = -1;
+	while (str[++i])
+		dup[i] = str[i];
+	dup[i] = '\0';
+	return (dup);
+}
+
+static char	*get_new_cache(char *cache, char *line)
+{
+	char	*new_cache;
+	char	*temp;
+
+	if (!line)
 	{
-		if (*s == (char)c)
-			return ((char *)s);
-		s++;
+		free(cache);
+		return (NULL);
 	}
-	if ((char)c == '\0')
-		return ((char *)s);
+	if (found_nl(cache))
+	{
+		temp = found_nl(cache) + 1;
+		if (*temp != '\0')
+		{
+			new_cache = ft_strdup(temp);
+			free(cache);
+			return (new_cache);
+		}
+	}
+	free(cache);
 	return (NULL);
 }
 
-static char	*ft_substr(char const *s, unsigned int start, size_t len)
+static char	*get_new_line(char *cache)
 {
-	size_t	i;
-	char	*sub_s;
+	int		i;
+	int		end;
+	char	*new_line;
 
-	i = 0;
-	if (!s)
-		return (NULL);
-	sub_s = ft_calloc(len + 1, sizeof(char));
-	if (!sub_s)
-		return (NULL);
-	while (i < len && (sub_s[i] || s[start]))
-		sub_s[i++] = s[start++];
-	sub_s[i] = '\0';
-	return (sub_s);
-}
-
-static char	*right_str(char	*line, int read_bytes)
-{
-	size_t	i;
-	char	*right_str;
-
-	if (read_bytes > 0)
+	if (*cache != '\0')
 	{
-		i = 0;
-		while (line[i] && line[i] != '\n')
-			i++;
-		if (line[i] == '\n')
-			i++;
-		right_str = ft_substr(line, i, (ft_strlen(line) - i) + 1);
-		free(line);
-		line = NULL;
-		return (right_str);
+		if (found_nl(cache))
+			end = found_nl(cache) - cache + 1;
+		else
+			end = ft_strlen(cache);
+		new_line = (char *)malloc((end + 1) * sizeof(char));
+		if (!new_line)
+			return (NULL);
+		i = -1;
+		while (++i < end)
+			new_line[i] = cache[i];
+		new_line[i] = '\0';
+		return (new_line);
 	}
-	free(line);
 	return (NULL);
 }
 
-static char	*left_str(char	*line, char *next_line, int read_bytes)
+static char	*get_buffer(int fd, char *cache, char *buffer, int *read_bytes)
 {
-	size_t	i;
-
-	free(next_line);
-	next_line = NULL;
-	if (*line != '\0' && read_bytes != -1)
+	*read_bytes = read(fd, buffer, BUFFER_SIZE);
+	if (*read_bytes == -1)
 	{
-		i = 0;
-		while (line[i] && line[i] != '\n')
-			i++;
-		if (line[i] == '\n')
-			i++;
-		next_line = ft_substr(line, 0, i);
+		if (cache)
+			free(cache);
+		return (NULL);
 	}
-	return (next_line);
+	buffer[*read_bytes] = '\0';
+	if (!cache && !(*read_bytes))
+		return (NULL);
+	else if (*read_bytes)
+		return (extend_cache(cache, buffer));
+	else
+		return (cache);
 }
 
 char	*get_next_line(int fd)
 {
-	static char	*line;
-	char		*buffer;
-	char		*next_line;
+	static char	*cache = NULL;
+	char		*line;
+	char		buffer[BUFFER_SIZE + 1];
 	int			read_bytes;
 
 	if (fd < 0 || BUFFER_SIZE <= 0)
-		return (NULL);
-	if (!line)
-		line = ft_calloc(1, sizeof(char));
-	read_bytes = BUFFER_SIZE;
-	while (!ft_strchr(line, '\n') && read_bytes == BUFFER_SIZE)
 	{
-		buffer = ft_calloc(BUFFER_SIZE + 1, sizeof(char));
-		read_bytes = read(fd, buffer, BUFFER_SIZE);
-		if (read_bytes > 0)
-			line = ft_strjoin(line, buffer);
-		free(buffer);
-		if (!line)
+		if (cache)
+			free(cache);
+		return (NULL);
+	}
+	read_bytes = 1;
+	cache = get_buffer(fd, cache, buffer, &read_bytes);
+	if (!cache)
+		return (NULL);
+	while (!found_nl(cache) && read_bytes > 0)
+	{
+		cache = get_buffer(fd, cache, buffer, &read_bytes);
+		if (!cache)
 			return (NULL);
 	}
-	next_line = ft_calloc(1, sizeof(char));
-	next_line = left_str(line, next_line, read_bytes);
-	line = right_str(line, read_bytes);
-	return (next_line);
+	line = get_new_line(cache);
+	cache = get_new_cache(cache, line);
+	return (line);
 }
 
 /* int	main(void)
 {
-	int		i;
-	int		fname;
-	char	**next_line;
+	int		fd;
+	char	*line;
 
-	i = 0;
-	fname = open("a.txt", O_RDONLY);
-	next_line = (char **)malloc(100 * sizeof(char *));
-	next_line[i] = get_next_line(fname);
-	while (next_line[i])
+	fd = open("tests/41_with_nl", O_RDONLY);
+	line = "";
+	while (line)
 	{
-		printf("%s", next_line[i]);
-		next_line[++i] = get_next_line(fname);
+		line = get_next_line(100);
+		if (line)
+		{
+			printf("%s", line);
+			free(line);
+		}
 	}
-	while (i-- > 0)
-		free(next_line[i]);
-	free(next_line);
-	close(fname);
+	close(fd);
 	return (0);
 } */
