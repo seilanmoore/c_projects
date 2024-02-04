@@ -6,7 +6,7 @@
 /*   By: smoore-a <smoore-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/26 17:22:59 by smoore-a          #+#    #+#             */
-/*   Updated: 2024/02/03 20:19:26 by smoore-a         ###   ########.fr       */
+/*   Updated: 2024/02/04 18:39:45 by smoore-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,14 +15,20 @@
 void	index_stack(t_stack **stack_a)
 {
 	int		i;
-	t_stack	*min;
+	int		pos;
+	int		size;
+	t_stack	*tmp;
 
 	i = 0;
-	min = get_min(*stack_a);
-	while (i < lst_size(*stack_a))
+	tmp = (*stack_a);
+	size = lst_size(*stack_a);
+	while (i < size)
 	{
-		min->index = i;
-		min = get_min(*stack_a);
+		tmp = *stack_a;
+		pos = get_pos_min(*stack_a);
+		while (pos-- > 0)
+			tmp = tmp->next;
+		tmp->index = i;
 		i++;
 	}
 }
@@ -54,8 +60,6 @@ void	push_max_a(t_stack	**stack_a, t_stack **stack_b)
 	}
 }
 
-//13 best number for 500, 7 for 100, 6 for 50, 10 for 424, 
-
 void	push_min_b(t_stack	**stack_b, t_stack	**stack_a)
 {
 	int	range;
@@ -63,8 +67,8 @@ void	push_min_b(t_stack	**stack_b, t_stack	**stack_a)
 	int	pushed;
 	int	limit;
 
-	range = (lst_size(*stack_a) - 1) / 15;
-	add = range + 1;
+	range = (lst_size(*stack_a) - 1) / 13;
+	add = range + 2;
 	pushed = 0;
 	limit = lst_size(*stack_a);
 	while (lst_size(*stack_a) > 1)
@@ -79,7 +83,10 @@ void	push_min_b(t_stack	**stack_b, t_stack	**stack_a)
 			else
 				rotate_a(&(*stack_a));
 		}
-		range += add;
+		if (lst_size(*stack_a) > (limit / 4))
+			range += add;
+		else
+			range += (add / 2);
 	}
 	push_b(&(*stack_b), &(*stack_a));
 }
@@ -94,10 +101,8 @@ int	main(int argc, char	**argv)
 	if (ft_error(argc, argv))
 		return (-1);
 	stack_b = NULL;
-	stack_a = new_node(atoi(argv[1]));
-	if (!stack_a)
-		return (-1);
-	i = 1;
+	stack_a = NULL;
+	i = 0;
 	while (++i < argc)
 	{
 		tmp = new_node(atoi(argv[i]));
@@ -107,7 +112,7 @@ int	main(int argc, char	**argv)
 	}
 	index_stack(&stack_a);
 	if (sorted(stack_a))
-		return (printf("Error\n"), 1);
+		return (lst_clear(&stack_a), printf("Error\n"), 1);
 	push_min_b(&stack_b, &stack_a);
 	push_max_a(&stack_a, &stack_b);
 	return (lst_clear(&stack_a), lst_clear(&stack_b), 0);
