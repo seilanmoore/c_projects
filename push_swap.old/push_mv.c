@@ -6,7 +6,7 @@
 /*   By: smoore-a <smoore-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/03 13:15:43 by smoore-a          #+#    #+#             */
-/*   Updated: 2024/02/05 18:26:22 by smoore-a         ###   ########.fr       */
+/*   Updated: 2024/02/03 20:15:00 by smoore-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,13 +20,23 @@ void	push_a(t_stack **stack_a, t_stack **stack_b)
 {
 	t_stack	*tmp;
 
-	if (!(*stack_b))
-		return ;
-	tmp = *stack_b;
-	*stack_b = (*stack_b)->next;
-	tmp->next = *stack_a;
-	*stack_a = tmp;
-	write(1, "pa\n", 3);
+	if (*stack_b)
+	{
+		tmp = (*stack_b)->next;
+		if (!(*stack_a))
+		{
+			(*stack_a) = (*stack_b);
+			(*stack_a)->next = NULL;
+			(*stack_b) = tmp;
+		}
+		else
+		{
+			(*stack_b)->next = (*stack_a);
+			(*stack_a) = (*stack_b);
+			(*stack_b) = tmp;
+		}
+		printf("pa\n");
+	}
 }
 
 //pb (push b): Take the first element at the
@@ -37,11 +47,21 @@ void	push_b(t_stack **stack_b, t_stack **stack_a)
 {
 	t_stack	*tmp;
 
-	if (!(*stack_a))
-		return ;
-	tmp = *stack_a;
-	*stack_a = (*stack_a)->next;
-	tmp->next = *stack_b;
-	*stack_b = tmp;
-	write(1, "pb\n", 3);
+	if (*stack_a)
+	{
+		tmp = (*stack_a)->next;
+		if (!(*stack_b))
+		{
+			(*stack_b) = (*stack_a);
+			(*stack_b)->next = NULL;
+			(*stack_a) = tmp;
+		}
+		else
+		{
+			(*stack_a)->next = (*stack_b);
+			(*stack_b) = (*stack_a);
+			(*stack_a) = tmp;
+		}
+		printf("pb\n");
+	}
 }

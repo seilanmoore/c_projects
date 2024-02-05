@@ -6,7 +6,7 @@
 /*   By: smoore-a <smoore-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/03 13:18:04 by smoore-a          #+#    #+#             */
-/*   Updated: 2024/02/05 22:18:03 by smoore-a         ###   ########.fr       */
+/*   Updated: 2024/02/03 13:38:03 by smoore-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ long	ft_atol(const char *str)
 
 int	sorted(t_stack *stack_a)
 {
-	size_t	prev;
+	int	prev;
 
 	if (!stack_a)
 		return (0);
@@ -67,11 +67,11 @@ int	ft_error(int argc, char **argv)
 	if (argc < 2)
 		return (1);
 	if (argc < 3)
-		return (write(1, "Error\n", 6), 1);
+		return (printf("Error\n"), 1);
 	while (++i < argc)
 		if ((ft_atol(argv[i]) == 0 && argv[i][0] != '0')
 			|| ft_atol(argv[i]) < -2147483648 || ft_atol(argv[i]) > 2147483647)
-			return (write(1, "Error\n", 6), 1);
+			return (printf("Error\n"), 1);
 	i = 1;
 	while (argv[i])
 	{
@@ -79,7 +79,7 @@ int	ft_error(int argc, char **argv)
 		while (argv[j])
 		{
 			if (ft_atol(argv[i]) == ft_atol(argv[j]))
-				return (write(1, "Error\n", 6), 1);
+				return (printf("Error\n"), 1);
 			j++;
 		}
 		i++;
