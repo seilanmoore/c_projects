@@ -6,7 +6,7 @@
 /*   By: smoore-a <smoore-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/05 22:41:40 by smoore-a          #+#    #+#             */
-/*   Updated: 2024/02/05 23:50:45 by smoore-a         ###   ########.fr       */
+/*   Updated: 2024/02/06 11:39:52 by smoore-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ void	init_stack_a(t_stack **stack_a, int argc, char **argv)
 	i = 0;
 	while (++i < argc)
 	{
-		tmp = new_node(atoi(argv[i]));
+		tmp = new_node(atol(argv[i]));
 		if (!tmp)
 		{
 			lst_clear(&(*stack_a));
