@@ -6,7 +6,7 @@
 /*   By: smoore-a <smoore-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/03 13:08:18 by smoore-a          #+#    #+#             */
-/*   Updated: 2024/02/15 08:11:42 by smoore-a         ###   ########.fr       */
+/*   Updated: 2024/02/15 14:05:20 by smoore-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,17 +39,23 @@ int		no_digit(char **argv);
 
 //	cost
 size_t	optimize_move(t_stack *s_a, t_stack *s_b, size_t a, size_t b);
-size_t	get_cost(t_stack *stack_a, t_stack *stack_b, size_t index_a);
-size_t	index_to_move(t_stack *stack_a, t_stack *stack_b);
-size_t	index_to_top(t_stack *stack_a, t_stack *stack_b);
+size_t	get_cost(t_stack *stack_b, t_stack *stack_a, size_t index_b);
+size_t	index_to_move(t_stack *stack_b, t_stack *stack_a);
+size_t	index_to_top(t_stack *stack_b, t_stack *stack_a);
 void	to_top(t_stack **stack_a, t_stack **stack_b);
+
+// DIVIDE
+
+//	divide
+void	pushable(t_stack **s_b, t_stack **s_a, size_t range, size_t limit);
+void	divide(t_stack **stack_a, t_stack **stack_b);
 
 // TARGET
 
 //	target
-size_t	target(t_stack *stack_b, size_t index_a);
-size_t	target_position(t_stack *stack_b, size_t index_a);
-size_t	pos_to_top(t_stack *stack_b, t_stack *stack_a);
+size_t	target(t_stack *stack_a, size_t index_b);
+size_t	target_position(t_stack *stack_a, size_t index_b);
+size_t	pos_to_top(t_stack *stack_a, t_stack *stack_b);
 
 // FEW_CASE
 
@@ -72,9 +78,9 @@ size_t	get_max_pos(t_stack *stack);
 //	moves
 void	move_both_r(t_stack **stack_a, t_stack **stack_b, size_t a, size_t b);
 void	move_both_rr(t_stack **stack_a, t_stack **stack_b, size_t a, size_t b);
-void	move_a(t_stack **stack_a, size_t a, size_t itt);
-void	move_b(t_stack **stack_b, size_t b, size_t ptt);
-void	last_short(t_stack **stack_a, t_stack **stack_b);
+void	move_a(t_stack **stack_a, size_t a, size_t ptt);
+void	move_b(t_stack **stack_b, size_t b, size_t itt);
+void	last_sort(t_stack **stack_a);
 
 // INITIALATION
 

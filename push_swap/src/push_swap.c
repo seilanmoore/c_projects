@@ -6,11 +6,30 @@
 /*   By: smoore-a <smoore-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/26 17:22:59 by smoore-a          #+#    #+#             */
-/*   Updated: 2024/02/14 22:48:13 by smoore-a         ###   ########.fr       */
+/*   Updated: 2024/02/15 13:54:32 by smoore-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/push_swap.h"
+
+void	last_short(t_stack **stack_a)
+{
+	size_t	min_a;
+	size_t	half_a;
+
+	min_a = get_min(*stack_a);
+	half_a = lst_size(*stack_a) / 2;
+	if (min_a > half_a)
+	{
+		while ((*stack_a)->index != min_a)
+			rotate_a(&(*stack_a), 0);
+	}
+	else
+	{
+		while ((*stack_a)->index != min_a)
+			reverse_rotate_a(&(*stack_a), 0);
+	}
+}
 
 int	main(int argc, char	**argv)
 {
@@ -32,11 +51,10 @@ int	main(int argc, char	**argv)
 		sort_few(&stack_a, &stack_b);
 	else
 	{
-		push_b(&stack_b, &stack_a);
-		push_b(&stack_b, &stack_a);
-		while (stack_a)
+		divide(&stack_a, &stack_b);
+		while (stack_b)
 			to_top(&stack_a, &stack_b);
-		last_short(&stack_a, &stack_b);
+		last_sort(&stack_a);
 	}
 	return (lst_clear(&stack_a), lst_clear(&stack_b), 0);
 }

@@ -6,7 +6,7 @@
 /*   By: smoore-a <smoore-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/14 21:27:52 by smoore-a          #+#    #+#             */
-/*   Updated: 2024/02/14 21:32:03 by smoore-a         ###   ########.fr       */
+/*   Updated: 2024/02/15 13:55:50 by smoore-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ void	move_both_r(t_stack **stack_a, t_stack **stack_b, size_t a, size_t b)
 		rotate_a(&(*stack_a), 0);
 	while ((*stack_b)->index != b)
 		rotate_b(&(*stack_b), 0);
-	push_b(&(*stack_b), &(*stack_a));
+	push_a(&(*stack_a), &(*stack_b));
 }
 
 void	move_both_rr(t_stack **stack_a, t_stack **stack_b, size_t a, size_t b)
@@ -31,12 +31,12 @@ void	move_both_rr(t_stack **stack_a, t_stack **stack_b, size_t a, size_t b)
 		reverse_rotate_a(&(*stack_a), 0);
 	while ((*stack_b)->index != b)
 		reverse_rotate_b(&(*stack_b), 0);
-	push_b(&(*stack_b), &(*stack_a));
+	push_a(&(*stack_a), &(*stack_b));
 }
 
-void	move_a(t_stack **stack_a, size_t a, size_t itt)
+void	move_a(t_stack **stack_a, size_t a, size_t ptt)
 {
-	if (itt)
+	if (ptt)
 		while ((*stack_a)->index != a)
 			rotate_a(&(*stack_a), 0);
 	else
@@ -44,9 +44,9 @@ void	move_a(t_stack **stack_a, size_t a, size_t itt)
 			reverse_rotate_a(&(*stack_a), 0);
 }
 
-void	move_b(t_stack **stack_b, size_t b, size_t ptt)
+void	move_b(t_stack **stack_b, size_t b, size_t itt)
 {
-	if (ptt)
+	if (itt)
 		while ((*stack_b)->index != b)
 			rotate_b(&(*stack_b), 0);
 	else
@@ -54,23 +54,21 @@ void	move_b(t_stack **stack_b, size_t b, size_t ptt)
 			reverse_rotate_b(&(*stack_b), 0);
 }
 
-void	last_short(t_stack **stack_a, t_stack **stack_b)
+void	last_sort(t_stack **stack_a)
 {
-	size_t	max_b;
-	size_t	half_b;
+	size_t	min_a;
+	size_t	half_a;
 
-	max_b = get_max(*stack_b);
-	half_b = lst_size(*stack_b) / 2;
-	if (max_b <= half_b)
+	min_a = get_min(*stack_a);
+	half_a = lst_size(*stack_a) / 2;
+	if (min_a > half_a)
 	{
-		while ((*stack_b)->index != max_b)
-			rotate_b(&(*stack_b), 0);
+		while ((*stack_a)->index != min_a)
+			rotate_a(&(*stack_a), 0);
 	}
 	else
 	{
-		while ((*stack_b)->index != max_b)
-			reverse_rotate_b(&(*stack_b), 0);
+		while ((*stack_a)->index != min_a)
+			reverse_rotate_a(&(*stack_a), 0);
 	}
-	while (*stack_b)
-		push_a(&(*stack_a), &(*stack_b));
 }
