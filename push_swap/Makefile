@@ -6,7 +6,7 @@
 #    By: smoore-a <smoore-a@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/02/14 20:01:41 by smoore-a          #+#    #+#              #
-#    Updated: 2024/02/14 21:36:37 by smoore-a         ###   ########.fr        #
+#    Updated: 2024/02/15 07:33:19 by smoore-a         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -19,9 +19,9 @@ CFLAGS				=		-Wall -Werror -Wextra -g -I
 RM					=		rm -rf
 AR					=		ar rcs
 
-SRC_FILES			=		checks cost few_case get_positions init lst_utils_1\
+SRC_FILES			=		checks_1 cost few_case get_positions init lst_utils_1\
 							lst_utils_2 push_mv push_swap rev_rotate_mv\
-							rotate_mv swap_mv moves target
+							rotate_mv swap_mv moves target checks_2
 SRC					=		$(addprefix $(SRC_DIR), $(addsuffix .c, $(SRC_FILES)))
 OBJ					=		$(addprefix $(OBJ_DIR), $(addsuffix .o, $(SRC_FILES)))
 

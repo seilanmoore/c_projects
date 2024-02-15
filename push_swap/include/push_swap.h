@@ -6,7 +6,7 @@
 /*   By: smoore-a <smoore-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/03 13:08:18 by smoore-a          #+#    #+#             */
-/*   Updated: 2024/02/14 22:54:03 by smoore-a         ###   ########.fr       */
+/*   Updated: 2024/02/15 08:11:42 by smoore-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,12 +25,15 @@ typedef struct s_stack
 
 // CHECKS
 
-//	checks
+//	checks_1
 long	ft_atol(const char *str);
 int		sorted(t_stack *stack_a);
 int		ft_error(int argc, char **argv);
 int		split_arg(t_stack **stack_a, char *argv);
 int		arr_to_lst(int argc, char **argv, t_stack **stack_a, int one_arg);
+
+//	checks_2
+int		no_digit(char **argv);
 
 // COST
 
