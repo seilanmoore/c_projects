@@ -6,7 +6,7 @@
 /*   By: smoore-a <smoore-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/31 14:00:16 by smoore-a          #+#    #+#             */
-/*   Updated: 2024/02/20 14:57:08 by smoore-a         ###   ########.fr       */
+/*   Updated: 2024/02/20 18:29:51 by smoore-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,15 +99,12 @@ static char	*get_buffer(int fd, char *cache, int *read_bytes)
 
 char	*get_next_line(int fd)
 {
-	static char	*cache[1024];
+	static char	*cache[20];
 	char		*line;
 	int			read_bytes;
 
-	if (fd < 0 || BUFFER_SIZE <= 0)
-	{
-		free_cache(cache);
+	if (fd < 0 || fd > 19 || BUFFER_SIZE <= 0)
 		return (NULL);
-	}
 	cache[fd] = get_buffer(fd, cache[fd], &read_bytes);
 	if (!cache[fd])
 		return (NULL);
@@ -128,6 +125,7 @@ char	*get_next_line(int fd)
 	char	*line;
 
 	fd = open("tests/variable_nls.txt", O_RDONLY);
+	printf("FOPEN_MAX = %d\n", FOPEN_MAX);
 	line = get_next_line(fd);
 	printf("%s", line);
 	free(line);

@@ -6,7 +6,7 @@
 /*   By: smoore-a <smoore-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/31 14:33:58 by smoore-a          #+#    #+#             */
-/*   Updated: 2024/02/20 14:52:42 by smoore-a         ###   ########.fr       */
+/*   Updated: 2024/02/20 18:19:52 by smoore-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,16 +75,4 @@ char	*extend_cache(char *cache, char *buffer)
 	temp[i] = '\0';
 	free(cache);
 	return (temp);
-}
-
-void	free_cache(char **cache)
-{
-	int	i;
-
-	i = 1024;
-	while (--i >= 0)
-	{
-		if (cache[i])
-			free(cache[i]);
-	}
 }
