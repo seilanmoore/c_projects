@@ -6,7 +6,7 @@
 /*   By: smoore-a <smoore-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/31 14:00:16 by smoore-a          #+#    #+#             */
-/*   Updated: 2024/01/04 14:34:36 by smoore-a         ###   ########.fr       */
+/*   Updated: 2024/02/20 14:23:28 by smoore-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,29 +75,38 @@ static char	*get_new_line(char *cache)
 	return (NULL);
 }
 
-static char	*get_buffer(int fd, char *cache, char *buffer, int *read_bytes)
+static char	*get_buffer(int fd, char *cache, int *read_bytes)
 {
-	*read_bytes = read(fd, buffer, BUFFER_SIZE);
-	if (*read_bytes == -1)
+	char	*buffer;
+
+	buffer = malloc((BUFFER_SIZE + 1) * sizeof(char));
+	if (!buffer)
 	{
 		if (cache)
 			free(cache);
 		return (NULL);
 	}
+	*read_bytes = read(fd, buffer, BUFFER_SIZE);
+	if (*read_bytes == -1)
+	{
+		if (cache)
+			free(cache);
+		free(buffer);
+		return (NULL);
+	}
 	buffer[*read_bytes] = '\0';
 	if (!cache && !(*read_bytes))
-		return (NULL);
-	else if (*read_bytes)
-		return (extend_cache(cache, buffer));
-	else
-		return (cache);
+		cache = NULL;
+	else if (*read_bytes > 0)
+		cache = extend_cache(cache, buffer);
+	free(buffer);
+	return (cache);
 }
 
 char	*get_next_line(int fd)
 {
 	static char	*cache = NULL;
 	char		*line;
-	char		buffer[BUFFER_SIZE + 1];
 	int			read_bytes;
 
 	if (fd < 0 || BUFFER_SIZE <= 0)
@@ -106,13 +115,12 @@ char	*get_next_line(int fd)
 			free(cache);
 		return (NULL);
 	}
-	read_bytes = 1;
-	cache = get_buffer(fd, cache, buffer, &read_bytes);
+	cache = get_buffer(fd, cache, &read_bytes);
 	if (!cache)
 		return (NULL);
 	while (!found_nl(cache) && read_bytes > 0)
 	{
-		cache = get_buffer(fd, cache, buffer, &read_bytes);
+		cache = get_buffer(fd, cache, &read_bytes);
 		if (!cache)
 			return (NULL);
 	}
