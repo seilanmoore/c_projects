@@ -6,7 +6,7 @@
 /*   By: smoore-a <smoore-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/31 14:00:16 by smoore-a          #+#    #+#             */
-/*   Updated: 2024/02/20 14:32:26 by smoore-a         ###   ########.fr       */
+/*   Updated: 2024/02/20 14:57:08 by smoore-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,8 +105,7 @@ char	*get_next_line(int fd)
 
 	if (fd < 0 || BUFFER_SIZE <= 0)
 	{
-		if (cache[fd])
-			free(cache[fd]);
+		free_cache(cache);
 		return (NULL);
 	}
 	cache[fd] = get_buffer(fd, cache[fd], &read_bytes);
