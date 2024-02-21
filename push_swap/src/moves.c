@@ -6,7 +6,7 @@
 /*   By: smoore-a <smoore-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/14 21:27:52 by smoore-a          #+#    #+#             */
-/*   Updated: 2024/02/15 13:55:50 by smoore-a         ###   ########.fr       */
+/*   Updated: 2024/02/21 20:57:19 by smoore-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@ void	last_sort(t_stack **stack_a)
 
 	min_a = get_min(*stack_a);
 	half_a = lst_size(*stack_a) / 2;
-	if (min_a > half_a)
+	if (get_min_pos(*stack_a) <= half_a)
 	{
 		while ((*stack_a)->index != min_a)
 			rotate_a(&(*stack_a), 0);

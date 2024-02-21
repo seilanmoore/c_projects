@@ -6,14 +6,17 @@
 /*   By: smoore-a <smoore-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/03 13:08:18 by smoore-a          #+#    #+#             */
-/*   Updated: 2024/02/15 14:05:20 by smoore-a         ###   ########.fr       */
+/*   Updated: 2024/02/21 20:58:22 by smoore-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
-#include <stdlib.h>
-#include <unistd.h>
-#include <stdio.h>
+#ifndef PUSH_SWAP_H
+# define PUSH_SWAP_H
+
+# include "libft.h"
+# include <stdlib.h>
+# include <unistd.h>
+# include <stdio.h>
 
 typedef struct s_stack
 {
@@ -124,3 +127,5 @@ void	rotate_a_b(t_stack **stack_a, t_stack **stack_b);
 void	reverse_rotate_a(t_stack **stack_a, int both_stacks);
 void	reverse_rotate_b(t_stack **stack_b, int both_stacks);
 void	reverse_rotate_a_b(t_stack **stack_a, t_stack **stack_b);
+
+#endif
