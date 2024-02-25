@@ -6,11 +6,11 @@
 /*   By: smoore-a <smoore-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/15 13:51:20 by smoore-a          #+#    #+#             */
-/*   Updated: 2024/02/15 14:00:49 by smoore-a         ###   ########.fr       */
+/*   Updated: 2024/02/25 11:23:00 by smoore-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "push_swap.h"
+#include "../include/push_swap.h"
 
 void	pushable(t_stack **s_b, t_stack **s_a, size_t range, size_t limit)
 {
