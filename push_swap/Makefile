@@ -6,53 +6,70 @@
 #    By: smoore-a <smoore-a@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/02/14 20:01:41 by smoore-a          #+#    #+#              #
-#    Updated: 2024/02/15 14:03:37 by smoore-a         ###   ########.fr        #
+#    Updated: 2024/02/27 10:53:57 by smoore-a         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-NAME				=	push_swap
-INCLUDE				=	include
-SRC_DIR				=	src/
-OBJ_DIR				=	obj/
-CC					=	cc
-CFLAGS				=	-Wall -Werror -Wextra -g -I
-RM					=	rm -rf
-AR					=	ar rcs
-SRC_FILES			=	checks_1 cost divide few_case get_positions\
-						init lst_utils_1 lst_utils_2 push_mv push_swap\
-						rev_rotate_mv rotate_mv swap_mv moves target\
-						checks_2
-SRC					=	$(addprefix $(SRC_DIR), $(addsuffix .c, $(SRC_FILES)))
-OBJ					=	$(addprefix $(OBJ_DIR), $(addsuffix .o, $(SRC_FILES)))
-OBJF				=	.cache_exists
+TARGET = push_swap
 
-all:					$(NAME)
+INCLUDE = -I include
 
-$(NAME):				$(OBJ)
-						@echo "Compiling the libft library..."
-						@make -C libft
-						@$(CC) $(CFLAGS) $(INCLUDE) $(OBJ) -Llibft -lft -o $@
+CC = cc
 
-$(OBJ_DIR)%.o:			$(SRC_DIR)%.c | $(OBJF)
-						@echo "Compiling $<..."
-						@$(CC) $(CFLAGS) $(INCLUDE) -c $< -o $@
+CFLAGS = -Wall -Werror -Wextra -g
 
-$(OBJF):
-						@echo "Creating $(OBJ_DIR) directory..."
-						@mkdir -p $(OBJ_DIR)
+LDFLAGS = -Llibft -lft
+
+LIBFT = libft/libft.a
+
+RM = rm -rf
+
+SRC_DIR = src/
+
+OBJ_DIR = obj/
+
+SRC =	checks_1 cost divide few_case get_positions \
+		init lst_utils_1 lst_utils_2 push_mv push_swap \
+		rev_rotate_mv rotate_mv swap_mv moves target \
+		checks_2
+
+SRC_FILES = $(addprefix $(SRC_DIR), $(addsuffix .c, $(SRC)))
+
+OBJ_FILES = $(addprefix $(OBJ_DIR), $(addsuffix .o, $(SRC)))
+
+
+all:	$(TARGET)
+
+$(TARGET):	$(OBJ_FILES) $(LIBFT)
+			$(CC) $(CFLAGS) $(INCLUDE) $(LDFLAGS) $^ -o $@
+			@echo "$(TARGET) compiled"
+
+$(OBJ_DIR)%.o:	$(SRC_DIR)%.c
+				@mkdir -p $(OBJ_DIR)
+				$(CC) $(CFLAGS) $(INCLUDE) -c $< -o $@
+				@echo "$< compiled"
+
+$(LIBFT):
+			make -C libft
+			make bonus -C libft
+			@echo "$(LIBFT) compiled"
 
 clean:
-						@echo "Cleaning up object files..."
-						@$(RM) $(OBJ_DIR)
-						@echo "Calling clean in libft..."
-						@make clean -C libft
+		$(RM) $(OBJ_DIR)
+		@echo "Object files removed"
+		make clean -C libft
+		@echo "Libft object files removed"
 
-fclean:					clean
-						@echo "Cleaning up $(NAME)..."
-						@$(RM) $(NAME)
-						@echo "Removing libft/libft.a..."
-						@$(RM) libft/libft.a
+fclean:	clean
+		$(RM) $(TARGET)
+		@echo "$(TARGET) removed"
+		$(RM) $(LIBFT)
+		@echo "$(LIBFT) removed"
 
-re:						fclean all
+re:	fclean all
 
-.PHONY:					all clean fclean re
+.PHONY:	all clean fclean re
+
+ifndef VERBOSE
+.SILENT:
+endif
