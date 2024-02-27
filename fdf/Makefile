@@ -6,7 +6,7 @@
 #    By: smoore-a <smoore-a@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/02/27 20:48:30 by smoore-a          #+#    #+#              #
-#    Updated: 2024/02/27 20:50:44 by smoore-a         ###   ########.fr        #
+#    Updated: 2024/02/27 23:14:55 by smoore-a         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -28,7 +28,7 @@ SRC_DIR = src/
 
 OBJ_DIR = obj/
 
-SRC =	
+SRC =	fdf
 
 SRC_FILES = $(addprefix $(SRC_DIR), $(addsuffix .c, $(SRC)))
 
@@ -37,19 +37,17 @@ OBJ_FILES = $(addprefix $(OBJ_DIR), $(addsuffix .o, $(SRC)))
 
 all: $(NAME)
 
-$(NAME):	$(OBJ_FILES) $(LIBFT)
-			$(CC) $(CFLAGS) $(INCLUDE) $(LDFLAGS) $^ -o $@
+$(NAME):	$(OBJ_FILES)
+			make -C libft
+			make bonus -C libft
+			@echo "$(LIBFT) compiled"
+			$(CC) $(CFLAGS) $(INCLUDE) $^ $(LDFLAGS) -o $@
 			@echo "$(NAME) compiled"
 
 $(OBJ_DIR)%.o:	$(SRC_DIR)%.c
 				@mkdir -p $(OBJ_DIR)
 				$(CC) $(CFLAGS) $(INCLUDE) -c $< -o $@
 				@echo "$< compiled"
-
-$(LIBFT):
-			make -C libft
-			make bonus -C libft
-			@echo "$(LIBFT) compiled"
 
 clean:
 		$(RM) $(OBJ_DIR)
