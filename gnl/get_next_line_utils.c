@@ -6,13 +6,13 @@
 /*   By: smoore-a <smoore-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/31 14:33:58 by smoore-a          #+#    #+#             */
-/*   Updated: 2024/01/03 12:11:19 by smoore-a         ###   ########.fr       */
+/*   Updated: 2024/02/27 21:06:05 by smoore-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 
-size_t	ft_strlen(char *str)
+size_t	str_len(char *str)
 {
 	size_t	i;
 
@@ -41,7 +41,7 @@ char	*create_cache(char *cache, char *buffer)
 	size_t	final_size;
 	int		i;
 
-	final_size = ft_strlen(buffer) + 1;
+	final_size = str_len(buffer) + 1;
 	cache = (char *)malloc(final_size * sizeof(char));
 	if (!cache)
 		return (NULL);
@@ -61,7 +61,7 @@ char	*extend_cache(char *cache, char *buffer)
 
 	if (!cache)
 		return (create_cache(cache, buffer));
-	final_size = ft_strlen(cache) + ft_strlen(buffer) + 1;
+	final_size = str_len(cache) + str_len(buffer) + 1;
 	temp = (char *)malloc(final_size * sizeof(char));
 	if (!temp)
 	{

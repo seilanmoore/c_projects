@@ -6,14 +6,14 @@
 /*   By: smoore-a <smoore-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/03 13:08:18 by smoore-a          #+#    #+#             */
-/*   Updated: 2024/02/21 20:58:22 by smoore-a         ###   ########.fr       */
+/*   Updated: 2024/02/27 22:51:57 by smoore-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef PUSH_SWAP_H
 # define PUSH_SWAP_H
 
-# include "libft.h"
+# include "../libft/include/libft.h"
 # include <stdlib.h>
 # include <unistd.h>
 # include <stdio.h>

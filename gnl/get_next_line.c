@@ -6,7 +6,7 @@
 /*   By: smoore-a <smoore-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/31 14:00:16 by smoore-a          #+#    #+#             */
-/*   Updated: 2024/02/20 14:23:28 by smoore-a         ###   ########.fr       */
+/*   Updated: 2024/02/27 21:06:05 by smoore-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ static char	*ft_strdup(char *str)
 	char	*dup;
 	size_t	i;
 
-	dup = (char *)malloc((ft_strlen(str) + 1) * sizeof(char));
+	dup = (char *)malloc((str_len(str) + 1) * sizeof(char));
 	if (!dup)
 		return (NULL);
 	i = -1;
@@ -62,7 +62,7 @@ static char	*get_new_line(char *cache)
 		if (found_nl(cache))
 			end = found_nl(cache) - cache + 1;
 		else
-			end = ft_strlen(cache);
+			end = str_len(cache);
 		new_line = (char *)malloc((end + 1) * sizeof(char));
 		if (!new_line)
 			return (NULL);

@@ -6,12 +6,13 @@
 /*   By: smoore-a <smoore-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/28 13:36:34 by smoore-a          #+#    #+#             */
-/*   Updated: 2023/12/17 19:26:54 by smoore-a         ###   ########.fr       */
+/*   Updated: 2024/02/27 22:42:23 by smoore-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef LIBFT_H
 # define LIBFT_H
+
 
 //# include <bsd/string.h>
 //Para compilar strlcpy y strlcat incluyendo
@@ -72,5 +73,8 @@ void	ft_lstdelone(t_list *lst, void (*del)(void*));
 void	ft_lstclear(t_list **lst, void (*del)(void*));
 void	ft_lstiter(t_list *lst, void (*f)(void *));
 t_list	*ft_lstmap(t_list *lst, void *(*f)(void *), void (*del)(void *));
+
+int		ft_printf(const char *arg, ...);
+char	*get_next_line(int fd);
 
 #endif

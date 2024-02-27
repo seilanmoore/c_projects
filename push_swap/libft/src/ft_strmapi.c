@@ -6,11 +6,11 @@
 /*   By: smoore-a <smoore-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/12 17:54:41 by smoore-a          #+#    #+#             */
-/*   Updated: 2024/02/27 11:43:39 by smoore-a         ###   ########.fr       */
+/*   Updated: 2024/02/27 22:13:45 by smoore-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../include/libft.h"
+#include "../include/libft.h"
 
 /* This function can be used when you want to create a new string where each
 character is the result of applying a function to the corresponding character

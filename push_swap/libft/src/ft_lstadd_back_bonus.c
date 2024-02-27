@@ -6,11 +6,11 @@
 /*   By: smoore-a <smoore-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/13 19:53:03 by smoore-a          #+#    #+#             */
-/*   Updated: 2024/02/27 11:43:39 by smoore-a         ###   ########.fr       */
+/*   Updated: 2024/02/27 22:13:45 by smoore-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../include/libft.h"
+#include "../include/libft.h"
 
 void	ft_lstadd_back(t_list **lst, t_list *new)
 {
