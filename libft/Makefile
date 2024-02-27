@@ -6,11 +6,11 @@
 #    By: smoore-a <smoore-a@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/11/27 15:26:15 by smoore-a          #+#    #+#              #
-#    Updated: 2024/02/27 10:51:56 by smoore-a         ###   ########.fr        #
+#    Updated: 2024/02/27 12:53:07 by smoore-a         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-TARGET = libft.a
+NAME = libft.a
 
 CC = cc
 
@@ -47,11 +47,11 @@ BONUS_SRC_FILES = $(addprefix $(SRC_DIR), $(addsuffix .c, $(BONUS_SRC)))
 BONUS_OBJ_FILES = $(addprefix $(OBJ_DIR), $(addsuffix .o, $(BONUS_SRC)))
 
 
-all:	$(TARGET)
+all:	$(NAME)
 
-$(TARGET):	$(OBJ_FILES)
-			ar rcs $(TARGET) $(OBJ_FILES)
-			@echo "$(TARGET) compiled"
+$(NAME):	$(OBJ_FILES)
+			ar rcs $(NAME) $(OBJ_FILES)
+			@echo "$(NAME) compiled"
 
 $(OBJ_DIR)%.o:	$(SRC_DIR)%.c
 				@mkdir -p $(OBJ_DIR)
@@ -59,7 +59,7 @@ $(OBJ_DIR)%.o:	$(SRC_DIR)%.c
 				@echo "$< compiled"
 
 bonus:	$(BONUS_OBJ_FILES)
-		ar rcs $(TARGET) $(BONUS_OBJ_FILES)
+		ar rcs $(NAME) $(BONUS_OBJ_FILES)
 		@echo "Bonus compiled"
 
 clean:
@@ -67,8 +67,8 @@ clean:
 		@echo "Object files removed"
 
 fclean:	clean
-		$(RM) $(TARGET)
-		@echo "$(TARGET) removed"
+		$(RM) $(NAME)
+		@echo "$(NAME) removed"
 
 re:	fclean all
 
