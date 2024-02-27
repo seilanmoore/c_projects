@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_itoa.c                                          :+:      :+:    :+:   */
+/*   ft_printf_itoa.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: smoore-a <smoore-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/12/12 14:40:52 by smoore-a          #+#    #+#             */
-/*   Updated: 2024/02/27 22:13:45 by smoore-a         ###   ########.fr       */
+/*   Created: 2024/02/27 21:58:05 by smoore-a          #+#    #+#             */
+/*   Updated: 2024/02/27 22:16:06 by smoore-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/libft.h"
+#include "../../include/ft_printf.h"
 
 static size_t	count_digit(int n)
 {
@@ -27,27 +27,8 @@ static size_t	count_digit(int n)
 	return (len);
 }
 
-static	char	*int_min(void)
+static char	*int_conv(char *nbr, int sign, int n, size_t len)
 {
-	char	*nbr;
-
-	nbr = ft_strdup("-2147483648");
-	if (!nbr)
-		return (NULL);
-	return (nbr);
-}
-
-char	*ft_itoa(int n)
-{
-	int		sign;
-	size_t	len;
-	char	*nbr;
-
-	sign = 0;
-	len = count_digit(n);
-	if (n == -2147483648)
-		return (int_min());
-	nbr = (char *)malloc((len + 1) * sizeof(char));
 	if (!nbr)
 		return (NULL);
 	nbr[len] = '\0';
@@ -64,4 +45,20 @@ char	*ft_itoa(int n)
 	if (sign)
 		nbr[0] = '-';
 	return (nbr);
+}
+
+int	int_itoa(int n)
+{
+	size_t	len;
+	char	*nbr;
+
+	len = count_digit(n);
+	nbr = (char *)malloc((len + 1) * sizeof(char));
+	if (n == -2147483648)
+		ft_strlcpy(nbr, "-2147483648", len + 1);
+	else
+		nbr = int_conv(nbr, 0, n, len);
+	len = put_str(nbr, 1);
+	free(nbr);
+	return ((int)len);
 }

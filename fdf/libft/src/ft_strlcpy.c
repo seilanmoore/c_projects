@@ -6,11 +6,11 @@
 /*   By: smoore-a <smoore-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/29 14:50:37 by smoore-a          #+#    #+#             */
-/*   Updated: 2024/02/27 11:43:39 by smoore-a         ###   ########.fr       */
+/*   Updated: 2024/02/27 22:13:45 by smoore-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../include/libft.h"
+#include "../include/libft.h"
 
 size_t	ft_strlcpy(char *dst, const char *src, size_t size)
 {

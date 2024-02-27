@@ -1,26 +1,37 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strdup.c                                        :+:      :+:    :+:   */
+/*   ft_printf_utils.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: smoore-a <smoore-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/12/06 16:03:33 by smoore-a          #+#    #+#             */
-/*   Updated: 2024/02/27 22:13:45 by smoore-a         ###   ########.fr       */
+/*   Created: 2024/02/27 21:56:57 by smoore-a          #+#    #+#             */
+/*   Updated: 2024/02/27 22:16:25 by smoore-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/libft.h"
+#include "../../include/ft_printf.h"
 
-char	*ft_strdup(const char *s1)
+int	put_str(char *s, int fd)
 {
-	unsigned char	*str;
-	size_t			s1_len;
+	if (!fd)
+		return (0);
+	if (!s)
+	{
+		write(fd, "(null)", 6);
+		return (6);
+	}
+	write(fd, s, ft_strlen(s));
+	return (ft_strlen(s));
+}
 
-	s1_len = ft_strlen(s1) + 1;
-	str = (unsigned char *) malloc(s1_len * sizeof(char));
-	if (str == NULL)
-		return (NULL);
-	ft_strlcpy((char *) str, s1, s1_len);
-	return ((char *) str);
+int	put_char(int c, int fd)
+{
+	unsigned char	ch;
+
+	ch = (unsigned char) c;
+	if (!fd)
+		return (0);
+	write(fd, &ch, 1);
+	return (1);
 }

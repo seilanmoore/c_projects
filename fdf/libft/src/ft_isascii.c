@@ -6,11 +6,11 @@
 /*   By: smoore-a <smoore-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/28 15:31:18 by smoore-a          #+#    #+#             */
-/*   Updated: 2024/02/27 11:43:39 by smoore-a         ###   ########.fr       */
+/*   Updated: 2024/02/27 22:13:45 by smoore-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../include/libft.h"
+#include "../include/libft.h"
 
 int	ft_isascii(int c)
 {

@@ -1,23 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_itoa.c                                          :+:      :+:    :+:   */
+/*   ft_uitoa.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: smoore-a <smoore-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/12/12 14:40:52 by smoore-a          #+#    #+#             */
-/*   Updated: 2024/02/27 22:13:45 by smoore-a         ###   ########.fr       */
+/*   Created: 2023/12/19 13:20:02 by smoore-a          #+#    #+#             */
+/*   Updated: 2024/02/27 22:16:32 by smoore-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/libft.h"
+#include "../../include/ft_printf.h"
 
-static size_t	count_digit(int n)
+static size_t	count_digit(unsigned int n)
 {
 	size_t	len;
 
 	len = 0;
-	if (n <= 0)
+	if (n == 0)
 		len++;
 	while (n != 0)
 	{
@@ -27,41 +27,26 @@ static size_t	count_digit(int n)
 	return (len);
 }
 
-static	char	*int_min(void)
+int	ft_uitoa(unsigned int n)
 {
-	char	*nbr;
-
-	nbr = ft_strdup("-2147483648");
-	if (!nbr)
-		return (NULL);
-	return (nbr);
-}
-
-char	*ft_itoa(int n)
-{
-	int		sign;
 	size_t	len;
 	char	*nbr;
 
-	sign = 0;
 	len = count_digit(n);
-	if (n == -2147483648)
-		return (int_min());
 	nbr = (char *)malloc((len + 1) * sizeof(char));
 	if (!nbr)
-		return (NULL);
-	nbr[len] = '\0';
-	if (n < 0)
 	{
-		n = -n;
-		sign = 1;
+		free(nbr);
+		return (0);
 	}
+	nbr[len] = '\0';
 	while (len-- > 0)
 	{
 		nbr[len] = '0' + (n % 10);
 		n /= 10;
 	}
-	if (sign)
-		nbr[0] = '-';
-	return (nbr);
+	put_str(nbr, 1);
+	len = ft_strlen(nbr);
+	free(nbr);
+	return (len);
 }
