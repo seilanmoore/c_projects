@@ -6,7 +6,7 @@
 /*   By: smoore-a <smoore-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/19 13:37:04 by smoore-a          #+#    #+#             */
-/*   Updated: 2024/02/27 22:16:30 by smoore-a         ###   ########.fr       */
+/*   Updated: 2024/02/29 23:05:18 by smoore-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,10 +35,7 @@ int	ft_puthex_fd(unsigned int n, int low_upper)
 	len = count_digit(n);
 	nbr = (char *)malloc((len + 1) * sizeof(char));
 	if (!nbr)
-	{
-		free(nbr);
-		return (0);
-	}
+		return (-1);
 	nbr[len] = '\0';
 	while (len-- > 0)
 	{

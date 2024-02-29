@@ -6,7 +6,7 @@
 /*   By: smoore-a <smoore-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/19 09:06:39 by smoore-a          #+#    #+#             */
-/*   Updated: 2024/02/27 22:16:18 by smoore-a         ###   ########.fr       */
+/*   Updated: 2024/02/29 23:04:51 by smoore-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,16 +46,13 @@ int	ft_hex_address(size_t address)
 
 	if (!address)
 	{
-		put_str("(nil)", 1);
-		return (5);
+		put_str("0x0", 1);
+		return (3);
 	}
 	len = count_digit(address) + 3;
 	nbr = (char *)malloc(len * sizeof(char));
 	if (!nbr)
-	{
-		free(nbr);
-		return (0);
-	}
+		return (-1);
 	nbr[--len] = '\0';
 	hex_conv(nbr, address, len);
 	nbr[1] = 'x';

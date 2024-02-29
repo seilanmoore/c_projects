@@ -6,33 +6,28 @@
 /*   By: smoore-a <smoore-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/18 16:33:58 by smoore-a          #+#    #+#             */
-/*   Updated: 2024/02/27 22:16:14 by smoore-a         ###   ########.fr       */
+/*   Updated: 2024/02/29 23:04:59 by smoore-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/ft_printf.h"
 
-static void	counter(int *sum, int c)
-{
-	*sum += c;
-}
-
-void	ft_conversion(char format, va_list ap, int *count)
+int	ft_conversion(char format, va_list ap)
 {
 	if (format == 'c')
-		counter(count, put_char(va_arg(ap, int), 1));
+		return (put_char(va_arg(ap, int), 1));
 	else if (format == 's')
-		counter(count, put_str(va_arg(ap, char *), 1));
+		return (put_str(va_arg(ap, char *), 1));
 	else if (format == 'p')
-		counter(count, ft_hex_address((size_t)va_arg(ap, void *)));
+		return (ft_hex_address((size_t)va_arg(ap, void *)));
 	else if (format == 'd' || format == 'i')
-		counter(count, int_itoa(va_arg(ap, int)));
+		return (int_itoa(va_arg(ap, int)));
 	else if (format == 'u')
-		counter(count, ft_uitoa(va_arg(ap, unsigned int)));
+		return (ft_uitoa(va_arg(ap, unsigned int)));
 	else if (format == 'x')
-		counter(count, ft_puthex_fd(va_arg(ap, unsigned int), 0));
+		return (ft_puthex_fd(va_arg(ap, unsigned int), 0));
 	else if (format == 'X')
-		counter(count, ft_puthex_fd(va_arg(ap, unsigned int), 1));
+		return (ft_puthex_fd(va_arg(ap, unsigned int), 1));
 	else
-		counter(count, put_char('%', 1));
+		return (put_char('%', 1));
 }

@@ -6,7 +6,7 @@
 /*   By: smoore-a <smoore-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/16 09:55:29 by smoore-a          #+#    #+#             */
-/*   Updated: 2024/02/27 22:37:22 by smoore-a         ###   ########.fr       */
+/*   Updated: 2024/02/29 23:05:18 by smoore-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ static size_t	count_digit(int n)
 	return (len);
 }
 
-static const char	*arginpos(const char *p, va_list ap_cpy, int *count)
+static const char	*arginpos(const char *p, va_list ap_cpy, int *add)
 {
 	int	argn;
 
@@ -41,26 +41,35 @@ static const char	*arginpos(const char *p, va_list ap_cpy, int *count)
 	p += count_digit(argn) + 1;
 	while (argn-- > 1)
 		va_arg(ap_cpy, char *);
-	ft_conversion(*p, ap_cpy, count);
+	*add = ft_conversion(*p, ap_cpy);
 	return (p);
 }
 
 static const char	*read_str(
 	va_list *ap, va_list *ap_cpy, const char *p, int *count)
 {
+	int	add;
+
+	add = 0;
 	if (*p != '%' || (*p == '%' && *(p + 1) == '0'))
 	{
 		put_char(*p, 1);
-		*count = *count + 1;
+		add = 1;
 	}
 	else if (ft_isdigit(*(p + 1)))
-		p = arginpos(p, *ap_cpy, count);
+		p = arginpos(p, *ap_cpy, &add);
 	else
 	{
-		ft_conversion(*(p + 1), *ap, count);
+		add = ft_conversion(*(p + 1), *ap);
 		p++;
 	}
+	if (add == -1)
+	{
+		*count = -1;
+		return (NULL);
+	}
 	p++;
+	*count = *count + add;
 	return (p);
 }
 
@@ -71,6 +80,8 @@ int	ft_printf(const char *format, ...)
 	va_list		ap_cpy;
 	int			count;
 
+	if (write(1, "", 0) == -1)
+		return (-1);
 	count = 0;
 	va_start(ap, format);
 	va_start(ap_cpy, format);
@@ -78,6 +89,8 @@ int	ft_printf(const char *format, ...)
 	while (*p)
 	{
 		p = read_str(&ap, &ap_cpy, p, &count);
+		if (count == -1)
+			return (-1);
 		va_start(ap_cpy, format);
 	}
 	va_end(ap);
