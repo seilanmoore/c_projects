@@ -6,7 +6,7 @@
 /*   By: smoore-a <smoore-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/18 16:33:58 by smoore-a          #+#    #+#             */
-/*   Updated: 2024/02/29 22:43:52 by smoore-a         ###   ########.fr       */
+/*   Updated: 2024/02/29 23:40:26 by smoore-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,8 @@ int	ft_conversion(char format, va_list ap)
 		return (ft_puthex_fd(va_arg(ap, unsigned int), 0));
 	else if (format == 'X')
 		return (ft_puthex_fd(va_arg(ap, unsigned int), 1));
-	else
+	else if (format == '%')
 		return (put_char('%', 1));
+	else
+		return (-1);
 }
