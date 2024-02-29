@@ -6,7 +6,7 @@
 #    By: smoore-a <smoore-a@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/12/19 20:08:31 by smoore-a          #+#    #+#              #
-#    Updated: 2024/02/29 20:53:28 by smoore-a         ###   ########.fr        #
+#    Updated: 2024/02/29 22:45:13 by smoore-a         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -20,7 +20,7 @@ RM			= 	rm -rf
 AR			= 	ar rcs
 
 SRC_FILES	=	ft_printf ft_conversion ft_hex_address ft_uitoa\
-				ft_puthex_fd
+				ft_puthex_fd ft_printf_itoa ft_printf_utils
 SRC 		= 	$(addprefix $(SRC_DIR), $(addsuffix .c, $(SRC_FILES)))
 OBJ 		= 	$(addprefix $(OBJ_DIR), $(addsuffix .o, $(SRC_FILES)))
 

@@ -6,11 +6,11 @@
 /*   By: smoore-a <smoore-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/19 13:20:02 by smoore-a          #+#    #+#             */
-/*   Updated: 2024/02/27 22:16:32 by smoore-a         ###   ########.fr       */
+/*   Updated: 2024/02/29 22:49:51 by smoore-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../include/ft_printf.h"
+#include "../include/ft_printf.h"
 
 static size_t	count_digit(unsigned int n)
 {
@@ -35,10 +35,7 @@ int	ft_uitoa(unsigned int n)
 	len = count_digit(n);
 	nbr = (char *)malloc((len + 1) * sizeof(char));
 	if (!nbr)
-	{
-		free(nbr);
-		return (0);
-	}
+		return (-1);
 	nbr[len] = '\0';
 	while (len-- > 0)
 	{

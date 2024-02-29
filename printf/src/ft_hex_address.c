@@ -6,11 +6,11 @@
 /*   By: smoore-a <smoore-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/19 09:06:39 by smoore-a          #+#    #+#             */
-/*   Updated: 2024/02/29 21:55:43 by smoore-a         ###   ########.fr       */
+/*   Updated: 2024/02/29 22:48:18 by smoore-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../include/ft_printf.h"
+#include "../include/ft_printf.h"
 
 static size_t	count_digit(size_t n)
 {
@@ -52,10 +52,7 @@ int	ft_hex_address(size_t address)
 	len = count_digit(address) + 3;
 	nbr = (char *)malloc(len * sizeof(char));
 	if (!nbr)
-	{
-		free(nbr);
-		return (0);
-	}
+		return (-1);
 	nbr[--len] = '\0';
 	hex_conv(nbr, address, len);
 	nbr[1] = 'x';

@@ -6,11 +6,11 @@
 /*   By: smoore-a <smoore-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/27 21:56:57 by smoore-a          #+#    #+#             */
-/*   Updated: 2024/02/27 22:16:25 by smoore-a         ###   ########.fr       */
+/*   Updated: 2024/02/29 22:44:13 by smoore-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../include/ft_printf.h"
+#include "../include/ft_printf.h"
 
 int	put_str(char *s, int fd)
 {

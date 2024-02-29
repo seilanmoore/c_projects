@@ -6,11 +6,11 @@
 /*   By: smoore-a <smoore-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/27 21:58:05 by smoore-a          #+#    #+#             */
-/*   Updated: 2024/02/27 22:16:06 by smoore-a         ###   ########.fr       */
+/*   Updated: 2024/02/29 22:47:55 by smoore-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../include/ft_printf.h"
+#include "../include/ft_printf.h"
 
 static size_t	count_digit(int n)
 {
@@ -54,6 +54,8 @@ int	int_itoa(int n)
 
 	len = count_digit(n);
 	nbr = (char *)malloc((len + 1) * sizeof(char));
+	if (!nbr)
+		return (-1);
 	if (n == -2147483648)
 		ft_strlcpy(nbr, "-2147483648", len + 1);
 	else
