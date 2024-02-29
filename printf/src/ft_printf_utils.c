@@ -1,28 +1,37 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_printf.h                                        :+:      :+:    :+:   */
+/*   ft_printf_utils.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: smoore-a <smoore-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/12/16 09:50:24 by smoore-a          #+#    #+#             */
-/*   Updated: 2024/02/29 22:26:10 by smoore-a         ###   ########.fr       */
+/*   Created: 2024/02/27 21:56:57 by smoore-a          #+#    #+#             */
+/*   Updated: 2024/02/27 22:16:25 by smoore-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef FT_PRINTF_H
-# define FT_PRINTF_H
+#include "../../include/ft_printf.h"
 
-# include "libft.h"
-# include <stdarg.h>
+int	put_str(char *s, int fd)
+{
+	if (!fd)
+		return (0);
+	if (!s)
+	{
+		write(fd, "(null)", 6);
+		return (6);
+	}
+	write(fd, s, ft_strlen(s));
+	return (ft_strlen(s));
+}
 
-int		ft_printf(const char *arg, ...);
-int		ft_conversion(char format, va_list ap);
-int		ft_hex_address(size_t address);
-int		ft_uitoa(unsigned int n);
-int		ft_puthex_fd(unsigned int n, int low_upper);
-int		put_str(char *s, int fd);
-int		put_char(int c, int fd);
-int		int_itoa(int n);
+int	put_char(int c, int fd)
+{
+	unsigned char	ch;
 
-#endif
+	ch = (unsigned char) c;
+	if (!fd)
+		return (0);
+	write(fd, &ch, 1);
+	return (1);
+}

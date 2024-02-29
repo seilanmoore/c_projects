@@ -6,14 +6,9 @@
 #    By: smoore-a <smoore-a@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/12/19 20:08:31 by smoore-a          #+#    #+#              #
-#    Updated: 2023/12/20 10:02:00 by smoore-a         ###   ########.fr        #
+#    Updated: 2024/02/29 20:53:28 by smoore-a         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
-
-GREEN		=	\033[0;32m
-RED			=	\033[0;31m
-YELLOW		=	\033[1;33m
-RESET		=	\033[0m
 
 NAME		= 	libftprintf.a
 INCLUDE		=	include

@@ -6,11 +6,11 @@
 /*   By: smoore-a <smoore-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/19 13:37:04 by smoore-a          #+#    #+#             */
-/*   Updated: 2023/12/19 22:13:21 by smoore-a         ###   ########.fr       */
+/*   Updated: 2024/02/27 22:16:30 by smoore-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_printf.h"
+#include "../../include/ft_printf.h"
 
 static size_t	count_digit(unsigned int n)
 {
@@ -51,7 +51,7 @@ int	ft_puthex_fd(unsigned int n, int low_upper)
 		n /= 16;
 	}
 	len = ft_strlen(nbr);
-	ft_putstr_fd(nbr, 1);
+	put_str(nbr, 1);
 	free(nbr);
 	return (len);
 }

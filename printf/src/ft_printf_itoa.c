@@ -1,65 +1,63 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_hex_address.c                                   :+:      :+:    :+:   */
+/*   ft_printf_itoa.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: smoore-a <smoore-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/12/19 09:06:39 by smoore-a          #+#    #+#             */
-/*   Updated: 2024/02/29 21:55:43 by smoore-a         ###   ########.fr       */
+/*   Created: 2024/02/27 21:58:05 by smoore-a          #+#    #+#             */
+/*   Updated: 2024/02/27 22:16:06 by smoore-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/ft_printf.h"
 
-static size_t	count_digit(size_t n)
+static size_t	count_digit(int n)
 {
 	size_t	len;
 
 	len = 0;
-	if (n == 0)
+	if (n <= 0)
 		len++;
 	while (n != 0)
 	{
-		n /= 16;
+		n /= 10;
 		len++;
 	}
 	return (len);
 }
 
-static void	hex_conv(char *nbr, size_t address, size_t len)
+static char	*int_conv(char *nbr, int sign, int n, size_t len)
 {
-	while (len-- > 2)
+	if (!nbr)
+		return (NULL);
+	nbr[len] = '\0';
+	if (n < 0)
 	{
-		if (address % 16 < 10)
-			nbr[len] = '0' + (address % 16);
-		else
-			nbr[len] = 'a' + (address % 16) - 10;
-		address /= 16;
+		n = -n;
+		sign = 1;
 	}
+	while (len-- > 0)
+	{
+		nbr[len] = '0' + (n % 10);
+		n /= 10;
+	}
+	if (sign)
+		nbr[0] = '-';
+	return (nbr);
 }
 
-int	ft_hex_address(size_t address)
+int	int_itoa(int n)
 {
 	size_t	len;
 	char	*nbr;
 
-	if (!address)
-	{
-		put_str("0x0", 1);
-		return (3);
-	}
-	len = count_digit(address) + 3;
-	nbr = (char *)malloc(len * sizeof(char));
-	if (!nbr)
-	{
-		free(nbr);
-		return (0);
-	}
-	nbr[--len] = '\0';
-	hex_conv(nbr, address, len);
-	nbr[1] = 'x';
-	nbr[0] = '0';
+	len = count_digit(n);
+	nbr = (char *)malloc((len + 1) * sizeof(char));
+	if (n == -2147483648)
+		ft_strlcpy(nbr, "-2147483648", len + 1);
+	else
+		nbr = int_conv(nbr, 0, n, len);
 	len = put_str(nbr, 1);
 	free(nbr);
 	return ((int)len);
