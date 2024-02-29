@@ -6,11 +6,19 @@
 /*   By: smoore-a <smoore-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/31 14:33:58 by smoore-a          #+#    #+#             */
-/*   Updated: 2024/02/27 21:06:05 by smoore-a         ###   ########.fr       */
+/*   Updated: 2024/02/29 18:20:14 by smoore-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line_bonus.h"
+
+char	*free_str(char **str)
+{
+	if (*str)
+		free(*str);
+	*str = NULL;
+	return (NULL);
+}
 
 size_t	str_len(char *str)
 {
@@ -50,29 +58,26 @@ char	*create_cache(char *cache, char *buffer)
 	return (cache);
 }
 
-char	*extend_cache(char *cache, char *buffer)
+char	*extend_cache(char **cache, char *buffer)
 {
 	size_t	final_size;
 	int		i;
 	int		j;
 	char	*temp;
 
-	if (!cache)
-		return (create_cache(cache, buffer));
-	final_size = str_len(cache) + str_len(buffer) + 1;
+	if (!(*cache))
+		return (create_cache(*cache, buffer));
+	final_size = str_len(*cache) + str_len(buffer) + 1;
 	temp = (char *)malloc(final_size * sizeof(char));
 	if (!temp)
-	{
-		free(cache);
-		return (NULL);
-	}
+		return (free_str(cache));
 	i = -1;
-	while (cache[++i])
-		temp[i] = cache[i];
+	while ((*cache)[++i])
+		temp[i] = (*cache)[i];
 	j = -1;
 	while (buffer[++j])
 		temp[i++] = buffer[j];
 	temp[i] = '\0';
-	free(cache);
+	free_str(cache);
 	return (temp);
 }

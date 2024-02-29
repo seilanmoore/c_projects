@@ -6,7 +6,7 @@
 /*   By: smoore-a <smoore-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/31 14:00:16 by smoore-a          #+#    #+#             */
-/*   Updated: 2024/02/27 21:06:05 by smoore-a         ###   ########.fr       */
+/*   Updated: 2024/02/29 18:25:44 by smoore-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,95 +27,87 @@ static char	*ft_strdup(char *str)
 	return (dup);
 }
 
-static char	*get_new_cache(char *cache)
+static char	*get_new_cache(char **cache)
 {
 	char	*new_cache;
 	char	*temp;
 
-	temp = found_nl(cache);
+	temp = found_nl(*cache);
 	if (*temp == '\n')
 		temp++;
 	if (*temp != '\0')
 	{
 		new_cache = ft_strdup(temp);
-		free(cache);
+		free_str(cache);
 		return (new_cache);
 	}
-	free(cache);
-	return (NULL);
+	return (free_str(cache));
 }
 
-static char	*get_new_line(char *cache)
+static char	*get_new_line(char **cache)
 {
 	int		i;
 	int		end;
 	char	*new_line;
 
-	if (*cache != '\0')
+	if (**cache != '\0')
 	{
-		if (*found_nl(cache) != '\0')
-			end = found_nl(cache) - cache + 1;
+		if (*found_nl(*cache) != '\0')
+			end = found_nl(*cache) - *cache + 1;
 		else
-			end = str_len(cache);
+			end = str_len(*cache);
 		new_line = (char *)malloc((end + 1) * sizeof(char));
 		if (!new_line)
-			return (NULL);
+			return (free_str(cache));
 		i = -1;
 		while (++i < end)
-			new_line[i] = cache[i];
+			new_line[i] = (*cache)[i];
 		new_line[i] = '\0';
 		return (new_line);
 	}
-	return (NULL);
+	return (free_str(cache));
 }
 
-static char	*get_buffer(int fd, char *cache, int *read_bytes)
+static char	*get_buffer(int fd, char **cache, int *read_bytes)
 {
 	char	*buffer;
 
 	buffer = malloc((BUFFER_SIZE + 1) * sizeof(char));
 	if (!buffer)
-	{
-		if (cache)
-			free(cache);
-		return (NULL);
-	}
+		return (free_str(cache));
 	*read_bytes = read(fd, buffer, BUFFER_SIZE);
 	if (*read_bytes == -1)
-	{
-		if (cache)
-			free(cache);
-		free(buffer);
-		return (NULL);
-	}
+		return (free_str(cache), free_str(&buffer));
 	buffer[*read_bytes] = '\0';
-	if (!cache && !(*read_bytes))
-		cache = NULL;
+	if (!(*cache) && !(*read_bytes))
+		*cache = NULL;
 	else if (*read_bytes > 0)
-		cache = extend_cache(cache, buffer);
-	free(buffer);
-	return (cache);
+		*cache = extend_cache(cache, buffer);
+	free_str(&buffer);
+	return (*cache);
 }
 
 char	*get_next_line(int fd)
 {
-	static char	*cache[20];
+	static char	*cache[4096];
 	char		*line;
 	int			read_bytes;
 
-	if (fd < 0 || fd > 19 || BUFFER_SIZE <= 0)
+	if (fd < 0 || fd > 4095 || BUFFER_SIZE <= 0)
 		return (NULL);
-	cache[fd] = get_buffer(fd, cache[fd], &read_bytes);
+	cache[fd] = get_buffer(fd, &(cache[fd]), &read_bytes);
 	if (!cache[fd])
 		return (NULL);
 	while (*found_nl(cache[fd]) == '\0' && read_bytes > 0)
 	{
-		cache[fd] = get_buffer(fd, cache[fd], &read_bytes);
+		cache[fd] = get_buffer(fd, &(cache[fd]), &read_bytes);
 		if (!cache[fd])
 			return (NULL);
 	}
-	line = get_new_line(cache[fd]);
-	cache[fd] = get_new_cache(cache[fd]);
+	line = get_new_line(&(cache[fd]));
+	if (!line)
+		return (NULL);
+	cache[fd] = get_new_cache(&(cache[fd]));
 	return (line);
 }
 
