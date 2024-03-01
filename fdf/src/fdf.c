@@ -6,7 +6,7 @@
 /*   By: smoore-a <smoore-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/27 20:52:25 by smoore-a          #+#    #+#             */
-/*   Updated: 2024/02/27 23:17:45 by smoore-a         ###   ########.fr       */
+/*   Updated: 2024/03/01 20:58:03 by smoore-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,10 @@
 
 int	main(void)
 {
-	ft_printf("This works fine.\n%d", 10);
+	void	*mlx;
+
+	mlx = mlx_init();
+	mlx_new_window(mlx, 800, 800, "apito");
+	mlx_loop(mlx);
 	return (0);
 }

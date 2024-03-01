@@ -6,7 +6,7 @@
 /*   By: smoore-a <smoore-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/31 13:58:00 by smoore-a          #+#    #+#             */
-/*   Updated: 2024/02/27 21:07:28 by smoore-a         ###   ########.fr       */
+/*   Updated: 2024/03/01 02:27:10 by smoore-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,7 @@ char	*get_next_line(int fd);
 size_t	str_len(char *str);
 char	*found_nl(char *cache);
 char	*create_cache(char *cache, char *buffer);
-char	*extend_cache(char *cache, char *buffer);
+char	*extend_cache(char **cache, char *buffer);
+char	*free_str(char **str);
 
 #endif

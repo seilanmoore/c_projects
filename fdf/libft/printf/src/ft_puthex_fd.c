@@ -6,52 +6,37 @@
 /*   By: smoore-a <smoore-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/19 13:37:04 by smoore-a          #+#    #+#             */
-/*   Updated: 2024/02/27 22:16:30 by smoore-a         ###   ########.fr       */
+/*   Updated: 2024/03/01 02:20:09 by smoore-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/ft_printf.h"
 
-static size_t	count_digit(unsigned int n)
-{
-	size_t	len;
-
-	len = 0;
-	if (n == 0)
-		len++;
-	while (n != 0)
-	{
-		n /= 16;
-		len++;
-	}
-	return (len);
-}
-
 int	ft_puthex_fd(unsigned int n, int low_upper)
 {
+	size_t	i;
 	size_t	len;
-	char	*nbr;
+	char	nbr[8];
 
-	len = count_digit(n);
-	nbr = (char *)malloc((len + 1) * sizeof(char));
-	if (!nbr)
-	{
-		free(nbr);
-		return (0);
-	}
-	nbr[len] = '\0';
-	while (len-- > 0)
+	if (n == 0)
+		return (put_char('0'));
+	i = 0;
+	while (n > 0)
 	{
 		if (n % 16 < 10)
-			nbr[len] = '0' + (n % 16);
+			nbr[i] = '0' + (n % 16);
 		else if (!low_upper)
-			nbr[len] = 'a' + (n % 16) - 10;
+			nbr[i] = 'a' + (n % 16) - 10;
 		else if (low_upper)
-			nbr[len] = 'A' + (n % 16) - 10;
+			nbr[i] = 'A' + (n % 16) - 10;
 		n /= 16;
+		i++;
 	}
-	len = ft_strlen(nbr);
-	put_str(nbr, 1);
-	free(nbr);
-	return (len);
+	len = i;
+	while (i-- > 0)
+	{
+		if (put_char(nbr[i]) == -1)
+			return (-1);
+	}
+	return (ft_bzero(nbr, 8), len);
 }

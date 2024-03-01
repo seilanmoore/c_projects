@@ -6,17 +6,17 @@
 #    By: smoore-a <smoore-a@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/11/27 15:26:15 by smoore-a          #+#    #+#              #
-#    Updated: 2024/03/01 02:40:54 by smoore-a         ###   ########.fr        #
+#    Updated: 2024/03/01 22:11:24 by smoore-a         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = libft.a
 
-CC = cc
+CC = gcc
 
-CFLAGS = -Wall -Werror -Wextra -g
+CFLAGS = -Wall -Werror -Wextra
 
-INCLUDE = -I include
+INCLUDE = -Iinclude
 
 RM = rm -rf
 
@@ -45,7 +45,7 @@ BONUS_SRC = ft_lstnew_bonus ft_lstadd_front_bonus \
 PRINTF_SRC = ft_printf ft_conversion ft_hex_address ft_puthex_fd \
 	ft_uitoa ft_printf_itoa ft_printf_utils
 
-GNL_SRC =	get_next_line get_next_line_utils
+GNL_SRC = get_next_line get_next_line_utils
 
 SRC_FILES = $(addprefix $(SRC_DIR), $(addsuffix .c, $(SRC)))
 
@@ -66,7 +66,7 @@ GNL_OBJ_F = $(addprefix $(GNL)$(OBJ_DIR), $(addsuffix .o, $(GNL_SRC)))
 all: $(NAME)
 
 $(NAME): $(OBJ_FILES) $(PRINTF_OBJ_F) $(GNL_OBJ_F)
-	ar rcs $(NAME) $^
+	ar rcs $@ $^
 	@echo "$(NAME) compiled"
 
 $(OBJ_DIR)%.o: $(SRC_DIR)%.c
@@ -75,7 +75,7 @@ $(OBJ_DIR)%.o: $(SRC_DIR)%.c
 	@echo "$< compiled"
 
 bonus: $(BONUS_OBJ_FILES)
-	ar rcs $(NAME) $(BONUS_OBJ_FILES)
+	ar rcs $(NAME) $^
 	@echo "Bonus compiled"
 
 $(PRINTF)$(OBJ_DIR)%.o:	$(PRINTF)$(SRC_DIR)%.c
