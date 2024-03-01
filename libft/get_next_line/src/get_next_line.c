@@ -6,11 +6,11 @@
 /*   By: smoore-a <smoore-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/31 14:00:16 by smoore-a          #+#    #+#             */
-/*   Updated: 2024/02/27 22:19:47 by smoore-a         ###   ########.fr       */
+/*   Updated: 2024/03/01 02:27:31 by smoore-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../include/get_next_line.h"
+#include "get_next_line.h"
 
 static char	*ft_strdup(char *str)
 {
@@ -27,105 +27,87 @@ static char	*ft_strdup(char *str)
 	return (dup);
 }
 
-static char	*get_new_cache(char *cache, char *line)
+static char	*get_new_cache(char **cache)
 {
 	char	*new_cache;
 	char	*temp;
 
-	if (!line)
+	temp = found_nl(*cache);
+	if (*temp == '\n')
+		temp++;
+	if (*temp != '\0')
 	{
-		free(cache);
-		return (NULL);
+		new_cache = ft_strdup(temp);
+		free_str(cache);
+		return (new_cache);
 	}
-	if (found_nl(cache))
-	{
-		temp = found_nl(cache) + 1;
-		if (*temp != '\0')
-		{
-			new_cache = ft_strdup(temp);
-			free(cache);
-			return (new_cache);
-		}
-	}
-	free(cache);
-	return (NULL);
+	return (free_str(cache));
 }
 
-static char	*get_new_line(char *cache)
+static char	*get_new_line(char **cache)
 {
 	int		i;
 	int		end;
 	char	*new_line;
 
-	if (*cache != '\0')
+	if (**cache != '\0')
 	{
-		if (found_nl(cache))
-			end = found_nl(cache) - cache + 1;
+		if (*found_nl(*cache) != '\0')
+			end = found_nl(*cache) - *cache + 1;
 		else
-			end = str_len(cache);
+			end = str_len(*cache);
 		new_line = (char *)malloc((end + 1) * sizeof(char));
 		if (!new_line)
-			return (NULL);
+			return (free_str(cache));
 		i = -1;
 		while (++i < end)
-			new_line[i] = cache[i];
+			new_line[i] = (*cache)[i];
 		new_line[i] = '\0';
 		return (new_line);
 	}
-	return (NULL);
+	return (free_str(cache));
 }
 
-static char	*get_buffer(int fd, char *cache, int *read_bytes)
+static char	*get_buffer(int fd, char **cache, int *read_bytes)
 {
 	char	*buffer;
 
 	buffer = malloc((BUFFER_SIZE + 1) * sizeof(char));
 	if (!buffer)
-	{
-		if (cache)
-			free(cache);
-		return (NULL);
-	}
+		return (free_str(cache));
 	*read_bytes = read(fd, buffer, BUFFER_SIZE);
 	if (*read_bytes == -1)
-	{
-		if (cache)
-			free(cache);
-		free(buffer);
-		return (NULL);
-	}
+		return (free_str(cache), free_str(&buffer));
 	buffer[*read_bytes] = '\0';
-	if (!cache && !(*read_bytes))
-		cache = NULL;
+	if (!(*cache) && !(*read_bytes))
+		*cache = NULL;
 	else if (*read_bytes > 0)
-		cache = extend_cache(cache, buffer);
-	free(buffer);
-	return (cache);
+		*cache = extend_cache(cache, buffer);
+	free_str(&buffer);
+	return (*cache);
 }
 
 char	*get_next_line(int fd)
 {
-	static char	*cache = NULL;
+	static char	*cache[4096];
 	char		*line;
 	int			read_bytes;
 
-	if (fd < 0 || BUFFER_SIZE <= 0)
-	{
-		if (cache)
-			free(cache);
+	if (fd < 0 || fd > 4095 || BUFFER_SIZE <= 0)
 		return (NULL);
-	}
-	cache = get_buffer(fd, cache, &read_bytes);
-	if (!cache)
+	cache[fd] = get_buffer(fd, &(cache[fd]), &read_bytes);
+	if (!cache[fd])
 		return (NULL);
-	while (!found_nl(cache) && read_bytes > 0)
+	while (*found_nl(cache[fd]) == '\0' && read_bytes > 0)
 	{
-		cache = get_buffer(fd, cache, &read_bytes);
-		if (!cache)
+		cache[fd] = get_buffer(fd, &(cache[fd]), &read_bytes);
+		if (!cache[fd])
 			return (NULL);
 	}
-	line = get_new_line(cache);
-	cache = get_new_cache(cache, line);
+	line = get_new_line(&(cache[fd]));
+	if (!line)
+		return (NULL);
+	cache[fd] = get_new_cache(&(cache[fd]));
 	return (line);
 }
 
@@ -134,11 +116,14 @@ char	*get_next_line(int fd)
 	int		fd;
 	char	*line;
 
-	fd = open("tests/41_with_nl", O_RDONLY);
-	line = "";
+	fd = open("tests/variable_nls.txt", O_RDONLY);
+	printf("FOPEN_MAX = %d\n", FOPEN_MAX);
+	line = get_next_line(fd);
+	printf("%s", line);
+	free(line);
 	while (line)
 	{
-		line = get_next_line(100);
+		line = get_next_line(fd);
 		if (line)
 		{
 			printf("%s", line);

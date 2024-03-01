@@ -6,58 +6,50 @@
 /*   By: smoore-a <smoore-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/19 09:06:39 by smoore-a          #+#    #+#             */
-/*   Updated: 2024/02/29 23:04:51 by smoore-a         ###   ########.fr       */
+/*   Updated: 2024/03/01 02:20:09 by smoore-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/ft_printf.h"
 
-static size_t	count_digit(size_t n)
+int	hex_conv(size_t n)
 {
+	size_t	i;
 	size_t	len;
+	char	nbr[16];
 
-	len = 0;
-	if (n == 0)
-		len++;
-	while (n != 0)
+	i = 0;
+	while (n > 0)
 	{
-		n /= 16;
-		len++;
-	}
-	return (len);
-}
-
-static void	hex_conv(char *nbr, size_t address, size_t len)
-{
-	while (len-- > 2)
-	{
-		if (address % 16 < 10)
-			nbr[len] = '0' + (address % 16);
+		if (n % 16 < 10)
+			nbr[i] = '0' + (n % 16);
 		else
-			nbr[len] = 'a' + (address % 16) - 10;
-		address /= 16;
+			nbr[i] = 'a' + (n % 16) - 10;
+		n /= 16;
+		i++;
 	}
+	len = i;
+	while (i-- > 0)
+	{
+		if (put_char(nbr[i]) == -1)
+			return (-1);
+	}
+	return (ft_bzero(nbr, 16), len);
 }
 
 int	ft_hex_address(size_t address)
 {
-	size_t	len;
-	char	*nbr;
+	int		len;
 
 	if (!address)
 	{
-		put_str("0x0", 1);
+		if (put_str("0x0") == -1)
+			return (-1);
 		return (3);
 	}
-	len = count_digit(address) + 3;
-	nbr = (char *)malloc(len * sizeof(char));
-	if (!nbr)
+	if (put_str("0x") == -1)
 		return (-1);
-	nbr[--len] = '\0';
-	hex_conv(nbr, address, len);
-	nbr[1] = 'x';
-	nbr[0] = '0';
-	len = put_str(nbr, 1);
-	free(nbr);
-	return ((int)len);
+	len = 2;
+	len += hex_conv(address);
+	return (len);
 }
