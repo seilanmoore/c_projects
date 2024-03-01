@@ -6,11 +6,13 @@
 #    By: smoore-a <smoore-a@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/02/27 20:48:30 by smoore-a          #+#    #+#              #
-#    Updated: 2024/03/01 21:29:48 by smoore-a         ###   ########.fr        #
+#    Updated: 2024/03/01 22:32:56 by smoore-a         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = fdf
+
+MLX = mlx/libmlx.a
 
 INCLUDE = -Iinclude -Ilibft/include -Imlx
 
@@ -38,9 +40,9 @@ SRC_FILES = $(addprefix $(SRC_DIR), $(addsuffix .c, $(SRC)))
 OBJ_FILES = $(addprefix $(OBJ_DIR), $(addsuffix .o, $(SRC)))
 
 
-all: $(NAME)
+all: $(NAME) $(MLX) $(LIBFT)
 
-$(NAME): $(OBJ_FILES) $(LIBFT)
+$(NAME): $(OBJ_FILES) $(LIBFT) $(MLX)
 	$(CC) $(CFLAGS) $(INCLUDE) $^ -o $@ $(LIBFT_FLAGS) $(MLX_FLAGS)
 	@echo "$(NAME) compiled"
 
@@ -52,6 +54,10 @@ $(OBJ_DIR)%.o: $(SRC_DIR)%.c
 $(LIBFT):
 	@make all bonus -C libft
 	@echo "$(LIBFT) compiled"
+
+$(MLX):
+	@make all -C mlx
+	@echo "$(MLX) compiled"
 
 clean:
 	$(RM) $(OBJ_DIR)
