@@ -6,7 +6,7 @@
 /*   By: smoore-a <smoore-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/18 16:33:58 by smoore-a          #+#    #+#             */
-/*   Updated: 2024/02/29 23:40:26 by smoore-a         ###   ########.fr       */
+/*   Updated: 2024/03/01 02:14:27 by smoore-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,9 +15,9 @@
 int	ft_conversion(char format, va_list ap)
 {
 	if (format == 'c')
-		return (put_char(va_arg(ap, int), 1));
+		return (put_char(va_arg(ap, int)));
 	else if (format == 's')
-		return (put_str(va_arg(ap, char *), 1));
+		return (put_str(va_arg(ap, char *)));
 	else if (format == 'p')
 		return (ft_hex_address((size_t)va_arg(ap, void *)));
 	else if (format == 'd' || format == 'i')
@@ -29,7 +29,7 @@ int	ft_conversion(char format, va_list ap)
 	else if (format == 'X')
 		return (ft_puthex_fd(va_arg(ap, unsigned int), 1));
 	else if (format == '%')
-		return (put_char('%', 1));
+		return (put_char('%'));
 	else
 		return (-1);
 }

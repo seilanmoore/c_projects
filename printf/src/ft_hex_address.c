@@ -6,7 +6,7 @@
 /*   By: smoore-a <smoore-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/19 09:06:39 by smoore-a          #+#    #+#             */
-/*   Updated: 2024/03/01 01:53:18 by smoore-a         ###   ########.fr       */
+/*   Updated: 2024/03/01 02:14:07 by smoore-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ int	hex_conv(size_t n)
 	len = i;
 	while (i-- > 0)
 	{
-		if (ft_putchar_fd(nbr[i], 1) == -1)
+		if (put_char(nbr[i]) == -1)
 			return (-1);
 	}
 	return (ft_bzero(nbr, 16), len);
@@ -43,10 +43,11 @@ int	ft_hex_address(size_t address)
 
 	if (!address)
 	{
-		put_str("0x0", 1);
+		if (put_str("0x0") == -1)
+			return (-1);
 		return (3);
 	}
-	if (write(1, "0x", 2) == -1)
+	if (put_str("0x") == -1)
 		return (-1);
 	len = 2;
 	len += hex_conv(address);

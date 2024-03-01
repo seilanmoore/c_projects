@@ -6,7 +6,7 @@
 /*   By: smoore-a <smoore-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/27 21:58:05 by smoore-a          #+#    #+#             */
-/*   Updated: 2024/03/01 01:32:12 by smoore-a         ###   ########.fr       */
+/*   Updated: 2024/03/01 02:13:38 by smoore-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ static int	int_conv(int n, int len)
 	if (n < 0)
 	{
 		n = -n;
-		if (write(1, "-", 1) == -1)
+		if (put_char('-') == -1)
 			return (-1);
 	}
 	while (n > 0)
@@ -33,7 +33,7 @@ static int	int_conv(int n, int len)
 	len += i;
 	while (i-- > 0)
 	{
-		if (write(1, &nbr[i], 1) == -1)
+		if (put_char(nbr[i]) == -1)
 			return (-1);
 	}
 	return (len);
@@ -42,9 +42,9 @@ static int	int_conv(int n, int len)
 int	int_itoa(int n)
 {
 	if (n == 0)
-		return (write(1, "0", 1));
+		return (put_char('0'));
 	if (n == -2147483648)
-		return (write(1, "-2147483648", 11));
+		return (put_str("-2147483648"));
 	if (n < 0)
 		return (int_conv(n, 1));
 	return (int_conv(n, 0));

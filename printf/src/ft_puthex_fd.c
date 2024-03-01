@@ -6,7 +6,7 @@
 /*   By: smoore-a <smoore-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/19 13:37:04 by smoore-a          #+#    #+#             */
-/*   Updated: 2024/03/01 01:10:27 by smoore-a         ###   ########.fr       */
+/*   Updated: 2024/03/01 02:10:53 by smoore-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ int	ft_puthex_fd(unsigned int n, int low_upper)
 	char	nbr[8];
 
 	if (n == 0)
-		return (write(1, "0", 1));
+		return (put_char('0'));
 	i = 0;
 	while (n > 0)
 	{
@@ -35,7 +35,7 @@ int	ft_puthex_fd(unsigned int n, int low_upper)
 	len = i;
 	while (i-- > 0)
 	{
-		if (ft_putchar_fd(nbr[i], 1) == -1)
+		if (put_char(nbr[i]) == -1)
 			return (-1);
 	}
 	return (ft_bzero(nbr, 8), len);
