@@ -6,7 +6,7 @@
 /*   By: smoore-a <smoore-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/16 09:55:29 by smoore-a          #+#    #+#             */
-/*   Updated: 2024/02/29 23:44:11 by smoore-a         ###   ########.fr       */
+/*   Updated: 2024/03/01 01:06:52 by smoore-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,14 +18,11 @@ static const char	*read_str(va_list *ap, const char *p, int *count)
 
 	add = 0;
 	if (*p != '%')
-	{
-		put_char(*p, 1);
-		add = 1;
-	}
+		add = put_char(*p, 1);
 	else
 	{
-		add = ft_conversion(*(p + 1), *ap);
 		p++;
+		add = ft_conversion(*p, *ap);
 	}
 	if (add == -1)
 	{

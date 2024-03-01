@@ -6,44 +6,32 @@
 /*   By: smoore-a <smoore-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/19 13:20:02 by smoore-a          #+#    #+#             */
-/*   Updated: 2024/02/29 22:49:51 by smoore-a         ###   ########.fr       */
+/*   Updated: 2024/03/01 01:11:27 by smoore-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/ft_printf.h"
 
-static size_t	count_digit(unsigned int n)
-{
-	size_t	len;
-
-	len = 0;
-	if (n == 0)
-		len++;
-	while (n != 0)
-	{
-		n /= 10;
-		len++;
-	}
-	return (len);
-}
-
 int	ft_uitoa(unsigned int n)
 {
+	size_t	i;
 	size_t	len;
-	char	*nbr;
+	char	nbr[10];
 
-	len = count_digit(n);
-	nbr = (char *)malloc((len + 1) * sizeof(char));
-	if (!nbr)
-		return (-1);
-	nbr[len] = '\0';
-	while (len-- > 0)
+	if (n == 0)
+		return (write(1, "0", 1));
+	i = 0;
+	while (n > 0)
 	{
-		nbr[len] = '0' + (n % 10);
+		nbr[i] = '0' + (n % 10);
 		n /= 10;
+		i++;
 	}
-	put_str(nbr, 1);
-	len = ft_strlen(nbr);
-	free(nbr);
-	return (len);
+	len = i;
+	while (i-- > 0)
+	{
+		if (ft_putchar_fd(nbr[i], 1) == -1)
+			return (-1);
+	}
+	return (ft_bzero(nbr, 10), len);
 }

@@ -6,7 +6,7 @@
 /*   By: smoore-a <smoore-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/27 21:56:57 by smoore-a          #+#    #+#             */
-/*   Updated: 2024/02/29 22:44:13 by smoore-a         ###   ########.fr       */
+/*   Updated: 2024/02/29 23:57:24 by smoore-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,10 +18,12 @@ int	put_str(char *s, int fd)
 		return (0);
 	if (!s)
 	{
-		write(fd, "(null)", 6);
+		if (write(fd, "(null)", 6) == -1)
+			return (-1);
 		return (6);
 	}
-	write(fd, s, ft_strlen(s));
+	if (write(fd, s, ft_strlen(s)) == -1)
+		return (-1);
 	return (ft_strlen(s));
 }
 
@@ -32,6 +34,7 @@ int	put_char(int c, int fd)
 	ch = (unsigned char) c;
 	if (!fd)
 		return (0);
-	write(fd, &ch, 1);
+	if (write(fd, &ch, 1) == -1)
+		return (-1);
 	return (1);
 }
