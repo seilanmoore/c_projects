@@ -6,24 +6,23 @@
 #    By: smoore-a <smoore-a@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/02/27 20:48:30 by smoore-a          #+#    #+#              #
-#    Updated: 2024/03/01 22:32:56 by smoore-a         ###   ########.fr        #
+#    Updated: 2024/03/05 15:51:51 by smoore-a         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = fdf
 
-MLX = mlx/libmlx.a
+MLX = mlx_linux/libmlx_Linux.a
 
-INCLUDE = -Iinclude -Ilibft/include -Imlx
+INCLUDE = -Iinclude -Ilibft/include -I/usr/include -Imlx_linux
 
 CC = gcc
 
-CPPFLAGS = -g -Wall -Werror -Wextra
+CFLAGS = -g -Wall -Werror -Wextra -O0 #-O3
 
 LIBFT_FLAGS = -Llibft -lft
 
-MLX_FLAGS = -Lmlx -lmlx -L/usr/X11/lib -lXext -lX11 \
-	-framework OpenGL -framework AppKit
+MLX_FLAGS = -Lmlx_linux -lmlx_Linux -L/usr/lib -lXext -lX11 -lm -lz
 
 LIBFT = libft/libft.a
 
@@ -33,7 +32,7 @@ SRC_DIR = src/
 
 OBJ_DIR = obj/
 
-SRC = fdf
+SRC = fdf handle_map ft_mlx
 
 SRC_FILES = $(addprefix $(SRC_DIR), $(addsuffix .c, $(SRC)))
 
@@ -56,7 +55,7 @@ $(LIBFT):
 	@echo "$(LIBFT) compiled"
 
 $(MLX):
-	@make all -C mlx
+	@make all -C mlx_linux
 	@echo "$(MLX) compiled"
 
 clean:
@@ -70,6 +69,8 @@ fclean: clean
 	@echo "$(NAME) removed"
 	$(RM) $(LIBFT)
 	@echo "$(LIBFT) removed"
+	make clean -C mlx_linux
+	@echo "Mlx cleaned"
 
 re: fclean all
 
