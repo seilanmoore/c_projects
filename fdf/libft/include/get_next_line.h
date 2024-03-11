@@ -6,7 +6,7 @@
 /*   By: smoore-a <smoore-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/31 13:58:00 by smoore-a          #+#    #+#             */
-/*   Updated: 2024/03/05 15:52:08 by smoore-a         ###   ########.fr       */
+/*   Updated: 2024/03/10 20:32:03 by smoore-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 # define GET_NEXT_LINE_H
 
 # ifndef BUFFER_SIZE
-#  define BUFFER_SIZE 500
+#  define BUFFER_SIZE 5502
 # endif
 
 //Lib for read()

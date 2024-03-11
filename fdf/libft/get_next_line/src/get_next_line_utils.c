@@ -6,11 +6,11 @@
 /*   By: smoore-a <smoore-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/31 14:33:58 by smoore-a          #+#    #+#             */
-/*   Updated: 2024/03/01 02:27:36 by smoore-a         ###   ########.fr       */
+/*   Updated: 2024/03/11 09:03:21 by smoore-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "get_next_line.h"
+#include "../../include/get_next_line.h"
 
 char	*free_str(char **str)
 {

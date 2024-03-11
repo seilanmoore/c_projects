@@ -6,7 +6,7 @@
 /*   By: smoore-a <smoore-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/27 20:50:51 by smoore-a          #+#    #+#             */
-/*   Updated: 2024/03/05 20:38:41 by smoore-a         ###   ########.fr       */
+/*   Updated: 2024/03/11 11:11:16 by smoore-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@
 # define WINDOW_WIDTH 500
 # define WINDOW_HEIGHT 500
 # define SIDE 25
+
 // COLORS
 
 # define WHITE			0x00FFFFFF
@@ -51,7 +52,7 @@ typedef struct	s_vars
 	int dx;
 	int dy;
 	
-}				t_vars;
+}	t_vars;
 
 typedef struct	s_lvar
 {
@@ -63,7 +64,7 @@ typedef struct	s_lvar
 	int x;
 	int y;
 	int e2;
-}				t_lvar;
+}	t_lvar;
 
 typedef struct	s_img
 {
@@ -72,14 +73,14 @@ typedef struct	s_img
 	int		bpp;
 	int		line_len;
 	int		endian;
-}				t_img;
+}	t_img;
 
 typedef struct	s_data
 {
 	void	*mlx_ptr;
 	void	*win_ptr;
 	t_img	img;
-}				t_data;
+}	t_data;
 
 typedef struct	s_line
 {
@@ -88,17 +89,23 @@ typedef struct	s_line
 	int		length;
 	int		angle;
 	int		color;
-}				t_line;
+}	t_line;
+
+typedef struct s_point
+{
+	int	height;
+	int	color;
+}	t_point;
+
 
 typedef struct	s_mtrx
 {
-	char	**map;
-	int		x;
-	int		y;
-	int		col;
+	t_point	**point;
+	char	***map;
+	char	*file;
 	int		row;
-	int		color;
-}				t_mtrx;
+	int		col;
+}	t_mtrx;
 
 void	ft_mlx_destroy_window(void *mlx_ptr, void *win_ptr);
 void	ft_mlx_destroy_image(void *mlx_ptr, void *mlx_img);
@@ -107,13 +114,14 @@ void	ft_mlx_loop(t_data *data, void *mlx_ptr);
 void	ft_mlx_hook(t_data *data, void *win, int x_event,
 	int x_mask,	int (*funct)(),void *param);
 
+void	free_columns(char **map);
+void	free_map(t_mtrx *maps);
+void	map_error(t_mtrx *maps, char *message, char *file);
 t_mtrx	*init_map(int argc);
-int		count_lines(t_mtrx **maps, char *argv);
+int		count_lines(t_mtrx *maps, t_mtrx map);
 void	handle_args(int	argc, char **argv);
-int		free_map(t_mtrx *maps);
-t_mtrx	allocate_lines(t_mtrx **maps, char *argv, int f_pos);
-int		handle_lines(t_mtrx **maps, char *argv, int f_pos);
-int		handle_files(int argc, char **argv);
+void	allocate_lines(t_mtrx *maps, int f_pos);
+void	handle_files(int argc, char **argv);
 void	ft_error(t_data *data, char *message, char *file);
 
 #endif

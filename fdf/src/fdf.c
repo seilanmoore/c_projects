@@ -6,7 +6,7 @@
 /*   By: smoore-a <smoore-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/27 20:52:25 by smoore-a          #+#    #+#             */
-/*   Updated: 2024/03/05 15:27:59 by smoore-a         ###   ########.fr       */
+/*   Updated: 2024/03/11 09:10:35 by smoore-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,9 +23,12 @@ t_data	init_data()
 
 void	terminate(t_data *data)
 {
-	ft_mlx_destroy_image(data->mlx_ptr, data->img.mlx_img);
-	ft_mlx_destroy_window(data->mlx_ptr, data->win_ptr);
-	ft_mlx_destroy_display(data->mlx_ptr);
+	if (data)
+	{
+		ft_mlx_destroy_image(data->mlx_ptr, data->img.mlx_img);
+		ft_mlx_destroy_window(data->mlx_ptr, data->win_ptr);
+		ft_mlx_destroy_display(data->mlx_ptr);
+	}
 }
 
 void	ft_mlx_pixel_put(t_img *img, int x, int y, int color)
@@ -80,6 +83,8 @@ void	render_background(t_img *img, int color)
 	return (0);
 } */
 
+void	gradient(t_line line);
+
 void	print_line(t_img *img, t_line line, t_lvar v)
 {
 	while ((v.x != line.x + v.dx || v.y != line.y + v.dy)
@@ -128,10 +133,6 @@ int	render_line(t_img *img, t_line line)
 {
 	return (0);
 } */
-int	handle_no_event(void)
-{
-	return (0);
-}
 
 int	handle_keypress(int keysym, t_data *data)
 {
@@ -176,20 +177,18 @@ void	ft_error(t_data *data, char *message, char *file)
 	if (message && !file)
 		ft_printf("ERROR: %s\n", message);
 	else if (message && file)
-		ft_printf("ERROR: %s FILE: %s\n", message, file);
+		ft_printf("ERROR: %s -- FILE: %s\n", message, file);
 	else if (file && !message)
-		ft_printf("ERROR: %s FILE: %s\n", strerror(errno), file);
+		ft_printf("ERROR: %s -- FILE: %s\n", strerror(errno), file);
 	else
 		ft_printf("ERROR: %s\n", strerror(errno));
-	if (data)
-		terminate(data);
+	terminate(data);
 	exit(EXIT_FAILURE);
 }
 
 int	close_window_hook(t_data *data)
 {
-	if(data)
-		terminate(data);
+	terminate(data);
 	exit(EXIT_SUCCESS);
 }
 
@@ -200,7 +199,7 @@ void	init_window(void)
 	data = init_data();
 	data.mlx_ptr = mlx_init();
 	if (!data.mlx_ptr)
-		ft_error(&data, "Could'nt initiate mlx", NULL);
+		ft_error(NULL, "Could'nt initiate mlx", NULL);
 	data.win_ptr = mlx_new_window(data.mlx_ptr, WINDOW_WIDTH, WINDOW_HEIGHT,
 			"Program");
 	if (!data.win_ptr)
@@ -223,5 +222,5 @@ int	main(int argc, char **argv)
 {
 	handle_args(argc, argv);
 	init_window();
-	return (0);
+	return (EXIT_SUCCESS);
 }
