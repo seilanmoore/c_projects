@@ -10,7 +10,7 @@
 #                                                                              #
 # **************************************************************************** #
 
-NAME = fdf
+NAME = so_long
 
 MLX = mlx_linux/libmlx_Linux.a
 
@@ -32,7 +32,7 @@ SRC_DIR = src/
 
 OBJ_DIR = obj/
 
-SRC = fdf handle_map ft_mlx
+SRC = so_long handle_map check_map ft_mlx
 
 SRC_FILES = $(addprefix $(SRC_DIR), $(addsuffix .c, $(SRC)))
 

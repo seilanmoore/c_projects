@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/fdf.h"
+#include "../include/so_long.h"
 
 void	ft_mlx_destroy_window(void *mlx_ptr, void *win_ptr)
 {

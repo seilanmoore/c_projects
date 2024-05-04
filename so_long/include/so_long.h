@@ -21,6 +21,8 @@
 # include <math.h>
 # include <errno.h>
 
+# define TRUE 1
+# define FALSE 0
 # define ERROR -1
 # define WINDOW_WIDTH 500
 # define WINDOW_HEIGHT 500
@@ -114,14 +116,11 @@ void	ft_mlx_loop(t_data *data, void *mlx_ptr);
 void	ft_mlx_hook(t_data *data, void *win, int x_event,
 	int x_mask,	int (*funct)(),void *param);
 
-void	free_columns(char **map);
-void	free_map(t_mtrx *maps);
-void	map_error(t_mtrx *maps, char *message, char *file);
-t_mtrx	*init_map(int argc);
-int		count_lines(t_mtrx *maps, t_mtrx map);
-void	handle_args(int	argc, char **argv);
-void	allocate_lines(t_mtrx *maps, int f_pos);
-void	handle_files(int argc, char **argv);
 void	ft_error(t_data *data, char *message, char *file);
+char	**handle_args(int	argc, char **argv);
+void	free_map(char ***map);
+
+void	check_map(char **map);
+
 
 #endif

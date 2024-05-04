@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/fdf.h"
+#include "../include/so_long.h"
 
 t_data	init_data()
 {
@@ -220,7 +220,11 @@ void	init_window(void)
 
 int	main(int argc, char **argv)
 {
-	handle_args(argc, argv);
-	init_window();
+	char	**map;
+
+	map = handle_args(argc, argv);
+	check_map(map);
+	//init_window();
+	free_map(&map);
 	return (EXIT_SUCCESS);
 }
