@@ -3,16 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   libft.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: smoore-a <smoore-a@student.42.fr>          +#+  +:+       +#+        */
+/*   By: smoore-a <smoore-a@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/28 13:36:34 by smoore-a          #+#    #+#             */
-/*   Updated: 2024/02/27 22:42:23 by smoore-a         ###   ########.fr       */
+/*   Updated: 2024/05/06 13:08:20 by smoore-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef LIBFT_H
 # define LIBFT_H
-
 
 //# include <bsd/string.h>
 //Para compilar strlcpy y strlcat incluyendo

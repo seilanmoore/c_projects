@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: smoore-a <smoore-a@student.42.fr>          +#+  +:+       +#+         #
+#    By: smoore-a <smoore-a@student.42malaga.com    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/02/27 20:48:30 by smoore-a          #+#    #+#              #
-#    Updated: 2024/03/11 09:29:24 by smoore-a         ###   ########.fr        #
+#    Updated: 2024/05/06 20:04:58 by smoore-a         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,6 +15,8 @@ NAME = so_long
 MLX = mlx_linux/libmlx_Linux.a
 
 INCLUDE = -Iinclude -Ilibft/include -I/usr/include -Imlx_linux
+
+HEADER = include/so_long.h
 
 CC = gcc
 
@@ -32,12 +34,11 @@ SRC_DIR = src/
 
 OBJ_DIR = obj/
 
-SRC = so_long handle_map check_map ft_mlx
+SRC = main handle_map check_map ft_mlx
 
 SRC_FILES = $(addprefix $(SRC_DIR), $(addsuffix .c, $(SRC)))
 
 OBJ_FILES = $(addprefix $(OBJ_DIR), $(addsuffix .o, $(SRC)))
-
 
 all: $(NAME) $(MLX) $(LIBFT)
 
@@ -45,7 +46,7 @@ $(NAME): $(OBJ_FILES) $(LIBFT) $(MLX)
 	$(CC) $(CFLAGS) $(INCLUDE) $^ $(MLX_FLAGS) $(LIBFT_FLAGS) -o $@
 	@echo "$(NAME) compiled"
 
-$(OBJ_DIR)%.o: $(SRC_DIR)%.c
+$(OBJ_DIR)%.o: $(SRC_DIR)%.c $(HEADER)
 	@mkdir -p $(OBJ_DIR)
 	$(CC) $(CFLAGS) $(INCLUDE) -c $< -o $@
 	@echo "$< compiled"

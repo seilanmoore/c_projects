@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: smoore-a <smoore-a@student.42.fr>          +#+  +:+       +#+         #
+#    By: smoore-a <smoore-a@student.42malaga.com    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/11/27 15:26:15 by smoore-a          #+#    #+#              #
-#    Updated: 2024/03/01 22:11:56 by smoore-a         ###   ########.fr        #
+#    Updated: 2024/05/06 13:04:10 by smoore-a         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,15 +14,19 @@ NAME = libft.a
 
 CC = gcc
 
-CFLAGS = -Wall -Werror -Wextra
+CFLAGS = -g -Wall -Werror -Wextra
 
 INCLUDE = -Iinclude
+
+HEADER = include/libft.h
 
 RM = rm -rf
 
 SRC_DIR = src/
 
 OBJ_DIR = obj/
+
+BONUS = bonus/
 
 PRINTF = printf/
 
@@ -51,9 +55,9 @@ SRC_FILES = $(addprefix $(SRC_DIR), $(addsuffix .c, $(SRC)))
 
 OBJ_FILES = $(addprefix $(OBJ_DIR), $(addsuffix .o, $(SRC)))
 
-BONUS_SRC_FILES = $(addprefix $(SRC_DIR), $(addsuffix .c, $(BONUS_SRC)))
+BONUS_SRC_F = $(addprefix $(BONUS)$(SRC_DIR), $(addsuffix .c, $(BONUS_SRC)))
 
-BONUS_OBJ_FILES = $(addprefix $(OBJ_DIR), $(addsuffix .o, $(BONUS_SRC)))
+BONUS_OBJ_F = $(addprefix $(BONUS)$(OBJ_DIR), $(addsuffix .o, $(BONUS_SRC)))
 
 PRINTF_SRC_F = $(addprefix $(PRINTF)$(SRC_DIR), $(addsuffix .c, $(PRINTF_SRC)))
 
@@ -69,27 +73,37 @@ $(NAME): $(OBJ_FILES) $(PRINTF_OBJ_F) $(GNL_OBJ_F)
 	ar rcs $@ $^
 	@echo "$(NAME) compiled"
 
-$(OBJ_DIR)%.o: $(SRC_DIR)%.c
+$(OBJ_DIR)%.o: $(SRC_DIR)%.c $(HEADER)
 	@mkdir -p $(OBJ_DIR)
 	$(CC) $(CFLAGS) $(INCLUDE) -c $< -o $@ 
 	@echo "$< compiled"
 
-bonus: $(BONUS_OBJ_FILES)
+bonusts = .bonus_timestamp
+
+bonus: $(bonusts)
+
+$(bonusts): $(BONUS_OBJ_F) $(HEADER)
+	@touch $@
 	ar rcs $(NAME) $^
 	@echo "Bonus compiled"
 
-$(PRINTF)$(OBJ_DIR)%.o:	$(PRINTF)$(SRC_DIR)%.c
+$(BONUS)$(OBJ_DIR)%.o:	$(BONUS)$(SRC_DIR)%.c $(HEADER)
+	@mkdir -p $(BONUS)$(OBJ_DIR)
+	$(CC) $(CFLAGS) $(INCLUDE) -c $< -o $@
+	@echo "$< compiled"
+
+$(PRINTF)$(OBJ_DIR)%.o:	$(PRINTF)$(SRC_DIR)%.c include/ft_printf.h $(HEADER)
 	@mkdir -p $(PRINTF)$(OBJ_DIR)
 	$(CC) $(CFLAGS) $(INCLUDE) -c $< -o $@
 	@echo "$< compiled"
 
-$(GNL)$(OBJ_DIR)%.o: $(GNL)$(SRC_DIR)%.c
+$(GNL)$(OBJ_DIR)%.o: $(GNL)$(SRC_DIR)%.c include/get_next_line.h
 	@mkdir -p $(GNL)$(OBJ_DIR)
 	$(CC) $(CFLAGS) $(INCLUDE) -c $< -o $@
 	@echo "$< compiled"
 
 clean:
-	$(RM) $(OBJ_DIR) $(PRINTF)$(OBJ_DIR) $(GNL)$(OBJ_DIR)
+	$(RM) $(OBJ_DIR) $(PRINTF)$(OBJ_DIR) $(GNL)$(OBJ_DIR) $(BONUS)$(OBJ_DIR) $(bonusts)
 	@echo "Object files removed"
 
 fclean: clean

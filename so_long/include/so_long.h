@@ -1,17 +1,17 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   fdf.h                                              :+:      :+:    :+:   */
+/*   so_long.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: smoore-a <smoore-a@student.42.fr>          +#+  +:+       +#+        */
+/*   By: smoore-a <smoore-a@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/27 20:50:51 by smoore-a          #+#    #+#             */
-/*   Updated: 2024/03/11 11:11:16 by smoore-a         ###   ########.fr       */
+/*   Updated: 2024/05/06 13:03:12 by smoore-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef FDF_H
-# define FDF_H
+#ifndef SO_LONG_H
+# define SO_LONG_H
 
 # include "../libft/include/libft.h"
 # include "../mlx_linux/mlx.h"
@@ -120,7 +120,6 @@ void	ft_error(t_data *data, char *message, char *file);
 char	**handle_args(int	argc, char **argv);
 void	free_map(char ***map);
 
-void	check_map(char **map);
-
+//void	check_map(char **map);
 
 #endif

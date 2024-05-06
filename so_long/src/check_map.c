@@ -1,6 +1,5 @@
-#include "../include/so_long.h"
+/* #include "../include/so_long.h"
 
 void check_map(char **map)
 {
-    if ()
-}
+} */

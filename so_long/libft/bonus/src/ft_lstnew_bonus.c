@@ -1,30 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_lstiter_bonus.c                                 :+:      :+:    :+:   */
+/*   ft_lstnew_bonus.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: smoore-a <smoore-a@student.42.fr>          +#+  +:+       +#+        */
+/*   By: smoore-a <smoore-a@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/12/13 20:41:14 by smoore-a          #+#    #+#             */
-/*   Updated: 2024/02/27 22:13:45 by smoore-a         ###   ########.fr       */
+/*   Created: 2023/12/13 11:42:40 by smoore-a          #+#    #+#             */
+/*   Updated: 2024/05/05 20:20:26 by smoore-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/libft.h"
+#include "../../include/libft.h"
 
-void	ft_lstiter(t_list *lst, void (*f)(void *))
+t_list	*ft_lstnew(void *content)
 {
-	t_list	*current;
-	t_list	*next;
+	t_list	*new_node;
 
-	if (lst && f)
-	{
-		current = lst;
-		while (current)
-		{
-			next = current->next;
-			f(current->content);
-			current = next;
-		}
-	}
+	new_node = (t_list *)malloc(sizeof(t_list));
+	if (!new_node)
+		return (NULL);
+	new_node->content = content;
+	new_node->next = NULL;
+	return (new_node);
 }

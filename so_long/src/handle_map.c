@@ -3,29 +3,29 @@
 /*                                                        :::      ::::::::   */
 /*   handle_map.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: smoore-a <smoore-a@student.42.fr>          +#+  +:+       +#+        */
+/*   By: smoore-a <smoore-a@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/04 20:55:28 by smoore-a          #+#    #+#             */
-/*   Updated: 2024/03/11 12:19:41 by smoore-a         ###   ########.fr       */
+/*   Updated: 2024/05/06 13:15:20 by smoore-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/so_long.h"
 
-void	print_map(char **map)
+char	**print_map(char **map)
 {
 	int	i;
 	int	j;
 
 	i = -1;
-	ft_printf("\n");
 	while (map[++i])
 	{
 		j = -1;
 		while (map[i][++j])
-			ft_printf(" %c ", map[i][j]);
+			ft_printf("%c", map[i][j]);
 		ft_printf("\n");
 	}
+	return (map);
 }
 
 void	free_map(char ***map)

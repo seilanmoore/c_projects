@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   fdf.c                                              :+:      :+:    :+:   */
+/*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: smoore-a <smoore-a@student.42.fr>          +#+  +:+       +#+        */
+/*   By: smoore-a <smoore-a@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/27 20:52:25 by smoore-a          #+#    #+#             */
-/*   Updated: 2024/03/11 09:10:35 by smoore-a         ###   ########.fr       */
+/*   Updated: 2024/05/06 13:03:21 by smoore-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -223,7 +223,7 @@ int	main(int argc, char **argv)
 	char	**map;
 
 	map = handle_args(argc, argv);
-	check_map(map);
+	//check_map(map);
 	//init_window();
 	free_map(&map);
 	return (EXIT_SUCCESS);
