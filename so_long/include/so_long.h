@@ -23,6 +23,7 @@
 
 # define TRUE 1
 # define FALSE 0
+# define SUCCESS 0
 # define ERROR -1
 # define WINDOW_WIDTH 500
 # define WINDOW_HEIGHT 500
@@ -108,6 +109,13 @@ typedef struct	s_mtrx
 	int		row;
 	int		col;
 }	t_mtrx;
+
+typedef struct	s_components
+{
+	int	collec;
+	int	exit;
+	int	start;
+}				t_components;
 
 void	ft_mlx_destroy_window(void *mlx_ptr, void *win_ptr);
 void	ft_mlx_destroy_image(void *mlx_ptr, void *mlx_img);
