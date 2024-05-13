@@ -6,7 +6,7 @@
 /*   By: smoore-a <smoore-a@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/27 20:50:51 by smoore-a          #+#    #+#             */
-/*   Updated: 2024/05/06 13:03:12 by smoore-a         ###   ########.fr       */
+/*   Updated: 2024/05/13 18:58:21 by smoore-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,16 +18,19 @@
 
 # include <X11/keysym.h>
 # include <X11/X.h>
+// # include <cstddef>
 # include <math.h>
 # include <errno.h>
 
 # define TRUE 1
+# define NONE 0
 # define FALSE 0
 # define SUCCESS 0
 # define ERROR -1
 # define WINDOW_WIDTH 500
 # define WINDOW_HEIGHT 500
 # define SIDE 25
+# define INVALID "invalid map"
 
 // COLORS
 
@@ -45,31 +48,30 @@
 # define ROSE			0x00FF007F
 # define PURPLE			0x007F00FF
 
-typedef struct	s_vars
+typedef struct s_vars
 {
 	int	i;
 	int	j;
 	int	k;
 	int	l;
 	int	m;
-	int dx;
-	int dy;
-	
+	int	dx;
+	int	dy;
 }	t_vars;
 
-typedef struct	s_lvar
+typedef struct s_lvar
 {
-	int dx;
-	int dy;
-	int sx;
-	int sy;
-	int err;
-	int x;
-	int y;
-	int e2;
+	int	dx;
+	int	dy;
+	int	sx;
+	int	sy;
+	int	err;
+	int	x;
+	int	y;
+	int	e2;
 }	t_lvar;
 
-typedef struct	s_img
+typedef struct s_img
 {
 	void	*mlx_img;
 	char	*addr;
@@ -78,14 +80,14 @@ typedef struct	s_img
 	int		endian;
 }	t_img;
 
-typedef struct	s_data
+typedef struct s_data
 {
 	void	*mlx_ptr;
 	void	*win_ptr;
 	t_img	img;
 }	t_data;
 
-typedef struct	s_line
+typedef struct s_line
 {
 	int		x;
 	int		y;
@@ -100,8 +102,7 @@ typedef struct s_point
 	int	color;
 }	t_point;
 
-
-typedef struct	s_mtrx
+typedef struct s_mtrx
 {
 	t_point	**point;
 	char	***map;
@@ -110,23 +111,36 @@ typedef struct	s_mtrx
 	int		col;
 }	t_mtrx;
 
-typedef struct	s_components
+typedef struct s_map
 {
-	int	collec;
-	int	exit;
-	int	start;
-}				t_components;
+	char	*fn;
+	int		fd;
+	char	**mtrx;
+	size_t	width;
+	size_t	height;
+	size_t	collecs;
+	size_t	exits;
+	size_t	starts;
+	size_t	walls;
+	size_t	spaces;
+}	t_map;
 
-void	ft_mlx_destroy_window(void *mlx_ptr, void *win_ptr);
+/* void	ft_mlx_destroy_window(void *mlx_ptr, void *win_ptr);
 void	ft_mlx_destroy_image(void *mlx_ptr, void *mlx_img);
 void	ft_mlx_destroy_display(void *mlx_ptr);
 void	ft_mlx_loop(t_data *data, void *mlx_ptr);
 void	ft_mlx_hook(t_data *data, void *win, int x_event,
-	int x_mask,	int (*funct)(),void *param);
+			int x_mask, int (*funct)(), void *param); */
 
 void	ft_error(t_data *data, char *message, char *file);
-char	**handle_args(int	argc, char **argv);
-void	free_map(char ***map);
+void	handle_args(t_map *map, int argc, char **argv);
+void	free_map(char **map);
+void	map_error(t_map *map, char *message);
+int		check_sections(t_map *map, char *line);
+void	openf(t_map *map);
+void	closef(t_map *map);
+void	init_map(t_map *map, char *fn);
+void	init_mtrx(t_map *map);
 
 //void	check_map(char **map);
 

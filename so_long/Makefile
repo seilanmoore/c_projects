@@ -6,7 +6,7 @@
 #    By: smoore-a <smoore-a@student.42malaga.com    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/02/27 20:48:30 by smoore-a          #+#    #+#              #
-#    Updated: 2024/05/06 20:04:58 by smoore-a         ###   ########.fr        #
+#    Updated: 2024/05/13 18:54:42 by smoore-a         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -34,7 +34,8 @@ SRC_DIR = src/
 
 OBJ_DIR = obj/
 
-SRC = main handle_map check_map ft_mlx
+SRC = main handle_map check_map cleanup open_close_file init_map ft_mlx\
+	
 
 SRC_FILES = $(addprefix $(SRC_DIR), $(addsuffix .c, $(SRC)))
 
