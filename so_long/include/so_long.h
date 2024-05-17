@@ -6,7 +6,7 @@
 /*   By: smoore-a <smoore-a@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/27 20:50:51 by smoore-a          #+#    #+#             */
-/*   Updated: 2024/05/13 18:58:21 by smoore-a         ###   ########.fr       */
+/*   Updated: 2024/05/17 13:35:48 by smoore-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,6 @@
 
 # include <X11/keysym.h>
 # include <X11/X.h>
-// # include <cstddef>
 # include <math.h>
 # include <errno.h>
 
@@ -30,7 +29,7 @@
 # define WINDOW_WIDTH 500
 # define WINDOW_HEIGHT 500
 # define SIDE 25
-# define INVALID "invalid map"
+# define NOTVALID "invalid map"
 
 // COLORS
 
@@ -116,32 +115,47 @@ typedef struct s_map
 	char	*fn;
 	int		fd;
 	char	**mtrx;
+	size_t	path;
 	size_t	width;
 	size_t	height;
 	size_t	collecs;
 	size_t	exits;
-	size_t	starts;
+	size_t	player;
 	size_t	walls;
 	size_t	spaces;
 }	t_map;
 
-/* void	ft_mlx_destroy_window(void *mlx_ptr, void *win_ptr);
+typedef struct s_player
+{
+	size_t	y;
+	size_t	x;
+}	t_player;
+
+void	ft_mlx_destroy_window(void *mlx_ptr, void *win_ptr);
 void	ft_mlx_destroy_image(void *mlx_ptr, void *mlx_img);
 void	ft_mlx_destroy_display(void *mlx_ptr);
 void	ft_mlx_loop(t_data *data, void *mlx_ptr);
-void	ft_mlx_hook(t_data *data, void *win, int x_event,
-			int x_mask, int (*funct)(), void *param); */
-
-void	ft_error(t_data *data, char *message, char *file);
+//void	ft_mlx_hook(t_data *data, void *win, int x_event,
+//			int x_mask, int (*funct)(), void *param);
+//
+// parse_file
+void	print_map(char **map);
 void	handle_args(t_map *map, int argc, char **argv);
-void	free_map(char **map);
-void	map_error(t_map *map, char *message);
-int		check_sections(t_map *map, char *line);
-void	openf(t_map *map);
-void	closef(t_map *map);
+// init_map
 void	init_map(t_map *map, char *fn);
 void	init_mtrx(t_map *map);
-
-//void	check_map(char **map);
+//
+// cleanup
+void	free_map(char **map);
+void	terminate(t_data *data);
+void	ft_error(t_data *data, t_map *map, char *message);
+//
+// check_map
+int		check_sections(t_map *map, char *line);
+void	check_map(t_map *map);
+//
+// open_close_file
+void	openf(t_map *map);
+void	closef(t_map *map);
 
 #endif

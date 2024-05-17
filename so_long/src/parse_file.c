@@ -1,18 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   handle_map.c                                       :+:      :+:    :+:   */
+/*   parse_file.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: smoore-a <smoore-a@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/04 20:55:28 by smoore-a          #+#    #+#             */
-/*   Updated: 2024/05/13 20:00:13 by smoore-a         ###   ########.fr       */
+/*   Updated: 2024/05/17 13:35:39 by smoore-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/so_long.h"
 
-static void	print_map(char **map)
+void	print_map(char **map)
 {
 	int	i;
 	int	j;
@@ -35,22 +35,22 @@ static void	clean_gnl(t_map *map, char **line)
 		*line = get_next_line(map->fd);
 	}
 	*line = NULL;
-	map_error(map, INVALID);
+	ft_error(NULL, map, NOTVALID);
 }
 
 static void	assign_lines(t_map *map)
 {
 	char	*line;
-	int		i;
+	size_t	i;
 
 	i = 0;
-	while (map->height-- > 0)
+	while (i < map->height)
 	{
 		line = get_next_line(map->fd);
 		map->mtrx[i] = ft_substr(line, 0, map->width);
 		free(line);
 		if (map->mtrx[i] == NULL)
-			map_error(map, NULL);
+			ft_error(NULL, map, NULL);
 		i++;
 	}
 	map->mtrx[i] = NULL;
@@ -63,23 +63,25 @@ static void	map_size(t_map *map)
 	openf(map);
 	line = get_next_line(map->fd);
 	if (!line)
-		map_error(map, "empty file");
-	map->width = ft_strlen(line);
+		ft_error(NULL, map, "empty file");
+	if (ft_strchr(line, '\n') == NULL)
+		ft_error(NULL, map, NOTVALID);
+	map->width = ft_strchr(line, '\n') - line;
 	while (line)
 	{
-		if (ft_strlen(line) != map->width
-			|| check_sections(map, line) == ERROR)
+		if ((ft_strchr(line, '\n') && ft_strlen(line) != map->width + 1) \
+		|| (!ft_strchr(line, '\n') && ft_strlen(line) != map->width) \
+		|| check_sections(map, line) == ERROR)
 			clean_gnl(map, &line);
 		map->height++;
 		free(line);
 		line = get_next_line(map->fd);
 	}
-	if (map->starts != TRUE || map->exits != TRUE
+	if (map->player != TRUE || map->exits != TRUE
 		|| map->collecs == FALSE || map->walls == FALSE
 		|| map->spaces == FALSE)
-		map_error(map, INVALID);
+		ft_error(NULL, map, NOTVALID);
 	closef(map);
-	map->width--;
 }
 
 void	handle_args(t_map *map, int argc, char **argv)
@@ -88,12 +90,12 @@ void	handle_args(t_map *map, int argc, char **argv)
 
 	argc--;
 	if (!argc)
-		ft_error(NULL, "No arguments", NULL);
+		ft_error(NULL, NULL, "No arguments");
 	argv++;
+	init_map(map, *argv);
 	fn_ext = ft_strnstr(*argv, ".ber", ft_strlen(*argv));
 	if (!fn_ext || ft_strlen(fn_ext) != 4 || **argv == '.')
-		ft_error(NULL, "Invalid .ber fnname", *argv);
-	init_map(map, *argv);
+		ft_error(NULL, map, "Invalid .ber fnname");
 	map_size(map);
 	init_mtrx(map);
 	openf(map);
