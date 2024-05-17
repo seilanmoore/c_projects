@@ -6,7 +6,7 @@
 /*   By: smoore-a <smoore-a@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/13 13:47:41 by smoore-a          #+#    #+#             */
-/*   Updated: 2024/05/17 01:02:09 by smoore-a         ###   ########.fr       */
+/*   Updated: 2024/05/17 14:40:23 by smoore-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,6 @@ void	init_map(t_map *map, char *fn)
 	map->fn = fn;
 	map->fd = NONE;
 	map->mtrx = NULL;
-	map->path = FALSE;
 	map->width = NONE;
 	map->height = NONE;
 	map->collecs = NONE;

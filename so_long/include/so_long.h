@@ -6,7 +6,7 @@
 /*   By: smoore-a <smoore-a@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/27 20:50:51 by smoore-a          #+#    #+#             */
-/*   Updated: 2024/05/17 13:35:48 by smoore-a         ###   ########.fr       */
+/*   Updated: 2024/05/17 14:40:16 by smoore-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,7 +115,6 @@ typedef struct s_map
 	char	*fn;
 	int		fd;
 	char	**mtrx;
-	size_t	path;
 	size_t	width;
 	size_t	height;
 	size_t	collecs;

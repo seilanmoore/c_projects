@@ -6,11 +6,13 @@
 /*   By: smoore-a <smoore-a@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/13 13:53:35 by smoore-a          #+#    #+#             */
-/*   Updated: 2024/05/17 13:42:39 by smoore-a         ###   ########.fr       */
+/*   Updated: 2024/05/17 18:20:16 by smoore-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/so_long.h"
+#include <stdio.h>
+#include <stdlib.h>
 
 int	check_sections(t_map *map, char *line)
 {
@@ -97,33 +99,72 @@ void	get_player_coord(t_player *coord, char **map)
 //no hay ninguna C ni E en el mapa, asi significara que ha pasado
 //por todos los collec y la salida
 
-void	check_directions(t_map *map, t_map stats, int y, int x)
+static char	**ft_mtrxdup(char **mtrx)
+{
+	char	**dup;
+	int		i;
+
+	i = 0;
+	dup = NULL;
+	while (mtrx[i])
+		i++;
+	dup = ft_calloc(i + 1, sizeof(char *));
+	if (dup == NULL)
+		return (NULL);
+	i = -1;
+	while (mtrx[++i])
+		dup[i] = ft_strdup(mtrx[i]);
+	dup[i] = NULL;
+	return (dup);
+}
+
+static int	check_stats(char **mtrx)
+{
+	int	i;
+
+	i = -1;
+	while (mtrx[++i])
+	{
+		if (ft_strchr(mtrx[i], 'E') || ft_strchr(mtrx[i], 'C'))
+			return (1);
+	}
+	return (0);
+}
+
+static void	check_directions(t_map *map, char ***mtrx, int y, int x)
 {
 	if (y < 0 || y >= (int)map->height
 		|| x < 0 || x >= (int)map->width)
 		return ;
-	if (!ft_strchr("0CEP", map->mtrx[y][x]))
+	if (!ft_strchr("0CEP", (*mtrx)[y][x]))
 		return ;
-	map->mtrx[y][x] = 'X';
-	check_directions(map, stats, y - 1, x);
-	check_directions(map, stats, y, x + 1);
-	check_directions(map, stats, y + 1, x);
-	check_directions(map, stats, y, x - 1);
+//	system("clear");
+	(*mtrx)[y][x] = 'X';
+//	print_map(*mtrx);
+//	usleep(250000);
+	check_directions(map, mtrx, y - 1, x);
+	check_directions(map, mtrx, y, x + 1);
+	check_directions(map, mtrx, y + 1, x);
+	check_directions(map, mtrx, y, x - 1);
 }
 
 static void	check_path(t_map *map)
 {
 	t_player	coord;
-	t_map		stats;
+	char		**tmp;
 
-	stats.collecs = 0;
-	stats.exits = FALSE;
-	stats.mtrx = map->mtrx;
+	tmp = ft_mtrxdup(map->mtrx);
+	if (tmp == NULL)
+		ft_error(NULL, map, NULL);
 	get_player_coord(&coord, map->mtrx);
-	check_directions(map, stats, coord.y, coord.x);
-	print_map(map->mtrx);
-	/* if (map->path == FALSE)
-		ft_error(NULL, map, NOTVALID); */
+	check_directions(map, &tmp, coord.y, coord.x);
+	if (check_stats(tmp))
+	{
+		free_map(tmp);
+		ft_error(NULL, map, NOTVALID);
+	}
+//	print_map(tmp);
+	free_map(tmp);
 }
 
 void	check_map(t_map *map)
