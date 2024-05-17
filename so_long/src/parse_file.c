@@ -6,26 +6,11 @@
 /*   By: smoore-a <smoore-a@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/04 20:55:28 by smoore-a          #+#    #+#             */
-/*   Updated: 2024/05/17 13:35:39 by smoore-a         ###   ########.fr       */
+/*   Updated: 2024/05/17 18:54:17 by smoore-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/so_long.h"
-
-void	print_map(char **map)
-{
-	int	i;
-	int	j;
-
-	i = -1;
-	while (map[++i])
-	{
-		j = -1;
-		while (map[i][++j])
-			ft_printf("%c", map[i][j]);
-		ft_printf("\n");
-	}
-}
 
 static void	clean_gnl(t_map *map, char **line)
 {
@@ -84,7 +69,22 @@ static void	map_size(t_map *map)
 	closef(map);
 }
 
-void	handle_args(t_map *map, int argc, char **argv)
+void	print_map(char **map)
+{
+	int	i;
+	int	j;
+
+	i = -1;
+	while (map[++i])
+	{
+		j = -1;
+		while (map[i][++j])
+			ft_printf("%c", map[i][j]);
+		ft_printf("\n");
+	}
+}
+
+void	parse_file(t_map *map, int argc, char **argv)
 {
 	char	*fn_ext;
 

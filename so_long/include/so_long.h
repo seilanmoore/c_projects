@@ -6,7 +6,7 @@
 /*   By: smoore-a <smoore-a@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/27 20:50:51 by smoore-a          #+#    #+#             */
-/*   Updated: 2024/05/17 14:40:16 by smoore-a         ###   ########.fr       */
+/*   Updated: 2024/05/17 18:53:34 by smoore-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -139,7 +139,7 @@ void	ft_mlx_loop(t_data *data, void *mlx_ptr);
 //
 // parse_file
 void	print_map(char **map);
-void	handle_args(t_map *map, int argc, char **argv);
+void	parse_file(t_map *map, int argc, char **argv);
 // init_map
 void	init_map(t_map *map, char *fn);
 void	init_mtrx(t_map *map);
@@ -152,6 +152,9 @@ void	ft_error(t_data *data, t_map *map, char *message);
 // check_map
 int		check_sections(t_map *map, char *line);
 void	check_map(t_map *map);
+//
+// check_path
+void	check_path(t_map *map);
 //
 // open_close_file
 void	openf(t_map *map);
