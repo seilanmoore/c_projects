@@ -6,11 +6,11 @@
 /*   By: smoore-a <smoore-a@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/13 12:05:31 by smoore-a          #+#    #+#             */
-/*   Updated: 2024/05/16 22:59:28 by smoore-a         ###   ########.fr       */
+/*   Updated: 2024/05/19 12:41:08 by smoore-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/so_long.h"
+#include "../../include/so_long.h"
 
 static void	data_error(t_data *data, char *message, char *file)
 {
@@ -61,9 +61,16 @@ void	terminate(t_data *data)
 {
 	if (data)
 	{
-		ft_mlx_destroy_image(data->mlx_ptr, data->img.mlx_img);
-		ft_mlx_destroy_window(data->mlx_ptr, data->win_ptr);
-		ft_mlx_destroy_display(data->mlx_ptr);
+		if (data->map.mtrx)
+			free_map(data->map.mtrx);
+		if (data->mlx)
+		{
+			if (data->img.mlx_img)
+				mlx_destroy_image(data->mlx, data->img.mlx_img);
+			if (data->mlx_win)
+				mlx_destroy_window(data->mlx, data->mlx_win);
+			mlx_destroy_display(data->mlx);
+		}
 	}
 }
 

@@ -6,11 +6,11 @@
 /*   By: smoore-a <smoore-a@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/13 13:53:35 by smoore-a          #+#    #+#             */
-/*   Updated: 2024/05/17 18:46:49 by smoore-a         ###   ########.fr       */
+/*   Updated: 2024/05/19 12:39:23 by smoore-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/so_long.h"
+#include "../../include/so_long.h"
 
 int	check_sections(t_map *map, char *line)
 {

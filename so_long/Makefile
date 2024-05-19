@@ -6,7 +6,7 @@
 #    By: smoore-a <smoore-a@student.42malaga.com    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/02/27 20:48:30 by smoore-a          #+#    #+#              #
-#    Updated: 2024/05/17 18:48:40 by smoore-a         ###   ########.fr        #
+#    Updated: 2024/05/19 13:18:01 by smoore-a         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,9 +18,9 @@ INCLUDE = -Iinclude -Ilibft/include -I/usr/include -Imlx_linux
 
 HEADER = include/so_long.h
 
-CC = gcc
+CC = gcc -g
 
-CFLAGS = -g -Wall -Werror -Wextra -O0 #-O3
+CFLAGS = -Wall -Werror -Wextra -O0 #-O3
 
 LIBFT_FLAGS = -Llibft -lft
 
@@ -34,21 +34,43 @@ SRC_DIR = src/
 
 OBJ_DIR = obj/
 
-SRC = main parse_file init_map cleanup check_map open_close_file ft_mlx\
-	check_path
-SRC_FILES = $(addprefix $(SRC_DIR), $(addsuffix .c, $(SRC)))
+SRC = main
 
-OBJ_FILES = $(addprefix $(OBJ_DIR), $(addsuffix .o, $(SRC)))
+PARSE_FILE_DIR = parse_map_file/
+
+PARSE_FILE = check_map check_path init_map open_close_file parse_file
+
+INIT_WINDOW_DIR = init_window/
+
+INIT_WINDOW = init_window
+
+UTILS_DIR = utils/
+
+UTILS = cleanup utils
+
+#SRC_FILES = $(addprefix $(SRC_DIR), $(addsuffix .c, $(SRC))) \
+	$(addprefix $(SRC_DIR)$(PARSE_FILE_DIR), $(addsuffix .c, $(PARSE_FILE))) \
+	$(addprefix $(SRC_DIR)$(INIT_WINDOW_DIR), $(addsuffix .c, $(INIT_WINDOW))) \
+	$(addprefix $(SRC_DIR)$(UTILS_DIR), $(addsuffix .c, $(UTILS))) \
+
+SRC_FILES := $(shell find $(SRC_DIR) -name '*.c')
+
+#OBJ_FILES = $(addprefix $(OBJ_DIR), $(addsuffix .o, $(SRC))) \
+	$(addprefix $(OBJ_DIR), $(addsuffix .o, $(PARSE_FILE))) \
+	$(addprefix $(OBJ_DIR), $(addsuffix .o, $(INIT_WINDOW))) \
+	$(addprefix $(OBJ_DIR), $(addsuffix .o, $(UTILS))) \
+
+OBJ_FILES = $(patsubst $(SRC_DIR)%.c,$(OBJ_DIR)%.o,$(SRC_FILES))
 
 all: $(NAME) $(MLX) $(LIBFT)
 
 $(NAME): $(OBJ_FILES) $(LIBFT) $(MLX)
-	$(CC) $(CFLAGS) $(INCLUDE) $^ $(MLX_FLAGS) $(LIBFT_FLAGS) -o $@
+	$(CC) $(CFLAGS_USE) $(INCLUDE) $^ $(MLX_FLAGS) $(LIBFT_FLAGS) -o $@
 	@echo "$(NAME) compiled"
 
-$(OBJ_DIR)%.o: $(SRC_DIR)%.c $(HEADER)
-	@mkdir -p $(OBJ_DIR)
-	$(CC) $(CFLAGS) $(INCLUDE) -c $< -o $@
+$(OBJ_DIR)/%.o: $(SRC_DIR)/%.c $(HEADER)
+	@mkdir -p $(dir $@)
+	$(CC) $(CFLAGS_USE) $(INCLUDE) -c $< -o $@
 	@echo "$< compiled"
 
 $(LIBFT):
@@ -74,6 +96,9 @@ fclean: clean
 	@echo "Mlx cleaned"
 
 re: fclean all
+
+noflag:
+	$(MAKE) CFLAGS_USE="" all
 
 .PHONY: all clean fclean re
 

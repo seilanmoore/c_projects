@@ -6,32 +6,13 @@
 /*   By: smoore-a <smoore-a@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/17 18:43:37 by smoore-a          #+#    #+#             */
-/*   Updated: 2024/05/17 18:52:45 by smoore-a         ###   ########.fr       */
+/*   Updated: 2024/05/19 12:39:28 by smoore-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/so_long.h"
+#include "../../include/so_long.h"
 
-static char	**ft_mtrxdup(char **mtrx)
-{
-	char	**dup;
-	int		i;
-
-	i = 0;
-	dup = NULL;
-	while (mtrx[i])
-		i++;
-	dup = ft_calloc(i + 1, sizeof(char *));
-	if (dup == NULL)
-		return (NULL);
-	i = -1;
-	while (mtrx[++i])
-		dup[i] = ft_strdup(mtrx[i]);
-	dup[i] = NULL;
-	return (dup);
-}
-
-static void	get_player_coord(t_player *coord, char **map)
+void	get_player_coord(t_player *coord, char **map)
 {
 	int	i;
 	int	j;
@@ -49,6 +30,25 @@ static void	get_player_coord(t_player *coord, char **map)
 			}
 		}
 	}
+}
+
+char	**ft_mtrxdup(char **mtrx)
+{
+	char	**dup;
+	int		i;
+
+	i = 0;
+	dup = NULL;
+	while (mtrx[i])
+		i++;
+	dup = ft_calloc(i + 1, sizeof(char *));
+	if (dup == NULL)
+		return (NULL);
+	i = -1;
+	while (mtrx[++i])
+		dup[i] = ft_strdup(mtrx[i]);
+	dup[i] = NULL;
+	return (dup);
 }
 
 static void	check_directions(t_map *map, char ***mtrx, int y, int x)

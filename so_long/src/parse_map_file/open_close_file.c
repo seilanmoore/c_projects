@@ -6,11 +6,11 @@
 /*   By: smoore-a <smoore-a@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/13 13:07:43 by smoore-a          #+#    #+#             */
-/*   Updated: 2024/05/16 19:59:35 by smoore-a         ###   ########.fr       */
+/*   Updated: 2024/05/19 12:39:35 by smoore-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/so_long.h"
+#include "../../include/so_long.h"
 
 void	openf(t_map *map)
 {
