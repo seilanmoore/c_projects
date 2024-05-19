@@ -6,7 +6,7 @@
 /*   By: smoore-a <smoore-a@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/27 20:50:51 by smoore-a          #+#    #+#             */
-/*   Updated: 2024/05/19 12:33:16 by smoore-a         ###   ########.fr       */
+/*   Updated: 2024/05/19 23:32:43 by smoore-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,14 +46,15 @@
 # define ROSE			0x00FF007F
 # define PURPLE			0x007F00FF
 
-typedef struct s_img
+typedef struct s_sprite
 {
-	void	*mlx_img;
-	char	*addr;
-	int		bpp;
-	int		line_len;
-	int		endian;
-}	t_img;
+	void	*border;
+	void	*ground;
+	void	*exit;
+	void	*collectible;
+	void	*player_stand[5];
+	void	*player_moves[5];
+}	t_sprite;
 
 typedef struct s_map
 {
@@ -77,10 +78,10 @@ typedef struct s_player
 
 typedef struct s_data
 {
-	void	*mlx;
-	void	*mlx_win;
-	t_img	img;
-	t_map	map;
+	void		*mlx;
+	void		*mlx_win;
+	t_sprite	sprite;
+	t_map		map;
 }	t_data;
 
 // utils
@@ -90,9 +91,6 @@ void	init_window(t_data *data);
 // parse_file
 void	print_map(char **map);
 void	parse_file(t_map *map, int argc, char **argv);
-// init_map
-void	init_map(t_map *map, char *fn);
-void	init_mtrx(t_map *map);
 // cleanup
 void	free_map(char **map);
 void	terminate(t_data *data);

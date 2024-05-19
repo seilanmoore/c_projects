@@ -6,7 +6,7 @@
 /*   By: smoore-a <smoore-a@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/13 12:05:31 by smoore-a          #+#    #+#             */
-/*   Updated: 2024/05/19 12:41:08 by smoore-a         ###   ########.fr       */
+/*   Updated: 2024/05/19 23:34:58 by smoore-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,8 +65,6 @@ void	terminate(t_data *data)
 			free_map(data->map.mtrx);
 		if (data->mlx)
 		{
-			if (data->img.mlx_img)
-				mlx_destroy_image(data->mlx, data->img.mlx_img);
 			if (data->mlx_win)
 				mlx_destroy_window(data->mlx, data->mlx_win);
 			mlx_destroy_display(data->mlx);

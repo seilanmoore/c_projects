@@ -1,34 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   init_map.c                                         :+:      :+:    :+:   */
+/*   init_sprites.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: smoore-a <smoore-a@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/05/13 13:47:41 by smoore-a          #+#    #+#             */
-/*   Updated: 2024/05/19 12:39:32 by smoore-a         ###   ########.fr       */
+/*   Created: 2024/05/19 21:01:02 by smoore-a          #+#    #+#             */
+/*   Updated: 2024/05/19 23:56:37 by smoore-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/so_long.h"
 
-void	init_map(t_map *map, char *fn)
+void	parse_img(t_data *data)
 {
-	map->fn = fn;
-	map->fd = NONE;
-	map->mtrx = NULL;
-	map->width = NONE;
-	map->height = NONE;
-	map->collecs = NONE;
-	map->exits = NONE;
-	map->player = NONE;
-	map->walls = NONE;
-	map->spaces = NONE;
-}
-
-void	init_mtrx(t_map *map)
-{
-	map->mtrx = ft_calloc(map->height + 1, sizeof(char *));
-	if (!map->mtrx)
-		ft_error(NULL, map, NULL);
+	
 }

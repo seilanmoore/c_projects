@@ -6,7 +6,7 @@
 #    By: smoore-a <smoore-a@student.42malaga.com    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/11/27 15:26:15 by smoore-a          #+#    #+#              #
-#    Updated: 2024/05/06 13:04:10 by smoore-a         ###   ########.fr        #
+#    Updated: 2024/05/19 17:03:48 by smoore-a         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,7 +18,7 @@ CFLAGS = -g -Wall -Werror -Wextra
 
 INCLUDE = -Iinclude
 
-HEADER = include/libft.h
+HEADER = include/
 
 RM = rm -rf
 
@@ -73,7 +73,7 @@ $(NAME): $(OBJ_FILES) $(PRINTF_OBJ_F) $(GNL_OBJ_F)
 	ar rcs $@ $^
 	@echo "$(NAME) compiled"
 
-$(OBJ_DIR)%.o: $(SRC_DIR)%.c $(HEADER)
+$(OBJ_DIR)%.o: $(SRC_DIR)%.c $(HEADER)libft.h
 	@mkdir -p $(OBJ_DIR)
 	$(CC) $(CFLAGS) $(INCLUDE) -c $< -o $@ 
 	@echo "$< compiled"
@@ -82,22 +82,22 @@ bonusts = .bonus_timestamp
 
 bonus: $(bonusts)
 
-$(bonusts): $(BONUS_OBJ_F) $(HEADER)
+$(bonusts): $(BONUS_OBJ_F)
 	@touch $@
 	ar rcs $(NAME) $^
 	@echo "Bonus compiled"
 
-$(BONUS)$(OBJ_DIR)%.o:	$(BONUS)$(SRC_DIR)%.c $(HEADER)
+$(BONUS)$(OBJ_DIR)%.o:	$(BONUS)$(SRC_DIR)%.c $(HEADER)libft.h
 	@mkdir -p $(BONUS)$(OBJ_DIR)
 	$(CC) $(CFLAGS) $(INCLUDE) -c $< -o $@
 	@echo "$< compiled"
 
-$(PRINTF)$(OBJ_DIR)%.o:	$(PRINTF)$(SRC_DIR)%.c include/ft_printf.h $(HEADER)
+$(PRINTF)$(OBJ_DIR)%.o:	$(PRINTF)$(SRC_DIR)%.c $(HEADER)ft_printf.h
 	@mkdir -p $(PRINTF)$(OBJ_DIR)
 	$(CC) $(CFLAGS) $(INCLUDE) -c $< -o $@
 	@echo "$< compiled"
 
-$(GNL)$(OBJ_DIR)%.o: $(GNL)$(SRC_DIR)%.c include/get_next_line.h
+$(GNL)$(OBJ_DIR)%.o: $(GNL)$(SRC_DIR)%.c $(HEADER)get_next_line.h
 	@mkdir -p $(GNL)$(OBJ_DIR)
 	$(CC) $(CFLAGS) $(INCLUDE) -c $< -o $@
 	@echo "$< compiled"

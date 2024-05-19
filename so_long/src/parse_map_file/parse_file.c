@@ -6,7 +6,7 @@
 /*   By: smoore-a <smoore-a@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/04 20:55:28 by smoore-a          #+#    #+#             */
-/*   Updated: 2024/05/19 12:39:40 by smoore-a         ###   ########.fr       */
+/*   Updated: 2024/05/19 23:33:17 by smoore-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,24 +21,6 @@ static void	clean_gnl(t_map *map, char **line)
 	}
 	*line = NULL;
 	ft_error(NULL, map, NOTVALID);
-}
-
-static void	assign_lines(t_map *map)
-{
-	char	*line;
-	size_t	i;
-
-	i = 0;
-	while (i < map->height)
-	{
-		line = get_next_line(map->fd);
-		map->mtrx[i] = ft_substr(line, 0, map->width);
-		free(line);
-		if (map->mtrx[i] == NULL)
-			ft_error(NULL, map, NULL);
-		i++;
-	}
-	map->mtrx[i] = NULL;
 }
 
 static void	map_size(t_map *map)
@@ -69,6 +51,31 @@ static void	map_size(t_map *map)
 	closef(map);
 }
 
+static void	init_mtrx(t_map *map)
+{
+	map->mtrx = ft_calloc(map->height + 1, sizeof(char *));
+	if (!map->mtrx)
+		ft_error(NULL, map, NULL);
+}
+
+static void	assign_lines(t_map *map)
+{
+	char	*line;
+	size_t	i;
+
+	i = 0;
+	while (i < map->height)
+	{
+		line = get_next_line(map->fd);
+		map->mtrx[i] = ft_substr(line, 0, map->width);
+		free(line);
+		if (map->mtrx[i] == NULL)
+			ft_error(NULL, map, NULL);
+		i++;
+	}
+	map->mtrx[i] = NULL;
+}
+
 void	parse_file(t_map *map, int argc, char **argv)
 {
 	char	*fn_ext;
@@ -77,7 +84,7 @@ void	parse_file(t_map *map, int argc, char **argv)
 	if (!argc)
 		ft_error(NULL, NULL, "No arguments");
 	argv++;
-	init_map(map, *argv);
+	map->fn = *argv;
 	fn_ext = ft_strnstr(*argv, ".ber", ft_strlen(*argv));
 	if (!fn_ext || ft_strlen(fn_ext) != 4 || **argv == '.')
 		ft_error(NULL, map, "Invalid .ber fnname");

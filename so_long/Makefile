@@ -6,7 +6,7 @@
 #    By: smoore-a <smoore-a@student.42malaga.com    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/02/27 20:48:30 by smoore-a          #+#    #+#              #
-#    Updated: 2024/05/19 13:18:01 by smoore-a         ###   ########.fr        #
+#    Updated: 2024/05/19 23:34:18 by smoore-a         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,7 +16,7 @@ MLX = mlx_linux/libmlx_Linux.a
 
 INCLUDE = -Iinclude -Ilibft/include -I/usr/include -Imlx_linux
 
-HEADER = include/so_long.h
+HEADER = so_long.h
 
 CC = gcc -g
 
@@ -38,39 +38,41 @@ SRC = main
 
 PARSE_FILE_DIR = parse_map_file/
 
-PARSE_FILE = check_map check_path init_map open_close_file parse_file
+PARSE_FILE = check_map check_path open_close_file parse_file
 
-INIT_WINDOW_DIR = init_window/
+GRAPHICS_DIR = graphics/
 
-INIT_WINDOW = init_window
+GRAPHICS = init_window init_sprites
 
 UTILS_DIR = utils/
 
 UTILS = cleanup utils
 
-#SRC_FILES = $(addprefix $(SRC_DIR), $(addsuffix .c, $(SRC))) \
+SRC_FILES := $(addprefix $(SRC_DIR), $(addsuffix .c, $(SRC))) \
 	$(addprefix $(SRC_DIR)$(PARSE_FILE_DIR), $(addsuffix .c, $(PARSE_FILE))) \
 	$(addprefix $(SRC_DIR)$(INIT_WINDOW_DIR), $(addsuffix .c, $(INIT_WINDOW))) \
 	$(addprefix $(SRC_DIR)$(UTILS_DIR), $(addsuffix .c, $(UTILS))) \
 
-SRC_FILES := $(shell find $(SRC_DIR) -name '*.c')
+#$(info Source files: $(SRC_FILES))
 
-#OBJ_FILES = $(addprefix $(OBJ_DIR), $(addsuffix .o, $(SRC))) \
+OBJ_FILES := $(addprefix $(OBJ_DIR), $(addsuffix .o, $(SRC))) \
 	$(addprefix $(OBJ_DIR), $(addsuffix .o, $(PARSE_FILE))) \
 	$(addprefix $(OBJ_DIR), $(addsuffix .o, $(INIT_WINDOW))) \
 	$(addprefix $(OBJ_DIR), $(addsuffix .o, $(UTILS))) \
 
-OBJ_FILES = $(patsubst $(SRC_DIR)%.c,$(OBJ_DIR)%.o,$(SRC_FILES))
+#$(info Object files: $(OBJ_FILES))
+
+VPATH = src:src/graphics:src/parse_map_file:src/utils:include
 
 all: $(NAME) $(MLX) $(LIBFT)
 
 $(NAME): $(OBJ_FILES) $(LIBFT) $(MLX)
-	$(CC) $(CFLAGS_USE) $(INCLUDE) $^ $(MLX_FLAGS) $(LIBFT_FLAGS) -o $@
+	$(CC) $(INCLUDE) $^ $(MLX_FLAGS) $(LIBFT_FLAGS) -o $@
 	@echo "$(NAME) compiled"
 
-$(OBJ_DIR)/%.o: $(SRC_DIR)/%.c $(HEADER)
-	@mkdir -p $(dir $@)
-	$(CC) $(CFLAGS_USE) $(INCLUDE) -c $< -o $@
+$(OBJ_DIR)%.o: %.c $(HEADER)
+	@mkdir -p $(OBJ_DIR)
+	$(CC) $(CFLAGS) $(INCLUDE) -c $< -o $@
 	@echo "$< compiled"
 
 $(LIBFT):
@@ -97,8 +99,9 @@ fclean: clean
 
 re: fclean all
 
-noflag:
-	$(MAKE) CFLAGS_USE="" all
+nocflag:
+	$(MAKE) $(MLX) $(LIBFT)
+	$(MAKE) CFLAGS="" $(NAME)
 
 .PHONY: all clean fclean re
 
