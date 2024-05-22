@@ -6,7 +6,7 @@
 /*   By: smoore-a <smoore-a@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/13 13:53:35 by smoore-a          #+#    #+#             */
-/*   Updated: 2024/05/19 17:01:47 by smoore-a         ###   ########.fr       */
+/*   Updated: 2024/05/22 12:59:10 by smoore-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,30 +33,31 @@ int	check_sections(t_map *map, char *line)
 	return (SUCCESS);
 }
 
-static void	check_wall(t_map *map)
+static void	check_wall(t_data *data)
 {
 	size_t	i;
 	size_t	j;
 
 	j = 0;
-	while (j < map->width)
+	while (j < data->map.width)
 	{
-		if (map->mtrx[0][j] != '1' || map->mtrx[map->height - 1][j] != '1')
-			ft_error(NULL, map, NOTVALID);
+		if (data->map.mtrx[0][j] != '1'
+			|| data->map.mtrx[data->map.height - 1][j] != '1')
+			ft_error(data, NOTVALID);
 		j++;
 	}
 	i = 1;
-	while (i < (map->height - 1))
+	while (i < (data->map.height - 1))
 	{
-		if (map->mtrx[i][0] != '1'
-			|| map->mtrx[i][map->width - 1] != '1')
-			ft_error(NULL, map, NOTVALID);
+		if (data->map.mtrx[i][0] != '1'
+			|| data->map.mtrx[i][data->map.width - 1] != '1')
+			ft_error(data, NOTVALID);
 		i++;
 	}
 }
 
-void	check_map(t_map *map)
+void	check_map(t_data *data)
 {
-	check_wall(map);
-	check_path(map);
+	check_wall(data);
+	check_path(data);
 }

@@ -6,7 +6,7 @@
 /*   By: smoore-a <smoore-a@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/17 18:43:37 by smoore-a          #+#    #+#             */
-/*   Updated: 2024/05/19 17:01:47 by smoore-a         ###   ########.fr       */
+/*   Updated: 2024/05/22 12:39:56 by smoore-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,10 +55,7 @@ static void	check_directions(t_map *map, char ***mtrx, int y, int x)
 {
 	if (!ft_strchr("0CEP", (*mtrx)[y][x]))
 		return ;
-//	system("clear");
 	(*mtrx)[y][x] = 'X';
-//	print_map(*mtrx);
-//	usleep(250000);
 	check_directions(map, mtrx, y - 1, x);
 	check_directions(map, mtrx, y, x + 1);
 	check_directions(map, mtrx, y + 1, x);
@@ -78,20 +75,20 @@ static int	check_stats(char **mtrx)
 	return (0);
 }
 
-void	check_path(t_map *map)
+void	check_path(t_data *data)
 {
 	t_player	coord;
 	char		**tmp;
 
-	tmp = ft_mtrxdup(map->mtrx);
+	tmp = ft_mtrxdup(data->map.mtrx);
 	if (tmp == NULL)
-		ft_error(NULL, map, NULL);
-	get_player_coord(&coord, map->mtrx);
-	check_directions(map, &tmp, coord.y, coord.x);
+		ft_error(data, NULL);
+	get_player_coord(&coord, data->map.mtrx);
+	check_directions(&(data->map), &tmp, coord.y, coord.x);
 	if (check_stats(tmp))
 	{
 		free_map(tmp);
-		ft_error(NULL, map, NOTVALID);
+		ft_error(data, NOTVALID);
 	}
 	free_map(tmp);
 }
