@@ -6,7 +6,7 @@
 /*   By: smoore-a <smoore-a@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/23 08:53:51 by smoore-a          #+#    #+#             */
-/*   Updated: 2024/05/23 17:53:30 by smoore-a         ###   ########.fr       */
+/*   Updated: 2024/05/23 23:03:23 by smoore-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,6 @@ void	check_up(t_data *data, t_coord *coord)
 			ft_printf("Moves: %d\n", (int)data->player.moves);
 		}
 	}
-	mlx_clear_window(data->mlx, data->mlx_win);
 	draw_map(data);
 }
 
@@ -52,7 +51,6 @@ void	check_right(t_data *data, t_coord *coord)
 			ft_printf("Moves: %d\n", (int)data->player.moves);
 		}
 	}
-	mlx_clear_window(data->mlx, data->mlx_win);
 	draw_map(data);
 }
 
@@ -74,7 +72,6 @@ void	check_down(t_data *data, t_coord *coord)
 			ft_printf("Moves: %d\n", (int)data->player.moves);
 		}
 	}
-	mlx_clear_window(data->mlx, data->mlx_win);
 	draw_map(data);
 }
 
@@ -96,6 +93,5 @@ void	check_left(t_data *data, t_coord *coord)
 			ft_printf("Moves: %d\n", (int)data->player.moves);
 		}
 	}
-	mlx_clear_window(data->mlx, data->mlx_win);
 	draw_map(data);
 }
