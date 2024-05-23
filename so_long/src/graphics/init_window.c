@@ -6,19 +6,24 @@
 /*   By: smoore-a <smoore-a@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/05 05:00:41 by smoore-a          #+#    #+#             */
-/*   Updated: 2024/05/22 23:19:54 by smoore-a         ###   ########.fr       */
+/*   Updated: 2024/05/23 12:40:45 by smoore-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/so_long.h"
-#include <X11/X.h>
 
-void	key_hook(int keycode, t_data *data)
+static void	key_hook(int keycode, t_data *data)
 {
 	if (keycode == XK_Escape)
 		terminate(data);
-	if (keycode == XK_Up)
-		mlx_clear_window(data->mlx, data->mlx_win);
+	else if (keycode == XK_w)
+		check_up(data, &(data->player.coord));
+	else if (keycode == XK_d)
+		check_right(data, &(data->player.coord));
+	else if (keycode == XK_s)
+		check_down(data, &(data->player.coord));
+	else if (keycode == XK_a)
+		check_left(data, &(data->player.coord));
 }
 
 void	init_window(t_data *data)

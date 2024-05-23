@@ -6,13 +6,13 @@
 /*   By: smoore-a <smoore-a@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/17 18:43:37 by smoore-a          #+#    #+#             */
-/*   Updated: 2024/05/22 12:39:56 by smoore-a         ###   ########.fr       */
+/*   Updated: 2024/05/23 09:30:44 by smoore-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/so_long.h"
 
-void	get_player_coord(t_player *coord, char **map)
+void	get_player_coord(t_data *data, char **map)
 {
 	int	i;
 	int	j;
@@ -25,8 +25,8 @@ void	get_player_coord(t_player *coord, char **map)
 		{
 			if (map[i][j] == 'P')
 			{
-				coord->x = j;
-				coord->y = i;
+				data->player.coord.x = j;
+				data->player.coord.y = i;
 			}
 		}
 	}
@@ -77,14 +77,17 @@ static int	check_stats(char **mtrx)
 
 void	check_path(t_data *data)
 {
-	t_player	coord;
-	char		**tmp;
+	size_t	x;
+	size_t	y;
+	char	**tmp;
 
 	tmp = ft_mtrxdup(data->map.mtrx);
 	if (tmp == NULL)
 		ft_error(data, NULL);
-	get_player_coord(&coord, data->map.mtrx);
-	check_directions(&(data->map), &tmp, coord.y, coord.x);
+	get_player_coord(data, data->map.mtrx);
+	x = data->player.coord.x;
+	y = data->player.coord.y;
+	check_directions(&(data->map), &tmp, y, x);
 	if (check_stats(tmp))
 	{
 		free_map(tmp);

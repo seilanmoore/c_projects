@@ -6,7 +6,7 @@
 #    By: smoore-a <smoore-a@student.42malaga.com    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/02/27 20:48:30 by smoore-a          #+#    #+#              #
-#    Updated: 2024/05/22 19:36:07 by smoore-a         ###   ########.fr        #
+#    Updated: 2024/05/23 11:51:50 by smoore-a         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,9 +16,9 @@ INCLUDE = -Iinclude -Ilibft/include -I/usr/include -Iminilibx-linux
 
 HEADER = so_long.h
 
-CC = gcc -g
+CC = gcc
 
-CFLAGS = -Wall -Werror -Wextra -O0 #-O3
+CFLAGS = -Wall -Werror -Wextra -O3 #-O0
 
 LIBFT_FLAGS = -Llibft -lft
 
@@ -39,7 +39,8 @@ SRC = main
 
 PARSE_FILE = check_map check_path open_close_file parse_file
 
-GRAPHICS = init_window init_textures draw_map draw_sections
+GRAPHICS = init_window init_textures draw_map draw_sections \
+	check_moves end_game
 
 UTILS = cleanup error utils
 
@@ -89,6 +90,8 @@ fclean: clean
 	@echo "$(NAME) removed"
 	$(RM) $(LIBFT)
 	@echo "$(LIBFT) removed"
+	@make clean -C minilibx-linux
+	@echo "$(MLX) compiled"
 
 re: fclean all
 

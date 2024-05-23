@@ -6,19 +6,11 @@
 /*   By: smoore-a <smoore-a@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/20 11:27:28 by smoore-a          #+#    #+#             */
-/*   Updated: 2024/05/22 13:01:53 by smoore-a         ###   ########.fr       */
+/*   Updated: 2024/05/23 10:47:17 by smoore-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/so_long.h"
-
-/* void	put_image(t_data *data, int x, int y)
-{
-	char	*addr;
-
-	addr = mlx_get_data_addr(
-		data->, int *bits_per_pixel, int *size_line, int *endian)
-} */
 
 void	draw_map(t_data *data)
 {

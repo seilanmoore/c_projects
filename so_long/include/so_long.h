@@ -6,7 +6,7 @@
 /*   By: smoore-a <smoore-a@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/27 20:50:51 by smoore-a          #+#    #+#             */
-/*   Updated: 2024/05/22 23:05:19 by smoore-a         ###   ########.fr       */
+/*   Updated: 2024/05/23 11:42:14 by smoore-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,10 +60,17 @@
 # define ROSE			0x00FF007F
 # define PURPLE			0x007F00FF
 
-typedef struct s_player
+typedef struct s_coord
 {
 	size_t	y;
 	size_t	x;
+}	t_coord;
+
+typedef struct s_player
+{
+	t_coord	coord;
+	size_t	collecs;
+	size_t	moves;
 }	t_player;
 
 typedef struct s_map
@@ -102,6 +109,7 @@ typedef struct s_data
 	void		*mlx_win;
 	t_texture	texture;
 	t_map		map;
+	t_player	player;
 }	t_data;
 
 //PARSE_MAP_FILE
@@ -112,7 +120,7 @@ void	parse_file(t_data *data, int argc, char **argv);
 int		check_sections(t_map *map, char *line);
 void	check_map(t_data *data);
 //	check_path
-void	get_player_coord(t_player *coord, char **map);
+void	get_player_coord(t_data *data, char **map);
 char	**ft_mtrxdup(char **mtrx);
 void	check_path(t_data *data);
 //	open_close_file
@@ -132,6 +140,13 @@ void	draw_collectible(t_data *data, int x, int y);
 void	draw_border(t_data *data, int x, int y);
 void	draw_exit(t_data *data, int x, int y);
 void	draw_player(t_data *data, int x, int y);
+//check_moves
+void	check_up(t_data *data, t_coord *coord);
+void	check_right(t_data *data, t_coord *coord);
+void	check_down(t_data *data, t_coord *coord);
+void	check_left(t_data *data, t_coord *coord);
+//end_game
+void	end_game(t_data *data);
 
 //UTILS
 //	utils

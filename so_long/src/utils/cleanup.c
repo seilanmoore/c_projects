@@ -6,13 +6,11 @@
 /*   By: smoore-a <smoore-a@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/13 12:05:31 by smoore-a          #+#    #+#             */
-/*   Updated: 2024/05/22 23:05:10 by smoore-a         ###   ########.fr       */
+/*   Updated: 2024/05/23 12:39:44 by smoore-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/so_long.h"
-#include <stdlib.h>
-#include <unistd.h>
 
 void	free_map(char **map)
 {
