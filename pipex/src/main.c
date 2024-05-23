@@ -1,30 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_lstiter_bonus.c                                 :+:      :+:    :+:   */
+/*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: smoore-a <smoore-a@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/12/13 20:41:14 by smoore-a          #+#    #+#             */
-/*   Updated: 2024/05/19 17:02:51 by smoore-a         ###   ########.fr       */
+/*   Created: 2024/05/23 19:50:40 by smoore-a          #+#    #+#             */
+/*   Updated: 2024/05/23 20:12:42 by smoore-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../include/libft.h"
+#include "../include/pipex.h"
 
-void	ft_lstiter(t_list *lst, void (*f)(void *))
+int	main(void)
 {
-	t_list	*current;
-	t_list	*next;
+	char	a[25] = "Hola";
+	char	*b = " yo manolo\n";
 
-	if (lst && f)
-	{
-		current = lst;
-		while (current)
-		{
-			next = current->next;
-			f(current->content);
-			current = next;
-		}
-	}
+	strlcat(a, b, 25);
+	ft_printf("Result: %s", a);
+	return (0);
 }

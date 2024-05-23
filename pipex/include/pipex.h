@@ -1,22 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_lstlast_bonus.c                                 :+:      :+:    :+:   */
+/*   pipex.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: smoore-a <smoore-a@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/12/13 16:31:27 by smoore-a          #+#    #+#             */
-/*   Updated: 2024/05/19 17:02:51 by smoore-a         ###   ########.fr       */
+/*   Created: 2024/05/23 19:50:58 by smoore-a          #+#    #+#             */
+/*   Updated: 2024/05/23 20:05:37 by smoore-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../include/libft.h"
+#ifndef PIPEX_H
+# define PIPEX_H
 
-t_list	*ft_lstlast(t_list *lst)
-{
-	if (!lst)
-		return (NULL);
-	while (lst->next)
-		lst = lst->next;
-	return (lst);
-}
+# include "../libft/include/libft.h"
+
+# include <fcntl.h>		//open
+# include <unistd.h>	//close, read, write, access, dup, dup2, execve, pipe
+# include <stdlib.h>	//malloc, free
+# include <stdio.h>		//perror
+# include <errno.h>		//errno
+# include <string.h>	//strerror
+
+#endif
