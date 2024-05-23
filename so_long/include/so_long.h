@@ -6,7 +6,7 @@
 /*   By: smoore-a <smoore-a@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/27 20:50:51 by smoore-a          #+#    #+#             */
-/*   Updated: 2024/05/23 11:42:14 by smoore-a         ###   ########.fr       */
+/*   Updated: 2024/05/23 12:58:10 by smoore-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,22 +25,8 @@
 # define FALSE 0
 # define SUCCESS 0
 # define ERROR -1
-# define WINDOW_WIDTH 1920
-# define WINDOW_HEIGHT 1080
 # define TILE_SIZE 64
-# define PLAYER_SIZE 192
-# define TOWER_WIDTH 128
-# define TOWER_HEIGHT 192
-# define SIDE 25
-# define NOTVALID "invalid map"
-# define SPRITE "../../sprites/"
-
-//Keycode
-# define ESC 65307
-# define UP 119
-# define DOWN 115
-# define RIGHT 100
-# define LEFT 97
+# define NOTVALID "Map not valid"
 
 # define DESTROY_NOTIF 17
 # define NO_EVENT_MASK 0
@@ -121,7 +107,6 @@ int		check_sections(t_map *map, char *line);
 void	check_map(t_data *data);
 //	check_path
 void	get_player_coord(t_data *data, char **map);
-char	**ft_mtrxdup(char **mtrx);
 void	check_path(t_data *data);
 //	open_close_file
 void	openf(t_data *data);

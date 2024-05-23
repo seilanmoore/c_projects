@@ -6,7 +6,7 @@
 /*   By: smoore-a <smoore-a@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/05 05:00:41 by smoore-a          #+#    #+#             */
-/*   Updated: 2024/05/23 12:40:45 by smoore-a         ###   ########.fr       */
+/*   Updated: 2024/05/23 13:29:10 by smoore-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ void	init_window(t_data *data)
 	convert_xpm(data);
 	mlx_hook(data->mlx_win, DESTROY_NOTIF,
 		NO_EVENT_MASK, (void *)terminate, data);
-	mlx_key_hook(data->mlx_win, (void *)key_hook, data);
+	mlx_hook(data->mlx_win, KeyPress, KeyPressMask, (void *)key_hook, data);
 	mlx_expose_hook(data->mlx_win, (void *)draw_map, data);
 	mlx_loop(data->mlx);
 }

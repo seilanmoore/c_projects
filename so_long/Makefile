@@ -6,7 +6,7 @@
 #    By: smoore-a <smoore-a@student.42malaga.com    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/02/27 20:48:30 by smoore-a          #+#    #+#              #
-#    Updated: 2024/05/23 11:51:50 by smoore-a         ###   ########.fr        #
+#    Updated: 2024/05/23 17:55:03 by smoore-a         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -47,16 +47,12 @@ UTILS = cleanup error utils
 SRC_FILES = $(addprefix $(SRC_DIR), $(addsuffix .c, $(SRC))) \
 	$(addprefix $(SRC_DIR)$(PARSE_FILE_DIR), $(addsuffix .c, $(PARSE_FILE))) \
 	$(addprefix $(SRC_DIR)$(INIT_WINDOW_DIR), $(addsuffix .c, $(GRAPHICS))) \
-	$(addprefix $(SRC_DIR)$(UTILS_DIR), $(addsuffix .c, $(UTILS))) \
-
-#$(info Source files: $(SRC_FILES))
+	$(addprefix $(SRC_DIR)$(UTILS_DIR), $(addsuffix .c, $(UTILS)))
 
 OBJ_FILES = $(addprefix $(OBJ_DIR), $(addsuffix .o, $(SRC))) \
 	$(addprefix $(OBJ_DIR), $(addsuffix .o, $(PARSE_FILE))) \
 	$(addprefix $(OBJ_DIR), $(addsuffix .o, $(GRAPHICS))) \
-	$(addprefix $(OBJ_DIR), $(addsuffix .o, $(UTILS))) \
-
-#$(info Object files: $(OBJ_FILES))
+	$(addprefix $(OBJ_DIR), $(addsuffix .o, $(UTILS)))
 
 VPATH = src:src/graphics:src/parse_map_file:src/utils:include
 

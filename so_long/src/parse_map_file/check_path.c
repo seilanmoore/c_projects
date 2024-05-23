@@ -6,7 +6,7 @@
 /*   By: smoore-a <smoore-a@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/17 18:43:37 by smoore-a          #+#    #+#             */
-/*   Updated: 2024/05/23 09:30:44 by smoore-a         ###   ########.fr       */
+/*   Updated: 2024/05/23 12:48:03 by smoore-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ void	get_player_coord(t_data *data, char **map)
 	}
 }
 
-char	**ft_mtrxdup(char **mtrx)
+static char	**ft_mtrxdup(char **mtrx)
 {
 	char	**dup;
 	int		i;
