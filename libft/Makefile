@@ -6,7 +6,7 @@
 #    By: smoore-a <smoore-a@student.42malaga.com    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/11/27 15:26:15 by smoore-a          #+#    #+#              #
-#    Updated: 2024/05/06 13:04:10 by smoore-a         ###   ########.fr        #
+#    Updated: 2024/05/23 19:28:52 by smoore-a         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,11 +14,11 @@ NAME = libft.a
 
 CC = gcc
 
-CFLAGS = -g -Wall -Werror -Wextra
+CFLAGS = -Wall -Werror -Wextra -O3
 
 INCLUDE = -Iinclude
 
-HEADER = include/libft.h
+HEADER = include/
 
 RM = rm -rf
 
@@ -39,8 +39,7 @@ SRC = ft_isalpha ft_isdigit ft_isalnum ft_isascii ft_isprint \
 	ft_atoi ft_calloc ft_strdup ft_substr ft_strjoin \
 	ft_strtrim ft_split ft_itoa ft_strmapi ft_striteri \
 	ft_putchar_fd ft_putstr_fd ft_putendl_fd ft_putnbr_fd \
-
-BONUS_SRC = ft_lstnew_bonus ft_lstadd_front_bonus \
+	ft_lstnew_bonus ft_lstadd_front_bonus \
 	ft_lstsize_bonus ft_lstlast_bonus \
 	ft_lstadd_back_bonus ft_lstdelone_bonus \
 	ft_lstclear_bonus ft_lstiter_bonus \
@@ -55,17 +54,13 @@ SRC_FILES = $(addprefix $(SRC_DIR), $(addsuffix .c, $(SRC)))
 
 OBJ_FILES = $(addprefix $(OBJ_DIR), $(addsuffix .o, $(SRC)))
 
-BONUS_SRC_F = $(addprefix $(BONUS)$(SRC_DIR), $(addsuffix .c, $(BONUS_SRC)))
-
-BONUS_OBJ_F = $(addprefix $(BONUS)$(OBJ_DIR), $(addsuffix .o, $(BONUS_SRC)))
-
 PRINTF_SRC_F = $(addprefix $(PRINTF)$(SRC_DIR), $(addsuffix .c, $(PRINTF_SRC)))
 
-PRINTF_OBJ_F = $(addprefix $(PRINTF)$(OBJ_DIR), $(addsuffix .o, $(PRINTF_SRC)))
+PRINTF_OBJ_F = $(addprefix $(OBJ_DIR), $(addsuffix .o, $(PRINTF_SRC)))
 
 GNL_SRC_F = $(addprefix $(GNL)$(SRC_DIR), $(addsuffix .c, $(GNL_SRC)))
 
-GNL_OBJ_F = $(addprefix $(GNL)$(OBJ_DIR), $(addsuffix .o, $(GNL_SRC)))
+GNL_OBJ_F = $(addprefix $(OBJ_DIR), $(addsuffix .o, $(GNL_SRC)))
 
 all: $(NAME)
 
@@ -73,37 +68,21 @@ $(NAME): $(OBJ_FILES) $(PRINTF_OBJ_F) $(GNL_OBJ_F)
 	ar rcs $@ $^
 	@echo "$(NAME) compiled"
 
-$(OBJ_DIR)%.o: $(SRC_DIR)%.c $(HEADER)
+$(OBJ_DIR)%.o: $(SRC_DIR)%.c $(HEADER)libft.h
 	@mkdir -p $(OBJ_DIR)
 	$(CC) $(CFLAGS) $(INCLUDE) -c $< -o $@ 
 	@echo "$< compiled"
 
-bonusts = .bonus_timestamp
-
-bonus: $(bonusts)
-
-$(bonusts): $(BONUS_OBJ_F) $(HEADER)
-	@touch $@
-	ar rcs $(NAME) $^
-	@echo "Bonus compiled"
-
-$(BONUS)$(OBJ_DIR)%.o:	$(BONUS)$(SRC_DIR)%.c $(HEADER)
-	@mkdir -p $(BONUS)$(OBJ_DIR)
+$(OBJ_DIR)%.o:	$(PRINTF)$(SRC_DIR)%.c $(HEADER)ft_printf.h
 	$(CC) $(CFLAGS) $(INCLUDE) -c $< -o $@
 	@echo "$< compiled"
 
-$(PRINTF)$(OBJ_DIR)%.o:	$(PRINTF)$(SRC_DIR)%.c include/ft_printf.h $(HEADER)
-	@mkdir -p $(PRINTF)$(OBJ_DIR)
-	$(CC) $(CFLAGS) $(INCLUDE) -c $< -o $@
-	@echo "$< compiled"
-
-$(GNL)$(OBJ_DIR)%.o: $(GNL)$(SRC_DIR)%.c include/get_next_line.h
-	@mkdir -p $(GNL)$(OBJ_DIR)
+$(OBJ_DIR)%.o: $(GNL)$(SRC_DIR)%.c $(HEADER)get_next_line.h
 	$(CC) $(CFLAGS) $(INCLUDE) -c $< -o $@
 	@echo "$< compiled"
 
 clean:
-	$(RM) $(OBJ_DIR) $(PRINTF)$(OBJ_DIR) $(GNL)$(OBJ_DIR) $(BONUS)$(OBJ_DIR) $(bonusts)
+	$(RM) $(OBJ_DIR)
 	@echo "Object files removed"
 
 fclean: clean
@@ -112,7 +91,7 @@ fclean: clean
 
 re: fclean all
 
-.PHONY: all clean fclean re bonus
+.PHONY: all clean fclean re
 
 ifndef VERBOSE
 .SILENT:

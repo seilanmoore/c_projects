@@ -6,7 +6,7 @@
 /*   By: smoore-a <smoore-a@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/27 20:50:51 by smoore-a          #+#    #+#             */
-/*   Updated: 2024/05/23 12:58:10 by smoore-a         ###   ########.fr       */
+/*   Updated: 2024/05/23 17:58:17 by smoore-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,21 +30,6 @@
 
 # define DESTROY_NOTIF 17
 # define NO_EVENT_MASK 0
-
-//Colors
-# define WHITE			0x00FFFFFF
-# define GRAY			0x007F7F7F
-# define BLACK			0x00000000
-# define RED			0x00FF0000
-# define GREEN			0x0000FF00
-# define BLUE			0x000000FF
-# define ORANGE			0x00FF7F00
-# define YELLOW			0x00FFFF00
-# define SPRING_GREEN	0x0000FF7F
-# define CYAN			0x0000FFFF
-# define MAGENTA		0x00FF00FF
-# define ROSE			0x00FF007F
-# define PURPLE			0x007F00FF
 
 typedef struct s_coord
 {

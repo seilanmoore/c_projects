@@ -1,32 +1,34 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_lstclear_bonus.c                                :+:      :+:    :+:   */
+/*   ft_strncmp.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: smoore-a <smoore-a@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/12/13 20:28:16 by smoore-a          #+#    #+#             */
-/*   Updated: 2024/05/05 20:20:16 by smoore-a         ###   ########.fr       */
+/*   Created: 2023/12/04 21:45:10 by smoore-a          #+#    #+#             */
+/*   Updated: 2024/05/19 17:03:14 by smoore-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../include/libft.h"
+#include "../include/libft.h"
 
-void	ft_lstclear(t_list **lst, void (*del)(void *))
+int	ft_strncmp(const char *s1, const char *s2, size_t n)
 {
-	t_list	*current;
-	t_list	*next;
+	unsigned char	*str1;
+	unsigned char	*str2;
 
-	if (*lst && del)
+	if (n == 0)
+		return (0);
+	str1 = (unsigned char *)s1;
+	str2 = (unsigned char *)s2;
+	if (*str1 == '\0' || *str2 == '\0')
+		return (*str1 - *str2);
+	while ((*str1 || *str2) && n--)
 	{
-		current = *lst;
-		while (current)
-		{
-			next = current->next;
-			del(current->content);
-			free(current);
-			current = next;
-		}
-		*lst = NULL;
+		if (*str1 != *str2)
+			return (*str1 - *str2);
+		str1++;
+		str2++;
 	}
+	return (*(str1 - 1) - *(str2 - 1));
 }

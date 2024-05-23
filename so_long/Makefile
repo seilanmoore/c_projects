@@ -6,7 +6,7 @@
 #    By: smoore-a <smoore-a@student.42malaga.com    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/02/27 20:48:30 by smoore-a          #+#    #+#              #
-#    Updated: 2024/05/23 17:55:03 by smoore-a         ###   ########.fr        #
+#    Updated: 2024/05/23 19:34:36 by smoore-a         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -58,7 +58,7 @@ VPATH = src:src/graphics:src/parse_map_file:src/utils:include
 
 all: $(NAME) $(LIBFT) $(MLX)
 
-$(NAME): $(OBJ_FILES) $(LIBFT) $(MLX)
+$(NAME): $(MLX) $(LIBFT) $(OBJ_FILES)
 	$(CC) $(INCLUDE) $^ $(MLX_FLAGS) $(LIBFT_FLAGS) -o $@
 	@echo "$(NAME) compiled"
 
@@ -68,7 +68,7 @@ $(OBJ_DIR)%.o: %.c $(HEADER)
 	@echo "$< compiled"
 
 $(LIBFT):
-	@make all bonus -C libft
+	@make all -C libft
 	@echo "$(LIBFT) compiled"
 
 $(MLX):

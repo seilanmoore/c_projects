@@ -6,11 +6,11 @@
 /*   By: smoore-a <smoore-a@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/13 11:42:40 by smoore-a          #+#    #+#             */
-/*   Updated: 2024/05/05 20:20:26 by smoore-a         ###   ########.fr       */
+/*   Updated: 2024/05/23 19:20:36 by smoore-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../include/libft.h"
+#include "../include/libft.h"
 
 t_list	*ft_lstnew(void *content)
 {
