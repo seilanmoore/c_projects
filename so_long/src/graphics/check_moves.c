@@ -6,7 +6,7 @@
 /*   By: smoore-a <smoore-a@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/23 08:53:51 by smoore-a          #+#    #+#             */
-/*   Updated: 2024/05/23 23:03:23 by smoore-a         ###   ########.fr       */
+/*   Updated: 2024/05/25 22:20:09 by smoore-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,13 +24,14 @@ void	check_up(t_data *data, t_coord *coord)
 		{
 			if (data->map.mtrx[coord->y - 1][coord->x] == 'C')
 				data->player.collecs++;
+			draw_player(data, coord->x, coord->y - 1);
+			draw_ground(data, coord->x, coord->y);
 			data->map.mtrx[coord->y - 1][coord->x] = 'P';
 			data->map.mtrx[coord->y][coord->x] = '0';
 			data->player.moves++;
 			ft_printf("Moves: %d\n", (int)data->player.moves);
 		}
 	}
-	draw_map(data);
 }
 
 void	check_right(t_data *data, t_coord *coord)
@@ -45,13 +46,14 @@ void	check_right(t_data *data, t_coord *coord)
 		{
 			if (data->map.mtrx[coord->y][coord->x + 1] == 'C')
 				data->player.collecs++;
+			draw_player(data, coord->x + 1, coord->y);
+			draw_ground(data, coord->x, coord->y);
 			data->map.mtrx[coord->y][coord->x + 1] = 'P';
 			data->map.mtrx[coord->y][coord->x] = '0';
 			data->player.moves++;
 			ft_printf("Moves: %d\n", (int)data->player.moves);
 		}
 	}
-	draw_map(data);
 }
 
 void	check_down(t_data *data, t_coord *coord)
@@ -66,13 +68,14 @@ void	check_down(t_data *data, t_coord *coord)
 		{
 			if (data->map.mtrx[coord->y + 1][coord->x] == 'C')
 				data->player.collecs++;
+			draw_player(data, coord->x, coord->y + 1);
+			draw_ground(data, coord->x, coord->y);
 			data->map.mtrx[coord->y + 1][coord->x] = 'P';
 			data->map.mtrx[coord->y][coord->x] = '0';
 			data->player.moves++;
 			ft_printf("Moves: %d\n", (int)data->player.moves);
 		}
 	}
-	draw_map(data);
 }
 
 void	check_left(t_data *data, t_coord *coord)
@@ -87,11 +90,12 @@ void	check_left(t_data *data, t_coord *coord)
 		{
 			if (data->map.mtrx[coord->y][coord->x - 1] == 'C')
 				data->player.collecs++;
+			draw_player(data, coord->x - 1, coord->y);
+			draw_ground(data, coord->x, coord->y);
 			data->map.mtrx[coord->y][coord->x - 1] = 'P';
 			data->map.mtrx[coord->y][coord->x] = '0';
 			data->player.moves++;
 			ft_printf("Moves: %d\n", (int)data->player.moves);
 		}
 	}
-	draw_map(data);
 }
