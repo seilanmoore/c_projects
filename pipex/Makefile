@@ -6,7 +6,7 @@
 #    By: smoore-a <smoore-a@student.42malaga.com    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/02/27 20:48:30 by smoore-a          #+#    #+#              #
-#    Updated: 2024/05/23 20:22:33 by smoore-a         ###   ########.fr        #
+#    Updated: 2024/05/30 17:24:57 by smoore-a         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -30,26 +30,16 @@ SRC_DIR = src/
 
 OBJ_DIR = obj/
 
-SRC = main
+SRC = main init get_path
 
-#PARSE_FILE = check_map check_path open_close_file parse_file
-
-#GRAPHICS = init_window init_textures draw_map draw_sections \
-	check_moves end_game
-
-#UTILS = cleanup error utils
+UTILS = error cleanup
 
 SRC_FILES = $(addprefix $(SRC_DIR), $(addsuffix .c, $(SRC))) \
-#	$(addprefix $(SRC_DIR)$(PARSE_FILE_DIR), $(addsuffix .c, $(PARSE_FILE))) \
-#	$(addprefix $(SRC_DIR)$(INIT_WINDOW_DIR), $(addsuffix .c, $(GRAPHICS))) \
-#	$(addprefix $(SRC_DIR)$(UTILS_DIR), $(addsuffix .c, $(UTILS)))
 
 OBJ_FILES = $(addprefix $(OBJ_DIR), $(addsuffix .o, $(SRC))) \
-#	$(addprefix $(OBJ_DIR), $(addsuffix .o, $(PARSE_FILE))) \
-#	$(addprefix $(OBJ_DIR), $(addsuffix .o, $(GRAPHICS))) \
-#	$(addprefix $(OBJ_DIR), $(addsuffix .o, $(UTILS)))
+	$(addprefix $(OBJ_DIR), $(addsuffix .o, $(UTILS)))
 
-VPATH = src:src/graphics:src/parse_map_file:src/utils:include
+VPATH = src:src/utils:include
 
 all:  $(NAME) $(LIBFT)
 
@@ -77,8 +67,6 @@ fclean: clean
 	@echo "$(NAME) removed"
 	$(RM) $(LIBFT)
 	@echo "$(LIBFT) removed"
-	@make clean -C minilibx-linux
-	@echo "$(MLX) compiled"
 
 re: fclean all
 
