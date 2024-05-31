@@ -6,7 +6,7 @@
 /*   By: smoore-a <smoore-a@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/26 12:42:31 by smoore-a          #+#    #+#             */
-/*   Updated: 2024/05/30 17:16:42 by smoore-a         ###   ########.fr       */
+/*   Updated: 2024/05/31 10:46:55 by smoore-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,30 @@ static void	init_assign(t_data *data, char **argv, char **envp)
 	data->fd_out = -1;
 	data->pipedes[0] = -1;
 	data->pipedes[1] = -1;
+	data->exit_code = -1;
+}
+
+static void	open_fds(t_data *data)
+{
+	data->fd_in = open(data->argv[1], O_RDONLY, 0644);
+	data->fd_out = open(data->argv[4], O_WRONLY | O_CREAT | O_TRUNC, 0644);
+	if (data->fd_in == ERROR || data->fd_out == ERROR)
+	{
+		ft_putstr_fd("bash: ", 2);
+		if (data->fd_in == ERROR && data->fd_out != ERROR)
+		{
+			ft_putstr_fd(data->argv[1], 2);
+			ft_putstr_fd("0\n", data->fd_out);
+			data->exit_code = 0;
+		}
+		else if (data->fd_out == ERROR)
+		{
+			ft_putstr_fd(data->argv[4], 2);
+			data->exit_code = errno;
+		}
+		ft_putstr_fd(OPENF, 2);
+		ft_error(data, NULL, NULL);
+	}
 }
 
 static void	assign_cmd(t_data *data)
@@ -33,22 +57,16 @@ static void	assign_cmd(t_data *data)
 		ft_error(data, "ft_split: " ALLOCF, NULL);
 }
 
-static void	open_fds(t_data *data)
-{
-	data->fd_in = open(data->argv[1], O_RDONLY, 644);
-	if (data->fd_in == ERROR)
-		ft_error(data, OPENF, strerror(errno));
-	data->fd_out = open(data->argv[4], O_WRONLY | O_CREAT | O_TRUNC, 0644);
-	if (data->fd_out == ERROR)
-		ft_error(data, OPENF, strerror(errno));
-}
-
-void	init(t_data *data, char **argv, char **envp)
+void	init(t_data *data, char **argv, char **envp, int argc)
 {
 	init_assign(data, argv, envp);
+	if (argc != 5)
+		ft_error(data, "wrong number of arguments. Must be 4 arguments", NULL);
+	if (envp == NULL)
+		ft_error(data, "environment variables not found", NULL);
+	open_fds(data);
 	assign_cmd(data);
 	get_path(data);
-	open_fds(data);
 	if (pipe(data->pipedes) == ERROR)
 		ft_error(data, PIPEF, strerror(errno));
 }

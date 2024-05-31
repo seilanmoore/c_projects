@@ -6,7 +6,7 @@
 /*   By: smoore-a <smoore-a@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/26 15:15:30 by smoore-a          #+#    #+#             */
-/*   Updated: 2024/05/30 16:29:19 by smoore-a         ###   ########.fr       */
+/*   Updated: 2024/05/31 11:00:19 by smoore-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,16 +16,19 @@ static void	cmd_not_found(t_data *data)
 {
 	if (data->cmd1p == NULL)
 	{
-		ft_putstr_fd("Error: ", 2);
+		ft_putstr_fd("bash: ", 2);
 		ft_putstr_fd(data->cmd1[0], 2);
-		ft_putstr_fd(": " PATHF "\n", 2);
+		ft_putstr_fd(PATHF "\n", 2);
+		ft_putstr_fd("      0       0       0\n", data->fd_out);
 	}
-	if (data->cmd2p == NULL)
+	else if (data->cmd2p == NULL)
 	{
-		ft_putstr_fd("Error: ", 2);
-		ft_putstr_fd(data->cmd1[0], 2);
-		ft_putstr_fd(": " PATHF "\n", 2);
+		ft_putstr_fd("bash: ", 2);
+		ft_putstr_fd(data->cmd2[0], 2);
+		ft_putstr_fd(PATHF "\n", 2);
+		ft_putstr_fd("", data->fd_out);
 	}
+	data->exit_code = 127;
 	ft_error(data, NULL, NULL);
 }
 
@@ -42,6 +45,28 @@ static void	append_slash(t_data *data)
 		free(tmp);
 		if (data->paths[i] == NULL)
 			ft_error(data, "ft_strjoin: " ALLOCF, NULL);
+	}
+}
+
+static void	additional_check(t_data *data)
+{
+	if (data->cmd1p == NULL)
+	{
+		data->cmd1p = ft_strdup(data->cmd1[0]);
+		if (access(data->cmd1p, F_OK | X_OK) == ERROR)
+		{
+			free(data->cmd1p);
+			data->cmd1p = NULL;
+		}
+	}
+	if (data->cmd2p == NULL)
+	{
+		data->cmd2p = ft_strdup(data->cmd2[0]);
+		if (access(data->cmd2p, F_OK | X_OK) == ERROR)
+		{
+			free(data->cmd2p);
+			data->cmd2p = NULL;
+		}
 	}
 }
 
@@ -71,6 +96,7 @@ static void	assign_paths(t_data *data)
 			}
 		}
 	}
+	additional_check(data);
 }
 
 void	get_path(t_data *data)

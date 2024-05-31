@@ -6,7 +6,7 @@
 /*   By: smoore-a <smoore-a@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/26 13:01:10 by smoore-a          #+#    #+#             */
-/*   Updated: 2024/05/30 17:14:21 by smoore-a         ###   ########.fr       */
+/*   Updated: 2024/05/31 10:15:55 by smoore-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,5 +67,6 @@ void	cleanup(t_data *data)
 		free_strings(data->cmd1);
 		free_strings(data->cmd2);
 		free_strings(data->paths);
+		*data = (t_data){NULL};
 	}
 }

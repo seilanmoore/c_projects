@@ -6,7 +6,7 @@
 /*   By: smoore-a <smoore-a@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/23 19:50:58 by smoore-a          #+#    #+#             */
-/*   Updated: 2024/05/30 17:24:29 by smoore-a         ###   ########.fr       */
+/*   Updated: 2024/05/31 10:44:30 by smoore-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,11 +25,11 @@
 
 # define ERROR -1
 # define ARGC 5
-# define OPENF "open: couldn't open file"
+# define OPENF ": No such file or directory\n"
 # define CLOSEF "close: couldn't close file"
 # define PIPEF "pipe: couldn't create pipe"
 # define ALLOCF "couldn't allocate memory"
-# define PATHF "couldn't find the command path"
+# define PATHF ": command not found"
 # define FORKF "couldn't clone the process"
 # define DUPF "couldn't duplicate the file descriptor"
 # define EXECF "couldn't execute the command"
@@ -41,16 +41,17 @@ typedef struct s_data
 	int		fd_in;
 	int		fd_out;
 	int		pipedes[2];
-	int		pid;
+	pid_t	pid;
+	char	**paths;
 	char	**cmd1;
 	char	**cmd2;
 	char	*cmd1p;
 	char	*cmd2p;
-	char	**paths;
+	int		exit_code;
 }	t_data;
 
 //MAIN
-void	init(t_data *data, char **argv, char **envp);
+void	init(t_data *data, char **argv, char **envp, int argc);
 void	get_path(t_data *data);
 
 //UTILS

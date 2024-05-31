@@ -1,4 +1,0 @@
-OBJ_FILES = $(addprefix $(OBJ_DIR), $(addsuffix .o, $(SRC))) \
-	$(addprefix $(OBJ_DIR), $(addsuffix .o, $(UTILS)))
-#	$(addprefix $(OBJ_DIR), $(addsuffix .o, $(PARSE_FILE))) \
-#	$(addprefix $(OBJ_DIR), $(addsuffix .o, $(GRAPHICS))) \
