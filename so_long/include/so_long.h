@@ -6,7 +6,7 @@
 /*   By: smoore-a <smoore-a@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/27 20:50:51 by smoore-a          #+#    #+#             */
-/*   Updated: 2024/05/23 17:58:17 by smoore-a         ###   ########.fr       */
+/*   Updated: 2024/05/26 12:35:56 by smoore-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,26 +83,23 @@ typedef struct s_data
 	t_player	player;
 }	t_data;
 
-//PARSE_MAP_FILE
-//	parse_file
+//\PARSE_MAP_FILE
+// \__parse_file
 void	print_map(char **map);
 void	parse_file(t_data *data, int argc, char **argv);
-//	check_map
+// \__check_map
 int		check_sections(t_map *map, char *line);
 void	check_map(t_data *data);
-//	check_path
+// \__check_path
 void	get_player_coord(t_data *data, char **map);
 void	check_path(t_data *data);
-//	open_close_file
-void	openf(t_data *data);
-void	closef(t_data *data);
 
-//GRAPHICS
-//	init_window
+//\GRAPHICS
+// \__init_window
 void	init_window(t_data *data);
-//		init_textures
+// \__init_textures
 void	convert_xpm(t_data *data);
-//	draw_map
+// \__draw_map
 void	draw_map(t_data *data);
 //	draw_sections
 void	draw_ground(t_data *data, int x, int y);
@@ -110,21 +107,24 @@ void	draw_collectible(t_data *data, int x, int y);
 void	draw_border(t_data *data, int x, int y);
 void	draw_exit(t_data *data, int x, int y);
 void	draw_player(t_data *data, int x, int y);
-//check_moves
+// \__check_moves
 void	check_up(t_data *data, t_coord *coord);
 void	check_right(t_data *data, t_coord *coord);
 void	check_down(t_data *data, t_coord *coord);
 void	check_left(t_data *data, t_coord *coord);
-//end_game
+// \__end_game
 void	end_game(t_data *data);
 
-//UTILS
-//	utils
-void	print_map(char **map);
-//	error
-void	ft_error(t_data *data, char *message);
-//	cleanup
+//\UTILS
+// \__cleanup
 void	free_map(char **map);
 void	terminate(t_data *data);
+// \__error
+void	ft_error(t_data *data, char *message);
+// \__open_close_file
+void	openf(t_data *data);
+void	closef(t_data *data);
+// \__utils
+void	print_map(char **map);
 
 #endif
