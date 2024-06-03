@@ -1,21 +1,32 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_putstr_fd.c                                     :+:      :+:    :+:   */
+/*   ft_lstclear_bonus.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: smoore-a <smoore-a@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/12/12 21:10:55 by smoore-a          #+#    #+#             */
-/*   Updated: 2024/05/19 17:03:14 by smoore-a         ###   ########.fr       */
+/*   Created: 2023/12/13 20:28:16 by smoore-a          #+#    #+#             */
+/*   Updated: 2024/05/23 19:20:26 by smoore-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/libft.h"
 
-void	ft_putstr_fd(char *s, int fd)
+void	ft_lstclear(t_list **lst, void (*del)(void *))
 {
-	if (!s || fd < 0)
-		return ;
-	if (write(fd, s, ft_strlen(s)) == ERROR)
-		return ;
+	t_list	*current;
+	t_list	*next;
+
+	if (*lst && del)
+	{
+		current = *lst;
+		while (current)
+		{
+			next = current->next;
+			del(current->content);
+			free(current);
+			current = next;
+		}
+		*lst = NULL;
+	}
 }

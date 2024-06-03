@@ -1,21 +1,36 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_putstr_fd.c                                     :+:      :+:    :+:   */
+/*   ft_printf_utils.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: smoore-a <smoore-a@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/12/12 21:10:55 by smoore-a          #+#    #+#             */
-/*   Updated: 2024/05/19 17:03:14 by smoore-a         ###   ########.fr       */
+/*   Created: 2024/02/27 21:56:57 by smoore-a          #+#    #+#             */
+/*   Updated: 2024/05/19 17:03:34 by smoore-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/libft.h"
+#include "../../include/ft_printf.h"
 
-void	ft_putstr_fd(char *s, int fd)
+int	put_str(char *s)
 {
-	if (!s || fd < 0)
-		return ;
-	if (write(fd, s, ft_strlen(s)) == ERROR)
-		return ;
+	if (!s)
+	{
+		if (write(1, "(null)", 6) == -1)
+			return (-1);
+		return (6);
+	}
+	if (write(1, s, ft_strlen(s)) == -1)
+		return (-1);
+	return (ft_strlen(s));
+}
+
+int	put_char(int c)
+{
+	unsigned char	ch;
+
+	ch = (unsigned char) c;
+	if (write(1, &ch, 1) == -1)
+		return (-1);
+	return (1);
 }

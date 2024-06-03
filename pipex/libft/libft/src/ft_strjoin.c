@@ -1,21 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_putstr_fd.c                                     :+:      :+:    :+:   */
+/*   ft_strjoin.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: smoore-a <smoore-a@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/12/12 21:10:55 by smoore-a          #+#    #+#             */
+/*   Created: 2023/12/07 15:22:01 by smoore-a          #+#    #+#             */
 /*   Updated: 2024/05/19 17:03:14 by smoore-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/libft.h"
 
-void	ft_putstr_fd(char *s, int fd)
+char	*ft_strjoin(char const *s1, char const *s2)
 {
-	if (!s || fd < 0)
-		return ;
-	if (write(fd, s, ft_strlen(s)) == ERROR)
-		return ;
+	unsigned char	*res_str;
+	size_t			full_size;
+
+	full_size = ft_strlen(s1) + ft_strlen(s2) + 1;
+	res_str = (unsigned char *) malloc(sizeof(char) * full_size);
+	if (!res_str)
+		return (NULL);
+	ft_strlcpy((char *) res_str, s1, ft_strlen(s1) + 1);
+	ft_strlcat((char *) res_str, s2, full_size);
+	return ((char *) res_str);
 }

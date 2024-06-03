@@ -1,21 +1,41 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_putstr_fd.c                                     :+:      :+:    :+:   */
+/*   ft_strnstr.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: smoore-a <smoore-a@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/12/12 21:10:55 by smoore-a          #+#    #+#             */
+/*   Created: 2023/12/04 23:14:57 by smoore-a          #+#    #+#             */
 /*   Updated: 2024/05/19 17:03:14 by smoore-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/libft.h"
 
-void	ft_putstr_fd(char *s, int fd)
+char	*ft_strnstr(const char *haystack, const char *needle, size_t len)
 {
-	if (!s || fd < 0)
-		return ;
-	if (write(fd, s, ft_strlen(s)) == ERROR)
-		return ;
+	unsigned char	*str1;
+	unsigned char	*str2;
+	size_t			i;
+	size_t			j;
+
+	str2 = (unsigned char *)needle;
+	str1 = (unsigned char *)haystack;
+	if (!*str2)
+		return ((char *)str1);
+	if (*str1)
+	{
+		i = 0;
+		while (str1[i] && i < len)
+		{
+			j = 0;
+			while (str1[i + j] == str2[j] && str1[i + j]
+				&& str2[j] && (i + j) < len)
+				j++;
+			if (!str2[j])
+				return ((char *) &str1[i]);
+			i++;
+		}
+	}
+	return (0);
 }
