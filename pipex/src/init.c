@@ -6,7 +6,7 @@
 /*   By: smoore-a <smoore-a@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/26 12:42:31 by smoore-a          #+#    #+#             */
-/*   Updated: 2024/06/05 07:08:09 by smoore-a         ###   ########.fr       */
+/*   Updated: 2024/06/05 18:05:15 by smoore-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,53 +24,27 @@ static void	init_assign(t_data *data, char **argv, char **envp)
 	data->exit_code = -1;
 }
 
-static void	check_permissions(t_data *data)
-{
-	int		len;
-	char	*tmp;
-
-	if (access(data->argv[1], F_OK | R_OK) == ERROR)
-	{
-		ft_putstr_fd("bash: ", 2);
-		ft_putstr_fd(data->argv[1], 2);
-		ft_putstr_fd(": Permission denied\n", 2);
-	}
-	len = ft_strrchr(data->argv[4], '/') - data->argv[4];
-	tmp = ft_substr(data->argv[4], 0, len);
-	if (access(tmp, F_OK & W_OK) == ERROR)
-	{
-		ft_putstr_fd("bash: ", 2);
-		ft_putstr_fd(tmp, 2);
-		ft_putstr_fd(": Permission denied\n", 2);
-	}
-	else if (access(data->argv[4], (F_OK & W_OK) | W_OK) == ERROR)
-	{
-		ft_putstr_fd("bash: ", 2);
-		ft_putstr_fd(data->argv[4], 2);
-		ft_putstr_fd(": Permission denied\n", 2);
-	}
-	free(tmp);
-}
-
 static void	open_fds(t_data *data)
 {
-	data->fd_in = open(data->argv[1], O_RDONLY, 0644);
-	data->fd_out = open(data->argv[4], O_WRONLY | O_CREAT | O_TRUNC, 0644);
+	data->fd_in = open(data->argv[1], O_RDONLY);
+	data->fd_out = open(data->argv[4], O_WRONLY | O_CREAT | O_TRUNC, 00644);
 	if (data->fd_in == ERROR || data->fd_out == ERROR)
 	{
-		ft_putstr_fd("bash: ", 2);
-		if (data->fd_in == ERROR && data->fd_out != ERROR)
+		if (data->fd_in == ERROR && access(data->argv[1], F_OK) == ERROR)
 		{
+			ft_putstr_fd("bash: ", 2);
 			ft_putstr_fd(data->argv[1], 2);
+			ft_putstr_fd(OPENF, 2);
 			ft_putstr_fd("0\n", data->fd_out);
 			data->exit_code = 0;
 		}
-		else if (data->fd_out == ERROR)
+		if (data->fd_out == ERROR && access(data->argv[4], F_OK) == ERROR)
 		{
+			ft_putstr_fd("bash: ", 2);
 			ft_putstr_fd(data->argv[4], 2);
+			ft_putstr_fd(OPENF, 2);
 			data->exit_code = errno;
 		}
-		ft_putstr_fd(OPENF, 2);
 		ft_error(data, NULL, NULL);
 	}
 }

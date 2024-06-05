@@ -6,7 +6,7 @@
 /*   By: smoore-a <smoore-a@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/23 19:50:58 by smoore-a          #+#    #+#             */
-/*   Updated: 2024/05/31 10:44:30 by smoore-a         ###   ########.fr       */
+/*   Updated: 2024/06/05 17:44:09 by smoore-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,7 @@ typedef struct s_data
 //MAIN
 void	init(t_data *data, char **argv, char **envp, int argc);
 void	get_path(t_data *data);
+void	check_permissions(t_data *data);
 
 //UTILS
 void	ft_error(t_data *data, char *message, char *sys_error);

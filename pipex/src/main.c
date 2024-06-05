@@ -6,75 +6,79 @@
 /*   By: smoore-a <smoore-a@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/23 19:50:40 by smoore-a          #+#    #+#             */
-/*   Updated: 2024/06/05 06:55:45 by smoore-a         ###   ########.fr       */
+/*   Updated: 2024/06/05 22:33:38 by smoore-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/pipex.h"
 #include <stdlib.h>
 
-static void	parent(t_data *data)
+static void	exec_second(t_data *data)
 {
-	data->pid = fork();
-	if (data->pid == ERROR)
-		ft_error(data, FORKF, strerror(errno));
-	if (data->pid == 0)
+	int	prueba;
+
+	prueba = 5;
+	while (prueba < 10)
+		ft_printf("%d", prueba++);
+	if (dup2(data->fd_out, STDOUT_FILENO) == ERROR)
+		ft_error(data, DUPF, strerror(errno));
+	if (dup2(data->pipedes[0], STDIN_FILENO) == ERROR)
+		ft_error(data, DUPF, strerror(errno));
+	if (close(data->pipedes[1]) == ERROR)
+		ft_error(data, CLOSEF, strerror(errno));
+	if (execve(data->cmd2p, data->cmd2, data->envp) == ERROR)
 	{
-		if (dup2(data->fd_out, STDOUT_FILENO) == ERROR)
-			ft_error(data, DUPF, strerror(errno));
-		if (dup2(data->pipedes[0], STDIN_FILENO) == ERROR)
-			ft_error(data, DUPF, strerror(errno));
-		if (close(data->pipedes[1]) == ERROR)
-			ft_error(data, CLOSEF, strerror(errno));
-		if (execve(data->cmd2p, data->cmd2, data->envp) == ERROR)
-		{
-			ft_putstr_fd("Error: ", 2);
-			ft_putstr_fd(data->cmd2[0], 2);
-			ft_putstr_fd(": " EXECF "\n", 2);
-			ft_error(data, NULL, strerror(errno));
-		}
+		ft_putstr_fd("Error: ", 2);
+		ft_putstr_fd(data->cmd2[0], 2);
+		ft_putstr_fd(": " EXECF "\n", 2);
+		ft_error(data, NULL, strerror(errno));
 	}
+	exit(EXIT_FAILURE);
 }
 
-static void	child(t_data *data)
+static void	exec_first(t_data *data)
 {
-	data->pid = fork();
-	if (data->pid == ERROR)
-		ft_error(data, FORKF, strerror(errno));
-	if (data->pid == 0)
+	int	prueba;
+
+	prueba = 0;
+	while (prueba < 5)
+		ft_printf("%d", prueba++);
+	if (dup2(data->fd_in, STDIN_FILENO) == ERROR)
+		ft_error(data, DUPF, strerror(errno));
+	if (dup2(data->pipedes[1], STDOUT_FILENO) == ERROR)
+		ft_error(data, DUPF, strerror(errno));
+	if (close(data->pipedes[0]) == ERROR)
+		ft_error(data, CLOSEF, strerror(errno));
+	if (execve(data->cmd1p, data->cmd1, data->envp) == ERROR)
 	{
-		if (dup2(data->fd_in, STDIN_FILENO) == ERROR)
-			ft_error(data, DUPF, strerror(errno));
-		if (dup2(data->pipedes[1], STDOUT_FILENO) == ERROR)
-			ft_error(data, DUPF, strerror(errno));
-		if (close(data->pipedes[0]) == ERROR)
-			ft_error(data, CLOSEF, strerror(errno));
-		if (execve(data->cmd1p, data->cmd1, data->envp) == ERROR)
-		{
-			ft_putstr_fd("Error: ", 2);
-			ft_putstr_fd(data->cmd1[0], 2);
-			ft_putstr_fd(": " EXECF "\n", 2);
-			ft_error(data, NULL, strerror(errno));
-		}
+		ft_putstr_fd("Error: ", 2);
+		ft_putstr_fd(data->cmd1[0], 2);
+		ft_putstr_fd(": " EXECF "\n", 2);
+		ft_error(data, NULL, strerror(errno));
 	}
+	exit(EXIT_FAILURE);
 }
 
 int	main(int argc, char **argv, char **envp)
 {
 	t_data	data;
+	int		pid1;
+	int		pid2;
 
 	data = (t_data){NULL};
 	init(&data, argv, envp, argc);
-	data.pid = fork();
-	if (data.pid == ERROR)
+	pid1 = fork();
+	if (pid1 == ERROR)
 		ft_error(&data, FORKF, strerror(errno));
-	if (data.pid == 0)
-		child(&data);
-	else
-	{
-		waitpid(-1, NULL, 0);
-		parent(&data);
-	}
+	if (pid1 == 0)
+		exec_first(&data);
+	waitpid(pid1, NULL, 0);
+	pid2 = fork();
+	if (pid2 == ERROR)
+		ft_error(&data, FORKF, strerror(errno));
+	if (pid2 == 0)
+		exec_second(&data);
+	waitpid(pid2, NULL, 0);
 	cleanup(&data);
-	return (EXIT_SUCCESS);
+	exit(EXIT_SUCCESS);
 }

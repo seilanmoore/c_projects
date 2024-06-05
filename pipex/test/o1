@@ -6,7 +6,7 @@
 #    By: smoore-a <smoore-a@student.42malaga.com    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/02/27 20:48:30 by smoore-a          #+#    #+#              #
-#    Updated: 2024/06/05 17:43:25 by smoore-a         ###   ########.fr        #
+#    Updated: 2024/05/30 17:24:57 by smoore-a         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -30,7 +30,7 @@ SRC_DIR = src/
 
 OBJ_DIR = obj/
 
-SRC = main init get_path check_permissions
+SRC = main init get_path
 
 UTILS = error cleanup
 
