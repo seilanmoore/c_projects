@@ -6,7 +6,7 @@
 /*   By: smoore-a <smoore-a@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/26 12:42:31 by smoore-a          #+#    #+#             */
-/*   Updated: 2024/05/31 10:46:55 by smoore-a         ###   ########.fr       */
+/*   Updated: 2024/06/05 07:08:09 by smoore-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,34 @@ static void	init_assign(t_data *data, char **argv, char **envp)
 	data->pipedes[0] = -1;
 	data->pipedes[1] = -1;
 	data->exit_code = -1;
+}
+
+static void	check_permissions(t_data *data)
+{
+	int		len;
+	char	*tmp;
+
+	if (access(data->argv[1], F_OK | R_OK) == ERROR)
+	{
+		ft_putstr_fd("bash: ", 2);
+		ft_putstr_fd(data->argv[1], 2);
+		ft_putstr_fd(": Permission denied\n", 2);
+	}
+	len = ft_strrchr(data->argv[4], '/') - data->argv[4];
+	tmp = ft_substr(data->argv[4], 0, len);
+	if (access(tmp, F_OK & W_OK) == ERROR)
+	{
+		ft_putstr_fd("bash: ", 2);
+		ft_putstr_fd(tmp, 2);
+		ft_putstr_fd(": Permission denied\n", 2);
+	}
+	else if (access(data->argv[4], (F_OK & W_OK) | W_OK) == ERROR)
+	{
+		ft_putstr_fd("bash: ", 2);
+		ft_putstr_fd(data->argv[4], 2);
+		ft_putstr_fd(": Permission denied\n", 2);
+	}
+	free(tmp);
 }
 
 static void	open_fds(t_data *data)
@@ -62,8 +90,9 @@ void	init(t_data *data, char **argv, char **envp, int argc)
 	init_assign(data, argv, envp);
 	if (argc != 5)
 		ft_error(data, "wrong number of arguments. Must be 4 arguments", NULL);
-	if (envp == NULL)
+	if (data->envp == NULL)
 		ft_error(data, "environment variables not found", NULL);
+	check_permissions(data);
 	open_fds(data);
 	assign_cmd(data);
 	get_path(data);
