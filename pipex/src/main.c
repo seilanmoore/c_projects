@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: smoore-a <smoore-a@student.42.fr>          +#+  +:+       +#+        */
+/*   By: smoore-a <smoore-a@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/23 19:50:40 by smoore-a          #+#    #+#             */
-/*   Updated: 2024/06/06 13:48:59 by smoore-a         ###   ########.fr       */
+/*   Updated: 2024/06/06 23:52:30 by smoore-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,15 +62,12 @@ int	main(int argc, char **argv, char **envp)
 		ft_error(&data, FORKF, strerror(errno));
 	if (pid1 == 0)
 		exec_first(&data);
-	else
-	{
-		waitpid(pid1, NULL, 0);
-		pid2 = fork();
-		if (pid2 == ERROR)
-			ft_error(&data, FORKF, strerror(errno));
-		if (pid2 == 0)
-			exec_second(&data);
-	}
+	waitpid(pid1, NULL, 0);
+	pid2 = fork();
+	if (pid2 == ERROR)
+		ft_error(&data, FORKF, strerror(errno));
+	if (pid2 == 0)
+		exec_second(&data);
 	cleanup(&data);
 	exit(EXIT_SUCCESS);
 }
