@@ -6,7 +6,7 @@
 /*   By: smoore-a <smoore-a@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/23 19:50:40 by smoore-a          #+#    #+#             */
-/*   Updated: 2024/06/06 23:52:30 by smoore-a         ###   ########.fr       */
+/*   Updated: 2024/06/07 14:05:08 by smoore-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,8 +27,8 @@ static void	exec_first(t_data *data)
 		ft_putstr_fd(data->cmd1[0], 2);
 		ft_putstr_fd(": " EXECF "\n", 2);
 		ft_error(data, NULL, strerror(errno));
+		exit(EXIT_FAILURE);
 	}
-	exit(EXIT_FAILURE);
 }
 
 static void	exec_second(t_data *data)
@@ -45,8 +45,8 @@ static void	exec_second(t_data *data)
 		ft_putstr_fd(data->cmd2[0], 2);
 		ft_putstr_fd(": " EXECF "\n", 2);
 		ft_error(data, NULL, strerror(errno));
+		exit(EXIT_FAILURE);
 	}
-	exit(EXIT_FAILURE);
 }
 
 int	main(int argc, char **argv, char **envp)
