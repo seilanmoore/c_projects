@@ -6,7 +6,7 @@
 #    By: smoore-a <smoore-a@student.42malaga.com    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/02/27 20:48:30 by smoore-a          #+#    #+#              #
-#    Updated: 2024/05/23 19:34:36 by smoore-a         ###   ########.fr        #
+#    Updated: 2024/06/08 14:27:41 by smoore-a         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,7 +16,7 @@ INCLUDE = -Iinclude -Ilibft/include -I/usr/include -Iminilibx-linux
 
 HEADER = so_long.h
 
-CC = gcc
+CC = clang
 
 CFLAGS = -Wall -Werror -Wextra -O3 #-O0
 

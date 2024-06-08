@@ -1,24 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: smoore-a <smoore-a@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/02/27 20:52:25 by smoore-a          #+#    #+#             */
-/*   Updated: 2024/06/08 14:29:46 by smoore-a         ###   ########.fr       */
+/*   Created: 2024/06/08 11:59:16 by smoore-a          #+#    #+#             */
+/*   Updated: 2024/06/08 13:46:36 by smoore-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/so_long.h"
+#include "../include/pipex_bonus.h"
 
-int	main(int argc, char **argv)
+void	initialize(t_data *data, int argc, char ***argv, char ***envp)
 {
-	t_data	data;
+	data->argc = argc;
+	data->argv = *argv;
+}
 
-	data = (t_data){0};
-	parse_file(&data, argc, argv);
-	check_map(&data);
-	init_window(&data);
-	return (SUCCESS);
+void	init(t_data *data, int argc, char ***argv, char ***envp)
+{
+	initialize(data, argc, argv, envp);
 }

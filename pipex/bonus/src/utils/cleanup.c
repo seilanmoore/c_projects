@@ -6,11 +6,11 @@
 /*   By: smoore-a <smoore-a@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/26 13:01:10 by smoore-a          #+#    #+#             */
-/*   Updated: 2024/06/08 14:56:52 by smoore-a         ###   ########.fr       */
+/*   Updated: 2024/06/08 12:03:35 by smoore-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../include/pipex.h"
+#include "../../include/pipex_bonus.h"
 
 static void	free_strings(char **str)
 {
@@ -69,6 +69,6 @@ void	cleanup(t_data *data)
 		free_strings(data->paths);
 		free_strings(data->cmd1);
 		free_strings(data->cmd2);
-		*data = (t_data){0};
+		*data = (t_data){NULL};
 	}
 }

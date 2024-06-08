@@ -6,7 +6,7 @@
 /*   By: smoore-a <smoore-a@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/26 12:42:31 by smoore-a          #+#    #+#             */
-/*   Updated: 2024/06/05 18:05:15 by smoore-a         ###   ########.fr       */
+/*   Updated: 2024/06/08 12:08:54 by smoore-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,6 @@ static void	init_assign(t_data *data, char **argv, char **envp)
 {
 	data->argv = argv;
 	data->envp = envp;
-	data->pid = -1;
 	data->fd_in = -1;
 	data->fd_out = -1;
 	data->pipedes[0] = -1;

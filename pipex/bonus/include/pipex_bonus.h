@@ -1,19 +1,19 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   pipex.h                                            :+:      :+:    :+:   */
+/*   pipex_bonus.h                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: smoore-a <smoore-a@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/05/23 19:50:58 by smoore-a          #+#    #+#             */
-/*   Updated: 2024/06/08 11:44:54 by smoore-a         ###   ########.fr       */
+/*   Created: 2024/06/07 22:04:30 by smoore-a          #+#    #+#             */
+/*   Updated: 2024/06/08 13:44:30 by smoore-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef PIPEX_H
-# define PIPEX_H
+#ifndef PIPEX_BONUS_H
+# define PIPEX_BONUS_H
 
-# include "../libft/include/libft.h"
+# include "../../libft/include/libft.h"
 
 # include <fcntl.h>		//open
 # include <unistd.h>	//close, read, write, access, dup, dup2, execve, pipe
@@ -34,28 +34,36 @@
 # define DUPF "couldn't duplicate the file descriptor"
 # define EXECF "couldn't execute the command"
 
+typedef struct s_cmd
+{
+	char	**opt;
+	char	*path;
+}	t_cmd;
+
+typedef struct s_file
+{
+	char	*name;
+	int		fd;
+}	t_file;
+
 typedef struct s_data
 {
+	int		argc;
 	char	**argv;
 	char	**envp;
-	int		fd_in;
-	int		fd_out;
+	t_file	file[2];
 	int		pipedes[2];
+	pid_t	*pid;
 	char	**paths;
-	char	**cmd1;
-	char	**cmd2;
-	char	*cmd1p;
-	char	*cmd2p;
+	t_cmd	*cmd;
 	int		exit_code;
 }	t_data;
 
-//MAIN
-void	init(t_data *data, char **argv, char **envp, int argc);
-void	get_path(t_data *data);
-void	check_permissions(t_data *data);
-
-//UTILS
 void	ft_error(t_data *data, char *message, char *sys_error);
 void	cleanup(t_data *data);
 
+void	init(t_data *data, int argc, char ***argv, char ***envp);
+
+
 #endif
+

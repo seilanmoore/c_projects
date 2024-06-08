@@ -6,13 +6,13 @@
 #    By: smoore-a <smoore-a@student.42malaga.com    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/11/27 15:26:15 by smoore-a          #+#    #+#              #
-#    Updated: 2024/05/23 19:28:52 by smoore-a         ###   ########.fr        #
+#    Updated: 2024/06/08 14:23:04 by smoore-a         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = libft.a
 
-CC = gcc
+CC = clang
 
 CFLAGS = -Wall -Werror -Wextra -O3
 

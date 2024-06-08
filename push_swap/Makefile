@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: smoore-a <smoore-a@student.42.fr>          +#+  +:+       +#+         #
+#    By: smoore-a <smoore-a@student.42malaga.com    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/02/14 20:01:41 by smoore-a          #+#    #+#              #
-#    Updated: 2024/02/27 23:07:54 by smoore-a         ###   ########.fr        #
+#    Updated: 2024/06/08 14:27:25 by smoore-a         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,7 +14,7 @@ NAME = push_swap
 
 INCLUDE = -I include
 
-CC = cc
+CC = clang
 
 CFLAGS = -Wall -Werror -Wextra -g
 

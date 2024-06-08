@@ -6,7 +6,7 @@
 /*   By: smoore-a <smoore-a@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/23 19:50:40 by smoore-a          #+#    #+#             */
-/*   Updated: 2024/06/07 14:05:08 by smoore-a         ###   ########.fr       */
+/*   Updated: 2024/06/08 14:56:06 by smoore-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ int	main(int argc, char **argv, char **envp)
 	pid_t	pid1;
 	pid_t	pid2;
 
-	data = (t_data){NULL};
+	data = (t_data){0};
 	init(&data, argv, envp, argc);
 	pid1 = fork();
 	if (pid1 == ERROR)

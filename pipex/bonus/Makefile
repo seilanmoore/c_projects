@@ -5,24 +5,24 @@
 #                                                     +:+ +:+         +:+      #
 #    By: smoore-a <smoore-a@student.42malaga.com    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2024/02/27 20:48:30 by smoore-a          #+#    #+#              #
-#    Updated: 2024/06/08 14:27:15 by smoore-a         ###   ########.fr        #
+#    Created: 2024/06/07 22:09:52 by smoore-a          #+#    #+#              #
+#    Updated: 2024/06/08 14:19:43 by smoore-a         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = pipex
 
-INCLUDE = -Iinclude -Ilibft/include -I/usr/include
+INCLUDE = -I../include -I../libft/include -I/usr/include
 
-HEADER = pipex.h
+HEADER = pipex_bonus.h
 
 CC = clang
 
 CFLAGS = -g -Wall -Werror -Wextra -O0 #-O3
 
-LIBFT_FLAGS = -Llibft -lft
+LIBFT_FLAGS = -L../libft -lft
 
-LIBFT = libft/libft.a
+LIBFT = ../libft/libft.a
 
 RM = rm -rf
 
@@ -30,20 +30,20 @@ SRC_DIR = src/
 
 OBJ_DIR = obj/
 
-SRC = main init get_path check_permissions
+SRC = main
 
-UTILS = error cleanup
+UTILS =
 
 SRC_FILES = $(addprefix $(SRC_DIR), $(addsuffix .c, $(SRC))) \
 
 OBJ_FILES = $(addprefix $(OBJ_DIR), $(addsuffix .o, $(SRC))) \
 	$(addprefix $(OBJ_DIR), $(addsuffix .o, $(UTILS)))
 
-VPATH = src:src/utils:include
+VPATH = src:../include
 
-all: $(NAME) $(LIBFT)
+all: $(NAME)
 
-$(NAME): $(LIBFT) $(OBJ_FILES)
+$(NAME): $(OBJ_MANDATORY) $(OBJ_FILES)
 	$(CC) $(INCLUDE) $^ $(LIBFT_FLAGS) -o $@
 	@echo "$(NAME) compiled"
 
@@ -52,21 +52,9 @@ $(OBJ_DIR)%.o: %.c $(HEADER)
 	$(CC) $(CFLAGS) $(INCLUDE) -c $< -o $@
 	@echo "$< compiled"
 
-$(LIBFT):
-	@make all -C libft
-	@echo "$(LIBFT) compiled"
-
-bonus:
-	@make all -C bonus
-	@echo "Bonus compiled"
-
 clean:
 	$(RM) $(OBJ_DIR)
 	@echo "Object files removed"
-	@make clean -C libft
-	@echo "Libft object files removed"
-	@make clean -C bonus
-	@echo "Bonus object files removed"
 
 fclean: clean
 	$(RM) $(NAME)
@@ -80,7 +68,7 @@ nocflag:
 	$(MAKE) $(LIBFT)
 	$(MAKE) CFLAGS="" $(NAME)
 
-.PHONY: all clean fclean re bonus nocflag
+.PHONY: all clean fclean re nocflag
 
 ifndef VERBOSE
 .SILENT:

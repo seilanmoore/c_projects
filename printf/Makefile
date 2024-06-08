@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: smoore-a <smoore-a@student.42.fr>          +#+  +:+       +#+         #
+#    By: smoore-a <smoore-a@student.42malaga.com    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/12/19 20:08:31 by smoore-a          #+#    #+#              #
-#    Updated: 2024/02/29 22:45:13 by smoore-a         ###   ########.fr        #
+#    Updated: 2024/06/08 14:27:36 by smoore-a         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,7 +14,7 @@ NAME		= 	libftprintf.a
 INCLUDE		=	include
 SRC_DIR		= 	src/
 OBJ_DIR		= 	obj/
-CC			= 	cc
+CC			= 	clang
 CFLAGS		= 	-Wall -Werror -Wextra -g -I
 RM			= 	rm -rf
 AR			= 	ar rcs
