@@ -6,7 +6,7 @@
 /*   By: smoore-a <smoore-a@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/07 22:04:30 by smoore-a          #+#    #+#             */
-/*   Updated: 2024/06/08 13:44:30 by smoore-a         ###   ########.fr       */
+/*   Updated: 2024/06/09 11:01:06 by smoore-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,8 +62,6 @@ typedef struct s_data
 void	ft_error(t_data *data, char *message, char *sys_error);
 void	cleanup(t_data *data);
 
-void	init(t_data *data, int argc, char ***argv, char ***envp);
-
+void	init(t_data *data, int argc, char **argv, char **envp);
 
 #endif
-

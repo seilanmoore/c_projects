@@ -6,13 +6,13 @@
 #    By: smoore-a <smoore-a@student.42malaga.com    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/06/07 22:09:52 by smoore-a          #+#    #+#              #
-#    Updated: 2024/06/08 14:19:43 by smoore-a         ###   ########.fr        #
+#    Updated: 2024/06/09 11:38:07 by smoore-a         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-NAME = pipex
+NAME = pipex_bonus
 
-INCLUDE = -I../include -I../libft/include -I/usr/include
+INCLUDE = -Iinclude -I../libft/include -I/usr/include
 
 HEADER = pipex_bonus.h
 
@@ -30,20 +30,18 @@ SRC_DIR = src/
 
 OBJ_DIR = obj/
 
-SRC = main
+SRC = main init
 
-UTILS =
-
-SRC_FILES = $(addprefix $(SRC_DIR), $(addsuffix .c, $(SRC))) \
+UTILS = cleanup error
 
 OBJ_FILES = $(addprefix $(OBJ_DIR), $(addsuffix .o, $(SRC))) \
 	$(addprefix $(OBJ_DIR), $(addsuffix .o, $(UTILS)))
 
-VPATH = src:../include
+VPATH = src:src/utils:include
 
 all: $(NAME)
 
-$(NAME): $(OBJ_MANDATORY) $(OBJ_FILES)
+$(NAME): $(LIBFT) $(OBJ_FILES)
 	$(CC) $(INCLUDE) $^ $(LIBFT_FLAGS) -o $@
 	@echo "$(NAME) compiled"
 
@@ -51,6 +49,10 @@ $(OBJ_DIR)%.o: %.c $(HEADER)
 	@mkdir -p $(OBJ_DIR)
 	$(CC) $(CFLAGS) $(INCLUDE) -c $< -o $@
 	@echo "$< compiled"
+
+$(LIBFT):
+	@make all -C ../libft
+	@echo "$(LIBFT) compiled"
 
 clean:
 	$(RM) $(OBJ_DIR)

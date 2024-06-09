@@ -6,7 +6,7 @@
 /*   By: smoore-a <smoore-a@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/07 22:13:08 by smoore-a          #+#    #+#             */
-/*   Updated: 2024/06/08 14:56:12 by smoore-a         ###   ########.fr       */
+/*   Updated: 2024/06/09 11:32:59 by smoore-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ int	main(int argc, char **argv, char **envp)
 {
 	t_data	data;
 
-	data = (t_data){0};
-	init(&data, argc, &argv, &envp);
+	init(&data, argc, argv, envp);
+	cleanup(&data);
 	exit(EXIT_SUCCESS);
 }

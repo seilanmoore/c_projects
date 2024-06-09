@@ -6,7 +6,7 @@
 /*   By: smoore-a <smoore-a@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/23 19:50:58 by smoore-a          #+#    #+#             */
-/*   Updated: 2024/06/08 11:44:54 by smoore-a         ###   ########.fr       */
+/*   Updated: 2024/06/09 11:30:57 by smoore-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,6 @@
 # include <sys/wait.h>	//wait, waitpid
 
 # define ERROR -1
-# define ARGC 5
 # define OPENF ": No such file or directory\n"
 # define CLOSEF "close: couldn't close file"
 # define PIPEF "pipe: couldn't create pipe"

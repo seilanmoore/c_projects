@@ -6,7 +6,7 @@
 #    By: smoore-a <smoore-a@student.42malaga.com    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/02/27 20:48:30 by smoore-a          #+#    #+#              #
-#    Updated: 2024/06/08 14:27:15 by smoore-a         ###   ########.fr        #
+#    Updated: 2024/06/09 11:40:12 by smoore-a         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,7 +18,7 @@ HEADER = pipex.h
 
 CC = clang
 
-CFLAGS = -g -Wall -Werror -Wextra -O0 #-O3
+CFLAGS = -g -Wall -Werror -Wextra -O3 #-O3
 
 LIBFT_FLAGS = -Llibft -lft
 
@@ -34,14 +34,12 @@ SRC = main init get_path check_permissions
 
 UTILS = error cleanup
 
-SRC_FILES = $(addprefix $(SRC_DIR), $(addsuffix .c, $(SRC))) \
-
 OBJ_FILES = $(addprefix $(OBJ_DIR), $(addsuffix .o, $(SRC))) \
 	$(addprefix $(OBJ_DIR), $(addsuffix .o, $(UTILS)))
 
 VPATH = src:src/utils:include
 
-all: $(NAME) $(LIBFT)
+all: $(NAME)
 
 $(NAME): $(LIBFT) $(OBJ_FILES)
 	$(CC) $(INCLUDE) $^ $(LIBFT_FLAGS) -o $@
@@ -56,9 +54,8 @@ $(LIBFT):
 	@make all -C libft
 	@echo "$(LIBFT) compiled"
 
-bonus:
+bonus: $(LIBFT)
 	@make all -C bonus
-	@echo "Bonus compiled"
 
 clean:
 	$(RM) $(OBJ_DIR)

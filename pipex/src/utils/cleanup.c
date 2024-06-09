@@ -6,26 +6,26 @@
 /*   By: smoore-a <smoore-a@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/26 13:01:10 by smoore-a          #+#    #+#             */
-/*   Updated: 2024/06/08 14:56:52 by smoore-a         ###   ########.fr       */
+/*   Updated: 2024/06/08 23:17:32 by smoore-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/pipex.h"
 
-static void	free_strings(char **str)
+static void	free_strings(char ***str)
 {
 	int	i;
 
-	if (str)
+	if (*str)
 	{
 		i = -1;
-		while (str[++i])
+		while ((*str)[++i])
 		{
-			free(str[i]);
-			str[i] = NULL;
+			free((*str)[i]);
+			(*str)[i] = NULL;
 		}
-		free(str);
-		str = NULL;
+		free(*str);
+		*str = NULL;
 	}
 }
 
@@ -66,9 +66,9 @@ void	cleanup(t_data *data)
 			free(data->cmd1p);
 		if (data->cmd2p)
 			free(data->cmd2p);
-		free_strings(data->paths);
-		free_strings(data->cmd1);
-		free_strings(data->cmd2);
+		free_strings(&(data->paths));
+		free_strings(&(data->cmd1));
+		free_strings(&(data->cmd2));
 		*data = (t_data){0};
 	}
 }
