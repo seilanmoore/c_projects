@@ -6,11 +6,11 @@
 #    By: smoore-a <smoore-a@student.42malaga.com    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/06/07 22:09:52 by smoore-a          #+#    #+#              #
-#    Updated: 2024/06/09 11:38:07 by smoore-a         ###   ########.fr        #
+#    Updated: 2024/06/09 22:30:50 by smoore-a         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-NAME = pipex_bonus
+NAME = pipex
 
 INCLUDE = -Iinclude -I../libft/include -I/usr/include
 
@@ -30,14 +30,17 @@ SRC_DIR = src/
 
 OBJ_DIR = obj/
 
-SRC = main init
+SRC = main init check_permissions get_path get_cmds
+
+HERE_DOC = here_doc
 
 UTILS = cleanup error
 
 OBJ_FILES = $(addprefix $(OBJ_DIR), $(addsuffix .o, $(SRC))) \
-	$(addprefix $(OBJ_DIR), $(addsuffix .o, $(UTILS)))
+	$(addprefix $(OBJ_DIR), $(addsuffix .o, $(UTILS))) \
+	$(addprefix $(OBJ_DIR), $(addsuffix .o, $(HERE_DOC)))
 
-VPATH = src:src/utils:include
+VPATH = src:src/utils:src/here_doc:include
 
 all: $(NAME)
 
@@ -57,6 +60,7 @@ $(LIBFT):
 clean:
 	$(RM) $(OBJ_DIR)
 	@echo "Object files removed"
+	@make clean -C ../libft
 
 fclean: clean
 	$(RM) $(NAME)

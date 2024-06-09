@@ -1,6 +1,0 @@
-OBJ_DIR = obj/
-OBJ_FILES = $(addprefix $(OBJ_DIR), $(addsuffix .o, $(SRC))) \
-	$(addprefix $(OBJ_DIR), $(addsuffix .o, $(UTILS)))
-$(OBJ_DIR)%.o: %.c $(HEADER)
-	@mkdir -p $(OBJ_DIR)
-	$(RM) $(OBJ_DIR)

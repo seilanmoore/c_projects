@@ -6,11 +6,13 @@
 #    By: smoore-a <smoore-a@student.42malaga.com    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/02/27 20:48:30 by smoore-a          #+#    #+#              #
-#    Updated: 2024/06/09 11:40:12 by smoore-a         ###   ########.fr        #
+#    Updated: 2024/06/09 11:43:57 by smoore-a         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = pipex
+
+BONUS = bonus/pipex_bonus
 
 INCLUDE = -Iinclude -Ilibft/include -I/usr/include
 
@@ -54,7 +56,7 @@ $(LIBFT):
 	@make all -C libft
 	@echo "$(LIBFT) compiled"
 
-bonus: $(LIBFT)
+bonus:
 	@make all -C bonus
 
 clean:
@@ -70,6 +72,8 @@ fclean: clean
 	@echo "$(NAME) removed"
 	$(RM) $(LIBFT)
 	@echo "$(LIBFT) removed"
+	$(RM) $(BONUS)
+	@echo "$(BONUS) removed"
 
 re: fclean all
 

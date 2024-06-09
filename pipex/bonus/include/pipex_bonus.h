@@ -6,7 +6,7 @@
 /*   By: smoore-a <smoore-a@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/07 22:04:30 by smoore-a          #+#    #+#             */
-/*   Updated: 2024/06/09 11:01:06 by smoore-a         ###   ########.fr       */
+/*   Updated: 2024/06/09 21:46:00 by smoore-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,9 @@
 # include <sys/wait.h>	//wait, waitpid
 
 # define ERROR -1
-# define ARGC 5
+# define HERE_DOC_P "./pipex here_doc LIMITER cmd cmd1 file"
+# define ARGS_P "./pipex file1 cmd1 cmd2 cmd3 ... cmdn file2"
+# define USAGE "usage: "
 # define OPENF ": No such file or directory\n"
 # define CLOSEF "close: couldn't close file"
 # define PIPEF "pipe: couldn't create pipe"
@@ -63,5 +65,10 @@ void	ft_error(t_data *data, char *message, char *sys_error);
 void	cleanup(t_data *data);
 
 void	init(t_data *data, int argc, char **argv, char **envp);
+void	check_permissions(t_data *data);
+void	get_path(t_data *data);
+void	get_cmds(t_data *data);
+
+void	here_doc(t_data *data);
 
 #endif
