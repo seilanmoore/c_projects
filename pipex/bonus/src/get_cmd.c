@@ -1,18 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_cmds.c                                         :+:      :+:    :+:   */
+/*   get_cmd.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: smoore-a <smoore-a@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/09 21:44:22 by smoore-a          #+#    #+#             */
-/*   Updated: 2024/06/09 22:30:04 by smoore-a         ###   ########.fr       */
+/*   Updated: 2024/06/10 08:32:51 by smoore-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/pipex_bonus.h"
 
-void	get_cmds(t_data *data)
+void	get_cmd(t_data *data)
 {
 	int	count;
 	int	i;

@@ -6,7 +6,7 @@
 /*   By: smoore-a <smoore-a@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/26 13:01:10 by smoore-a          #+#    #+#             */
-/*   Updated: 2024/06/09 19:31:33 by smoore-a         ###   ########.fr       */
+/*   Updated: 2024/06/10 08:41:49 by smoore-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,8 +63,8 @@ void	cleanup(t_data *data)
 
 	if (data)
 	{
-		unlink(".here_doc");
 		close_fds(data);
+		unlink(_HERE_DOC);
 		free_strings(&(data->paths));
 		if (data->cmd)
 		{
@@ -78,10 +78,6 @@ void	cleanup(t_data *data)
 			free(data->cmd);
 			data->cmd = (t_cmd *){0};
 		}
-		if (data->file[0].name)
-			free(data->file[0].name);
-		if (data->file[1].name)
-			free(data->file[1].name);
 		*data = (t_data){0};
 	}
 }

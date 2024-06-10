@@ -1,45 +1,38 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   check_permissions.c                                :+:      :+:    :+:   */
+/*   check_permission.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: smoore-a <smoore-a@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/05 17:42:30 by smoore-a          #+#    #+#             */
-/*   Updated: 2024/06/09 13:22:24 by smoore-a         ###   ########.fr       */
+/*   Updated: 2024/06/10 10:04:58 by smoore-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/pipex_bonus.h"
 
-static void	check_here_doc()
+static void	check_here_doc(void)
 {
-	if (access(".here_doc", F_OK) != ERROR
-		&& access(".here_doc", W_OK) == ERROR)
-		unlink(".here_doc");
+	if (access(_HERE_DOC, F_OK) != ERROR)
+		unlink(_HERE_DOC);
+	if (access(".", W_OK) == ERROR)
+	{
+		ft_putstr_fd("bash: ", 2);
+		ft_putstr_fd(HERE_DOC, 2);
+		ft_putstr_fd(": Permission denied\n", 2);
+	}
 }
 
 static void	check_infile(t_data *data)
 {
-	int		len;
-	char	*tmp;
-
-	len = ft_strrchr(data->argv[1], '/') - data->argv[1] + 1;
-	tmp = ft_substr(data->argv[1], 0, len);
-	if (access(tmp, F_OK) != ERROR && access(tmp, R_OK) == ERROR)
-	{
-		ft_putstr_fd("bash: ", 2);
-		ft_putstr_fd(tmp, 2);
-		ft_putstr_fd(": Permission denied\n", 2);
-	}
-	else if (access(data->argv[1], F_OK) != ERROR
+	if (access(data->argv[1], F_OK) != ERROR
 		&& access(data->argv[1], R_OK) == ERROR)
 	{
 		ft_putstr_fd("bash: ", 2);
 		ft_putstr_fd(data->argv[1], 2);
 		ft_putstr_fd(": Permission denied\n", 2);
 	}
-	free(tmp);
 }
 
 static void	check_outfile(t_data *data)
@@ -50,15 +43,13 @@ static void	check_outfile(t_data *data)
 
 	argn = data->argc - 1;
 	len = ft_strrchr(data->argv[argn], '/') - data->argv[argn] + 1;
-	tmp = ft_substr(data->argv[argn], 0, len);
-	if (access(tmp, F_OK) != ERROR && access(tmp, W_OK) == ERROR)
-	{
-		ft_putstr_fd("bash: ", 2);
-		ft_putstr_fd(tmp, 2);
-		ft_putstr_fd(": Permission denied\n", 2);
-	}
-	else if (access(data->argv[argn], F_OK) != ERROR
-		&& access(data->argv[argn], W_OK) == ERROR)
+	if (ft_strchr(data->argv[argn], '/'))
+		tmp = ft_substr(data->argv[argn], 0, len);
+	else
+		tmp = ft_strdup(".");
+	if ((access(data->argv[argn], F_OK) != ERROR && \
+		access(data->argv[argn], W_OK) == ERROR) || \
+		(access(tmp, F_OK) != ERROR && access(tmp, W_OK) == ERROR))
 	{
 		ft_putstr_fd("bash: ", 2);
 		ft_putstr_fd(data->argv[argn], 2);
@@ -67,11 +58,11 @@ static void	check_outfile(t_data *data)
 	free(tmp);
 }
 
-void	check_permissions(t_data *data)
+void	check_permission(t_data *data)
 {
-	if (ft_strncmp("here_doc", data->argv[1], ft_strlen(data->argv[1])))
+	if (ft_strncmp(HERE_DOC, data->argv[1], ft_strlen(data->argv[1])))
 		check_infile(data);
 	else
-	 	check_here_doc();
+		check_here_doc();
 	check_outfile(data);
 }

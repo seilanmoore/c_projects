@@ -6,7 +6,7 @@
 #    By: smoore-a <smoore-a@student.42malaga.com    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/06/07 22:09:52 by smoore-a          #+#    #+#              #
-#    Updated: 2024/06/09 22:30:50 by smoore-a         ###   ########.fr        #
+#    Updated: 2024/06/10 08:33:25 by smoore-a         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -30,7 +30,7 @@ SRC_DIR = src/
 
 OBJ_DIR = obj/
 
-SRC = main init check_permissions get_path get_cmds
+SRC = main init check_permission get_path get_cmd open_fd
 
 HERE_DOC = here_doc
 

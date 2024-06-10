@@ -6,7 +6,7 @@
 /*   By: smoore-a <smoore-a@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/08 11:59:16 by smoore-a          #+#    #+#             */
-/*   Updated: 2024/06/09 22:50:37 by smoore-a         ###   ########.fr       */
+/*   Updated: 2024/06/10 10:10:21 by smoore-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ static void	check_argc(t_data *data)
 		ft_error(data, USAGE ARGS_P "\npipex: " USAGE HERE_DOC_P, NULL);
 	else if (data->argv)
 	{
-		if (!ft_strncmp("here_doc", data->argv[1], ft_strlen(data->argv[1]))
+		if (!ft_strncmp(HERE_DOC, data->argv[1], ft_strlen(data->argv[1]))
 			&& data->argc != 6)
 			ft_error(data, USAGE HERE_DOC_P, NULL);
 		else if (data->argc < 5)
@@ -45,13 +45,13 @@ void	init(t_data *data, int argc, char **argv, char **envp)
 {
 	initialize(data, argc, argv, envp);
 	check_argc(data);
-	check_permissions(data);
-	if (!ft_strncmp("here_doc", data->argv[1], ft_strlen(data->argv[1])))
+	check_permission(data);
+	if (!ft_strncmp(HERE_DOC, data->argv[1], ft_strlen(data->argv[1])))
 		here_doc(data);
 	else
-		get_cmds(data);
-	//openfds;
+		get_cmd(data);
+	open_fd(data);
 	get_path(data);
-	//if (pipe(&data->argc) == ERROR)
-	//	ft_error(data, PIPEF, strerror(errno));
+	if (pipe(data->pipedes) == ERROR)
+		ft_error(data, PIPEF, strerror(errno));
 }

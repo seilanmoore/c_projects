@@ -6,7 +6,7 @@
 /*   By: smoore-a <smoore-a@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/26 15:15:30 by smoore-a          #+#    #+#             */
-/*   Updated: 2024/06/09 22:43:03 by smoore-a         ###   ########.fr       */
+/*   Updated: 2024/06/10 08:06:42 by smoore-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,9 +102,4 @@ void	get_path(t_data *data)
 	append_slash(data);
 	assign_paths(data);
 	cmd_not_found(data);
-
-	for (int i = 0; data->cmd[i].opt; i++) {
-		ft_printf("cmd[%d]: %s\n", i, data->cmd[i].opt[0]);
-	}
-
 }
