@@ -6,11 +6,32 @@
 /*   By: smoore-a <smoore-a@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/26 13:01:10 by smoore-a          #+#    #+#             */
-/*   Updated: 2024/06/10 08:41:49 by smoore-a         ###   ########.fr       */
+/*   Updated: 2024/06/10 19:52:39 by smoore-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/pipex_bonus.h"
+
+void	close_file(t_data *data, t_file *file)
+{
+	if (file != NULL)
+	{
+		file->opened = 0;
+		file->closed = 1;
+	}
+	if (close(file->fd) == ERROR)
+		ft_error(data, CLOSEF, strerror(errno));
+}
+void	close_pipe(t_data *data, t_pipedes *pipedes, int in_out)
+{
+	if (pipedes != NULL)
+	{
+		pipedes->opened[in_out] = 0;
+		pipedes->closed[in_out] = 1;
+	}
+	if (close(pipedes->fd[in_out]) == ERROR)
+		ft_error(data, CLOSEF, strerror(errno));
+}
 
 static void	free_strings(char ***str)
 {
@@ -31,30 +52,14 @@ static void	free_strings(char ***str)
 
 static void	close_fds(t_data *data)
 {
-	if (data->file[0].fd != ERROR)
-	{
-		if (close(data->file[0].fd) == ERROR)
-			ft_error(data, "infile:" CLOSEF, strerror(errno));
-		data->file[0].fd = -1;
-	}
-	if (data->file[1].fd != ERROR)
-	{
-		if (close(data->file[1].fd) == ERROR)
-			ft_error(data, "outfile: " CLOSEF, strerror(errno));
-		data->file[1].fd = -1;
-	}
-	if (data->pipedes[0] != ERROR)
-	{
-		if (close(data->pipedes[0]) == ERROR)
-			ft_error(data, "read pipe end: " CLOSEF, strerror(errno));
-		data->pipedes[0] = -1;
-	}
-	if (data->pipedes[1] != ERROR)
-	{
-		if (close(data->pipedes[1]) == ERROR)
-			ft_error(data, "write pipe end: " CLOSEF, strerror(errno));
-		data->pipedes[1] = -1;
-	}
+	if (data->file[0].opened && !data->file[0].closed)
+		close_file(data, &(data->file[0]));
+	if (data->file[1].opened && !data->file[1].closed)
+		close_file(data, &(data->file[1]));
+	if (data->pipedes.opened[0] && !data->pipedes.closed[0])
+		close_pipe(data, &(data->pipedes), 0);
+	if (data->pipedes.opened[1] && !data->pipedes.closed[1])
+		close_pipe(data, &(data->pipedes), 1);
 }
 
 void	cleanup(t_data *data)

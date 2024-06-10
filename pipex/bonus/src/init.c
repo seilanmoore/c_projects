@@ -6,7 +6,7 @@
 /*   By: smoore-a <smoore-a@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/08 11:59:16 by smoore-a          #+#    #+#             */
-/*   Updated: 2024/06/10 10:10:21 by smoore-a         ###   ########.fr       */
+/*   Updated: 2024/06/10 19:48:54 by smoore-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,8 +18,8 @@ static void	initialize(t_data *data, int argc, char **argv, char **envp)
 	data->argc = argc;
 	data->argv = argv;
 	data->envp = envp;
-	data->pipedes[0] = -1;
-	data->pipedes[1] = -1;
+	data->pipedes.fd[0] = -1;
+	data->pipedes.fd[1] = -1;
 	data->file[0].fd = -1;
 	data->file[1].fd = -1;
 	data->exit_code = -1;
@@ -27,14 +27,15 @@ static void	initialize(t_data *data, int argc, char **argv, char **envp)
 
 static void	check_argc(t_data *data)
 {
-	if (data->argc < 2)
+	if (data->argc < 5)
 		ft_error(data, USAGE ARGS_P "\npipex: " USAGE HERE_DOC_P, NULL);
 	else if (data->argv)
 	{
-		if (!ft_strncmp(HERE_DOC, data->argv[1], ft_strlen(data->argv[1]))
-			&& data->argc != 6)
+		if (!ft_strncmp(HERE_DOC, data->argv[1], ft_strlen(data->argv[1])))
+			data->here_doc_exits = 1;
+		if (data->here_doc_exits && data->argc != 6)
 			ft_error(data, USAGE HERE_DOC_P, NULL);
-		else if (data->argc < 5)
+		else if (!data->here_doc_exits && data->argc < 5)
 			ft_error(data, USAGE ARGS_P, NULL);
 	}
 	if (data->envp == NULL)
@@ -43,15 +44,17 @@ static void	check_argc(t_data *data)
 
 void	init(t_data *data, int argc, char **argv, char **envp)
 {
+	int	piped;
+
 	initialize(data, argc, argv, envp);
 	check_argc(data);
 	check_permission(data);
-	if (!ft_strncmp(HERE_DOC, data->argv[1], ft_strlen(data->argv[1])))
-		here_doc(data);
-	else
-		get_cmd(data);
 	open_fd(data);
+	get_cmd(data);
 	get_path(data);
-	if (pipe(data->pipedes) == ERROR)
+	piped = pipe(data->pipedes.fd);
+	data->pipedes.opened[0] = 1;
+	data->pipedes.opened[1] = 1;
+	if (piped == ERROR)
 		ft_error(data, PIPEF, strerror(errno));
 }

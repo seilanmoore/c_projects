@@ -6,7 +6,7 @@
 /*   By: smoore-a <smoore-a@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/25 13:22:32 by smoore-a          #+#    #+#             */
-/*   Updated: 2024/06/09 18:44:49 by smoore-a         ###   ########.fr       */
+/*   Updated: 2024/06/10 16:34:34 by smoore-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ void	ft_error(t_data *data, char *message, char *sys_error)
 			ft_putstr_fd("pipex: ", 2);
 			ft_putstr_fd(message, 2);
 			if (sys_error)
-				ft_putstr_fd(" -- ", 2);
+				ft_putstr_fd(": ", 2);
 		}
 		if (sys_error)
 			ft_putstr_fd(sys_error, 2);

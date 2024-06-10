@@ -6,7 +6,7 @@
 /*   By: smoore-a <smoore-a@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/10 08:31:32 by smoore-a          #+#    #+#             */
-/*   Updated: 2024/06/10 09:26:23 by smoore-a         ###   ########.fr       */
+/*   Updated: 2024/06/10 20:23:55 by smoore-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,23 +20,45 @@ static void	file_error(t_data *data, char *file)
 	data->exit_code = errno;
 }
 
+static void	here_doc_file(t_data *data)
+{
+	data->file[0].fd = open(_HERE_DOC, O_WRONLY | O_CREAT, 00644);
+	data->file[1].fd = open(data->argv[data->argc - 1], \
+		O_WRONLY | O_CREAT | O_APPEND, 00644);
+	data->file[0].opened = 1;
+	data->file[1].opened = 1;
+}
+
+static void	not_here_doc_file(t_data *data)
+{
+	data->file[0].fd = open(data->argv[1], O_RDONLY);
+	data->file[1].fd = open(data->argv[data->argc - 1], \
+		O_WRONLY | O_CREAT | O_TRUNC, 00644);
+	data->file[0].opened = 1;
+	data->file[1].opened = 1;
+}
+
 void	open_fd(t_data *data)
 {
 	int	count;
 
-	data->file[0].name = data->argv[1];
-	if(ft_strncmp(data->argv[1], HERE_DOC, ft_strlen(data->argv[1])))
-		data->file[0].fd = open(data->argv[1], O_RDONLY);
+	if (data->here_doc_exits)
+		here_doc_file(data);
 	else
-		data->file[0].fd = open(_HERE_DOC, O_RDWR | O_CREAT);
+		not_here_doc_file(data);
 	count = data->argc - 1;
+	data->file[0].name = data->argv[1];
 	data->file[1].name = data->argv[count];
-	data->file[1].fd = open(data->argv[count], O_WRONLY | O_CREAT | O_TRUNC, 00644);
-	if (data->file[0].fd == ERROR || data->file[1].fd == ERROR)
+	count = -1;
+	while (++count < 2)
 	{
-		count = -1;
-		while (++count < 2)
+		if (data->file[count].fd == ERROR)
 			file_error(data, data->file[count].name);
-		ft_error(data, NULL, NULL);
+	}
+	count = -1;
+	while (++count < 2)
+	{
+		if (data->file[count].fd == ERROR)
+			ft_error(data, NULL, NULL);
 	}
 }

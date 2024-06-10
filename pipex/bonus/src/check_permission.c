@@ -6,7 +6,7 @@
 /*   By: smoore-a <smoore-a@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/05 17:42:30 by smoore-a          #+#    #+#             */
-/*   Updated: 2024/06/10 10:04:58 by smoore-a         ###   ########.fr       */
+/*   Updated: 2024/06/10 19:56:47 by smoore-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ static void	check_here_doc(void)
 		unlink(_HERE_DOC);
 	if (access(".", W_OK) == ERROR)
 	{
-		ft_putstr_fd("bash: ", 2);
+		ft_putstr_fd("pipex: ", 2);
 		ft_putstr_fd(HERE_DOC, 2);
 		ft_putstr_fd(": Permission denied\n", 2);
 	}
@@ -29,7 +29,7 @@ static void	check_infile(t_data *data)
 	if (access(data->argv[1], F_OK) != ERROR
 		&& access(data->argv[1], R_OK) == ERROR)
 	{
-		ft_putstr_fd("bash: ", 2);
+		ft_putstr_fd("pipex: ", 2);
 		ft_putstr_fd(data->argv[1], 2);
 		ft_putstr_fd(": Permission denied\n", 2);
 	}
@@ -51,7 +51,7 @@ static void	check_outfile(t_data *data)
 		access(data->argv[argn], W_OK) == ERROR) || \
 		(access(tmp, F_OK) != ERROR && access(tmp, W_OK) == ERROR))
 	{
-		ft_putstr_fd("bash: ", 2);
+		ft_putstr_fd("pipex: ", 2);
 		ft_putstr_fd(data->argv[argn], 2);
 		ft_putstr_fd(": Permission denied\n", 2);
 	}
@@ -60,9 +60,9 @@ static void	check_outfile(t_data *data)
 
 void	check_permission(t_data *data)
 {
-	if (ft_strncmp(HERE_DOC, data->argv[1], ft_strlen(data->argv[1])))
-		check_infile(data);
-	else
+	if (data->here_doc_exits)
 		check_here_doc();
+	else
+		check_infile(data);
 	check_outfile(data);
 }
