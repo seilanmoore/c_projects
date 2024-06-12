@@ -6,7 +6,7 @@
 /*   By: smoore-a <smoore-a@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/07 22:04:30 by smoore-a          #+#    #+#             */
-/*   Updated: 2024/06/12 19:47:45 by smoore-a         ###   ########.fr       */
+/*   Updated: 2024/06/12 20:52:20 by smoore-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,11 +24,11 @@
 # include <sys/wait.h>	//wait, waitpid
 
 # define ERROR -1
-# define HERE_DOC_P "./pipex here_doc LIMITER cmd cmd1 file"
+# define USAGE "usage: "
 # define ARGS_P "./pipex file1 cmd1 cmd2 ... cmdn file2"
+# define HERE_DOC_P "./pipex here_doc LIMITER cmd cmd1 file"
 # define HERE_DOC "here_doc"
 # define _HERE_DOC ".here_doc"
-# define USAGE "usage: "
 # define OPENF ": No such file or directory\n"
 # define CLOSEF "close: couldn't close file"
 # define ALLOCF "couldn't allocate memory"

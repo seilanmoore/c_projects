@@ -6,7 +6,7 @@
 /*   By: smoore-a <smoore-a@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/11 09:24:30 by smoore-a          #+#    #+#             */
-/*   Updated: 2024/06/12 17:55:42 by smoore-a         ###   ########.fr       */
+/*   Updated: 2024/06/12 20:44:26 by smoore-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ static void	infile_to_cmd(t_data *data, int i)
 static void	cmd_to_cmd(t_data *data, int i)
 {
 	if (dup2(data->pipes[i - 1].fd[0], STDIN_FILENO) == ERROR)
-		ft_error(data, DUPF, strerror(errno)); // DA ERROR!
+		ft_error(data, DUPF, strerror(errno));
 	if (dup2(data->pipes[i].fd[1], STDOUT_FILENO) == ERROR)
 		ft_error(data, DUPF, strerror(errno));
 	close(data->pipes[i - 1].fd[0]);

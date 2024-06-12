@@ -6,7 +6,7 @@
 /*   By: smoore-a <smoore-a@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/26 12:42:31 by smoore-a          #+#    #+#             */
-/*   Updated: 2024/06/09 11:10:00 by smoore-a         ###   ########.fr       */
+/*   Updated: 2024/06/12 20:53:16 by smoore-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,10 +16,6 @@ static void	init_assign(t_data *data, char **argv, char **envp)
 {
 	data->argv = argv;
 	data->envp = envp;
-	data->fd_in = -1;
-	data->fd_out = -1;
-	data->pipedes[0] = -1;
-	data->pipedes[1] = -1;
 	data->exit_code = -1;
 }
 
@@ -62,7 +58,7 @@ void	init(t_data *data, char **argv, char **envp, int argc)
 {
 	init_assign(data, argv, envp);
 	if (argc != 5)
-		ft_error(data, "wrong number of arguments. Must be 4 arguments", NULL);
+		ft_error(data, USAGE ARGS_P, NULL);
 	if (data->envp == NULL)
 		ft_error(data, "environment variables not found", NULL);
 	check_permissions(data);

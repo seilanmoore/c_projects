@@ -1,0 +1,5 @@
+total 16$
+drwxr-xr-x 2 smoore-a smoore-a 4096 Jun  8 12:00 include$
+-rw-r--r-- 1 smoore-a smoore-a 2075 Jun 12 20:55 Makefile$
+drwxr-xr-x 4 smoore-a smoore-a 4096 Jun 12 17:16 src$
+drwxr-xr-x 2 smoore-a smoore-a 4096 Jun 12 20:19 test$

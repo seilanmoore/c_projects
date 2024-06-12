@@ -6,7 +6,7 @@
 /*   By: smoore-a <smoore-a@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/26 13:01:10 by smoore-a          #+#    #+#             */
-/*   Updated: 2024/06/08 23:17:32 by smoore-a         ###   ########.fr       */
+/*   Updated: 2024/06/12 20:30:58 by smoore-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,30 +31,10 @@ static void	free_strings(char ***str)
 
 static void	close_fds(t_data *data)
 {
-	if (data->fd_in != ERROR)
-	{
-		if (close(data->fd_in) == ERROR)
-			ft_error(data, CLOSEF, strerror(errno));
-		data->fd_in = -1;
-	}
-	if (data->fd_out != ERROR)
-	{
-		if (close(data->fd_out) == ERROR)
-			ft_error(data, CLOSEF, strerror(errno));
-		data->fd_out = -1;
-	}
-	if (data->pipedes[0] != ERROR)
-	{
-		if (close(data->pipedes[0]) == ERROR)
-			ft_error(data, CLOSEF, strerror(errno));
-		data->pipedes[0] = -1;
-	}
-	if (data->pipedes[1] != ERROR)
-	{
-		if (close(data->pipedes[1]) == ERROR)
-			ft_error(data, CLOSEF, strerror(errno));
-		data->pipedes[1] = -1;
-	}
+	close(data->fd_in);
+	close(data->fd_out);
+	close(data->pipedes[0]);
+	close(data->pipedes[1]);
 }
 
 void	cleanup(t_data *data)

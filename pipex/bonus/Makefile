@@ -6,7 +6,7 @@
 #    By: smoore-a <smoore-a@student.42malaga.com    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/06/07 22:09:52 by smoore-a          #+#    #+#              #
-#    Updated: 2024/06/12 19:46:31 by smoore-a         ###   ########.fr        #
+#    Updated: 2024/06/12 20:55:13 by smoore-a         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,7 +18,7 @@ HEADER = pipex_bonus.h
 
 CC = clang
 
-CFLAGS = -g -Wall -Werror -Wextra -O0 #-O3
+CFLAGS = -g -Wall -Werror -Wextra -O3 #-O3
 
 LIBFT_FLAGS = -L../libft -lft
 
