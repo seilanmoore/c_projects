@@ -6,7 +6,7 @@
 #    By: smoore-a <smoore-a@student.42malaga.com    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/06/07 22:09:52 by smoore-a          #+#    #+#              #
-#    Updated: 2024/06/10 18:52:34 by smoore-a         ###   ########.fr        #
+#    Updated: 2024/06/12 17:16:59 by smoore-a         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -30,17 +30,17 @@ SRC_DIR = src/
 
 OBJ_DIR = obj/
 
-SRC = main init check_permission get_path get_cmd open_fd
+SRC = main not_here_doc here_doc
 
-HERE_DOC = here_doc
+INIT = init check_permission get_path get_cmd open_fd
 
 UTILS = cleanup error
 
 OBJ_FILES = $(addprefix $(OBJ_DIR), $(addsuffix .o, $(SRC))) \
+	$(addprefix $(OBJ_DIR), $(addsuffix .o, $(INIT))) \
 	$(addprefix $(OBJ_DIR), $(addsuffix .o, $(UTILS))) \
-	$(addprefix $(OBJ_DIR), $(addsuffix .o, $(HERE_DOC)))
 
-VPATH = src:src/utils:src/here_doc:include
+VPATH = src:src/initialize:src/utils:include
 
 all: $(NAME)
 

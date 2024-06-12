@@ -6,11 +6,11 @@
 /*   By: smoore-a <smoore-a@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/09 21:44:22 by smoore-a          #+#    #+#             */
-/*   Updated: 2024/06/10 16:19:02 by smoore-a         ###   ########.fr       */
+/*   Updated: 2024/06/12 17:18:50 by smoore-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/pipex_bonus.h"
+#include "../../include/pipex_bonus.h"
 
 static void	here_doc_cmd(t_data *data)
 {
@@ -47,7 +47,7 @@ static void	not_here_doc_cmd(t_data *data)
 
 void	get_cmd(t_data *data)
 {
-	if (data->here_doc_exits)
+	if (data->here_doc_exists)
 		here_doc_cmd(data);
 	else
 		not_here_doc_cmd(data);

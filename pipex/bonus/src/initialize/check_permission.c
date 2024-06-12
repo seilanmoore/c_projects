@@ -6,11 +6,11 @@
 /*   By: smoore-a <smoore-a@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/05 17:42:30 by smoore-a          #+#    #+#             */
-/*   Updated: 2024/06/10 19:56:47 by smoore-a         ###   ########.fr       */
+/*   Updated: 2024/06/12 17:18:50 by smoore-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/pipex_bonus.h"
+#include "../../include/pipex_bonus.h"
 
 static void	check_here_doc(void)
 {
@@ -60,7 +60,7 @@ static void	check_outfile(t_data *data)
 
 void	check_permission(t_data *data)
 {
-	if (data->here_doc_exits)
+	if (data->here_doc_exists)
 		check_here_doc();
 	else
 		check_infile(data);

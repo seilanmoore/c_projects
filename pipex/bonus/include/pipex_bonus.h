@@ -6,7 +6,7 @@
 /*   By: smoore-a <smoore-a@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/07 22:04:30 by smoore-a          #+#    #+#             */
-/*   Updated: 2024/06/11 00:35:52 by smoore-a         ###   ########.fr       */
+/*   Updated: 2024/06/12 17:58:11 by smoore-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,12 +31,12 @@
 # define USAGE "usage: "
 # define OPENF ": No such file or directory\n"
 # define CLOSEF "close: couldn't close file"
-# define PIPEF "pipe: couldn't create pipe"
 # define ALLOCF "couldn't allocate memory"
 # define PATHF ": command not found"
-# define FORKF "couldn't clone the process"
-# define DUPF "couldn't duplicate the file descriptor"
-# define EXECF "couldn't execute the command"
+# define PIPEF "pipe: couldn't create pipe"
+# define FORKF "fork: couldn't clone the process"
+# define DUPF "dup2: couldn't duplicate the file descriptor"
+# define EXECF "execve: couldn't execute the command"
 
 typedef struct s_cmd
 {
@@ -44,46 +44,38 @@ typedef struct s_cmd
 	char	*path;
 }	t_cmd;
 
-typedef struct s_file
+typedef struct s_pipe
 {
-	char	*name;
-	int		fd;
-	int		opened;
-	int		closed;
-}	t_file;
-
-typedef struct s_pipedes
-{
-	int		fd[2];
-	int		opened[2];
-	int		closed[2];
-}	t_pipedes;
+	int	fd[2];
+}	t_pipe;
 
 typedef struct s_data
 {
-	int			here_doc_exits;
+	int			here_doc_exists;
 	int			argc;
 	char		**argv;
 	char		**envp;
-	t_file		file[2];
-	t_pipedes	pipedes;
-	pid_t		pid;
-	char		**paths;
+	int			fd[2];
+	int			pipedes[2];
+	t_pipe		*pipes;
+	pid_t		*pid;
 	t_cmd		*cmd;
+	char		**paths;
+	int			cmdc;
 	int			exit_code;
 }	t_data;
 
 void	ft_error(t_data *data, char *message, char *sys_error);
 void	cleanup(t_data *data);
-void	close_file(t_data *data, t_file *file);
-void	close_pipe(t_data *data, t_pipedes *pipedes, int in_out);
 
 void	init(t_data *data, int argc, char **argv, char **envp);
 void	check_permission(t_data *data);
 void	get_path(t_data *data);
 void	get_cmd(t_data *data);
+
 void	open_fd(t_data *data);
 
 void	here_doc(t_data *data);
+void	not_here_doc(t_data *data);
 
 #endif
