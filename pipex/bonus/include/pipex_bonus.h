@@ -6,7 +6,7 @@
 /*   By: smoore-a <smoore-a@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/07 22:04:30 by smoore-a          #+#    #+#             */
-/*   Updated: 2024/06/12 17:58:11 by smoore-a         ###   ########.fr       */
+/*   Updated: 2024/06/12 19:47:45 by smoore-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,6 @@ void	init(t_data *data, int argc, char **argv, char **envp);
 void	check_permission(t_data *data);
 void	get_path(t_data *data);
 void	get_cmd(t_data *data);
-
 void	open_fd(t_data *data);
 
 void	here_doc(t_data *data);

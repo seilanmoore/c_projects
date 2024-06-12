@@ -6,7 +6,7 @@
 /*   By: smoore-a <smoore-a@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/09 12:11:30 by smoore-a          #+#    #+#             */
-/*   Updated: 2024/06/12 17:38:22 by smoore-a         ###   ########.fr       */
+/*   Updated: 2024/06/12 20:17:51 by smoore-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,8 +69,8 @@ static void	exec_second(t_data *data)
 	if (execve(data->cmd[1].path, data->cmd[1].opt, data->envp) == ERROR)
 	{
 		ft_putstr_fd("pipex: ", 2);
-		ft_putstr_fd(data->cmd[1].opt[1], 2);
-		ft_putstr_fd(": " EXECF, 2);
+		ft_putstr_fd(data->cmd[1].opt[0], 2);
+		ft_putstr_fd(": " EXECF ": ", 2);
 		ft_error(data, NULL, strerror(errno));
 		exit(EXIT_FAILURE);
 	}
@@ -81,6 +81,8 @@ void	here_doc(t_data *data)
 	pid_t	pid[2];
 
 	buffer_here_doc(data);
+	if (pipe(data->pipedes) == ERROR)
+		ft_error(data, PIPEF, strerror(errno));
 	pid[0] = fork();
 	if (pid[0] == ERROR)
 		ft_error(data, FORKF, strerror(errno));

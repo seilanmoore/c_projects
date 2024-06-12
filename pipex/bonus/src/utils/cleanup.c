@@ -6,7 +6,7 @@
 /*   By: smoore-a <smoore-a@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/26 13:01:10 by smoore-a          #+#    #+#             */
-/*   Updated: 2024/06/12 17:58:15 by smoore-a         ###   ########.fr       */
+/*   Updated: 2024/06/12 20:03:56 by smoore-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,25 +29,30 @@ static void	free_strings(char ***str)
 	}
 }
 
-void	cleanup(t_data *data)
+static void free_cmd(t_data *data)
 {
 	int	i;
 
+	if (data->cmd)
+	{
+		i = -1;
+		while (data->cmd[++i].opt)
+		{
+			free_strings(&(data->cmd[i].opt));
+			if (data->cmd[i].path)
+				free(data->cmd[i].path);
+		}
+		free(data->cmd);
+	}
+}
+
+void	cleanup(t_data *data)
+{
 	if (data)
 	{
 		unlink(_HERE_DOC);
 		free_strings(&(data->paths));
-		if (data->cmd)
-		{
-			i = -1;
-			while (data->cmd[++i].opt)
-			{
-				free_strings(&(data->cmd[i].opt));
-				if (data->cmd[i].path)
-					free(data->cmd[i].path);
-			}
-			free(data->cmd);
-		}
+		free_cmd(data);
 		*data = (t_data){0};
 	}
 }
