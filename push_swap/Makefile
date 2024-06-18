@@ -6,7 +6,7 @@
 #    By: smoore-a <smoore-a@student.42malaga.com    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/02/14 20:01:41 by smoore-a          #+#    #+#              #
-#    Updated: 2024/06/08 14:27:25 by smoore-a         ###   ########.fr        #
+#    Updated: 2024/06/13 10:35:54 by smoore-a         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -42,7 +42,6 @@ all:	$(NAME)
 
 $(NAME):	$(OBJ_FILES)
 			make -C libft
-			make bonus -C libft
 			@echo "$(LIBFT) compiled"
 			$(CC) $(CFLAGS) $(INCLUDE) $^ $(LDFLAGS) -o $@
 			@echo "$(NAME) compiled"
