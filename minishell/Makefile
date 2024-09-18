@@ -32,9 +32,9 @@ SRC_DIR = src/
 
 OBJ_DIR = obj/
 
-SRC = main
+SRC = main parse get_path
 
-UTILS = 
+UTILS =
 
 OBJ_FILES = $(addprefix $(OBJ_DIR), $(addsuffix .o, $(SRC))) \
 	$(addprefix $(OBJ_DIR), $(addsuffix .o, $(UTILS)))

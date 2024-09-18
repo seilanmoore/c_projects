@@ -62,8 +62,10 @@ char	**ft_split(char const *s, char c)
 {
 	char	**mtrx;
 
+	if (!s)
+		return (NULL);
 	mtrx = (char **)malloc((count_items(s, c) + 1) * sizeof(char *));
-	if (!mtrx || !s)
+	if (!mtrx)
 		return (NULL);
 	return (cpy_to_mtrx(s, c, mtrx, 0));
 }
