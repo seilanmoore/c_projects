@@ -1,17 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   parse.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: smoore-a <smoore-a@student.42malaga.com    +#+  +:+       +#+        */
+/*   By: smoore-a <smoore-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/19 12:17:10 by smoore-a          #+#    #+#             */
-/*   Updated: 2024/07/22 19:45:58 by smoore-a         ###   ########.fr       */
+/*   Updated: 2024/09/19 11:27:49 by smoore-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
-#include <stdio.h>
 
 static void	count_token(t_data *data)
 {
@@ -20,7 +19,6 @@ static void	count_token(t_data *data)
 	int		count;
 
 	tmp = ft_split(data->input.raw_line, ' ');
-	printf(RED "PARSE: ");
 	i = -1;
 	count = 0;
 	while (tmp[++i])
@@ -29,10 +27,10 @@ static void	count_token(t_data *data)
 	data->n_token = count;
 }
 
-void	one_letter_token(t_data *data)
+/* void	one_letter_token(t_data *data)
 {
-	
-}
+
+} */
 
 void	assign_types(t_data	*data)
 {
@@ -88,12 +86,17 @@ void	command_checker(char *cmd)
 
 void	parse(t_data *data)
 {
+	char *ptr;
+
 	get_env_paths(data);
 	count_token(data);
-	printf(GREEN "INPUT: %s" WHITE "\n" WHITE, data->input.raw_line);
+	//printf(GREEN "INPUT: %s" WHITE "\n" WHITE, data->input.raw_line);
 	data->input.tokens = ft_calloc(data->n_token + 1, sizeof(t_tokens));
 	if (!data->input.tokens)
 		return ;
 	assign_tokens(data);
-	printf(WHITE "\n" WHITE);
+	//printf(WHITE "\n" WHITE);
+	ptr = data->input.tokens[0].token;
+	if (!ft_strncmp(ptr, "exit", ft_strlen(ptr)))
+		exit_builtin(data);
 }

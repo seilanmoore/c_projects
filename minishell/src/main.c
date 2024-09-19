@@ -3,14 +3,21 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: smoore-a <smoore-a@student.42malaga.com    +#+  +:+       +#+        */
+/*   By: smoore-a <smoore-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/19 12:17:10 by smoore-a          #+#    #+#             */
-/*   Updated: 2024/07/22 19:45:58 by smoore-a         ###   ########.fr       */
+/*   Updated: 2024/09/19 11:31:14 by smoore-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
+#include <stdio.h>
+
+void	handle_eof(t_data *data)
+{
+    if (!data->input.raw_line)
+		exit_builtin(data);
+}
 
 void	init_data(t_data *data, int argc, char **argv, char **envp)
 {
@@ -19,6 +26,7 @@ void	init_data(t_data *data, int argc, char **argv, char **envp)
 	data->envp = envp;
 	data->argc = argc;
 	data->argv = argv;
+	data->status = -1;
 }
 
 void	free_mtrx(char **mtrx)
@@ -54,7 +62,9 @@ void	free_data(t_data *data)
 		free(data->input.command);
 	}
 	free_mtrx(data->paths);
+	i = data->status;
 	init_data(data, data->argc, data->argv, data->envp);
+	data->status = i;
 }
 
 void signal_handler(int sig) {
@@ -63,6 +73,12 @@ void signal_handler(int sig) {
         rl_on_new_line();
         rl_replace_line("", 0);
         rl_redisplay();
+    }
+}
+
+void signal_hand(int sig) {
+    if (sig == 3) {
+		exit(EXIT_SUCCESS);
     }
 }
 
@@ -91,17 +107,16 @@ int	main(int argc, char **argv, char **envp)
 	init_data(&data, argc, argv, envp);
 	signal(SIGINT, signal_handler);
 	read_history(HISTORY_FILE);
-	while (1)
+	while (data.status == -1)
 	{
 		data.input.raw_line = readline(prompter(&data));
-		if (!data.input.raw_line)
+		handle_eof(&data);
+		if (data.input.raw_line && ft_strlen(data.input.raw_line) > 0)
 		{
-			write(1, GREEN "exit" WHITE "\n" WHITE, 14);
-			free_data(&data);
-			break;
+			printf("\'Entra?\'");
+			add_history(data.input.raw_line);
+			parse(&data);
 		}
-        add_history(data.input.raw_line);
-		parse(&data);
 		free_data(&data);
 	}
 	write_history(HISTORY_FILE);

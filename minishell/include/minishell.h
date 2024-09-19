@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: smoore-a <smoore-a@student.42malaga.com    +#+  +:+       +#+        */
+/*   By: smoore-a <smoore-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/19 12:17:44 by smoore-a          #+#    #+#             */
-/*   Updated: 2024/07/22 19:35:10 by smoore-a         ###   ########.fr       */
+/*   Updated: 2024/09/19 10:01:31 by smoore-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,6 +78,7 @@ typedef struct	s_data
 	int		n_cmd;
 	int		n_token;
 	int		exit_code;
+	int		status;
 	t_input	input;
 
 }	t_data;
@@ -86,5 +87,6 @@ typedef struct	s_data
 void	free_mtrx(char **mtrx);
 void	parse(t_data *data);
 void	get_env_paths(t_data *data);
+void	exit_builtin(t_data *data);
 
 #endif
