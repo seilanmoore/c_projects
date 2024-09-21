@@ -1,0 +1,33 @@
+Sin redireccion
+\
+ \_.->	CMD OPTIONS ARGS                ---->   cat -e path/to/file
+  \
+   \.->	ABSOLUTE_PATH OPTIONS ARGS      ---->   /usr/bin/cat -e path/to/file
+    \
+	 \.->	RELATIVE_PATH OPTIONS ARGS  ---->   ./cat -e path/to/file
+
+
+Con redireccion simple
+\
+ \_.->	CMD OPTIONS ARGS < path/to/file
+  \
+   \.->	CMD OPTIONS ARGS >/>> path/to/file
+    \
+	 \.->	CMD OPTIONS ARGS << LIMITER
+
+
+Con redireccion compleja (solo se tienen en cuenta las redirecciones de los extremos)
+\
+ \_.->  CMD OPTIONS ARGS < path/to/file >/>> path/to/file ('</<<' & '>/>>' solo funcionan los ultimos escritos respectivamente los otros se ignoran)
+  \
+   \.-> CMD OPTIONS ARGS << LIMITER >/>> path/to/file
+
+
+Con redireccion mas compleja
+\
+ \_.->  CMD OPTIONS ARGS < path/to/file | CMD OPTIONS ARGS ... | CMD OPTIONS ARGS >/>> path/to/file
+  \
+   \.-> CMD OPTIONS ARGS << LIMITER | CMD OPTIONS ARGS ... | CMD OPTIONS ARGS >/>> path/to/file
+
+
+command < file | cmd1 -eaw -w argument | cmd2 -a -e --asdf "argu ment" > path/to/file

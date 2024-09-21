@@ -1,20 +1,37 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   builtin.c                                          :+:      :+:    :+:   */
+/*   quotes.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: smoore-a <smoore-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/05/26 15:15:30 by smoore-a          #+#    #+#             */
-/*   Updated: 2024/09/19 13:41:08 by smoore-a         ###   ########.fr       */
+/*   Created: 2024/09/20 11:05:26 by smoore-a          #+#    #+#             */
+/*   Updated: 2024/09/21 10:16:28 by smoore-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 
-void	exit_builtin(t_data *data)
+int	its_var(char *input, int in_quote)
 {
-	ft_putstr_fd("exit\n", 1);
-	free_data(data);
-	exit(EXIT_SUCCESS);
+	char	*tmp;
+
+	if (in_quote == 1)
+		return (0);
+	tmp = ft_strchr(input, '=');
+	if(tmp && tmp + 1 && (*(tmp + 1) == '\'' || *(tmp + 1) == '\"'))
+		return (1);
+	return (0);
+}
+
+char	**handle_quotes(char *input)
+{
+	char	**tokens;
+	int		i;
+
+	i = -1;
+	while (input[++i])
+	{
+		
+	}
 }

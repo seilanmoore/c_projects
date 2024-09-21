@@ -6,7 +6,7 @@
 #    By: smoore-a <smoore-a@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/02/27 20:48:30 by smoore-a          #+#    #+#              #
-#    Updated: 2024/09/19 10:08:27 by smoore-a         ###   ########.fr        #
+#    Updated: 2024/09/21 12:11:45 by smoore-a         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -32,7 +32,7 @@ SRC_DIR = src/
 
 OBJ_DIR = obj/
 
-SRC = main parse get_path builtin
+SRC = main parser get_path builtin utils
 
 UTILS =
 

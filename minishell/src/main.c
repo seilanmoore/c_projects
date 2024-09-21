@@ -6,7 +6,7 @@
 /*   By: smoore-a <smoore-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/19 12:17:10 by smoore-a          #+#    #+#             */
-/*   Updated: 2024/09/19 11:31:14 by smoore-a         ###   ########.fr       */
+/*   Updated: 2024/09/21 13:21:19 by smoore-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,19 +41,29 @@ void	free_mtrx(char **mtrx)
 	free(mtrx);
 }
 
+void	free_tokens(t_data *data)
+{
+	t_tokens	*tmp;
+
+	if (data->input.tokens)
+	{
+		while (data->input.tokens)
+		{
+			free(data->input.tokens->token);
+			tmp = data->input.tokens;
+			data->input.tokens = data->input.tokens->next;
+			free(tmp);
+		}
+	}
+}
+
 void	free_data(t_data *data)
 {
-	int	i;
+	int			i;
 
 	free(data->prompt);
 	free(data->input.raw_line);
-	i = -1;
-	if (data->input.tokens)
-	{
-		while (data->input.tokens[++i].token)
-			free(data->input.tokens[i].token);
-		free(data->input.tokens);
-	}
+	free_tokens(data);
 	i = -1;
 	if (data->input.command)
 	{
@@ -113,14 +123,13 @@ int	main(int argc, char **argv, char **envp)
 		handle_eof(&data);
 		if (data.input.raw_line && ft_strlen(data.input.raw_line) > 0)
 		{
-			printf("\'Entra?\'");
 			add_history(data.input.raw_line);
-			parse(&data);
+			parser(&data);
 		}
 		free_data(&data);
 	}
 	write_history(HISTORY_FILE);
 	rl_clear_history();
 	clear_history();
-	exit(EXIT_SUCCESS);
+	exit(data.status);
 }
