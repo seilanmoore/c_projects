@@ -6,7 +6,7 @@
 /*   By: smoore-a <smoore-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/19 12:17:10 by smoore-a          #+#    #+#             */
-/*   Updated: 2024/09/21 13:21:19 by smoore-a         ###   ########.fr       */
+/*   Updated: 2024/09/22 14:12:00 by smoore-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,19 +41,30 @@ void	free_mtrx(char **mtrx)
 	free(mtrx);
 }
 
+void	free_environment(t_data *data)
+{
+	t_environment	*tmp;
+
+	while (data->env)
+	{
+		free(data->env->variable);
+		free(data->env->value);
+		tmp = data->env;
+		data->env = data->env->next;
+		free(tmp);
+	}
+}
+
 void	free_tokens(t_data *data)
 {
 	t_tokens	*tmp;
 
-	if (data->input.tokens)
+	while (data->input.tokens)
 	{
-		while (data->input.tokens)
-		{
-			free(data->input.tokens->token);
-			tmp = data->input.tokens;
-			data->input.tokens = data->input.tokens->next;
-			free(tmp);
-		}
+		free(data->input.tokens->token);
+		tmp = data->input.tokens;
+		data->input.tokens = data->input.tokens->next;
+		free(tmp);
 	}
 }
 
@@ -63,7 +74,9 @@ void	free_data(t_data *data)
 
 	free(data->prompt);
 	free(data->input.raw_line);
+	free(data->history);
 	free_tokens(data);
+	free_environment(data);
 	i = -1;
 	if (data->input.command)
 	{
@@ -72,6 +85,7 @@ void	free_data(t_data *data)
 		free(data->input.command);
 	}
 	free_mtrx(data->paths);
+	free_mtrx(data->envp_cpy);
 	i = data->status;
 	init_data(data, data->argc, data->argv, data->envp);
 	data->status = i;
@@ -83,12 +97,6 @@ void signal_handler(int sig) {
         rl_on_new_line();
         rl_replace_line("", 0);
         rl_redisplay();
-    }
-}
-
-void signal_hand(int sig) {
-    if (sig == 3) {
-		exit(EXIT_SUCCESS);
     }
 }
 
@@ -123,12 +131,14 @@ int	main(int argc, char **argv, char **envp)
 		handle_eof(&data);
 		if (data.input.raw_line && ft_strlen(data.input.raw_line) > 0)
 		{
-			add_history(data.input.raw_line);
+			data.history = ft_strtrim(data.input.raw_line, "\n");
+			if (data.history && ft_strlen(data.history) > 0)
+				add_history(data.history);
+			write_history(HISTORY_FILE);
 			parser(&data);
 		}
 		free_data(&data);
 	}
-	write_history(HISTORY_FILE);
 	rl_clear_history();
 	clear_history();
 	exit(data.status);

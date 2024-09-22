@@ -6,7 +6,7 @@
 /*   By: smoore-a <smoore-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/19 12:17:44 by smoore-a          #+#    #+#             */
-/*   Updated: 2024/09/21 18:52:40 by smoore-a         ###   ########.fr       */
+/*   Updated: 2024/09/22 14:11:53 by smoore-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,17 +37,19 @@
 # define NOT_FOUND "command not found"
 # define ERROR "error "
 
-# define CMD 100	// cmd
-# define OPTION 101	// cmd option
-# define ARG 102	// argument
-# define FILE 109	// file
-# define PIPE 103 	// |
-# define LEFT 104 	// <
-# define RIGHT 105 	// >
-# define LEFTT 106 	// <<
-# define RIGHTT 107 // >>
-# define HERE 110 // here_doc
-# define QUOTE 108 // "" || ''
+# define CMD 100		// cmd
+# define OPTION 101		// cmd option
+# define ARG 102		// argument
+# define PIPE 103 		// |
+# define LEFT 104 		// <
+# define RIGHT 105 		// >
+# define LEFTT 106 		// <<
+# define RIGHTT 107 	// >>
+# define QUOTE 108 		// "" || ''
+# define FILE 109		// file
+# define HERE 110 		// here_doc
+# define VARIABLE 111 	// variable=value
+# define VALUE 112 		// variable=value
 
 typedef struct s_command
 {
@@ -79,34 +81,55 @@ typedef struct	s_var
 
 }	t_var;
 
+typedef struct s_environment
+{
+	char					*variable;
+	char					*value;
+	//struct	s_environment	*prev;
+	struct	s_environment	*next;
+}	t_environment;
+
 typedef struct	s_data
 {
-	int		argc;
-	char	**argv;
-	char	**envp;
-	char	**paths;
-	char	*user;
-	char	*cwd;
-	char	*prompt;
-	int		n_cmd;
-	int		n_token;
-	int		status;
-	t_input	input;
+	int				argc;
+	char			**argv;
+	char			**envp;
+	char			**envp_cpy;
+	char			**paths;
+	char			*user;
+	char			*cwd;
+	char			*prompt;
+	char			*history;
+	int				n_cmd;
+	int				n_token;
+	int				status;
+	t_environment	*env;
+	t_input			input;
 
 }	t_data;
 
 
-void		free_mtrx(char **mtrx);
-void		parser(t_data *data);
-void		get_env_paths(t_data *data);
-void		exit_builtin(t_data *data);
-void		free_data(t_data *data);
+void			free_mtrx(char **mtrx);
+void			parser(t_data *data);
+void			get_env_paths(t_data *data);
+void			exit_builtin(t_data *data);
+void			env_builtin(t_data *data);
+void			free_data(t_data *data);
 
-t_tokens	*new_token(void *token, int type);
-int			lst_size(t_tokens *lst);
+t_tokens		*new_token(void *token, int type);
+int				lst_size(t_tokens *lst);
 
 
-void		add_front_token(t_tokens **lst, t_tokens *node);
-t_tokens	*last_token(t_tokens *lst);
-void		add_back_token(t_tokens **lst, t_tokens *node);
+void			add_front_token(t_tokens **lst, t_tokens *node);
+t_tokens		*last_token(t_tokens *lst);
+void			add_back_token(t_tokens **lst, t_tokens *node);
+
+t_environment	*new_variable(void *variable, char *value);
+t_environment	*last_variable(t_environment *lst);
+void			add_back_variable(t_environment **lst, t_environment *node);
+void			add_front_variable(t_environment **lst, t_environment *node);
+int				env_size(t_environment *lst);
+
+void			parse_environment(t_data *data);
+
 #endif

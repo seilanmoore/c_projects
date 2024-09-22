@@ -98,3 +98,89 @@ gfgvdf
 gdsh
 gfb
 x
+var << doc 
+var -a << doc | cat -e > file
+var -a << doc | cat -e > file
+hey
+var -a << doc | cat -e > file
+var -a << doc | cat -e > file
+var -a << doc | cat -e > file
+var -a << doc | cat -e > file
+ 
+var -a << doc | cat -e > file
+    
+var -a << doc | cat -e > file
+var -a << doc | cat -e > file
+var -a << doc | cat -e > file
+var -a << doc | cat -e > file
+exit
+cat -e
+cat -e
+cat -e
+cat -a
+cat -o
+cat -e
+echo
+sfd
+var=' lo que sea  '
+var=' lo que
+ sea  '
+var=' lo que       
+       
+ sea  '
+exit
+ls
+var='  lo que sea  '
+var='  lo
+ que sea
+  '
+ls
+ls -a -e -asd | cat -e > "no se q"
+ls -a -e -asd | cat -e > "no se q"
+ls -a -e -asd | cat -e > "no se q" | var=
+ls -a -e -asd | cat -e > "no se q" | vafdr=
+ls -a -e -asd | cat -e > "no se q" | vafdr=''
+ls -a -e -asd | cat -e > "no se q" | vafdr=""
+ls -a -e -asd | cat -e > "no se q" | vafdr="dsa"
+ls -a -e -asd | cat -e > var=
+ls -a -e -asd | cat -e > var=
+ls -a -e -asd | cat -e > var=
+ls -a -e -asd | cat -e > "no se q" | vafdr="dsa"
+ls -a -e -asd | cat -e > "no se q"
+var='  lo que sea  '
+ls -a -e -asd | cat -e > "no se q"
+env
+hola
+a
+exit
+a
+a
+exit
+a
+a
+exit
+a
+a
+b
+0
+<
+>
+>>
+<<
+|
+> a
+> "a"
+<< "h"
+grep -i "abc" << "hola ma" > borrar
+"HOLA JAMA"=2
+a
+env
+env
+env
+exit
+a
+dsa
+ds
+a
+a
+a
