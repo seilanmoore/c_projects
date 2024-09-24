@@ -6,11 +6,16 @@
 /*   By: smoore-a <smoore-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/19 12:17:10 by smoore-a          #+#    #+#             */
-/*   Updated: 2024/09/22 13:33:50 by smoore-a         ###   ########.fr       */
+/*   Updated: 2024/09/24 15:23:15 by smoore-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
+
+void	handle_dollar()
+{
+
+}
 
 static void	set_prev_token(t_data *data)
 {
@@ -39,32 +44,35 @@ static void	single_quote(t_data *data, t_var *var)
 	if (var->aux1[var->i] && var->aux1[var->i] == '\'')
 		var->aux = ft_substr(var->aux1, 0, var->i);
 	var->i++;
-	add_back_token(&(data->input.tokens), new_token(var->aux, QUOTE));
+	add_back_token(&(data->input.tokens), new_token(var->aux, S_QUOTE));
 }
 
 static void	double_quote(t_data *data, t_var *var)
 {
 	var->aux1++;
-	while (var->aux1[var->i] &&
-		(var->aux1[var->i] != '\"' ||
+	while (var->aux1[var->i] && \
+		(var->aux1[var->i] != '\"' || \
 		(var->aux1[var->i] == '\"' && var->aux1[var->i - 1] == '\\')))
 		var->i++;
 	if (var->aux1[var->i] && var->aux1[var->i] == '\"')
 		var->aux = ft_substr(var->aux1, 0, var->i);
 	var->i++;
-	add_back_token(&(data->input.tokens), new_token(var->aux, QUOTE));
+	add_back_token(&(data->input.tokens), new_token(var->aux, D_QUOTE));
 }
 
 static void	characters(t_data *data, t_var *var)
 {
-	while (var->aux1[var->i] &&
-		var->aux1[var->i] != ' ' &&
-		var->aux1[var->i] != '\'' &&
-		var->aux1[var->i] != '\"' &&
+	while (var->aux1[var->i] && \
+		var->aux1[var->i] != ' ' && \
+		var->aux1[var->i] != '\'' && \
+		var->aux1[var->i] != '\"' && \
+		var->aux1[var->i] != '=' && \
 		var->aux1[var->i] != '\n')
+			var->i++;
+	if (var->aux1[var->i] == '=')
 		var->i++;
 	var->aux = ft_substr(var->aux1, 0, var->i);
-	add_back_token(&(data->input.tokens), new_token(var->aux, -1));
+	add_back_token(&(data->input.tokens), new_token(var->aux, NO_QUOTE));
 	if (var->aux1[var->i] && var->aux1[var->i] == '\n')
 		var->i++;
 }
@@ -73,13 +81,13 @@ static void	parse_tokens(t_data *data)
 {
 	t_var	var;
 
-	var = (t_var) {0};
+	var = (t_var){0};
 	var.aux1 = data->input.raw_line;
 	while (*var.aux1)
 	{
 		var.i = 0;
 		var.aux = NULL;
-		while (*var.aux1 && (*var.aux1 == ' ' || *var.aux1 == '\n'))
+		while (*var.aux1 && (*var.aux1 == ' ' || *var.aux1 == '\t' || *var.aux1 == '\n'))
 			var.aux1++;
 		if (*var.aux1 && *var.aux1 == '\'')
 			single_quote(data, &var);
@@ -99,38 +107,102 @@ void	access_to_types(t_data *data, int target, int type)
 
 	head = data->input.tokens;
 	i = -1;
-	while(++i != target)
+	while (++i != target)
 		data->input.tokens = data->input.tokens->next;
 	if (data->input.tokens)
 		data->input.tokens->type = type;
 	data->input.tokens = head;
 }
 
-void	type_checks(t_data *data, t_tokens *ptr, int i)
+int	check_redirections(t_data *data, t_tokens *ptr, int i)
 {
-	if (ptr->type != QUOTE && !ft_strncmp(ptr->token, ">>", 2))
-			access_to_types(data, i, RIGHTT);
-	else if (ptr->type != QUOTE && !ft_strncmp(ptr->token, "<<", 2))
-		access_to_types(data, i, LEFTT);
-	else if (ptr->prev && (ptr->prev->type == CMD || ptr->prev->type == OPTION) &&
-		ptr->token[0] == '-' && ptr->type != QUOTE)
-		access_to_types(data, i, OPTION);
-	else if(ptr->prev && (ptr->prev->type == LEFT
-	|| ptr->prev->type == RIGHT
-	|| ptr->prev->type == RIGHTT))
-		access_to_types(data, i, FILE);
-	else if (ptr->prev && ptr->prev->type == LEFTT)
-		access_to_types(data, i, HERE);
-	else if (ptr->prev && (ptr->prev->type == CMD ||
-		ptr->prev->type == OPTION))
-		access_to_types(data, i, ARG);
-	else if (ptr->type != QUOTE &&
+	if (ptr->type != NO_QUOTE)
+		return (0);
+	if (ft_strlen(ptr->token) == 1)
+	{
+		if (ptr->token[0] == '|')
+			return (access_to_types(data, i, PIPE), 1);
+		else if (ptr->token[0] == '<')
+			return (access_to_types(data, i, LEFT), 1);
+		else if (ptr->token[0] == '>')
+			return (access_to_types(data, i, RIGHT), 1);
+	}
+	else if (ft_strlen(ptr->token) == 2)
+	{
+		if (!ft_strncmp(ptr->token, ">>", 2))
+			return (access_to_types(data, i, RIGHTT), 1);
+		else if (!ft_strncmp(ptr->token, "<<", 2))
+			return (access_to_types(data, i, LEFTT), 1);
+	}
+	return (0);
+}
+
+int	check_files(t_data *data, t_tokens *ptr, int i)
+{
+	if (ptr->prev && \
+		(ptr->prev->type == LEFT || \
+		ptr->prev->type == RIGHT || \
+		ptr->prev->type == RIGHTT))
+		return (access_to_types(data, i, FILE), 1);
+	return (0);
+}
+
+int	check_local_variables(t_data *data, t_tokens *ptr, int i)
+{
+	if (!ptr->prev && ptr->type == NO_QUOTE && \
 		ptr->token[ft_strlen(ptr->token) - 1] == '=')
-		access_to_types(data, i, VARIABLE);
-	else if (ptr->prev && ptr->prev->type == VARIABLE)
-		access_to_types(data, i, VALUE);
-	else
-		access_to_types(data, i, CMD);
+		return (access_to_types(data, i, L_VARIABLE), 1);
+	if (ptr->prev && ptr->prev->type == L_VARIABLE)
+		return (access_to_types(data, i, L_VALUE), 1);
+	return (0);
+}
+
+int	check_variables(t_data *data, t_tokens *ptr, int i)
+{
+	if (ptr->type == NO_QUOTE && \
+		ptr->token[ft_strlen(ptr->token) - 1] == '=')
+		return (access_to_types(data, i, VARIABLE), 1);
+	if (ptr->prev && ptr->prev->type == VARIABLE)
+		return (access_to_types(data, i, VALUE), 1);
+	return (0);
+}
+
+int	check_heredoc(t_data *data, t_tokens *ptr, int i)
+{
+	if (ptr->prev && ptr->prev->type == LEFTT)
+		return (access_to_types(data, i, HERE), 1);
+	return (0);
+}
+
+int	check_cmds(t_data *data, t_tokens *ptr, int i)
+{
+	if (ptr->prev)
+	{
+		if (ptr->type == NO_QUOTE && \
+			ptr->token[0] == '-' && \
+			(ptr->prev->type == CMD || ptr->prev->type == OPTION))
+			return (access_to_types(data, i, OPTION), 1);
+		if (ptr->prev->type == CMD || \
+			ptr->prev->type == OPTION || \
+			ptr->prev->type == ARG)
+			return (access_to_types(data, i, ARG), 1);
+	}
+	return (access_to_types(data, i, CMD), 1);
+}
+
+int	type_checks(t_data *data, t_tokens *ptr, int i)
+{
+	if (check_redirections(data, ptr, i))
+		return (1);
+	if (check_files(data, ptr, i))
+		return (1);
+	if (check_local_variables(data, ptr, i))
+		return (1);
+	if (check_variables(data, ptr, i))
+		return (1);
+	if (check_heredoc(data, ptr, i))
+		return (1);
+	return (check_cmds(data, ptr, i));
 }
 
 void	assign_types(t_data	*data)
@@ -142,21 +214,9 @@ void	assign_types(t_data	*data)
 	i = 0;
 	while (ptr)
 	{
-		if (ft_strlen(ptr->token) == 1 && ptr->type != QUOTE &&
-			(ptr->token[0] == '|' || ptr->token[0] == '<' ||
-			ptr->token[0] == '>'))
-		{
-			if (ptr->token[0] == '|')
-				access_to_types(data, i, PIPE);
-			else if (ptr->token[0] == '<')
-				access_to_types(data, i, LEFT);
-			else if (ptr->token[0] == '>')
-				access_to_types(data, i, RIGHT);
-		}
-		else
-			type_checks(data, ptr, i);
-		i++;
+		type_checks(data, ptr, i);
 		ptr = ptr->next;
+		i++;
 	}
 }
 
@@ -179,15 +239,23 @@ char	*type_to_char(int type)
 	if (type == 107)
 		return (">>");
 	if (type == 108)
-		return ("QUOTE");
-	if (type == 109)
 		return ("FILE");
+	if (type == 109)
+		return ("HEREDOC");
 	if (type == 110)
-		return ("HERE_DOC");
-	if (type == 111)
 		return ("VARIABLE");
-	if (type == 112)
+	if (type == 111)
 		return ("VALUE");
+	if (type == 112)
+		return ("LOCAL VARIABLE");
+	if (type == 113)
+		return ("LOCAL VALUE");
+	if (type == 114)
+		return ("SINGLE QUOTES");
+	if (type == 115)
+		return ("DOUBLE QUOTES");
+	if (type == 116)
+		return ("NO QUOTES");
 	return ("NO_TYPE");
 }
 
@@ -203,6 +271,27 @@ void	print_types(t_data *data)
 	}
 }
 
+void	remove_equal(t_data *data)
+{
+	t_tokens	*head;
+	char		*tmp;
+
+	if (!data->input.tokens)
+		return ;
+	head = data->input.tokens;
+	while (data->input.tokens)
+	{
+		if (data->input.tokens->type == VARIABLE)
+		{
+			tmp = data->input.tokens->token;
+			data->input.tokens->token = ft_substr(tmp, 0, ft_strlen(tmp) - 1);
+			free(tmp);
+		}
+		data->input.tokens = data->input.tokens->next;
+	}
+	data->input.tokens = head;
+}
+
 void	parser(t_data *data)
 {
 	t_tokens	*ptr;
@@ -212,10 +301,13 @@ void	parser(t_data *data)
 	parse_tokens(data);
 	set_prev_token(data);
 	assign_types(data);
+	remove_equal(data);
 	print_types(data);
 	ptr = data->input.tokens;
 	if (ptr && !ft_strncmp(ptr->token, "env", ft_strlen(ptr->token)))
 		env_builtin(data);
+	if (ptr && !ft_strncmp(ptr->token, "export", ft_strlen(ptr->token)))
+		export_builtin(data);
 	if (ptr && !ft_strncmp(ptr->token, "exit", ft_strlen(ptr->token)))
 		exit_builtin(data);
 }

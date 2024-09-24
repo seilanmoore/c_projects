@@ -6,11 +6,43 @@
 /*   By: smoore-a <smoore-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/21 12:03:30 by smoore-a          #+#    #+#             */
-/*   Updated: 2024/09/22 12:41:15 by smoore-a         ###   ########.fr       */
+/*   Updated: 2024/09/24 13:17:35 by smoore-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
+
+int	variable_len(char *envp_line)
+{
+	int	i;
+
+	i = -1;
+	if (!envp_line)
+		return (0);
+	while (envp_line[++i] != '=')
+		;
+	return (i);
+}
+
+t_environment *get_env_var(t_environment *env, char *variable)
+{
+	t_environment	*head;
+	size_t			len;
+
+	if (!env || !variable)
+		return (NULL);
+	len = ft_strlen(variable);
+	head = env;
+	while (env)
+	{
+		if (ft_strlen(env->variable) == len && \
+			!ft_strncmp(env->variable, variable, len))
+			return (env);
+		env = env->next;
+	}
+	env = head;
+	return (NULL);
+}
 
 t_environment	*new_variable(void *variable, char *value)
 {
@@ -21,8 +53,11 @@ t_environment	*new_variable(void *variable, char *value)
 	new_node = (t_environment *)malloc(sizeof(t_environment));
 	if (!new_node)
 		return (NULL);
-	new_node->variable = variable;
-	new_node->value = value;
+	new_node->variable = ft_strdup(variable);
+	if (value)
+		new_node->value = ft_strdup(value);
+	else
+		new_node->value = ft_strdup("");
 	new_node->next = NULL;
 	return (new_node);
 }

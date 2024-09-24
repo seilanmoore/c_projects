@@ -6,7 +6,7 @@
 /*   By: smoore-a <smoore-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/19 12:17:44 by smoore-a          #+#    #+#             */
-/*   Updated: 2024/09/22 14:11:53 by smoore-a         ###   ########.fr       */
+/*   Updated: 2024/09/24 14:41:54 by smoore-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,11 +45,15 @@
 # define RIGHT 105 		// >
 # define LEFTT 106 		// <<
 # define RIGHTT 107 	// >>
-# define QUOTE 108 		// "" || ''
-# define FILE 109		// file
-# define HERE 110 		// here_doc
-# define VARIABLE 111 	// variable=value
-# define VALUE 112 		// variable=value
+# define FILE 108		// file
+# define HERE 109 		// heredoc
+# define VARIABLE 110 	// variable=value
+# define VALUE 111 		// variable=value
+# define L_VARIABLE 112 // local variable=value
+# define L_VALUE 113 	// local variable=value
+# define S_QUOTE 114 	// ''
+# define D_QUOTE 115 	// ""
+# define NO_QUOTE 116
 
 typedef struct s_command
 {
@@ -109,12 +113,14 @@ typedef struct	s_data
 }	t_data;
 
 
-void			free_mtrx(char **mtrx);
+void			free_array(char **array);
 void			parser(t_data *data);
 void			get_env_paths(t_data *data);
 void			exit_builtin(t_data *data);
 void			env_builtin(t_data *data);
+void			export_builtin(t_data	*data);
 void			free_data(t_data *data);
+void			free_environment(t_data *data);
 
 t_tokens		*new_token(void *token, int type);
 int				lst_size(t_tokens *lst);
@@ -129,7 +135,12 @@ t_environment	*last_variable(t_environment *lst);
 void			add_back_variable(t_environment **lst, t_environment *node);
 void			add_front_variable(t_environment **lst, t_environment *node);
 int				env_size(t_environment *lst);
+t_environment 	*get_env_var(t_environment *env, char *variable);
 
 void			parse_environment(t_data *data);
+void			envp_to_array(t_data *data);
+void			update_env(t_data	*data);
+
+void			print_array(char	**array);
 
 #endif
