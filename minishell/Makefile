@@ -6,7 +6,7 @@
 #    By: smoore-a <smoore-a@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/02/27 20:48:30 by smoore-a          #+#    #+#              #
-#    Updated: 2024/09/22 12:44:27 by smoore-a         ###   ########.fr        #
+#    Updated: 2024/09/25 11:03:48 by smoore-a         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -32,7 +32,8 @@ SRC_DIR = src/
 
 OBJ_DIR = obj/
 
-SRC = main parser get_path builtin utils_env utils_token environment
+SRC = main init free_func parser get_path builtin utils_env \
+	utils_token environment local
 
 UTILS =
 

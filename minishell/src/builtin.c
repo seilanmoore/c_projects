@@ -6,7 +6,7 @@
 /*   By: smoore-a <smoore-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/26 15:15:30 by smoore-a          #+#    #+#             */
-/*   Updated: 2024/09/24 13:21:22 by smoore-a         ###   ########.fr       */
+/*   Updated: 2024/09/25 11:08:40 by smoore-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,14 +20,14 @@ void	check_new_var(t_data *data, t_environment *new_var)
 		if (data->input.tokens->next)
 			new_var->value = ft_strdup(data->input.tokens->next->token);
 		else
-		 	new_var->value = ft_strdup("");
+			new_var->value = ft_strdup("");
 	}
 	else
 	{
 		if (data->input.tokens->next)
 		{
 			new_var = new_variable(data->input.tokens->token,
-				data->input.tokens->next->token);
+					data->input.tokens->next->token);
 		}
 		else
 			new_var = new_variable(data->input.tokens->token, "");
@@ -35,7 +35,7 @@ void	check_new_var(t_data *data, t_environment *new_var)
 	}
 }
 
-void	export_builtin(t_data	*data)
+void	export_builtin(t_data *data)
 {
 	t_environment	*new_var;
 	t_tokens		*head;
@@ -64,6 +64,7 @@ void	env_builtin(t_data *data)
 void	exit_builtin(t_data *data)
 {
 	ft_putstr_fd("exit\n", 1);
+	free_local(data);
 	free_environment(data);
 	free_data(data);
 	rl_clear_history();

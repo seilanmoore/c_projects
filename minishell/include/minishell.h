@@ -6,7 +6,7 @@
 /*   By: smoore-a <smoore-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/19 12:17:44 by smoore-a          #+#    #+#             */
-/*   Updated: 2024/09/24 14:41:54 by smoore-a         ###   ########.fr       */
+/*   Updated: 2024/09/25 11:16:59 by smoore-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,13 @@
 # define D_QUOTE 115 	// ""
 # define NO_QUOTE 116
 
+typedef struct s_l_variable
+{
+	char				*variable;
+	char				*value;
+	struct s_l_variable	*next;
+}	t_l_variable;
+
 typedef struct s_command
 {
 	char	*cmd;
@@ -65,8 +72,8 @@ typedef struct s_tokens
 {
 	char				*token;
 	int					type;
-	struct	s_tokens	*prev;
-	struct	s_tokens	*next;
+	struct s_tokens		*prev;
+	struct s_tokens		*next;
 }	t_tokens;
 
 typedef struct s_input
@@ -77,7 +84,7 @@ typedef struct s_input
 	t_command	*command;
 }	t_input;
 
-typedef struct	s_var
+typedef struct s_var
 {
 	char	*aux;
 	char	*aux1;
@@ -90,10 +97,10 @@ typedef struct s_environment
 	char					*variable;
 	char					*value;
 	//struct	s_environment	*prev;
-	struct	s_environment	*next;
+	struct s_environment	*next;
 }	t_environment;
 
-typedef struct	s_data
+typedef struct s_data
 {
 	int				argc;
 	char			**argv;
@@ -107,24 +114,36 @@ typedef struct	s_data
 	int				n_cmd;
 	int				n_token;
 	int				status;
+	t_l_variable	*local;
 	t_environment	*env;
 	t_input			input;
-
 }	t_data;
 
+// init
+void			init_data(t_data *data, int argc, char **argv, char **envp);
 
+// free_func
+void			free_tokens(t_data *data);
+void			free_local(t_data *data);
+void			free_environment(t_data *data);
 void			free_array(char **array);
+void			free_data(t_data *data);
+
+// local
+void			print_locals(t_data *data);
+void			add_l_variables(t_data *data);
+
+//parser
 void			parser(t_data *data);
 void			get_env_paths(t_data *data);
+
+//builtin
 void			exit_builtin(t_data *data);
 void			env_builtin(t_data *data);
 void			export_builtin(t_data	*data);
-void			free_data(t_data *data);
-void			free_environment(t_data *data);
 
 t_tokens		*new_token(void *token, int type);
 int				lst_size(t_tokens *lst);
-
 
 void			add_front_token(t_tokens **lst, t_tokens *node);
 t_tokens		*last_token(t_tokens *lst);
@@ -135,11 +154,12 @@ t_environment	*last_variable(t_environment *lst);
 void			add_back_variable(t_environment **lst, t_environment *node);
 void			add_front_variable(t_environment **lst, t_environment *node);
 int				env_size(t_environment *lst);
-t_environment 	*get_env_var(t_environment *env, char *variable);
+t_environment	*get_env_var(t_environment *env, char *variable);
 
 void			parse_environment(t_data *data);
 void			envp_to_array(t_data *data);
 void			update_env(t_data	*data);
+
 
 void			print_array(char	**array);
 

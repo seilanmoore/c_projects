@@ -446,3 +446,32 @@ MY_VAR=321
 		
 		
 		
+env
+export HOLA=321
+env
+loc
+loc
+loc
+   
+L_VAR=012
+loc
+env
+L_VAR=012
+loc
+loc
+L_VAR=012
+loc
+L_VAR=210
+loc
+L_VAR_S=210
+loc
+L_VAR=123
+loc
+L_VAR=
+loc
+L_VAR="Jamau"
+loc
+L_VAR="Jamau yeah"
+loc
+env
+exit

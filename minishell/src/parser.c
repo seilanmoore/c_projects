@@ -6,16 +6,12 @@
 /*   By: smoore-a <smoore-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/19 12:17:10 by smoore-a          #+#    #+#             */
-/*   Updated: 2024/09/24 15:23:15 by smoore-a         ###   ########.fr       */
+/*   Updated: 2024/09/25 11:26:02 by smoore-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
-
-void	handle_dollar()
-{
-
-}
+#include <string.h>
 
 static void	set_prev_token(t_data *data)
 {
@@ -68,7 +64,7 @@ static void	characters(t_data *data, t_var *var)
 		var->aux1[var->i] != '\"' && \
 		var->aux1[var->i] != '=' && \
 		var->aux1[var->i] != '\n')
-			var->i++;
+		var->i++;
 	if (var->aux1[var->i] == '=')
 		var->i++;
 	var->aux = ft_substr(var->aux1, 0, var->i);
@@ -87,7 +83,8 @@ static void	parse_tokens(t_data *data)
 	{
 		var.i = 0;
 		var.aux = NULL;
-		while (*var.aux1 && (*var.aux1 == ' ' || *var.aux1 == '\t' || *var.aux1 == '\n'))
+		while (*var.aux1 && \
+			(*var.aux1 == ' ' || *var.aux1 == '\t' || *var.aux1 == '\n'))
 			var.aux1++;
 		if (*var.aux1 && *var.aux1 == '\'')
 			single_quote(data, &var);
@@ -281,7 +278,8 @@ void	remove_equal(t_data *data)
 	head = data->input.tokens;
 	while (data->input.tokens)
 	{
-		if (data->input.tokens->type == VARIABLE)
+		if (data->input.tokens->type == VARIABLE || \
+			data->input.tokens->type == L_VARIABLE)
 		{
 			tmp = data->input.tokens->token;
 			data->input.tokens->token = ft_substr(tmp, 0, ft_strlen(tmp) - 1);
@@ -302,6 +300,7 @@ void	parser(t_data *data)
 	set_prev_token(data);
 	assign_types(data);
 	remove_equal(data);
+	add_l_variables(data);
 	print_types(data);
 	ptr = data->input.tokens;
 	if (ptr && !ft_strncmp(ptr->token, "env", ft_strlen(ptr->token)))
@@ -310,4 +309,6 @@ void	parser(t_data *data)
 		export_builtin(data);
 	if (ptr && !ft_strncmp(ptr->token, "exit", ft_strlen(ptr->token)))
 		exit_builtin(data);
+	if (ptr && !ft_strncmp(ptr->token, "loc", ft_strlen(ptr->token)))
+		print_locals(data);
 }
