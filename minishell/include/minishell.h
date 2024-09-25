@@ -6,7 +6,7 @@
 /*   By: smoore-a <smoore-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/19 12:17:44 by smoore-a          #+#    #+#             */
-/*   Updated: 2024/09/25 11:16:59 by smoore-a         ###   ########.fr       */
+/*   Updated: 2024/09/25 13:00:39 by smoore-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,9 +51,9 @@
 # define VALUE 111 		// variable=value
 # define L_VARIABLE 112 // local variable=value
 # define L_VALUE 113 	// local variable=value
-# define S_QUOTE 114 	// ''
-# define D_QUOTE 115 	// ""
-# define NO_QUOTE 116
+# define NO_QUOTE 120
+# define S_QUOTE 121 	// ''
+# define D_QUOTE 122 	// ""
 
 typedef struct s_l_variable
 {
@@ -72,6 +72,7 @@ typedef struct s_tokens
 {
 	char				*token;
 	int					type;
+	int					quote;
 	struct s_tokens		*prev;
 	struct s_tokens		*next;
 }	t_tokens;
@@ -132,17 +133,19 @@ void			free_data(t_data *data);
 // local
 void			print_locals(t_data *data);
 void			add_l_variables(t_data *data);
+t_l_variable	*get_l_var(t_l_variable *l_variables, char *l_variable);
 
 //parser
 void			parser(t_data *data);
 void			get_env_paths(t_data *data);
+char			*get_dollar_value(t_data *data, char *variable);
 
 //builtin
 void			exit_builtin(t_data *data);
 void			env_builtin(t_data *data);
 void			export_builtin(t_data	*data);
 
-t_tokens		*new_token(void *token, int type);
+t_tokens		*new_token(void *token, int type, int quote);
 int				lst_size(t_tokens *lst);
 
 void			add_front_token(t_tokens **lst, t_tokens *node);

@@ -6,12 +6,108 @@
 /*   By: smoore-a <smoore-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/19 12:17:10 by smoore-a          #+#    #+#             */
-/*   Updated: 2024/09/25 11:26:02 by smoore-a         ###   ########.fr       */
+/*   Updated: 2024/09/25 15:50:57 by smoore-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 #include <string.h>
+#include <time.h>
+
+char	*get_dollar_value(t_data *data, char *variable)
+{
+	t_environment	*env_var;
+	t_l_variable	*local_head;
+
+	env_var = get_env_var(data->env, variable);
+	if (env_var)
+		return (env_var->value);
+	local_head = get_l_var(data->local, variable);
+	if (local_head)
+		return (local_head->value);
+	return (NULL);
+}
+
+char	*rev_split(char **array)
+{
+	char	*str;
+	char	*prev_str;
+	char	*aux;
+	int		i;
+
+
+	i = 0;
+	str = ft_strdup(array[i]);
+	while (array[++i])
+	{
+		prev_str = str;
+		aux = ft_strjoin(str, " ");
+		str = ft_strjoin(aux, array[i]);
+		free(aux);
+		free(prev_str);
+		if (!str)
+			break ;
+	}
+	return (str);
+}
+
+//terminar implementacion de expansion de variables
+
+void	replace_dollar(t_data *data)
+{
+	char	*token;
+	char	**tmp;
+	int		i;
+	char	*dollar_value;
+	char	*aux;
+
+	token = data->input.tokens->token;
+	tmp = ft_split(data->input.tokens->token, ' ');
+	i = -1;
+	while (tmp[++i])
+	{
+		if (ft_strrchr(tmp[i], '$') && ft_strlen(tmp[i]) > 1 && !ft_strnstr(tmp[i], "\\$", 2))
+		{
+			dollar_value = get_dollar_value(data, ft_strrchr(tmp[i], '$') + 1);
+			aux = tmp[i];
+			if (dollar_value &&)
+				tmp[i] = ft_strdup(dollar_value);
+			else
+				tmp[i] = ft_strdup("");
+			free(aux);
+		}
+	}
+	data->input.tokens->token = rev_split(tmp);
+	free(token);
+	free_array(tmp);
+}
+
+void	check_dollar(t_data *data)
+{
+	t_tokens	*token_head;
+	char		*tmp;
+	char		*dollar_value;
+
+	token_head = data->input.tokens;
+	while (data->input.tokens)
+	{
+		if (data->input.tokens->quote == NO_QUOTE && \
+			data->input.tokens->token[0] == '$')
+		{
+			tmp = data->input.tokens->token;
+			dollar_value = get_dollar_value(data, data->input.tokens->token + 1);
+			if (dollar_value)
+				data->input.tokens->token = ft_strdup(dollar_value);
+			else
+				data->input.tokens->token = ft_strdup("");
+			free(tmp);
+		}
+		else if (data->input.tokens->quote == D_QUOTE)
+			replace_dollar(data);
+		data->input.tokens = data->input.tokens->next;
+	}
+	data->input.tokens = token_head;
+}
 
 static void	set_prev_token(t_data *data)
 {
@@ -40,7 +136,7 @@ static void	single_quote(t_data *data, t_var *var)
 	if (var->aux1[var->i] && var->aux1[var->i] == '\'')
 		var->aux = ft_substr(var->aux1, 0, var->i);
 	var->i++;
-	add_back_token(&(data->input.tokens), new_token(var->aux, S_QUOTE));
+	add_back_token(&(data->input.tokens), new_token(var->aux, 0, S_QUOTE));
 }
 
 static void	double_quote(t_data *data, t_var *var)
@@ -53,7 +149,7 @@ static void	double_quote(t_data *data, t_var *var)
 	if (var->aux1[var->i] && var->aux1[var->i] == '\"')
 		var->aux = ft_substr(var->aux1, 0, var->i);
 	var->i++;
-	add_back_token(&(data->input.tokens), new_token(var->aux, D_QUOTE));
+	add_back_token(&(data->input.tokens), new_token(var->aux, 0, D_QUOTE));
 }
 
 static void	characters(t_data *data, t_var *var)
@@ -68,7 +164,7 @@ static void	characters(t_data *data, t_var *var)
 	if (var->aux1[var->i] == '=')
 		var->i++;
 	var->aux = ft_substr(var->aux1, 0, var->i);
-	add_back_token(&(data->input.tokens), new_token(var->aux, NO_QUOTE));
+	add_back_token(&(data->input.tokens), new_token(var->aux, 0, NO_QUOTE));
 	if (var->aux1[var->i] && var->aux1[var->i] == '\n')
 		var->i++;
 }
@@ -113,7 +209,7 @@ void	access_to_types(t_data *data, int target, int type)
 
 int	check_redirections(t_data *data, t_tokens *ptr, int i)
 {
-	if (ptr->type != NO_QUOTE)
+	if (ptr->quote != NO_QUOTE)
 		return (0);
 	if (ft_strlen(ptr->token) == 1)
 	{
@@ -146,7 +242,7 @@ int	check_files(t_data *data, t_tokens *ptr, int i)
 
 int	check_local_variables(t_data *data, t_tokens *ptr, int i)
 {
-	if (!ptr->prev && ptr->type == NO_QUOTE && \
+	if (!ptr->prev && ptr->quote == NO_QUOTE && \
 		ptr->token[ft_strlen(ptr->token) - 1] == '=')
 		return (access_to_types(data, i, L_VARIABLE), 1);
 	if (ptr->prev && ptr->prev->type == L_VARIABLE)
@@ -156,7 +252,7 @@ int	check_local_variables(t_data *data, t_tokens *ptr, int i)
 
 int	check_variables(t_data *data, t_tokens *ptr, int i)
 {
-	if (ptr->type == NO_QUOTE && \
+	if (ptr->quote == NO_QUOTE && \
 		ptr->token[ft_strlen(ptr->token) - 1] == '=')
 		return (access_to_types(data, i, VARIABLE), 1);
 	if (ptr->prev && ptr->prev->type == VARIABLE)
@@ -175,7 +271,7 @@ int	check_cmds(t_data *data, t_tokens *ptr, int i)
 {
 	if (ptr->prev)
 	{
-		if (ptr->type == NO_QUOTE && \
+		if (ptr->quote == NO_QUOTE && \
 			ptr->token[0] == '-' && \
 			(ptr->prev->type == CMD || ptr->prev->type == OPTION))
 			return (access_to_types(data, i, OPTION), 1);
@@ -301,6 +397,7 @@ void	parser(t_data *data)
 	assign_types(data);
 	remove_equal(data);
 	add_l_variables(data);
+	check_dollar(data);
 	print_types(data);
 	ptr = data->input.tokens;
 	if (ptr && !ft_strncmp(ptr->token, "env", ft_strlen(ptr->token)))

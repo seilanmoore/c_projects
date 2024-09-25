@@ -475,3 +475,31 @@ L_VAR="Jamau yeah"
 loc
 env
 exit
+hola crack
+hola $maquina
+loc
+export MY_VAR="Por favor"
+loc
+env
+MY_LOC="Por favor."
+loc
+echo "$MY_LOC que vaya. $MY_LOC"
+MY_LOC="Por favor"
+loc
+echo "$MY_LOC que vaya. $MY_LOC"
+MY_LOC="Por favor"
+echo "$MY_LOC que vaya. $MY_LOC"
+MY_LOC="Por favor"
+echo "$MY_LOC que vaya. $MY_LOC"
+MY_LOC="Por favor"
+echo "$MY_LOC que vaya. $MY_LOC"
+MY_LOC="Por favor"
+echo "$MY_LOC que vaya. $MY_LOC"
+MY_LOC="Por favor"
+echo "$MY_LOC que vaya. $MY_LOC"
+MY_LOC="Por favor"
+echo "$MY_LOC que vaya. $MY_LOC"
+MY_LOC="Por favor"
+echo "$MY_LOC que vaya. $MY_LOC"
+echo "$MY_LOC que $ vaya. $MY_LOC"
+echo "$MY_LOC que $NO_EXISTE vaya. $MY_LOC"

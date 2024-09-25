@@ -6,7 +6,7 @@
 /*   By: smoore-a <smoore-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/25 10:56:20 by smoore-a          #+#    #+#             */
-/*   Updated: 2024/09/25 11:21:57 by smoore-a         ###   ########.fr       */
+/*   Updated: 2024/09/25 12:48:38 by smoore-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,7 @@ static void	check_l_variable(t_data *data, t_l_variable *new_l_var)
 	}
 }
 
-static t_l_variable	*get_l_var(t_l_variable *l_variables, char *l_variable)
+t_l_variable	*get_l_var(t_l_variable *l_variables, char *l_variable)
 {
 	t_l_variable	*head;
 	size_t			len;
