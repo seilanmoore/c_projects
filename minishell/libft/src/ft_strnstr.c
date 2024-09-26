@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strnstr.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: smoore-a <smoore-a@student.42malaga.com    +#+  +:+       +#+        */
+/*   By: smoore-a <smoore-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/04 23:14:57 by smoore-a          #+#    #+#             */
-/*   Updated: 2024/05/19 17:03:14 by smoore-a         ###   ########.fr       */
+/*   Updated: 2024/09/26 14:03:34 by smoore-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ char	*ft_strnstr(const char *haystack, const char *needle, size_t len)
 
 	str2 = (unsigned char *)needle;
 	str1 = (unsigned char *)haystack;
-	if (!*str2)
+	if (!str1 || !str2)
 		return ((char *)str1);
 	if (*str1)
 	{

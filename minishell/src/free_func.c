@@ -6,7 +6,7 @@
 /*   By: smoore-a <smoore-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/25 11:02:07 by smoore-a          #+#    #+#             */
-/*   Updated: 2024/09/25 11:10:53 by smoore-a         ###   ########.fr       */
+/*   Updated: 2024/09/26 13:31:27 by smoore-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,6 +75,7 @@ void	free_tokens(t_data *data)
 void	free_data(t_data *data)
 {
 	int				i;
+	int				j;
 	t_environment	*env_head;
 	t_l_variable	*local_head;
 	char			**env_ptr;
@@ -85,6 +86,7 @@ void	free_data(t_data *data)
 	free(data->prompt);
 	free(data->input.raw_line);
 	free(data->history);
+	free(data->process);
 	free_tokens(data);
 	i = -1;
 	if (data->input.command)
@@ -95,9 +97,11 @@ void	free_data(t_data *data)
 	}
 	free_array(data->paths);
 	i = data->status;
+	j = data->exit_code;
 	init_data(data, data->argc, data->argv, data->envp);
 	data->env = env_head;
 	data->envp_cpy = env_ptr;
-	data->local = local_head;		
+	data->local = local_head;
 	data->status = i;
+	data->exit_code = j;
 }

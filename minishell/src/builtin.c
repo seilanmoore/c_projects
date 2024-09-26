@@ -6,7 +6,7 @@
 /*   By: smoore-a <smoore-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/26 15:15:30 by smoore-a          #+#    #+#             */
-/*   Updated: 2024/09/25 11:08:40 by smoore-a         ###   ########.fr       */
+/*   Updated: 2024/09/26 11:20:06 by smoore-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,21 +39,27 @@ void	export_builtin(t_data *data)
 {
 	t_environment	*new_var;
 	t_tokens		*head;
+	int				modified;
+	int				valid_id;
 
+	modified = 0;
 	head = data->input.tokens;
 	while (data->input.tokens)
 	{
-		if (data->input.tokens->type == VARIABLE)
+		valid_id = valid_char(data->input.tokens->token);
+		if (data->input.tokens->type == VARIABLE && valid_id)
 		{
 			new_var = get_env_var(data->env, data->input.tokens->token);
 			check_new_var(data, new_var);
+			modified = 1;
 		}
+		else if (data->input.tokens->type == VARIABLE)
+			print_msg(data, MS EXPORT EXPORT_ID, 1);
 		data->input.tokens = data->input.tokens->next;
 	}
 	data->input.tokens = head;
-	free_array(data->envp_cpy);
-	data->envp_cpy = NULL;
-	envp_to_array(data);
+	if (modified)
+		upd_env(data);
 }
 
 void	env_builtin(t_data *data)

@@ -6,7 +6,7 @@
 /*   By: smoore-a <smoore-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/21 12:03:30 by smoore-a          #+#    #+#             */
-/*   Updated: 2024/09/25 13:00:23 by smoore-a         ###   ########.fr       */
+/*   Updated: 2024/09/26 10:47:54 by smoore-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ void	add_back_token(t_tokens **lst, t_tokens *node)
 	}
 }
 
-t_tokens	*new_token(void *token, int type, int quote)
+	t_tokens	*new_token(void *token, int type, int quote)
 {
 	t_tokens	*new_node;
 

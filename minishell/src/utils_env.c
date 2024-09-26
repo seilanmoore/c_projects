@@ -6,7 +6,7 @@
 /*   By: smoore-a <smoore-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/21 12:03:30 by smoore-a          #+#    #+#             */
-/*   Updated: 2024/09/24 13:17:35 by smoore-a         ###   ########.fr       */
+/*   Updated: 2024/09/26 10:45:49 by smoore-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,4 +102,11 @@ int	env_size(t_environment *lst)
 		lst_len++;
 	}
 	return (lst_len);
+}
+
+void	upd_env(t_data *data)
+{
+	free_array(data->envp_cpy);
+	data->envp_cpy = NULL;
+	envp_to_array(data);
 }

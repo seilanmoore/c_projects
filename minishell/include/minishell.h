@@ -6,7 +6,7 @@
 /*   By: smoore-a <smoore-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/19 12:17:44 by smoore-a          #+#    #+#             */
-/*   Updated: 2024/09/25 13:00:39 by smoore-a         ###   ########.fr       */
+/*   Updated: 2024/09/26 14:34:22 by smoore-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,8 @@
 # define NO_PATH "PATH variable not found"
 # define NOT_FOUND "command not found"
 # define ERROR "error "
+# define EXPORT "export: "
+# define EXPORT_ID "not a valid identifier"
 
 # define CMD 100		// cmd
 # define OPTION 101		// cmd option
@@ -54,6 +56,10 @@
 # define NO_QUOTE 120
 # define S_QUOTE 121 	// ''
 # define D_QUOTE 122 	// ""
+
+extern volatile int signalize;
+
+void signal_handler(int sig);
 
 typedef struct s_l_variable
 {
@@ -115,6 +121,9 @@ typedef struct s_data
 	int				n_cmd;
 	int				n_token;
 	int				status;
+	int				exit_code;
+	char			*process;
+	pid_t			pid;
 	t_l_variable	*local;
 	t_environment	*env;
 	t_input			input;
@@ -145,6 +154,9 @@ void			exit_builtin(t_data *data);
 void			env_builtin(t_data *data);
 void			export_builtin(t_data	*data);
 
+// expand
+void			expand(t_data *data);
+
 t_tokens		*new_token(void *token, int type, int quote);
 int				lst_size(t_tokens *lst);
 
@@ -158,12 +170,19 @@ void			add_back_variable(t_environment **lst, t_environment *node);
 void			add_front_variable(t_environment **lst, t_environment *node);
 int				env_size(t_environment *lst);
 t_environment	*get_env_var(t_environment *env, char *variable);
+void			upd_env(t_data *data);
 
 void			parse_environment(t_data *data);
 void			envp_to_array(t_data *data);
 void			update_env(t_data	*data);
 
+// utils
 
-void			print_array(char	**array);
+void			print_types(t_data *data);
+
+void			print_msg(t_data *data, char *msg, int status);
+char			*rev_split(char **array);
+void			print_array(char **array);
+int				valid_char(char *str);
 
 #endif
