@@ -762,3 +762,81 @@ $?
 env
 $?
 $?
+hey
+gr
+fgd
+$?
+$?
+$?
+env
+$?
+export VAR_1="Heyy boy"
+$?
+dsfd
+$?
+$?
+dsfd
+$?
+$?
+$?
+env
+$?
+export MY_VAR="Hey boy"
+$?
+env
+env
+$?
+$?
+export MY_VAR1="Hey girl"
+env
+unset MY_VAR
+$?
+env
+export MY_VAR="hola"
+export MY_VAR1="adios"
+unset MY_VAR
+export MY_VAR="hola"
+export MY_VAR1="adios"
+env
+unset MY_VAR
+export MY_VAR="hola"
+export MY_VAR1="adios"
+unset MY_VAR
+export MY_VAR="hola"
+export MY_VAR1="adios"
+unset MY_VAR
+export MY_VAR="hola"
+export MY_VAR1="adios"
+env
+unset MY_VAR
+env
+export MY_VAR="hola"
+export MY_VAR1="adios"
+env
+unset MY_VAR
+env
+export MY_VAR="hola"
+export MY_VAR1="adios"
+env
+unset MY_VAR
+export MY_VAR="hola"
+export MY_VAR1="adios"
+unset MY_VAR
+env
+export MY_VAR="hola"
+export MY_VAR1="adios"
+env
+unset MY_VAR
+env
+export MY_VAR="hola"
+export MY_VAR1="adios"
+env
+unset MY_VAR
+export MY_VAR="hola"
+export MY_VAR1="adios"
+env
+unset MY_VAR
+env
+unset MY_VAR1
+export MY_VAR="hola"
+unset MY_VAR

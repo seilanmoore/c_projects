@@ -6,7 +6,7 @@
 /*   By: smoore-a <smoore-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/19 12:17:10 by smoore-a          #+#    #+#             */
-/*   Updated: 2024/09/27 14:07:29 by smoore-a         ###   ########.fr       */
+/*   Updated: 2024/09/27 20:10:18 by smoore-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -254,11 +254,18 @@ int	parser(t_data *data)
 	ptr = data->input.tokens;
 	if (ptr && !ft_strncmp(ptr->token, "env", ft_strlen(ptr->token)))
 		data->exit_code = env_builtin(data);
-	if (ptr && !ft_strncmp(ptr->token, "export", ft_strlen(ptr->token)))
+	else if (ptr && !ft_strncmp(ptr->token, "export", ft_strlen(ptr->token)))
 		data->exit_code = export_builtin(data);
-	if (ptr && !ft_strncmp(ptr->token, "loc", ft_strlen(ptr->token)))
+	else if (ptr && !ft_strncmp(ptr->token, "unset", ft_strlen(ptr->token)))
+		data->exit_code = unset_builtin(data);
+	else if (ptr && !ft_strncmp(ptr->token, "loc", ft_strlen(ptr->token)))
 		print_locals(data);
-	if (ptr && !ft_strncmp(ptr->token, "exit", ft_strlen(ptr->token)))
+	else if (ptr && !ft_strncmp(ptr->token, "exit", ft_strlen(ptr->token)))
 		data->exit_code = exit_builtin(data);
-	return (free(data->prev_exit_code), data->exit_code);
+	free(data->prev_exit_code);
+	if (data->exit_code == -1)
+		data->prev_exit_code = ft_strdup(MS "127: command not found" NL);
+	else
+		data->prev_exit_code = ft_itoa(data->exit_code);
+	return (0);
 }

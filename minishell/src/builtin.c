@@ -6,7 +6,7 @@
 /*   By: smoore-a <smoore-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/26 15:15:30 by smoore-a          #+#    #+#             */
-/*   Updated: 2024/09/27 13:34:15 by smoore-a         ###   ########.fr       */
+/*   Updated: 2024/09/27 21:14:54 by smoore-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,6 +60,17 @@ int	export_builtin(t_data *data)
 	data->input.tokens = head;
 	if (modified)
 		upd_env(data);
+	return (0);
+}
+
+int	unset_builtin(t_data *data)
+{
+	char			*variable;
+
+	variable = data->input.tokens->next->token;
+	if (get_env_var(data->env, variable))
+		del_env(data->env, variable);
+	upd_env(data);
 	return (0);
 }
 

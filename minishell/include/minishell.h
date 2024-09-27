@@ -6,7 +6,7 @@
 /*   By: smoore-a <smoore-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/19 12:17:44 by smoore-a          #+#    #+#             */
-/*   Updated: 2024/09/27 13:37:10 by smoore-a         ###   ########.fr       */
+/*   Updated: 2024/09/27 21:11:26 by smoore-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -136,6 +136,8 @@ t_tokens			*last_token(t_tokens *lst);
 t_environment		*get_env_var(t_environment *env, char *variable);
 t_environment		*new_variable(void *variable, char *value);
 t_environment		*last_variable(t_environment *lst);
+void	del_env(t_environment *env, char *variable);
+
 
 // init
 void	init_data(t_data *data, int argc, char **argv, char **envp);
@@ -160,6 +162,7 @@ char	*get_dollar_value(t_data *data, char *variable);
 int		exit_builtin(t_data *data);
 int		env_builtin(t_data *data);
 int		export_builtin(t_data *data);
+int		unset_builtin(t_data *data);
 
 // expand
 void	expand(t_data *data);
