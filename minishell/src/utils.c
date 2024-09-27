@@ -6,7 +6,7 @@
 /*   By: smoore-a <smoore-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/26 09:54:56 by smoore-a          #+#    #+#             */
-/*   Updated: 2024/09/26 11:42:25 by smoore-a         ###   ########.fr       */
+/*   Updated: 2024/09/27 14:05:22 by smoore-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,7 +86,7 @@ int	valid_char(char *str)
 		return (0);
 	while (*str)
 	{
-		if (*str != '_' &&  *str != '$' && \
+		if (*str != '_' && *str != '$' && \
 			(*str < 'A' || *str > 'Z') && (*str < '0' || *str > '9'))
 			return (0);
 		str++;
@@ -114,5 +114,33 @@ char	*rev_split(char **array)
 		if (!str)
 			break ;
 	}
+	return (str);
+}
+
+char	*str_replace(char *haystack, char *needle, char *replace)
+{
+	char	*str;
+	char	*ptr;
+	char	*aux;
+	int		len;
+
+	if (!haystack || !needle)
+		return (ft_strdup(haystack));
+	ptr = ft_strnstr(haystack, needle, ft_strlen(haystack));
+	len = ptr - haystack;
+	str = ft_substr(haystack, 0, len);
+	if (!str)
+		return (NULL);
+	ptr = ptr + ft_strlen(needle);
+	aux = str;
+	str = ft_strjoin(str, replace);
+	if (!str)
+		return (NULL);
+	free (aux);
+	aux = str;
+	str = ft_strjoin(str, ptr);
+	free(aux);
+	if (!str)
+		return (NULL);
 	return (str);
 }

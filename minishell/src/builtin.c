@@ -6,7 +6,7 @@
 /*   By: smoore-a <smoore-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/26 15:15:30 by smoore-a          #+#    #+#             */
-/*   Updated: 2024/09/26 11:20:06 by smoore-a         ###   ########.fr       */
+/*   Updated: 2024/09/27 13:34:15 by smoore-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ void	check_new_var(t_data *data, t_environment *new_var)
 	}
 }
 
-void	export_builtin(t_data *data)
+int	export_builtin(t_data *data)
 {
 	t_environment	*new_var;
 	t_tokens		*head;
@@ -60,16 +60,19 @@ void	export_builtin(t_data *data)
 	data->input.tokens = head;
 	if (modified)
 		upd_env(data);
+	return (0);
 }
 
-void	env_builtin(t_data *data)
+int	env_builtin(t_data *data)
 {
 	print_array(data->envp_cpy);
+	return (0);
 }
 
-void	exit_builtin(t_data *data)
+int	exit_builtin(t_data *data)
 {
-	ft_putstr_fd("exit\n", 1);
+	ft_putendl_fd("exit", 1);
+	free(data->prev_exit_code);
 	free_local(data);
 	free_environment(data);
 	free_data(data);

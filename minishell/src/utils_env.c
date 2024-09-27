@@ -6,7 +6,7 @@
 /*   By: smoore-a <smoore-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/21 12:03:30 by smoore-a          #+#    #+#             */
-/*   Updated: 2024/09/26 10:45:49 by smoore-a         ###   ########.fr       */
+/*   Updated: 2024/09/27 12:52:02 by smoore-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ int	variable_len(char *envp_line)
 	return (i);
 }
 
-t_environment *get_env_var(t_environment *env, char *variable)
+t_environment	*get_env_var(t_environment *env, char *variable)
 {
 	t_environment	*head;
 	size_t			len;

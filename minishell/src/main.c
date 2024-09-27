@@ -6,20 +6,20 @@
 /*   By: smoore-a <smoore-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/19 12:17:10 by smoore-a          #+#    #+#             */
-/*   Updated: 2024/09/26 14:50:18 by smoore-a         ###   ########.fr       */
+/*   Updated: 2024/09/27 14:07:00 by smoore-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 #include <stdio.h>
 
-volatile int signalize = 0;
+volatile int	g_signal = 0;
 
-void signal_handler(int sig)
+void	signal_handler(int sig)
 {
 	if (sig == SIGINT)
 	{
-		signalize = 1;
+		g_signal = 1;
 		write(1, "\n", 1);
 		rl_on_new_line();
 		rl_replace_line("", 0);
@@ -58,7 +58,7 @@ int	main(int argc, char **argv, char **envp)
 	signal(SIGINT, signal_handler);
 	init_data(&data, argc, argv, envp);
 	read_history(HISTORY_FILE);
-	while (data.exit_code == -1)
+	while (1)
 	{
 		data.input.raw_line = readline(prompter(&data));
 		handle_eof(&data);
@@ -69,10 +69,14 @@ int	main(int argc, char **argv, char **envp)
 			if (data.history && ft_strlen(data.history) > 0)
 				add_history(data.history);
 			write_history(HISTORY_FILE);
-			parser(&data);
+			data.prev_exit_code = ft_itoa(parser(&data));
+		}
+		else
+		{
+			free(data.prev_exit_code);
+			data.prev_exit_code = ft_itoa(0);
 		}
 		free_data(&data);
 	}
-	rl_clear_history();
-	exit(data.status);
+	exit(0);
 }

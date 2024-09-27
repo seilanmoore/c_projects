@@ -6,7 +6,7 @@
 /*   By: smoore-a <smoore-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/25 11:02:34 by smoore-a          #+#    #+#             */
-/*   Updated: 2024/09/26 14:29:25 by smoore-a         ###   ########.fr       */
+/*   Updated: 2024/09/27 14:11:04 by smoore-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,4 +41,5 @@ void	init_data(t_data *data, int argc, char **argv, char **envp)
 	data->exit_code = -1;
 	data->pid = ft_get_pid();
 	data->process = ft_itoa(data->pid);
+	data->prev_exit_code = ft_itoa(0);
 }

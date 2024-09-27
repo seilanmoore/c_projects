@@ -6,7 +6,7 @@
 /*   By: smoore-a <smoore-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/19 12:17:10 by smoore-a          #+#    #+#             */
-/*   Updated: 2024/09/26 13:09:28 by smoore-a         ###   ########.fr       */
+/*   Updated: 2024/09/27 14:07:29 by smoore-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,7 +84,7 @@ static void	parse_tokens(t_data *data)
 		var.aux = NULL;
 		while (*var.aux1 && \
 			(*var.aux1 == ' ' || *var.aux1 == '\t' || *var.aux1 == '\n'))
-			var.aux1++;			
+			var.aux1++;
 		if (*var.aux1 && *var.aux1 == '\'')
 			single_quote(data, &var);
 		else if (*var.aux1 && *var.aux1 == '\"')
@@ -238,7 +238,7 @@ void	remove_equal(t_data *data)
 	data->input.tokens = head;
 }
 
-void	parser(t_data *data)
+int	parser(t_data *data)
 {
 	t_tokens	*ptr;
 
@@ -253,11 +253,12 @@ void	parser(t_data *data)
 	print_types(data);
 	ptr = data->input.tokens;
 	if (ptr && !ft_strncmp(ptr->token, "env", ft_strlen(ptr->token)))
-		env_builtin(data);
+		data->exit_code = env_builtin(data);
 	if (ptr && !ft_strncmp(ptr->token, "export", ft_strlen(ptr->token)))
-		export_builtin(data);
-	if (ptr && !ft_strncmp(ptr->token, "exit", ft_strlen(ptr->token)))
-		exit_builtin(data);
+		data->exit_code = export_builtin(data);
 	if (ptr && !ft_strncmp(ptr->token, "loc", ft_strlen(ptr->token)))
 		print_locals(data);
+	if (ptr && !ft_strncmp(ptr->token, "exit", ft_strlen(ptr->token)))
+		data->exit_code = exit_builtin(data);
+	return (free(data->prev_exit_code), data->exit_code);
 }

@@ -6,7 +6,7 @@
 /*   By: smoore-a <smoore-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/25 11:02:07 by smoore-a          #+#    #+#             */
-/*   Updated: 2024/09/26 13:31:27 by smoore-a         ###   ########.fr       */
+/*   Updated: 2024/09/27 14:15:58 by smoore-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,9 @@ void	free_data(t_data *data)
 	t_environment	*env_head;
 	t_l_variable	*local_head;
 	char			**env_ptr;
+	char			*aux;
 
+	aux = data->prev_exit_code;
 	env_head = data->env;
 	env_ptr = data->envp_cpy;
 	local_head = data->local;
@@ -104,4 +106,6 @@ void	free_data(t_data *data)
 	data->local = local_head;
 	data->status = i;
 	data->exit_code = j;
+	free(data->prev_exit_code);
+	data->prev_exit_code = aux;
 }
