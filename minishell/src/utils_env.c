@@ -6,7 +6,7 @@
 /*   By: smoore-a <smoore-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/21 12:03:30 by smoore-a          #+#    #+#             */
-/*   Updated: 2024/09/27 21:20:18 by smoore-a         ###   ########.fr       */
+/*   Updated: 2024/09/27 21:29:17 by smoore-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,6 @@ void	del_env(t_environment *env, char *variable)
 		if (ft_strlen(current->variable) == len && \
 			!ft_strncmp(current->variable, variable, len))
 		{
-			printf("CURRENT->NEXT: %s\n", current->next->variable);
 			env->next = current->next;
 			del_node(current);
 			current = NULL;

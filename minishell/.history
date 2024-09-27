@@ -840,3 +840,18 @@ env
 unset MY_VAR1
 export MY_VAR="hola"
 unset MY_VAR
+export MY_VAR="hola"
+unset MY_VAR
+export MY_VAR="hola"
+unset MY_VAR
+env
+export MY_VAR="hola"
+unset MY_VAR
+env
+unset LD_PRELOAD
+env
+env
+export MY_VAR="hola"
+env
+unset MY_VAR
+env
