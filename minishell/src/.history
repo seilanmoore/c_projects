@@ -898,31 +898,6 @@ cd
 cd
 cd ../pipex/
 cd ..
-cd ..
+cd .
+cd minishell/src/
 cd
-cd ..
-cd
-cd ~/mygit/pipex/src/
-cd
-ls -oa -s -saf dir/path/ "another/path" | grep -i "pattern ads" > "path/to/file"
-ls -oa -s -saf dir/path/ "another/path" | grep -i "pattern ads" > "path/to/file"
-ls -oa -s -saf dir/path/ "another/path" | grep -i "pattern ads" > "path/to/file"
-ls -oa -s -saf dir/path/ "another/path" | grep -i "pattern ads" > "path/to/file"
-ls -oa -s -saf dir/path/ "another/path" | grep -i "pattern ads" > "path/to/file"
-ls -oa -s -saf dir/path/ "another/path" | grep -i "pattern ads" > "path/to/file"
-ls -oa -s -saf dir/path/ "another/path" | grep -i "pattern ads" > "path/to/file"
-cd -oa -s -saf dir/path/ "another/path" | grep -i "pattern ads" > "path/to/file"
-cd -oa -s -saf dir/path/ "another/path" | grep -i "pattern ads" > "path/to/file"
-make
-cd -oa -s -saf dir/path/ "another/path" | grep -i "pattern ads" > "path/to/file"
-cd dir/path/ "another/path" | grep -i "pattern ads" > "path/to/file"
-cd "another/path" | grep -i "pattern ads" > "path/to/file"
-cd "another/path" | grep -i "pattern ads" > "path/to/file"
-cd "another/path" | grep -i "pattern ads" > "path/to/file"
-cd "fds cds" "csc  s2"
-cd "fds cds"
-cd "fds cds"
-unset HOME
-cd
-cd ~/hey
-cd ~/mygit/

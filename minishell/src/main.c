@@ -6,7 +6,7 @@
 /*   By: smoore-a <smoore-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/19 12:17:10 by smoore-a          #+#    #+#             */
-/*   Updated: 2024/09/27 20:00:51 by smoore-a         ###   ########.fr       */
+/*   Updated: 2024/10/01 13:00:45 by smoore-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,15 +37,20 @@ char	*prompter(t_data *data)
 {
 	char	*prompt;
 	char	*tmp;
+	char	*short_cwd;
 
 	data->user = getenv("USER");
-	data->cwd = getcwd(NULL, 0);
-	prompt = NULL;
-	tmp = NULL;
 	prompt = ft_strjoin(data->user, ": ");
-	tmp = ft_strjoin(prompt, data->cwd);
+	data->cwd = getcwd(NULL, 0);
+	short_cwd = cwd_compress(data);
+	if (short_cwd)
+	{
+		tmp = ft_strjoin(prompt, short_cwd);
+		free(short_cwd);
+	}
+	else
+		tmp = ft_strjoin(prompt, data->cwd);
 	free(prompt);
-	free(data->cwd);
 	data->prompt = ft_strjoin(tmp, " $ ");
 	free(tmp);
 	return (data->prompt);

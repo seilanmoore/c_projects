@@ -6,7 +6,7 @@
 /*   By: smoore-a <smoore-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/25 11:02:07 by smoore-a          #+#    #+#             */
-/*   Updated: 2024/09/27 20:16:00 by smoore-a         ###   ########.fr       */
+/*   Updated: 2024/10/01 10:46:08 by smoore-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,6 +88,7 @@ void	free_data(t_data *data)
 	free(data->input.raw_line);
 	free(data->history);
 	free(data->process);
+	free(data->cwd);
 	free_tokens(data);
 	i = -1;
 	if (data->input.command)

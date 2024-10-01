@@ -6,7 +6,7 @@
 /*   By: smoore-a <smoore-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/19 12:17:44 by smoore-a          #+#    #+#             */
-/*   Updated: 2024/09/27 21:11:26 by smoore-a         ###   ########.fr       */
+/*   Updated: 2024/10/01 14:32:22 by smoore-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,11 @@
 # define ERROR "error "
 # define EXPORT "export: "
 # define EXPORT_ID "not a valid identifier"
+# define CD "cd: "
+# define CD_OPT "no options allowed"
+# define CD_ARG "too many arguments"
+# define CD_HOME "HOME not set"
+# define CD_EXIST "No such a file or directory"
 
 # define CMD 100		// cmd
 # define OPTION 101		// cmd option
@@ -79,6 +84,8 @@ typedef struct s_tokens
 	char				*token;
 	int					type;
 	int					quote;
+	struct s_tokens		*opt;
+	struct s_tokens		*arg;
 	struct s_tokens		*prev;
 	struct s_tokens		*next;
 }	t_tokens;
@@ -163,9 +170,12 @@ int		exit_builtin(t_data *data);
 int		env_builtin(t_data *data);
 int		export_builtin(t_data *data);
 int		unset_builtin(t_data *data);
+int		pwd_builtin(t_data *data);
+int		cd_builtin(t_data *data, t_tokens *token);
 
 // expand
 void	expand(t_data *data);
+char	*cwd_compress(t_data *data);
 
 int		lst_size(t_tokens *lst);
 
@@ -179,7 +189,7 @@ void	upd_env(t_data *data);
 
 void	parse_environment(t_data *data);
 void	envp_to_array(t_data *data);
-void	update_env(t_data	*data);
+void	upd_env(t_data *data);
 
 // utils
 
@@ -189,5 +199,6 @@ void	print_msg(t_data *data, char *msg, int status);
 char	*rev_split(char **array);
 void	print_array(char **array);
 int		valid_char(char *str);
+char	*get_envp_var(char **envp, char *var);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: smoore-a <smoore-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/22 12:13:57 by smoore-a          #+#    #+#             */
-/*   Updated: 2024/09/24 12:20:09 by smoore-a         ###   ########.fr       */
+/*   Updated: 2024/10/01 10:39:50 by smoore-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,10 +94,26 @@ void	envp_to_lst(t_data *data)
 
 void	parse_environment(t_data *data)
 {
+	t_environment	*variable;
+
 	if (!data->envp_cpy)
 	{
 		copy_envp(data);
 		envp_to_lst(data);
+		variable = get_env_var(data->env, "OLDPWD");
+		if (variable)
+		{
+			free(variable->value);
+			variable->value = ft_strdup(data->cwd);
+			upd_env(data);
+		}
+	}
+	variable = get_env_var(data->env, "PWD");
+	if (variable)
+	{
+		free(variable->value);
+		variable->value = ft_strdup(data->cwd);
+		upd_env(data);
 	}
 }
 

@@ -6,7 +6,7 @@
 /*   By: smoore-a <smoore-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/26 09:53:56 by smoore-a          #+#    #+#             */
-/*   Updated: 2024/09/27 14:05:02 by smoore-a         ###   ########.fr       */
+/*   Updated: 2024/10/01 12:50:10 by smoore-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,6 +67,16 @@ void	expand(t_data *data)
 			data->input.tokens->token = str_replace(tmp, identifier, value);
 			free(tmp);
 			free(identifier);
+		}
+		if (data->input.tokens->token && \
+			data->input.tokens->quote == NO_QUOTE && \
+			data->input.tokens->type == ARG && \
+			*(data->input.tokens->token) == '~')
+		{
+			tmp = str_replace(data->input.tokens->token, "~", \
+				get_envp_var(data->envp, "HOME="));
+			free(data->input.tokens->token);
+			data->input.tokens->token = tmp;
 		}
 		data->input.tokens = data->input.tokens->next;
 	}

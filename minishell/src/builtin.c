@@ -6,7 +6,7 @@
 /*   By: smoore-a <smoore-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/26 15:15:30 by smoore-a          #+#    #+#             */
-/*   Updated: 2024/09/27 21:14:54 by smoore-a         ###   ########.fr       */
+/*   Updated: 2024/10/01 14:43:05 by smoore-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,6 +78,63 @@ int	env_builtin(t_data *data)
 {
 	print_array(data->envp_cpy);
 	return (0);
+}
+
+int	pwd_builtin(t_data *data)
+{
+	t_environment	*pwd;
+
+	pwd = get_env_var(data->env, "PWD");
+	if (pwd && pwd->value)
+		return (ft_putendl_fd(pwd->value, 1), 0);
+	return (-1);
+}
+
+int	cd_builtin(t_data *data, t_tokens *token)
+{
+	t_environment	*home;
+	t_environment	*variable;
+	char			*recover;
+
+	if (token->opt)
+		return (print_msg(data, MS CD CD_OPT, -1), 1);
+	if (token->arg && token->arg->next && token->arg->next->type == ARG)
+		return (print_msg(data, MS CD CD_ARG, -1), 1);
+	home = get_env_var(data->env, "HOME");
+	variable = get_env_var(data->env, "OLDPWD");
+	recover = NULL;
+	if (variable)
+	{
+		recover = ft_strdup(variable->value);
+		free(variable->value);
+		variable->value = ft_strdup(data->cwd);
+		upd_env(data);
+	}
+	if (!data->input.tokens->next && home && home->value)
+		chdir(home->value);
+	else if (!data->input.tokens->next)
+	{
+		if (variable)
+		{
+			free(variable->value);
+			variable->value = ft_strdup(recover);
+		}
+		free(recover);
+		return (print_msg(data, MS CD CD_HOME, -1), 1);
+	}
+	else if (chdir(data->input.tokens->next->token) == -1)
+	{
+		if (variable)
+		{
+			free(variable->value);
+			variable->value = ft_strdup(recover);
+		}
+		free(recover);
+		ft_putstr_fd(MS CD, 2);
+		ft_putstr_fd(data->input.tokens->next->token, 2);
+		return (print_msg(data, ": " CD_EXIST, -1), 1);
+	}
+	return (free(recover), 0);
 }
 
 int	exit_builtin(t_data *data)
