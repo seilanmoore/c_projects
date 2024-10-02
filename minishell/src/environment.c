@@ -6,7 +6,7 @@
 /*   By: smoore-a <smoore-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/22 12:13:57 by smoore-a          #+#    #+#             */
-/*   Updated: 2024/10/01 10:39:50 by smoore-a         ###   ########.fr       */
+/*   Updated: 2024/10/02 12:41:48 by smoore-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -116,4 +116,3 @@ void	parse_environment(t_data *data)
 		upd_env(data);
 	}
 }
-

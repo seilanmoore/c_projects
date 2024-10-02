@@ -6,7 +6,7 @@
 /*   By: smoore-a <smoore-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/19 12:17:10 by smoore-a          #+#    #+#             */
-/*   Updated: 2024/10/01 13:00:45 by smoore-a         ###   ########.fr       */
+/*   Updated: 2024/10/02 15:02:06 by smoore-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,9 @@ char	*prompter(t_data *data)
 	char	*short_cwd;
 
 	data->user = getenv("USER");
-	prompt = ft_strjoin(data->user, ": ");
+	tmp = ft_strjoin("[", data->user);
+	prompt = ft_strjoin(tmp, ": ");
+	free (tmp);
 	data->cwd = getcwd(NULL, 0);
 	short_cwd = cwd_compress(data);
 	if (short_cwd)
@@ -51,7 +53,7 @@ char	*prompter(t_data *data)
 	else
 		tmp = ft_strjoin(prompt, data->cwd);
 	free(prompt);
-	data->prompt = ft_strjoin(tmp, " $ ");
+	data->prompt = ft_strjoin(tmp, "]$ ");
 	free(tmp);
 	return (data->prompt);
 }
@@ -69,7 +71,6 @@ int	main(int argc, char **argv, char **envp)
 		handle_eof(&data);
 		if (data.input.raw_line && ft_strlen(data.input.raw_line) > 0)
 		{
-			printf("Current process: %d\n", data.pid);
 			data.history = ft_strtrim(data.input.raw_line, "\n");
 			if (data.history && ft_strlen(data.history) > 0)
 				add_history(data.history);

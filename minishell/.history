@@ -926,3 +926,108 @@ unset HOME
 cd
 cd ~/hey
 cd ~/mygit/
+ds
+vfds
+vfd
+sbg
+rw
+fdas
+bgf
+$?
+dsa
+vfd
+brg
+waef
+hbtr
+de ds 
+de -ds -a fdsa 
+de - fdsa 
+cd
+cd
+cd ..
+cd ..
+cd ~/mygit/minishell/
+pwd
+cd -ae dsa
+cd -a ds
+cd - ds
+cd "-hola"
+cd "../" "../../"
+cd "../"
+pwd
+cd
+env
+cd mygit/minishell/
+env
+export HOME=
+env
+cd
+cd ~/Documents/
+unset HOME
+env
+cd ~/Documents/
+cd
+cd ~/mygit/minishell/
+export HOME=
+cd
+cd ~/Documents/
+cd ~/Documents
+pwd
+cd
+pwd
+cd ~
+unset HOME
+cd ~
+unset HOME
+cd ~
+unset HOME
+cd ~
+cd ~/Documents/
+echo "hola"
+echo "\"hola\""
+echo "\"hola\""
+echo -n "\"hola\""
+echo -n "\"hola\""
+echo -n "\"hola\" "
+echo -n -a "\"hola\" "
+echo -n -a "\"hola\" "
+echo -na "\"hola\" "
+echo -n "\"hola\" "
+echo -n "\"hola\"" "heyy"
+echo -n "\"hola\"" "heyy"
+echo $?
+echo "Hey, bro. ¿Qué tal?"
+echo "Hey, bro.\n¿Qué tal?"
+echo "Hey, bro.\n¿Qué tal?"
+echo "Hey, bro.\n¿Qué tal?"
+echo "Hey, bro.\n¿Qué tal?"
+echo "Hey, bro.\n¿Qué tal?"
+echo "Hey, bro.\'¿Qué tal?"
+echo "Hey, bro.\''¿Qué tal?"
+echo "Hey, bro.\$¿Qué tal?"
+echo "Hey, bro.\$¿Qué tal?"
+echo "Hey, bro.\$¿Qué tal?$"
+echo "Hey, bro.\$¿Qué tal?$HOME"
+echo "Hey, bro.\$¿Qué tal?$HOME"
+echo "Hey, bro.\$¿Qué tal?$HOME"
+echo "Hey, bro.\$¿Qué tal?$HOME"
+echo "Hey, bro.\$¿Qué tal?$HOME"
+echo "Hey, bro.\$¿Qué tal?$HOME"
+echo "Hey, bro.\$¿Qué tal?$HOME$"
+echo "Hey, bro.\$¿Qué tal?$HOME$"
+echo "Hey, bro.\$¿Qué tal?$HOME$"
+echo "Hey, bro.\$¿Qué tal?$HOME$"
+echo "Hey, bro.\$¿Qué tal?$HOME$"
+echo "Hey, bro.\$¿Qué tal?$HOME$"
+echo "Hey, bro.\$¿Qué tal?$HOME$"
+echo "Hey, bro.\$¿Qué tal?$HOME$"
+echo "Hey, bro.\$¿Qué tal?$HOME$"
+echo "Hey, bro.\$¿Qué tal?$HOME$"
+echo "Hey, bro.\$¿Qué tal?$HOME$"
+echo -n "Hey, bro.\$¿Qué tal?$HOME$"
+echo -n "Hey, bro.\$¿Qué tal?$HOME$" "eo"
+echo "Hey, bro.\$¿Qué tal?$HOME$"   "eo"
+echo "Hey, bro.\$¿Qué tal?$HOME$"
+"eo"
+echo $?
+echo $?

@@ -6,7 +6,7 @@
 /*   By: smoore-a <smoore-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/19 12:17:44 by smoore-a          #+#    #+#             */
-/*   Updated: 2024/10/01 14:32:22 by smoore-a         ###   ########.fr       */
+/*   Updated: 2024/10/02 13:26:33 by smoore-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,13 +36,19 @@
 # define NO_PATH "PATH variable not found"
 # define NOT_FOUND "command not found"
 # define ERROR "error "
+
 # define EXPORT "export: "
 # define EXPORT_ID "not a valid identifier"
+
 # define CD "cd: "
 # define CD_OPT "no options allowed"
 # define CD_ARG "too many arguments"
 # define CD_HOME "HOME not set"
 # define CD_EXIST "No such a file or directory"
+
+# define ECHO "echo: "
+# define ECHO_OPT "not valid option"
+# define ECHO_OPTS "too many options"
 
 # define CMD 100		// cmd
 # define OPTION 101		// cmd option
@@ -163,7 +169,6 @@ void	add_l_variables(t_data *data);
 //parser
 int		parser(t_data *data);
 void	get_env_paths(t_data *data);
-char	*get_dollar_value(t_data *data, char *variable);
 
 //builtin
 int		exit_builtin(t_data *data);
@@ -172,6 +177,7 @@ int		export_builtin(t_data *data);
 int		unset_builtin(t_data *data);
 int		pwd_builtin(t_data *data);
 int		cd_builtin(t_data *data, t_tokens *token);
+int		echo_builtin(t_data *data, t_tokens *token, int fd);
 
 // expand
 void	expand(t_data *data);

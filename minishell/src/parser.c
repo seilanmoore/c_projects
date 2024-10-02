@@ -6,7 +6,7 @@
 /*   By: smoore-a <smoore-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/19 12:17:10 by smoore-a          #+#    #+#             */
-/*   Updated: 2024/10/01 14:27:16 by smoore-a         ###   ########.fr       */
+/*   Updated: 2024/10/02 15:01:44 by smoore-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -249,7 +249,8 @@ void	assign_opt_arg(t_data *data)
 		if (tmp->type == CMD)
 		{
 			aux = tmp->next;
-			while (aux && (aux->type == OPTION || aux->type == ARG) && !g_signal)
+			while (aux && \
+			(aux->type == OPTION || aux->type == ARG) && !g_signal)
 			{
 				if (aux->type == OPTION && !tmp->opt)
 					tmp->opt = aux;
@@ -281,6 +282,8 @@ int	parser(t_data *data)
 		data->exit_code = env_builtin(data);
 	else if (ptr && !ft_strncmp(ptr->token, "pwd", ft_strlen(ptr->token)))
 		data->exit_code = pwd_builtin(data);
+	else if (ptr && !ft_strncmp(ptr->token, "echo", ft_strlen(ptr->token)))
+		data->exit_code = echo_builtin(data, ptr, 1);
 	else if (ptr && !ft_strncmp(ptr->token, "cd", ft_strlen(ptr->token)))
 		data->exit_code = cd_builtin(data, ptr);
 	else if (ptr && !ft_strncmp(ptr->token, "export", ft_strlen(ptr->token)))

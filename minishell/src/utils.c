@@ -6,7 +6,7 @@
 /*   By: smoore-a <smoore-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/26 09:54:56 by smoore-a          #+#    #+#             */
-/*   Updated: 2024/10/01 14:06:53 by smoore-a         ###   ########.fr       */
+/*   Updated: 2024/10/02 12:46:23 by smoore-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -137,7 +137,6 @@ char	*rev_split(char **array)
 	char	*aux;
 	int		i;
 
-
 	i = 0;
 	str = ft_strdup(array[i]);
 	while (array[++i])
@@ -155,7 +154,6 @@ char	*rev_split(char **array)
 
 char	*get_envp_var(char **envp, char *var)
 {
-
 	if (!envp)
 		return (NULL);
 	while (*envp)

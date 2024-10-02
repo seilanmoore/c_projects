@@ -6,7 +6,7 @@
 /*   By: smoore-a <smoore-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/26 15:15:30 by smoore-a          #+#    #+#             */
-/*   Updated: 2024/09/23 12:26:37 by smoore-a         ###   ########.fr       */
+/*   Updated: 2024/10/02 12:42:34 by smoore-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,19 +86,12 @@ void	get_env_paths(t_data *data)
 		;
 	if (!ft_strncmp("PATH=", data->envp_cpy[i], 5))
 	{
-			line = &(data->envp_cpy[i][5]);
-			if (line[0] == '\0')
-				printf(MS EMPTY_PATH NL);
-			data->paths = ft_split(line, ':');
+		line = &(data->envp_cpy[i][5]);
+		if (line[0] == '\0')
+			printf(MS EMPTY_PATH NL);
+		data->paths = ft_split(line, ':');
 	}
 	else
 		printf(MS NO_PATH NL);
 	append_slash(data);
-	// i = -1;
-	// printf("PATHS\n");
-	// while (data->paths[++i])
-	// 	printf(BLUE "%s\n" BLUE, data->paths[i]);
-	// printf(WHITE "\n" WHITE);
-	//assign_paths(data);
-	//cmd_not_found(data);
 }
