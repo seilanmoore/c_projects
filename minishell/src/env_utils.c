@@ -1,19 +1,19 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   utils_env.c                                        :+:      :+:    :+:   */
+/*   env_utils.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: smoore-a <smoore-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/21 12:03:30 by smoore-a          #+#    #+#             */
-/*   Updated: 2024/09/27 21:29:17 by smoore-a         ###   ########.fr       */
+/*   Updated: 2024/10/03 15:34:58 by smoore-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 #include <string.h>
 
-static void	del_node(t_environment *env)
+static void	del_node(t_env *env)
 {
 	free(env->variable);
 	env->variable = NULL;
@@ -22,11 +22,11 @@ static void	del_node(t_environment *env)
 	free(env);
 }
 
-void	del_env(t_environment *env, char *variable)
+void	del_env(t_env *env, char *variable)
 {
-	size_t			len;
-	t_environment	*head;
-	t_environment	*current;
+	size_t	len;
+	t_env	*head;
+	t_env	*current;
 
 	len = ft_strlen(variable);
 	head = env;
@@ -63,10 +63,10 @@ int	variable_len(char *envp_line)
 	return (i);
 }
 
-t_environment	*get_env_var(t_environment *env, char *variable)
+t_env	*get_env_var(t_env *env, char *variable)
 {
-	t_environment	*head;
-	size_t			len;
+	t_env	*head;
+	size_t	len;
 
 	if (!env || !variable)
 		return (NULL);
@@ -83,13 +83,13 @@ t_environment	*get_env_var(t_environment *env, char *variable)
 	return (NULL);
 }
 
-t_environment	*new_variable(void *variable, char *value)
+t_env	*new_variable(void *variable, char *value)
 {
-	t_environment	*new_node;
+	t_env	*new_node;
 
 	if (!variable)
 		return (NULL);
-	new_node = (t_environment *)malloc(sizeof(t_environment));
+	new_node = (t_env *)malloc(sizeof(t_env));
 	if (!new_node)
 		return (NULL);
 	new_node->variable = ft_strdup(variable);
@@ -101,7 +101,7 @@ t_environment	*new_variable(void *variable, char *value)
 	return (new_node);
 }
 
-t_environment	*last_variable(t_environment *lst)
+t_env	*last_variable(t_env *lst)
 {
 	if (!lst)
 		return (NULL);
@@ -110,7 +110,7 @@ t_environment	*last_variable(t_environment *lst)
 	return (lst);
 }
 
-void	add_back_variable(t_environment **lst, t_environment *node)
+void	add_back_variable(t_env **lst, t_env *node)
 {
 	if (lst && node)
 	{
@@ -121,16 +121,7 @@ void	add_back_variable(t_environment **lst, t_environment *node)
 	}
 }
 
-void	add_front_variable(t_environment **lst, t_environment *node)
-{
-	if (lst && node)
-	{
-		node->next = *lst;
-		*lst = node;
-	}
-}
-
-int	env_size(t_environment *lst)
+int	env_size(t_env *lst)
 {
 	int	lst_len;
 

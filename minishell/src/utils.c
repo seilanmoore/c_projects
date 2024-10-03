@@ -6,7 +6,7 @@
 /*   By: smoore-a <smoore-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/26 09:54:56 by smoore-a          #+#    #+#             */
-/*   Updated: 2024/10/03 11:05:58 by smoore-a         ###   ########.fr       */
+/*   Updated: 2024/10/03 15:30:41 by smoore-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,8 +87,8 @@ char	*type_to_char(int type)
 
 void	print_types(t_data *data)
 {
-	t_tokens	*head;
-	t_tokens	*aux;
+	t_token	*head;
+	t_token	*aux;
 
 	head = data->input.tokens;
 	while (head)

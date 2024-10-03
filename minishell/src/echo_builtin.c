@@ -6,7 +6,7 @@
 /*   By: smoore-a <smoore-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/02 12:47:35 by smoore-a          #+#    #+#             */
-/*   Updated: 2024/10/03 13:31:01 by smoore-a         ###   ########.fr       */
+/*   Updated: 2024/10/03 15:10:12 by smoore-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,9 +26,9 @@ static void	print_arg(char *arg, int fd)
 	}
 }
 
-static int	check_options(t_data *data, t_tokens *token, int fd)
+static int	check_options(t_data *data, t_token *token, int fd)
 {
-	t_tokens	*arg;
+	t_token	*arg;
 
 	if ((token->opt->next && token->opt->next->type == OPTION) || \
 	ft_strlen(token->opt->token) > 2)
@@ -47,9 +47,9 @@ static int	check_options(t_data *data, t_tokens *token, int fd)
 	return (0);
 }
 
-int	echo_builtin(t_data *data, t_tokens *token, int fd)
+int	echo_builtin(t_data *data, t_token *token, int fd)
 {
-	t_tokens	*arg;
+	t_token	*arg;
 
 	if (token->opt)
 	{

@@ -6,7 +6,7 @@
 /*   By: smoore-a <smoore-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/25 11:02:07 by smoore-a          #+#    #+#             */
-/*   Updated: 2024/10/01 10:46:08 by smoore-a         ###   ########.fr       */
+/*   Updated: 2024/10/03 15:30:13 by smoore-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ void	free_array(char **array)
 
 void	free_local(t_data *data)
 {
-	t_l_variable	*tmp;
+	t_l_var	*tmp;
 
 	while (data->local)
 	{
@@ -42,7 +42,7 @@ void	free_local(t_data *data)
 
 void	free_environment(t_data *data)
 {
-	t_environment	*tmp;
+	t_env	*tmp;
 
 	while (data->env)
 	{
@@ -60,7 +60,7 @@ void	free_environment(t_data *data)
 
 void	free_tokens(t_data *data)
 {
-	t_tokens	*tmp;
+	t_token	*tmp;
 
 	while (data->input.tokens)
 	{
@@ -74,11 +74,11 @@ void	free_tokens(t_data *data)
 
 void	free_data(t_data *data)
 {
-	int				i;
-	t_environment	*env_head;
-	t_l_variable	*local_head;
-	char			**env_ptr;
-	char			*aux;
+	int		i;
+	t_env	*env_head;
+	t_l_var	*local_head;
+	char	**env_ptr;
+	char	*aux;
 
 	aux = data->prev_exit_code;
 	env_head = data->env;

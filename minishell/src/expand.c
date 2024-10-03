@@ -6,13 +6,13 @@
 /*   By: smoore-a <smoore-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/26 09:53:56 by smoore-a          #+#    #+#             */
-/*   Updated: 2024/10/03 13:15:36 by smoore-a         ###   ########.fr       */
+/*   Updated: 2024/10/03 15:35:32 by smoore-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 
-static void	update_token(t_data *data, t_tokens *token, char **ptr)
+static void	update_token(t_data *data, t_token *token, char **ptr)
 {
 	char		*identifier;
 	char		*value;
@@ -35,8 +35,8 @@ static void	update_token(t_data *data, t_tokens *token, char **ptr)
 
 static void	check_token(t_data *data, char *aux)
 {
-	t_tokens	*token;
-	char		*ptr;
+	t_token	*token;
+	char	*ptr;
 
 	token = data->input.tokens;
 	ptr = ft_strdup(token->token);
@@ -58,8 +58,8 @@ static void	check_token(t_data *data, char *aux)
 
 void	expand(t_data *data)
 {
-	t_tokens	*token_head;
-	char		*aux;
+	t_token	*token_head;
+	char	*aux;
 
 	token_head = data->input.tokens;
 	while (data->input.tokens)

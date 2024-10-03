@@ -6,7 +6,7 @@
 /*   By: smoore-a <smoore-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/25 10:56:20 by smoore-a          #+#    #+#             */
-/*   Updated: 2024/09/25 12:48:38 by smoore-a         ###   ########.fr       */
+/*   Updated: 2024/10/03 15:31:36 by smoore-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 void	print_locals(t_data *data)
 {
-	t_l_variable	*head;
+	t_l_var	*head;
 
 	head = data->local;
 	while (data->local)
@@ -25,13 +25,13 @@ void	print_locals(t_data *data)
 	data->local = head;
 }
 
-static t_l_variable	*new_l_variable(void *variable, char *value)
+static t_l_var	*new_l_variable(void *variable, char *value)
 {
-	t_l_variable	*new_node;
+	t_l_var	*new_node;
 
 	if (!variable)
 		return (NULL);
-	new_node = (t_l_variable *)malloc(sizeof(t_l_variable));
+	new_node = (t_l_var *)malloc(sizeof(t_l_var));
 	if (!new_node)
 		return (NULL);
 	new_node->variable = ft_strdup(variable);
@@ -43,7 +43,7 @@ static t_l_variable	*new_l_variable(void *variable, char *value)
 	return (new_node);
 }
 
-static t_l_variable	*last_l_variable(t_l_variable *lst)
+static t_l_var	*last_l_var(t_l_var *lst)
 {
 	if (!lst)
 		return (NULL);
@@ -52,7 +52,7 @@ static t_l_variable	*last_l_variable(t_l_variable *lst)
 	return (lst);
 }
 
-static void	check_l_variable(t_data *data, t_l_variable *new_l_var)
+static void	check_l_variable(t_data *data, t_l_var *new_l_var)
 {
 	if (new_l_var)
 	{
@@ -71,17 +71,17 @@ static void	check_l_variable(t_data *data, t_l_variable *new_l_var)
 		}
 		else
 			new_l_var = new_l_variable(data->input.tokens->token, "");
-		if (last_l_variable(data->local))
-			last_l_variable(data->local)->next = new_l_var;
+		if (last_l_var(data->local))
+			last_l_var(data->local)->next = new_l_var;
 		else
 			data->local = new_l_var;
 	}
 }
 
-t_l_variable	*get_l_var(t_l_variable *l_variables, char *l_variable)
+t_l_var	*get_l_var(t_l_var *l_variables, char *l_variable)
 {
-	t_l_variable	*head;
-	size_t			len;
+	t_l_var	*head;
+	size_t	len;
 
 	if (!l_variables || !l_variable)
 		return (NULL);
@@ -100,8 +100,8 @@ t_l_variable	*get_l_var(t_l_variable *l_variables, char *l_variable)
 
 void	add_l_variables(t_data *data)
 {
-	t_l_variable	*new_l_var;
-	t_tokens		*head;
+	t_l_var	*new_l_var;
+	t_token	*head;
 
 	head = data->input.tokens;
 	while (data->input.tokens)

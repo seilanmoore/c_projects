@@ -1,40 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   utils_token.c                                      :+:      :+:    :+:   */
+/*   token_utils.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: smoore-a <smoore-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/21 12:03:30 by smoore-a          #+#    #+#             */
-/*   Updated: 2024/10/01 14:03:52 by smoore-a         ###   ########.fr       */
+/*   Updated: 2024/10/03 15:10:12 by smoore-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 
-int	lst_size(t_tokens *lst)
-{
-	int	lst_len;
-
-	lst_len = 0;
-	while (lst)
-	{
-		lst = lst->next;
-		lst_len++;
-	}
-	return (lst_len);
-}
-
-void	add_front_token(t_tokens **lst, t_tokens *node)
-{
-	if (lst && node)
-	{
-		node->next = *lst;
-		*lst = node;
-	}
-}
-
-t_tokens	*last_token(t_tokens *lst)
+t_token	*last_token(t_token *lst)
 {
 	if (!lst)
 		return (NULL);
@@ -43,7 +21,7 @@ t_tokens	*last_token(t_tokens *lst)
 	return (lst);
 }
 
-void	add_back_token(t_tokens **lst, t_tokens *node)
+void	add_back_token(t_token **lst, t_token *node)
 {
 	if (lst && node)
 	{
@@ -54,13 +32,13 @@ void	add_back_token(t_tokens **lst, t_tokens *node)
 	}
 }
 
-t_tokens	*new_token(void *token, int type, int quote)
+t_token	*new_token(void *token, int type, int quote)
 {
-	t_tokens	*new_node;
+	t_token	*new_node;
 
 	if (!token)
 		return (NULL);
-	new_node = (t_tokens *)malloc(sizeof(t_tokens));
+	new_node = (t_token *)malloc(sizeof(t_token));
 	if (!new_node)
 		return (NULL);
 	new_node->token = token;

@@ -6,7 +6,7 @@
 /*   By: smoore-a <smoore-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/03 13:15:47 by smoore-a          #+#    #+#             */
-/*   Updated: 2024/10/03 13:16:14 by smoore-a         ###   ########.fr       */
+/*   Updated: 2024/10/03 15:10:59 by smoore-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,8 +33,8 @@ void	expand_home(t_data *data)
 
 char	*get_dollar_value(t_data *data, char *variable)
 {
-	t_environment	*env_var;
-	t_l_variable	*local_head;
+	t_env	*env_var;
+	t_l_var	*local_head;
 
 	if (!variable)
 		return (NULL);

@@ -1194,3 +1194,19 @@ echo $JAMAU no te motives  "d s '
 echo $JAMAU no te motives  "d s 'ju
 echo $JAMAU no te motives  "d s 'ju'
 echo ' " "
+echo "\"Hey amego\""
+echo "\"Hey \\amego\""
+echo "\"Hey \amego\""
+echo '\"Hey \amego\'
+echo '\"Hey \amegos'
+echo '\"Hey \amego\'
+code ../pipex/
+fd
+cds
+gfd
+yf
+echo $?
+echo $$
+echo "$"
+echo $
+echo "$Hey Nada tonto"

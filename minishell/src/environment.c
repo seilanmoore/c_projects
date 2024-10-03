@@ -6,7 +6,7 @@
 /*   By: smoore-a <smoore-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/22 12:13:57 by smoore-a          #+#    #+#             */
-/*   Updated: 2024/10/02 12:41:48 by smoore-a         ###   ########.fr       */
+/*   Updated: 2024/10/03 15:35:10 by smoore-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,9 +51,9 @@ void	copy_envp(t_data *data)
 
 void	envp_to_array(t_data *data)
 {
-	t_environment	*head;
-	char			*tmp;
-	int				i;
+	t_env	*head;
+	char	*tmp;
+	int		i;
 
 	if (!data->env)
 		return ;
@@ -94,7 +94,7 @@ void	envp_to_lst(t_data *data)
 
 void	parse_environment(t_data *data)
 {
-	t_environment	*variable;
+	t_env	*variable;
 
 	if (!data->envp_cpy)
 	{

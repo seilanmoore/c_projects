@@ -6,7 +6,7 @@
 /*   By: smoore-a <smoore-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/25 11:02:34 by smoore-a          #+#    #+#             */
-/*   Updated: 2024/10/03 10:45:10 by smoore-a         ###   ########.fr       */
+/*   Updated: 2024/10/03 15:10:59 by smoore-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,8 +31,8 @@ pid_t	ft_get_pid(void)
 void	init_data(t_data *data, int argc, char **argv, char **envp)
 {
 	*data = (t_data){0};
-	data->env = (t_environment *){0};
-	data->local = (t_l_variable *){0};
+	data->env = (t_env *){0};
+	data->local = (t_l_var *){0};
 	data->input = (t_input){0};
 	data->envp = envp;
 	data->argc = argc;

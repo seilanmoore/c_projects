@@ -6,13 +6,13 @@
 /*   By: smoore-a <smoore-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/02 10:49:42 by smoore-a          #+#    #+#             */
-/*   Updated: 2024/10/03 11:03:45 by smoore-a         ###   ########.fr       */
+/*   Updated: 2024/10/03 15:35:39 by smoore-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 
-void	check_new_var(t_data *data, t_environment *new_var)
+void	check_new_var(t_data *data, t_env *new_var)
 {
 	if (new_var)
 	{
@@ -37,10 +37,10 @@ void	check_new_var(t_data *data, t_environment *new_var)
 
 int	export_builtin(t_data *data)
 {
-	t_environment	*new_var;
-	t_tokens		*head;
-	int				modified;
-	int				valid_id;
+	t_env	*new_var;
+	t_token	*head;
+	int		modified;
+	int		valid_id;
 
 	modified = 0;
 	head = data->input.tokens;

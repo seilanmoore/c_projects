@@ -6,7 +6,7 @@
 #    By: smoore-a <smoore-a@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/02/27 20:48:30 by smoore-a          #+#    #+#              #
-#    Updated: 2024/10/03 13:19:48 by smoore-a         ###   ########.fr        #
+#    Updated: 2024/10/03 15:28:36 by smoore-a         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -32,10 +32,12 @@ SRC_DIR = src/
 
 OBJ_DIR = obj/
 
-SRC = main init free_func parser get_path utils_env \
-	utils_token environment local expand expand_utils utils \
+SRC = main init free_func get_path environment env_utils \
+	parser parser_checks1 parser_checks2 parser_types \
+	token token_utils expand expand_utils utils \
+	local \
 	cd_builtin export_builtin unset_builtin exit_builtin env_builtin \
-	pwd_builtin echo_builtin
+	pwd_builtin echo_builtin #command command_utils #executer
 
 UTILS =
 
