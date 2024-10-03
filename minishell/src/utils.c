@@ -6,7 +6,7 @@
 /*   By: smoore-a <smoore-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/26 09:54:56 by smoore-a          #+#    #+#             */
-/*   Updated: 2024/10/02 12:46:23 by smoore-a         ###   ########.fr       */
+/*   Updated: 2024/10/03 11:05:58 by smoore-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -116,7 +116,17 @@ void	print_types(t_data *data)
 	}
 }
 
-int	valid_char(char *str)
+int	valid_char(char c)
+{
+	if (!c)
+		return (0);
+	if ((c < 'A' || c > 'Z') && (c < 'a' || c > 'z') && \
+	(c < '0' || c > '9') && c != '_')
+		return (0);
+	return (1);
+}
+
+int	valid_str(char *str)
 {
 	if (!str)
 		return (0);

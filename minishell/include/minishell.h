@@ -6,7 +6,7 @@
 /*   By: smoore-a <smoore-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/19 12:17:44 by smoore-a          #+#    #+#             */
-/*   Updated: 2024/10/02 13:26:33 by smoore-a         ###   ########.fr       */
+/*   Updated: 2024/10/03 13:17:37 by smoore-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -170,6 +170,15 @@ void	add_l_variables(t_data *data);
 int		parser(t_data *data);
 void	get_env_paths(t_data *data);
 
+// expand_utils
+
+void	expand_home(t_data *data);
+char	*get_dollar_value(t_data *data, char *variable);
+char	*extract_id(char *token);
+
+// expand
+void	expand(t_data *data);
+
 //builtin
 int		exit_builtin(t_data *data);
 int		env_builtin(t_data *data);
@@ -179,8 +188,6 @@ int		pwd_builtin(t_data *data);
 int		cd_builtin(t_data *data, t_tokens *token);
 int		echo_builtin(t_data *data, t_tokens *token, int fd);
 
-// expand
-void	expand(t_data *data);
 char	*cwd_compress(t_data *data);
 
 int		lst_size(t_tokens *lst);
@@ -204,7 +211,8 @@ char	*str_replace(char *haystack, char *needle, char *replace);
 void	print_msg(t_data *data, char *msg, int status);
 char	*rev_split(char **array);
 void	print_array(char **array);
-int		valid_char(char *str);
+int		valid_char(char c);
+int		valid_str(char *str);
 char	*get_envp_var(char **envp, char *var);
 
 #endif

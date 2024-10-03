@@ -6,7 +6,7 @@
 #    By: smoore-a <smoore-a@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/02/27 20:48:30 by smoore-a          #+#    #+#              #
-#    Updated: 2024/10/02 12:48:40 by smoore-a         ###   ########.fr        #
+#    Updated: 2024/10/03 13:19:48 by smoore-a         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -33,8 +33,8 @@ SRC_DIR = src/
 OBJ_DIR = obj/
 
 SRC = main init free_func parser get_path utils_env \
-	utils_token environment local expand utils cd_builtin \
-	export_builtin unset_builtin exit_builtin env_builtin \
+	utils_token environment local expand expand_utils utils \
+	cd_builtin export_builtin unset_builtin exit_builtin env_builtin \
 	pwd_builtin echo_builtin
 
 UTILS =

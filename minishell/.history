@@ -1057,3 +1057,140 @@ echo $?$?$?
 echo '$?$?$?'
 echo '$?$?$?'
 echo "$?$?$?"
+echo
+echo $?
+echo -n Hello World
+echo -n
+echo $?
+echo -e Hello
+echo ""
+echo ""
+echo -n ""
+echo $?
+echo -n -x Hello
+echo "This is a long string that should be printed as is"
+echo -n "This is a long string that should be printed as is"
+echo -nn "This is a long string that should be printed as is"
+echo -nn
+echo $?
+echo -nn
+echo -nn "This is a long string that should be printed as is"
+echo -nn "This is a long tring that should be printed as is"
+echo -n "This is a long tring that should be printed as is"
+echo -n "This is a long tring that should be printed as is"
+echo -n "This is a long tring that should be printed as is"
+echo HOLA
+echo
+pwd
+echo
+echo hey
+echo -n "This is a long tring that should be printed as is"
+echo -n "This is a long tring that should be printed as is"
+echo -n "This is a long"
+echo -n "This is a long"
+echo -n "This is a long"
+echo -n "This is a long"
+echo -n "This is a long"
+echo -n "This is a long"
+echo -n "This is a long"
+echo -n "This is a long"
+echo -n "This is a long"
+echo -n "This is a long"
+echo -n "This is a long"
+echo -n "This is a long"
+echo -n "This is a long"
+echo -n "This is a long"
+echo -n "This is a long"
+echo -n "This is a long"
+echo -n "This is a long"
+echo -nn "This is a long"
+echo -n "This is a long tring that should be printed as is"
+echo -n "This is a long tring that should be printed as is"
+echo -n "This is a long tring that should be printed as is"
+echo -n "This is a long tring that should be printed a"
+echo  "This is a long tring that should be printed a"
+echo  "This is a long tring that should be printed a"
+echo  "This is a long tring that should be printed a"
+echo ""
+echo -n ""
+echo -nn ""
+echo -n e ""
+echo -n -e ""
+echo Hello@World!
+echo -n Hello@World!
+echo Hello@World!
+echo " leading and trailing spaces "
+echo -n " leading and trailing spaces "
+echo "$Hey, hola amego. $.HEHE"
+echo "$Hey, hola amego. $.HEHE"
+echo "$Hey, hola amego. $.HEHE"
+echo "$Hey, hola amego. $.HEHE"
+echo "$Hey, hola amego. $.HEHE$"
+echo "$Hey, hola amego. $.HEHE$"
+echo "$Hey, hola amego. $.HEHE"
+echo "$Hey, hola amego. $.HEHE"
+echo "$Hey, hola amego. $.HEHE$"
+echo "$Hey, hola amego. $.HEHE$$"
+echo "$Hey, hola amego. $.HEHE$?"
+echo "$Hey, hola amego. $.HEHE$?"
+echo "$Hey, hola amego. $.HEHE$?"
+echo "$Hey, hola amego. $.HEHE$?$"
+echo "$Hey, hola amego. $.HEHE$?$$$"
+echo "$Hey? hola amego. $.HEHE$?$$$"
+echo "$Hey? $? hola amego. $.HEHE$?$$$"
+echo "$Hey? $? ho$$la amego. $.HEHE$?$$$"
+echo "$? $? ho$$la amego. $.HEHE$?$$$"
+echo "$$$? $? ho$$la amego. $.HEHE$?$$$"
+echo "$$$? $? ho$$la amego. $.HEHE$?$$$"
+echo -n "$$$? $? ho$$la amego. $.HEHE$?$$$"
+echo -n "$$$? $? ho$$la amego. $.HEHE$?$$$"
+echo "$$$? $? ho$$la amego. $.HEHE$?$$$"
+echo -ds "$$$? $? ho$$la amego. $.HEHE$?$$$"
+echo -s "$$$? $? ho$$la amego. $.HEHE$?$$$"
+echo -s -d "$$$? $? ho$$la amego. $.HEHE$?$$$"
+echo hola
+echo hola
+echo -n hola
+echo -s "$$$? $? ho$$la amego. $.HEHE$?$$$"
+echo "$$$? $? ho$$la amego. $.HEHE$?$$$"
+echo -n "$$$? $? ho$$la amego. $.HEHE$?$$$"
+echo hola
+echo hola adios jeje
+echo hola adios jeje jiji
+echo hola adios jeje jiji >
+echo hola adios jeje jiji <
+echo hola adios jeje jiji |
+echo hola adios jeje jiji "|"
+echo 'hola adios jeje jiji "|"'
+exit
+echo "$HOLA=crackk"
+echo "$HOLA$=crackk"
+echo "$HOLA_$=crackk"
+echo "$HOLA_$.=crackk"
+echo "$HOLA_$.=crackk="
+echo ?
+echo $
+echo $?
+echo $$
+echo -n $$
+echo -n $?
+JAMAU="Hey, esto es una prueba"
+loc
+echo "$JAMU no te motives"
+echo "$JAMAU no te motives"
+echo "$JAMAU no te motives
+echo "$JAMAU no te motivescd
+echo '$JAMAU no te motives'
+echo $JAMAU no te motives
+echo $JAMAU no te motives '
+echo $JAMAU no te motives '
+echo $JAMAU no te motives '
+echo $JAMAU no te motives ' "
+echo $JAMAU no te motives ' "
+echo $JAMAU no te motives ' "
+echo $JAMAU no te motives "
+echo $JAMAU no te motives  " d s
+echo $JAMAU no te motives  "d s '
+echo $JAMAU no te motives  "d s 'ju
+echo $JAMAU no te motives  "d s 'ju'
+echo ' " "

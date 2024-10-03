@@ -6,7 +6,7 @@
 /*   By: smoore-a <smoore-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/19 12:17:10 by smoore-a          #+#    #+#             */
-/*   Updated: 2024/10/02 15:01:44 by smoore-a         ###   ########.fr       */
+/*   Updated: 2024/10/03 13:36:16 by smoore-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,9 +38,10 @@ static void	single_quote(t_data *data, t_var *var)
 	var->aux1++;
 	while (var->aux1[var->i] && var->aux1[var->i] != '\'')
 		var->i++;
-	if (var->aux1[var->i] && var->aux1[var->i] == '\'')
-		var->aux = ft_substr(var->aux1, 0, var->i);
-	var->i++;
+	//if (var->aux1[var->i] && var->aux1[var->i] == '\'')
+	var->aux = ft_substr(var->aux1, 0, var->i);
+	if (var->aux1[var->i])
+		var->i++;
 	add_back_token(&(data->input.tokens), new_token(var->aux, 0, S_QUOTE));
 }
 
@@ -85,9 +86,9 @@ static void	parse_tokens(t_data *data)
 		while (*var.aux1 && \
 			(*var.aux1 == ' ' || *var.aux1 == '\t' || *var.aux1 == '\n'))
 			var.aux1++;
-		if (*var.aux1 && *var.aux1 == '\'')
+		if (*var.aux1 && *var.aux1 == '\'' && *(var.aux1 + 1))
 			single_quote(data, &var);
-		else if (*var.aux1 && *var.aux1 == '\"')
+		else if (*var.aux1 && *var.aux1 == '\"' && *(var.aux1 + 1))
 			double_quote(data, &var);
 		else if (*var.aux1)
 			characters(data, &var);
@@ -250,7 +251,7 @@ void	assign_opt_arg(t_data *data)
 		{
 			aux = tmp->next;
 			while (aux && \
-			(aux->type == OPTION || aux->type == ARG) && !g_signal)
+			(aux->type == OPTION || aux->type == ARG))
 			{
 				if (aux->type == OPTION && !tmp->opt)
 					tmp->opt = aux;

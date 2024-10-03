@@ -6,7 +6,7 @@
 /*   By: smoore-a <smoore-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/02 10:49:42 by smoore-a          #+#    #+#             */
-/*   Updated: 2024/10/02 10:49:56 by smoore-a         ###   ########.fr       */
+/*   Updated: 2024/10/03 11:03:45 by smoore-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ int	export_builtin(t_data *data)
 	head = data->input.tokens;
 	while (data->input.tokens)
 	{
-		valid_id = valid_char(data->input.tokens->token);
+		valid_id = valid_str(data->input.tokens->token);
 		if (data->input.tokens->type == VARIABLE && valid_id)
 		{
 			new_var = get_env_var(data->env, data->input.tokens->token);
