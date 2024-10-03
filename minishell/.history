@@ -1031,3 +1031,29 @@ echo "Hey, bro.\$¿Qué tal?$HOME$"
 "eo"
 echo $?
 echo $?
+echo "Hey, bro.\$¿Qué tal?$HOME$"
+echo "$Hey, bro.\$¿Qué tal?$HOME$"
+$$
+echo $$
+echo $$$
+echo $$$$
+echo $$$$?
+echo $?
+echo $?$$
+make
+echo $$$$?
+echo $?
+echo $?$?
+echo $?$?
+echo $$$$?
+echo $?$$$?
+echo $$$?$$$?
+echo $$$?$$$?$
+echo $$$?$$$?$$
+echo $$$?$$$?$$$$?
+echo $$
+echo $?
+echo $?$?$?
+echo '$?$?$?'
+echo '$?$?$?'
+echo "$?$?$?"

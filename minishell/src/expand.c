@@ -6,7 +6,7 @@
 /*   By: smoore-a <smoore-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/26 09:53:56 by smoore-a          #+#    #+#             */
-/*   Updated: 2024/10/02 15:10:23 by smoore-a         ###   ########.fr       */
+/*   Updated: 2024/10/03 10:20:17 by smoore-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,11 +77,21 @@ static void	check_token(t_data *data, char *tmp, char *aux)
 	token = data->input.tokens;
 	ptr = ft_strdup(token->token);
 	aux = ptr;
+	if (*ptr == '$' && ptr + 1 && *(ptr + 1))
+	{
+		tmp = token->token;
+		identifier = extract_id(ptr);
+		value = get_dollar_value(data, identifier + 1);
+		token->token = str_replace(token->token, identifier, value);
+		free(identifier);
+		free(tmp);
+	}
+	ptr++;
+	if (ptr && *ptr == '$' && *(ptr - 1) == '$')
+		ptr++;
 	while (ptr && *ptr && !g_signal)
 	{
-		printf("+++%s+++\n", ptr);
-		if (*ptr == '$' && ptr + 1 && *(ptr + 1) && \
-		(!(ptr - 1) || (ptr - 1 && *(ptr - 1) != '\\')))
+		if (*ptr == '$' && ptr + 1 && *(ptr + 1) && *(ptr - 1) != '\\')
 		{
 			tmp = token->token;
 			identifier = extract_id(ptr);
@@ -91,6 +101,8 @@ static void	check_token(t_data *data, char *tmp, char *aux)
 			free(tmp);
 		}
 		ptr++;
+		if (ptr && *ptr == '$' && *(ptr - 1) == '$')
+			ptr++;
 	}
 	free(aux);
 }
@@ -104,10 +116,13 @@ void	expand(t_data *data)
 	token_head = data->input.tokens;
 	while (data->input.tokens && !g_signal)
 	{
-		tmp = NULL;
-		aux = NULL;
-		check_token(data, tmp, aux);
-		expand_home(data);
+		if (data->input.tokens->quote != S_QUOTE)
+		{
+			tmp = NULL;
+			aux = NULL;
+			check_token(data, tmp, aux);
+			expand_home(data);
+		}
 		data->input.tokens = data->input.tokens->next;
 	}
 	data->input.tokens = token_head;
