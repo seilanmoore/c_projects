@@ -6,7 +6,7 @@
 /*   By: smoore-a <smoore-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/19 12:17:44 by smoore-a          #+#    #+#             */
-/*   Updated: 2024/10/03 15:34:29 by smoore-a         ###   ########.fr       */
+/*   Updated: 2024/10/04 12:32:19 by smoore-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -167,9 +167,10 @@ void	add_l_variables(t_data *data);
 
 //parser
 int		parser(t_data *data);
-void	get_env_paths(t_data *data);
 void	access_to_types(t_data *data, int target, int type);
 int		type_checks(t_data *data, t_token *ptr, int i);
+void	parse_cmd_opt(t_data *data);
+void	assign_paths(t_data *data);
 
 // token
 void	parse_tokens(t_data *data);
@@ -218,6 +219,7 @@ void	upd_env(t_data *data);
 // utils
 
 void	print_types(t_data *data);
+void	print_cmd_array(t_data *data);
 char	*str_replace(char *haystack, char *needle, char *replace);
 void	print_msg(t_data *data, char *msg, int status);
 char	*rev_split(char **array);

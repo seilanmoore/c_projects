@@ -1210,3 +1210,70 @@ echo $$
 echo "$"
 echo $
 echo "$Hey Nada tonto"
+env
+export PATH="$PATH:/new/path"
+env
+export PATH="/new/path:$PATH"
+env
+" "
+"      "
+"
+"      "
+echo $?
+"   "
+echo $?
+echo $?
+lagoat
+echo $?
+lagoat
+echo $?
+lagoat
+echo $?
+lagoat
+echo $?
+lagoat
+echo $?
+lagoat
+echo $?
+ls
+lagoat -f -v -fsd "hola adios" "jeje" "illo
+ls -f -v -fsd "hola adios" "jeje" "illo
+export PATH="$PATH:/home/smoore-a/mygit/minishell"
+minishell -f -v -fsd "hola adios" "jeje" "illo
+export PATH="$PATH:/home/smoore-a/mygit/minishell/"
+minishell -f -v -fsd "hola adios" "jeje" "illo
+minishell -f -v -fsd "hola adios" "jeje" "illo
+export PATH="$PATH:/home/smoore-a/mygit/minishell/"
+minishell -f -v -fsd "hola adios" "jeje" "illo
+minishell -f -v -fsd "hola adios" "jeje" "illo
+export PATH="$PATH:/home/smoore-a/mygit/minishell/"
+env
+env
+minishell -f -v -fsd "hola adios" "jeje" "illo
+export PATH="$PATH:/home/smoore-a/mygit/minishell/"
+env
+env
+export PATH="$PATH:/home/smoore-a/mygit/minishell/"
+env
+env
+lacabra
+export PATH="$PATH:/home/smoore-a/mygit/minishell/"
+lacabra
+minishell -f -v
+minishell "hey hol" "adios"
+export PATH="$PATH:/home/smoore-a/mygit/minishell/"
+minishell "hey hol" "adios"
+export PATH="$PATH:/home/smoore-a/mygit/minishell/"
+minishell "hey hol" "adios"
+export PATH="$PATH:/home/smoore-a/mygit/minishell/"
+minishell "hey hol" "adios"
+ls -n -la path/to/file
+" " "   "
+"   " "      "
+echo $?
+echo $?
+dsf -fdsa "  "
+dsf "  " dsa
+ls
+ls -la
+echo $?

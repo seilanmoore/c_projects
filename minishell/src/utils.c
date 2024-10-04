@@ -6,11 +6,12 @@
 /*   By: smoore-a <smoore-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/26 09:54:56 by smoore-a          #+#    #+#             */
-/*   Updated: 2024/10/03 15:30:41 by smoore-a         ###   ########.fr       */
+/*   Updated: 2024/10/04 12:59:34 by smoore-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
+#include <stdio.h>
 
 char	*cwd_compress(t_data *data)
 {
@@ -43,7 +44,11 @@ void	print_array(char **array)
 		return ;
 	i = -1;
 	while (array[++i])
-		printf("%s\n", array[i]);
+	{
+		printf("%s", array[i]);
+		if (array[i + 1])
+			printf(" ");
+	}
 }
 
 char	*type_to_char(int type)
@@ -112,6 +117,23 @@ void	print_types(t_data *data)
 			aux = aux->next;
 		}
 		printf("\n");
+		head = head->next;
+	}
+}
+
+void	print_cmd_array(t_data *data)
+{
+	t_cmd	*head;
+
+	head = data->input.command;
+	while (head)
+	{
+		if (!(head->builtin))
+		{
+			printf("CMD_PATH: \"%s\" ARGUMENTS: ", head->cmd);
+			print_array(head->args);
+			printf("\n");
+		}
 		head = head->next;
 	}
 }

@@ -6,7 +6,7 @@
 /*   By: smoore-a <smoore-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/19 12:17:10 by smoore-a          #+#    #+#             */
-/*   Updated: 2024/10/03 15:25:36 by smoore-a         ###   ########.fr       */
+/*   Updated: 2024/10/04 13:33:50 by smoore-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,11 +17,12 @@ int	parser(t_data *data)
 	t_token	*ptr;
 
 	parse_environment(data);
-	get_env_paths(data);
 	parse_tokens(data);
 	add_l_variables(data);
 	expand(data);
 	assign_opt_arg(data);
+	parse_cmd_opt(data);
+	//print_cmd_array(data);
 	//print_types(data);
 	ptr = data->input.tokens;
 	if (ptr && !ft_strncmp(ptr->token, "env", ft_strlen(ptr->token)))
@@ -41,9 +42,6 @@ int	parser(t_data *data)
 	else if (ptr && !ft_strncmp(ptr->token, "exit", ft_strlen(ptr->token)))
 		data->exit_code = exit_builtin(data);
 	free(data->prev_exit_code);
-	if (data->exit_code == -1)
-		data->prev_exit_code = ft_strdup(MS "127: command not found" NL);
-	else
-		data->prev_exit_code = ft_itoa(data->exit_code);
+	data->prev_exit_code = ft_itoa(data->exit_code);
 	return (0);
 }

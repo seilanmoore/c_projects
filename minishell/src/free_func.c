@@ -6,7 +6,7 @@
 /*   By: smoore-a <smoore-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/25 11:02:07 by smoore-a          #+#    #+#             */
-/*   Updated: 2024/10/03 15:30:13 by smoore-a         ###   ########.fr       */
+/*   Updated: 2024/10/04 13:15:06 by smoore-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,6 +58,22 @@ void	free_environment(t_data *data)
 	data->envp_cpy = NULL;
 }
 
+void	free_cmds(t_data *data)
+{
+	t_cmd	*tmp;
+
+	while (data->input.command)
+	{
+		free(data->input.command->cmd);
+		data->input.command->cmd = NULL;
+		free_array(data->input.command->args);
+		data->input.command->args = NULL;
+		tmp = data->input.command;
+		data->input.command = data->input.command->next;
+		free(tmp);
+	}
+}
+
 void	free_tokens(t_data *data)
 {
 	t_token	*tmp;
@@ -90,6 +106,7 @@ void	free_data(t_data *data)
 	free(data->process);
 	free(data->cwd);
 	free_tokens(data);
+	free_cmds(data);
 	i = -1;
 	if (data->input.command)
 	{
