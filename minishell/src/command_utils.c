@@ -6,7 +6,7 @@
 /*   By: smoore-a <smoore-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/03 14:52:01 by smoore-a          #+#    #+#             */
-/*   Updated: 2024/10/04 11:47:51 by smoore-a         ###   ########.fr       */
+/*   Updated: 2024/10/05 14:12:42 by smoore-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,15 +42,8 @@ t_cmd	*new_cmd(void *command, char **arguments, int builtin)
 	if (!new_node)
 		return (NULL);
 	new_node->next = NULL;
-	if (builtin)
-	{
-		new_node->cmd = NULL;
-		new_node->args = NULL;
-		new_node->builtin = 1;
-		return (new_node);
-	}
 	new_node->cmd = command;
 	new_node->args = arguments;
-	new_node->builtin = 0;
+	new_node->builtin = builtin;
 	return (new_node);
 }

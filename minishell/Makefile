@@ -6,7 +6,7 @@
 #    By: smoore-a <smoore-a@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/02/27 20:48:30 by smoore-a          #+#    #+#              #
-#    Updated: 2024/10/04 12:37:31 by smoore-a         ###   ########.fr        #
+#    Updated: 2024/10/05 11:02:11 by smoore-a         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -37,7 +37,7 @@ SRC = main init free_func get_path environment env_utils \
 	token token_utils expand expand_utils utils \
 	local \
 	cd_builtin export_builtin unset_builtin exit_builtin env_builtin \
-	pwd_builtin echo_builtin command command_utils #executer
+	pwd_builtin echo_builtin command command_utils executer
 
 UTILS =
 

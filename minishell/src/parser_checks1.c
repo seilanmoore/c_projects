@@ -6,7 +6,7 @@
 /*   By: smoore-a <smoore-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/03 15:13:34 by smoore-a          #+#    #+#             */
-/*   Updated: 2024/10/03 15:20:06 by smoore-a         ###   ########.fr       */
+/*   Updated: 2024/10/05 10:58:22 by smoore-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ static int	check_redirections(t_data *data, t_token *ptr, int i)
 	if (ft_strlen(ptr->token) == 1)
 	{
 		if (ptr->token[0] == '|')
-			return (access_to_types(data, i, PIPE), 1);
+			return (data->n_pipe++, access_to_types(data, i, PIPE), 1);
 		else if (ptr->token[0] == '<')
 			return (access_to_types(data, i, LEFT), 1);
 		else if (ptr->token[0] == '>')

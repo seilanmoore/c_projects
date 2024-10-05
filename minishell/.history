@@ -1277,3 +1277,109 @@ dsf "  " dsa
 ls
 ls -la
 echo $?
+ls
+ls
+ls
+ls
+ls
+ls
+ls
+echo "jamus"
+env
+exit
+export
+export
+unset
+export
+unset
+echo
+echo -n
+cmd1 < /path/to/file | cmd2 -a -bc "arg1" "arg2 arg3" | cmd3 -opt args | cmd4 > /path/to/filee
+cmd1 < /path/to/file | cmd2 -a -bc "arg1" "arg2 arg3" | cmd3 -opt args | cmd4 >> /path/to/filee
+ls
+ls
+ls
+cat test/t1 
+cat test/t2
+echo $$
+echo $$
+echo $$
+echo $$
+echo $$
+echo $$
+exit
+echo $$
+echo $$
+echo $$
+echo $$
+echo $$
+echo $$
+echo $$
+echo $$
+echo $$
+exit
+exit
+echo $$
+exit
+echo $$
+echo $$
+echo $$
+ls
+rm -rf vgcore.*
+ls
+exit 
+ls
+ls
+echo "hola"
+exit
+echo $$
+exit
+ls
+echo $$
+echo $?
+echo $?
+echo $?
+ls
+echo $?
+ls -la
+echo $?
+env
+echo $?
+exit
+echo $?
+echo 
+echo -n
+exit > txto
+echo "Hola"
+echo $?
+echo $?
+xeit
+exit
+hola
+hola adios
+ls
+ls -la
+cd ..
+echo $?
+ls
+cd ..
+cd ../
+cd
+echo $?
+trash
+echo $?
+dsa
+echo $?
+echo $?
+dsa
+echo $?
+echo $?
+exit
+cd ..
+cd ..
+exit
+cd ..
+echo $?
+echo $$
+cd .
+cd ..

@@ -6,7 +6,7 @@
 /*   By: smoore-a <smoore-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/19 12:17:44 by smoore-a          #+#    #+#             */
-/*   Updated: 2024/10/04 12:32:19 by smoore-a         ###   ########.fr       */
+/*   Updated: 2024/10/05 15:01:14 by smoore-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,8 @@
 # include <stdlib.h>
 # include <signal.h>
 # include <unistd.h>
+# include <sys/wait.h>
+# include <errno.h>
 
 // ANSI color codes
 # define RED	"\x1b[31m"
@@ -101,7 +103,7 @@ typedef struct s_tokens
 typedef struct s_input
 {
 	char		*raw_line;
-	char		*file_name;
+	//char		*file_name;
 	t_token		*tokens;
 	t_cmd		*command;
 }	t_input;
@@ -121,8 +123,14 @@ typedef struct s_environment
 	struct s_environment	*next;
 }	t_env;
 
+typedef struct s_pipe
+{
+	int	fd[2];
+}	t_pipe;
+
 typedef struct s_data
 {
+	int		fd[2];
 	int		argc;
 	char	**argv;
 	char	**envp;
@@ -133,6 +141,7 @@ typedef struct s_data
 	char	*prompt;
 	char	*history;
 	int		n_cmd;
+	int		n_pipe;
 	int		status;
 	int		exit_code;
 	char	*prev_exit_code;
@@ -140,6 +149,7 @@ typedef struct s_data
 	pid_t	pid;
 	t_l_var	*local;
 	t_env	*env;
+	t_pipe	*pipes;
 	t_input	input;
 }	t_data;
 
@@ -165,8 +175,11 @@ void	free_data(t_data *data);
 void	print_locals(t_data *data);
 void	add_l_variables(t_data *data);
 
+// executer
+//void	execute(t_data *data);
+
 //parser
-int		parser(t_data *data);
+void	parser(t_data *data);
 void	access_to_types(t_data *data, int target, int type);
 int		type_checks(t_data *data, t_token *ptr, int i);
 void	parse_cmd_opt(t_data *data);
@@ -174,6 +187,9 @@ void	assign_paths(t_data *data);
 
 // token
 void	parse_tokens(t_data *data);
+
+//executer
+void	execute(t_data *data);
 
 // parser_checks2
 int		check_heredoc(t_data *data, t_token *ptr, int i);
@@ -195,12 +211,12 @@ void	expand(t_data *data);
 
 //builtin
 int		exit_builtin(t_data *data);
-int		env_builtin(t_data *data);
 int		export_builtin(t_data *data);
 int		unset_builtin(t_data *data);
-int		pwd_builtin(t_data *data);
 int		cd_builtin(t_data *data, t_token *token);
-int		echo_builtin(t_data *data, t_token *token, int fd);
+int		echo_builtin(t_data *data, t_token *token);
+int		pwd_builtin(t_data *data);
+int		env_builtin(t_data *data);
 
 char	*cwd_compress(t_data *data);
 

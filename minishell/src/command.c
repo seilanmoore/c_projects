@@ -6,7 +6,7 @@
 /*   By: smoore-a <smoore-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/03 14:39:54 by smoore-a          #+#    #+#             */
-/*   Updated: 2024/10/04 13:11:13 by smoore-a         ###   ########.fr       */
+/*   Updated: 2024/10/05 14:33:08 by smoore-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,6 +76,29 @@ static char	*put_quotes(t_token *token)
 	return (arg);
 }
 
+static char	**args_no_cmd(t_token *token)
+{
+	t_token	*tmp;
+	char	**args;
+	int		n_args;
+	int		i;
+
+	tmp = token->next;
+	n_args = count_args(token) - 1;
+	args = ft_calloc(n_args + 1, sizeof(char *));
+	if (!args)
+		return (NULL);
+	i = -1;
+	while (++i < n_args)
+	{
+		args[i] = ft_strdup(tmp->token);
+		if (!args[i])
+			return (args);
+		tmp = tmp->next;
+	}
+	return (args);
+}
+
 static char	**extract_args(t_token *token)
 {
 	t_token	*tmp;
@@ -85,20 +108,20 @@ static char	**extract_args(t_token *token)
 
 	tmp = token->next;
 	n_args = count_args(token);
-	args = ft_calloc(n_args + 2, sizeof(char *));
+	args = ft_calloc(n_args + 1, sizeof(char *));
 	if (!args)
 		return (NULL);
 	args[0] = ft_strdup(token->token);
 	i = 0;
 	while (++i < n_args)
 	{
-		if (tmp->quote == S_QUOTE || tmp->quote == D_QUOTE)
-			args[i] = put_quotes(tmp);
-		else
-			args[i] = ft_strdup(tmp->token);
-		if (!args[i])
-			return (args);
-		tmp = tmp->next;
+			if (tmp->quote == S_QUOTE || tmp->quote == D_QUOTE)
+				args[i] = put_quotes(tmp);
+			else
+				args[i] = ft_strdup(tmp->token);
+			if (!args[i])
+				return (args);
+			tmp = tmp->next;
 	}
 	return (args);
 }
@@ -117,7 +140,10 @@ void	parse_cmd_opt(t_data *data)
 			add_back_cmd(&(data->input.command), new_cmd(tmp->token, args, 0));
 		}
 		else if (tmp->token && tmp->type == CMD && is_built(tmp->token))
-			add_back_cmd(&(data->input.command), new_cmd(tmp->token, NULL, 1));
+		{
+			args = args_no_cmd(tmp);
+			add_back_cmd(&(data->input.command), new_cmd(tmp->token, args, 1));
+		}
 		tmp = tmp->next;
 	}
 	assign_paths(data);
