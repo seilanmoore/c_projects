@@ -6,7 +6,7 @@
 /*   By: smoore-a <smoore-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/19 12:17:10 by smoore-a          #+#    #+#             */
-/*   Updated: 2024/10/09 12:11:42 by smoore-a         ###   ########.fr       */
+/*   Updated: 2024/10/09 19:28:22 by smoore-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ void	get_history(void)
 	{
 		read_history(ms_history);
 		free(ms_history);
-	}	
+	}
 }
 
 void	save_history(void)

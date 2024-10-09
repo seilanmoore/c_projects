@@ -6,7 +6,7 @@
 /*   By: smoore-a <smoore-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/03 13:15:47 by smoore-a          #+#    #+#             */
-/*   Updated: 2024/10/03 15:10:59 by smoore-a         ###   ########.fr       */
+/*   Updated: 2024/10/09 19:29:52 by smoore-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,8 @@ void	expand_home(t_data *data)
 
 	if (data->input.tokens->token && \
 		data->input.tokens->quote == NO_QUOTE && \
-		data->input.tokens->type == ARG && \
+		(data->input.tokens->type == ARG || \
+		data->input.tokens->type == FILE) && \
 		*(data->input.tokens->token) == '~')
 	{
 		value = get_envp_var(data->envp_cpy, "HOME=");

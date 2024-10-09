@@ -1383,3 +1383,60 @@ echo $?
 echo $$
 cd .
 cd ..
+./minishell 
+ls
+/home/smoore-a/mygit/minishell/minishell 
+/usr/bin/ls
+/usr/bin/ls
+/usr/bin/ls
+/usr/bin/ls
+cd /usr/bin/
+cd
+./minishell 
+echo $$
+ls
+echo $?
+ls
+echo $?
+make
+echo $?
+ls
+ls
+ls
+cas
+csa
+fcds
+vfd
+dsa
+dvs
+/tro/mcfloy
+/usr/bin/ls
+/usr/bin/cat test/t2
+/usr/bin/ls
+/usr/bin/ls
+/usr/bin/ls
+/home/smoore-a/mygit/minishell/minishell 
+echo $$
+/home/smoore-a/mygit/minishell/minishell 
+echo $$
+exit
+history
+ls
+ls
+ls
+echo $?
+las
+echo $?
+echo $?
+las
+echo $?
+las
+echo $?
+echo $?
+./minishell 
+echo $?
+cd acr
+echo $?
+echo $$
+cd ..
+echo $$

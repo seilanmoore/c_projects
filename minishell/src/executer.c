@@ -6,7 +6,7 @@
 /*   By: smoore-a <smoore-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/03 13:58:17 by smoore-a          #+#    #+#             */
-/*   Updated: 2024/10/09 17:19:38 by smoore-a         ###   ########.fr       */
+/*   Updated: 2024/10/09 19:28:10 by smoore-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -139,27 +139,8 @@ static int	builtin_redir(t_data *data)
 			fd[0] = open(redir->next->token, O_RDONLY);
 			if (fd[0] == -1)
 			{
-				if (errno == EISDIR)
-				{
-					ft_putstr_fd(MS, 2);
-					ft_putstr_fd(redir->next->token, 2);
-					ft_putendl_fd(": " IS_DIR, 2);
+				if (handle_errno(redir->next->token) == 1)
 					return (1);
-				}
-				if (errno == EACCES)
-				{
-					ft_putstr_fd(MS, 2);
-					ft_putstr_fd(redir->next->token, 2);
-					ft_putendl_fd(": " PERMIT, 2);
-					return (1);
-				}
-				if (errno == ENOENT)
-				{
-					ft_putstr_fd(MS, 2);
-					ft_putstr_fd(redir->next->token, 2);
-					ft_putendl_fd(": " PATH_EXIST, 2);
-					return (1);
-				}
 				if (access(redir->next->token, R_OK) == -1)
 				{
 					ft_putstr_fd(MS, 2);
@@ -171,28 +152,47 @@ static int	builtin_redir(t_data *data)
 		}
 		else if (redir && redir->type == RIGHT && redir->next)
 		{
-			if (check_right_path(redir->next->token) == 1)
-				return (1);
-			fd[1] = open(redir->next->token, O_CREAT | O_TRUNC | O_WRONLY, 0644);
-			/* if (fd == -1)
+			/* if (check_right_path(redir->next->token) == 1)
 				return (1); */
+			fd[1] = open(redir->next->token, O_CREAT | O_TRUNC | O_WRONLY, 0644);
+			if (fd[1] == -1)
+			{
+				if (handle_errno(redir->next->token) == 1)
+					return (1);
+				if (access(redir->next->token, W_OK) == -1)
+				{
+					ft_putstr_fd(MS, 2);
+					ft_putstr_fd(redir->next->token, 2);
+					ft_putendl_fd(": " PERMIT, 2);
+					return (1);
+				}
+			}
 		}
 		else if (redir && redir->type == RIGHTT && redir->next)
 		{
-			if (check_right_path(redir->next->token) == 1)
-				return (1);
-			fd[1] = open(redir->next->token, O_CREAT | O_APPEND | O_WRONLY, 0644);
-			/* if (fd == -1)
+			/* if (check_right_path(redir->next->token) == 1)
 				return (1); */
+			fd[1] = open(redir->next->token, O_CREAT | O_APPEND | O_WRONLY, 0644);
+			if (fd[1] == -1)
+			{
+				if (handle_errno(redir->next->token) == 1)
+					return (1);
+				if (access(redir->next->token, W_OK) == -1)
+				{
+					ft_putstr_fd(MS, 2);
+					ft_putstr_fd(redir->next->token, 2);
+					ft_putendl_fd(": " PERMIT, 2);
+					return (1);
+				}
+			}
 		}
 		redir = get_redirecction(redir);
 	}
-	printf("LLEGA fd: %d\n", fd[1]);
 	if (fd[1] > 2)
 	{
 		stdout_backup = dup(STDOUT_FILENO);
 		dup2(fd[1], STDOUT_FILENO);
-		close(fd[1]);		
+		close(fd[1]);
 	}
 	exit_code = builtin_out(data);
 	if (fd[1] > 2)

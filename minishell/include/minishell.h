@@ -6,7 +6,7 @@
 /*   By: smoore-a <smoore-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/19 12:17:44 by smoore-a          #+#    #+#             */
-/*   Updated: 2024/10/09 10:35:57 by smoore-a         ###   ########.fr       */
+/*   Updated: 2024/10/09 17:43:57 by smoore-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -258,5 +258,8 @@ int		dir_w_check(char *path);
 int		path_f_check(char *path);
 int		path_r_check(char *path);
 int		path_w_check(char *path);
+
+// handle_error
+int		handle_errno(char *wildcard);
 
 #endif

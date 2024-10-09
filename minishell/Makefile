@@ -6,7 +6,7 @@
 #    By: smoore-a <smoore-a@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/02/27 20:48:30 by smoore-a          #+#    #+#              #
-#    Updated: 2024/10/09 09:01:43 by smoore-a         ###   ########.fr        #
+#    Updated: 2024/10/09 17:47:23 by smoore-a         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -38,7 +38,7 @@ SRC = main init free_func get_path environment env_utils \
 	local \
 	cd_builtin export_builtin unset_builtin exit_builtin env_builtin \
 	pwd_builtin echo_builtin command command_utils executer path_checks \
-	dir_checks
+	dir_checks handle_error
 
 UTILS =
 

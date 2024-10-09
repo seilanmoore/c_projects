@@ -12,30 +12,30 @@
 
 #include "../include/pipex_bonus.h"
 
-static void	buffer_here_doc(t_data *data)
-{
-	char	*limit;
-	char	*line;
-
-	limit = ft_strjoin(data->argv[2], "\n");
-	if (!limit)
-		ft_error(data, "ft_strjoin: " ALLOCF, NULL);
-	line = get_next_line(STDIN_FILENO);
-	if (!line)
-		ft_error(data, "get_next_line: ", strerror(errno));
-	while (line && ft_strncmp(line, limit, ft_strlen(line)))
+	static void	buffer_here_doc(t_data *data)
 	{
-		ft_putstr_fd(line, data->fd[0]);
-		free(line);
+		char	*limit;
+		char	*line;
+
+		limit = ft_strjoin(data->argv[2], "\n");
+		if (!limit)
+			ft_error(data, "ft_strjoin: " ALLOCF, NULL);
 		line = get_next_line(STDIN_FILENO);
-	}
-	if (line)
-		free(line);
-	free(limit);
-	close(data->fd[0]);
-	data->fd[0] = open(_HERE_DOC, O_RDONLY);
-	if (data->fd[0] == ERROR)
-		ft_error(data, _HERE_DOC, strerror(errno));
+		if (!line)
+			ft_error(data, "get_next_line: ", strerror(errno));
+		while (line && ft_strncmp(line, limit, ft_strlen(line)))
+		{
+			ft_putstr_fd(line, data->fd[0]);
+			free(line);
+			line = get_next_line(STDIN_FILENO);
+		}
+		if (line)
+			free(line);
+		free(limit);
+		close(data->fd[0]);
+		data->fd[0] = open(_HERE_DOC, O_RDONLY);
+		if (data->fd[0] == ERROR)				
+			ft_error(data, _HERE_DOC, strerror(errno));
 }
 
 static void	exec_first(t_data *data)
