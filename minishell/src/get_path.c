@@ -6,19 +6,12 @@
 /*   By: smoore-a <smoore-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/26 15:15:30 by smoore-a          #+#    #+#             */
-/*   Updated: 2024/10/04 13:33:22 by smoore-a         ###   ########.fr       */
+/*   Updated: 2024/10/07 11:02:13 by smoore-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
-
-static void	cmd_not_found(t_data *data, char *cmd)
-{
-	ft_putstr_fd(MS, 2);
-	ft_putstr_fd(cmd, 2);
-	print_msg(data, ": " NOT_FOUND, 127);
-	data->exit_code = 127;
-}
+#include <unistd.h>
 
 static void	append_slash(t_data *data)
 {
@@ -70,7 +63,7 @@ void	assign_paths(t_data *data)
 	head = data->input.command;
 	while (head)
 	{
-		if (!head->builtin)
+		if (!head->builtin && !ft_strchr(head->cmd, '/'))
 		{
 			i = -1;
 			cmd = head->cmd;
@@ -85,8 +78,12 @@ void	assign_paths(t_data *data)
 				}
 			}
 			if (!head->cmd)
-				cmd_not_found(data, cmd);
+			{
+				head->cmd = ft_strdup(cmd);
+			}
 		}
+		else if (!head->builtin)
+			head->cmd = ft_strdup(head->cmd);
 		head = head->next;
 	}
 }

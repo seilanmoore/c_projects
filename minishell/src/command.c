@@ -6,7 +6,7 @@
 /*   By: smoore-a <smoore-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/03 14:39:54 by smoore-a          #+#    #+#             */
-/*   Updated: 2024/10/05 14:33:08 by smoore-a         ###   ########.fr       */
+/*   Updated: 2024/10/07 09:10:26 by smoore-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,13 +115,13 @@ static char	**extract_args(t_token *token)
 	i = 0;
 	while (++i < n_args)
 	{
-			if (tmp->quote == S_QUOTE || tmp->quote == D_QUOTE)
-				args[i] = put_quotes(tmp);
-			else
-				args[i] = ft_strdup(tmp->token);
-			if (!args[i])
-				return (args);
-			tmp = tmp->next;
+		if (tmp->quote == S_QUOTE || tmp->quote == D_QUOTE)
+			args[i] = put_quotes(tmp);
+		else
+			args[i] = ft_strdup(tmp->token);
+		if (!args[i])
+			return (args);
+		tmp = tmp->next;
 	}
 	return (args);
 }

@@ -6,31 +6,51 @@
 /*   By: smoore-a <smoore-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/19 12:17:10 by smoore-a          #+#    #+#             */
-/*   Updated: 2024/10/05 15:02:32 by smoore-a         ###   ########.fr       */
+/*   Updated: 2024/10/09 12:11:42 by smoore-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
-#include <stdio.h>
 
 volatile int	g_signal = 0;
 
-void	signal_handler(int sig)
+void	handle_signal(int sig)
 {
-	if (sig == SIGINT)
-	{
-		g_signal = 1;
-		write(1, "\n", 1);
-		rl_on_new_line();
-		rl_replace_line("", 0);
-		rl_redisplay();
-	}						
+	g_signal = sig;
+	write(1, "\n", 1);
+	rl_on_new_line();
+	rl_replace_line("", 0);
+	rl_redisplay();
 }
 
 void	handle_eof(t_data *data)
 {
 	if (!data->input.raw_line)
 		exit_builtin(data);
+}
+
+void	get_history(void)
+{
+	char	*ms_history;
+
+	ms_history = ft_strjoin(getenv("HOME"), "/.ms_history");
+	if (ms_history)
+	{
+		read_history(ms_history);
+		free(ms_history);
+	}	
+}
+
+void	save_history(void)
+{
+	char	*ms_history;
+
+	ms_history = ft_strjoin(getenv("HOME"), "/.ms_history");
+	if (ms_history)
+	{
+		write_history(ms_history);
+		free(ms_history);
+	}
 }
 
 char	*prompter(t_data *data)
@@ -62,9 +82,10 @@ int	main(int argc, char **argv, char **envp)
 {
 	t_data	data;
 
-	signal(SIGINT, signal_handler);
+	signal(SIGQUIT, SIG_IGN);
+	signal(SIGINT, handle_signal);
 	init_data(&data, argc, argv, envp);
-	read_history(HISTORY_FILE);
+	get_history();
 	while (1)
 	{
 		data.input.raw_line = readline(prompter(&data));
@@ -74,16 +95,11 @@ int	main(int argc, char **argv, char **envp)
 			data.history = ft_strtrim(data.input.raw_line, "\n");
 			if (data.history && ft_strlen(data.history) > 0)
 				add_history(data.history);
-			write_history(HISTORY_FILE);
+			save_history();
 			parser(&data);
 			execute(&data);
 			free(data.prev_exit_code);
 			data.prev_exit_code = ft_itoa(data.exit_code);
-		}
-		else
-		{
-			free(data.prev_exit_code);
-			data.prev_exit_code = ft_itoa(0);
 		}
 		free_data(&data);
 	}

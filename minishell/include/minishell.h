@@ -6,7 +6,7 @@
 /*   By: smoore-a <smoore-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/19 12:17:44 by smoore-a          #+#    #+#             */
-/*   Updated: 2024/10/05 15:01:14 by smoore-a         ###   ########.fr       */
+/*   Updated: 2024/10/09 10:35:57 by smoore-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@
 # include <unistd.h>
 # include <sys/wait.h>
 # include <errno.h>
+# include <sys/stat.h>
 
 // ANSI color codes
 # define RED	"\x1b[31m"
@@ -38,6 +39,10 @@
 # define NO_PATH "PATH variable not found"
 # define NOT_FOUND "command not found"
 # define ERROR "error "
+# define PATH_EXIST "No such a file or directory"
+# define PERMIT "Permission denied"
+# define IS_DIR "Is a directory"
+# define NOT_DIR "Not a directory"
 
 # define EXPORT "export: "
 # define EXPORT_ID "not a valid identifier"
@@ -46,7 +51,6 @@
 # define CD_OPT "no options allowed"
 # define CD_ARG "too many arguments"
 # define CD_HOME "HOME not set"
-# define CD_EXIST "No such a file or directory"
 
 # define ECHO "echo: "
 # define ECHO_OPT "not valid option"
@@ -175,9 +179,6 @@ void	free_data(t_data *data);
 void	print_locals(t_data *data);
 void	add_l_variables(t_data *data);
 
-// executer
-//void	execute(t_data *data);
-
 //parser
 void	parser(t_data *data);
 void	access_to_types(t_data *data, int target, int type);
@@ -248,5 +249,14 @@ char	*get_envp_var(char **envp, char *var);
 void	add_back_cmd(t_cmd **lst, t_cmd *node);
 t_cmd	*new_cmd(void *command, char **arguments, int builtin);
 t_cmd	*last_cmd(t_cmd *lst);
+
+// path_checks
+
+int		dir_f_check(char *path);
+int		dir_r_check(char *path);
+int		dir_w_check(char *path);
+int		path_f_check(char *path);
+int		path_r_check(char *path);
+int		path_w_check(char *path);
 
 #endif
