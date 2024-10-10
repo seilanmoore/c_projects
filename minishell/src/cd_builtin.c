@@ -6,13 +6,13 @@
 /*   By: smoore-a <smoore-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/02 10:48:46 by smoore-a          #+#    #+#             */
-/*   Updated: 2024/10/09 19:41:01 by smoore-a         ###   ########.fr       */
+/*   Updated: 2024/10/10 14:33:19 by smoore-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 
-static int	cd_path(t_data *data, t_token *token)
+static int	cd_path(t_token *token)
 {
 	if (chdir(token->arg->token) == -1)
 	{
@@ -35,7 +35,7 @@ static int	cd_home(t_data *data, t_token *token, t_env *home)
 		else
 			return (print_msg(data, MS CD CD_HOME, -1), 1);
 	}
-	else if (cd_path(data, token) == 1)
+	else if (cd_path(token) == 1)
 		return (1);
 	return (0);
 }

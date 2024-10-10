@@ -6,7 +6,7 @@
 /*   By: smoore-a <smoore-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/03 13:58:17 by smoore-a          #+#    #+#             */
-/*   Updated: 2024/10/09 19:28:10 by smoore-a         ###   ########.fr       */
+/*   Updated: 2024/10/10 14:34:34 by smoore-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,7 @@ static int	builtin_out(t_data *data)
 	return (0);
 }
 
-static int	is_dir_check(char *path)
+/* static int	is_dir_check(char *path)
 {
 	struct stat	path_stat;
 
@@ -118,7 +118,7 @@ static int	check_right_path(char *path)
 	if (path_w_check(path) == 1)
 		return (1);
 	return (0);
-}
+} */
 
 static int	builtin_redir(t_data *data)
 {
@@ -134,8 +134,6 @@ static int	builtin_redir(t_data *data)
 	{
 		if (redir && redir->type == LEFT && redir->next)
 		{
-			/* if (check_left_path(redir->next->token) == 1)
-				;//	return (1); */
 			fd[0] = open(redir->next->token, O_RDONLY);
 			if (fd[0] == -1)
 			{
@@ -152,8 +150,6 @@ static int	builtin_redir(t_data *data)
 		}
 		else if (redir && redir->type == RIGHT && redir->next)
 		{
-			/* if (check_right_path(redir->next->token) == 1)
-				return (1); */
 			fd[1] = open(redir->next->token, O_CREAT | O_TRUNC | O_WRONLY, 0644);
 			if (fd[1] == -1)
 			{
