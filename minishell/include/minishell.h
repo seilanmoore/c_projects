@@ -6,7 +6,7 @@
 /*   By: smoore-a <smoore-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/19 12:17:44 by smoore-a          #+#    #+#             */
-/*   Updated: 2024/10/09 17:43:57 by smoore-a         ###   ########.fr       */
+/*   Updated: 2024/10/11 12:18:54 by smoore-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -213,7 +213,7 @@ void	expand(t_data *data);
 //builtin
 int		exit_builtin(t_data *data);
 int		export_builtin(t_data *data);
-int		unset_builtin(t_data *data);
+int		unset_builtin(t_data *data, t_token *token);
 int		cd_builtin(t_data *data, t_token *token);
 int		echo_builtin(t_data *data, t_token *token);
 int		pwd_builtin(t_data *data);
@@ -232,9 +232,9 @@ void	upd_env(t_data *data);
 void	parse_environment(t_data *data);
 void	envp_to_array(t_data *data);
 void	upd_env(t_data *data);
+void	print_env(t_data *data);
 
 // utils
-
 void	print_types(t_data *data);
 void	print_cmd_array(t_data *data);
 char	*str_replace(char *haystack, char *needle, char *replace);
@@ -244,6 +244,9 @@ void	print_array(char **array);
 int		valid_char(char c);
 int		valid_str(char *str);
 char	*get_envp_var(char **envp, char *var);
+int		is_redir(int c);
+int		is_space(int c);
+int		is_group_valid(int c);
 
 //command
 void	add_back_cmd(t_cmd **lst, t_cmd *node);

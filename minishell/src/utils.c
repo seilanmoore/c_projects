@@ -6,12 +6,52 @@
 /*   By: smoore-a <smoore-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/26 09:54:56 by smoore-a          #+#    #+#             */
-/*   Updated: 2024/10/04 12:59:34 by smoore-a         ###   ########.fr       */
+/*   Updated: 2024/10/11 12:16:39 by smoore-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 #include <stdio.h>
+
+int	is_redir(int c)
+{
+	if (c && (\
+	c == '<' || \
+	c == '>' || \
+	c == '|'))
+		return (1);
+	return (0);
+}
+
+int	is_space(int c)
+{
+	if (c && (\
+	c == ' ' || \
+	c == '\t' || \
+	c == '\n' || \
+	c == '\r' || \
+	c == '\f' || \
+	c == '\v'))
+		return (1);
+	return (0);
+}
+
+int	is_group_valid(int c)
+{
+	if (c && (\
+	(c >= 'a' && c <= 'z') || \
+	(c >= 'A' && c <= 'Z') || \
+	(c >= '0' && c <= '9') || \
+	c == '$' || \
+	c == '*' || \
+	c == '/' || \
+	c == '.' || \
+	c == '-' || \
+	c == '_' || \
+	c == '\\'))
+		return (1);
+	return (0);
+}
 
 char	*cwd_compress(t_data *data)
 {

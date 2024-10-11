@@ -6,12 +6,26 @@
 /*   By: smoore-a <smoore-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/21 12:03:30 by smoore-a          #+#    #+#             */
-/*   Updated: 2024/10/03 15:34:58 by smoore-a         ###   ########.fr       */
+/*   Updated: 2024/10/11 10:40:32 by smoore-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 #include <string.h>
+
+void	print_env(t_data *data)
+{
+	void	*head;
+
+	head = data->env;
+	while (data->env)
+	{
+		printf("VARIABLE: \'%s\'\nVALUE: \'%s\'\n", \
+		data->env->variable, data->env->value);
+		data->env = data->env->next;
+	}
+	data->env = head;
+}
 
 static void	del_node(t_env *env)
 {
