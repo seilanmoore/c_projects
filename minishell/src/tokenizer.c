@@ -1,35 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   token.c                                            :+:      :+:    :+:   */
+/*   tokenizer.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: smoore-a <smoore-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/03 15:21:13 by smoore-a          #+#    #+#             */
-/*   Updated: 2024/10/11 12:23:14 by smoore-a         ###   ########.fr       */
+/*   Updated: 2024/10/11 13:59:31 by smoore-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
-
-static void	set_prev_token(t_data *data)
-{
-	t_token	*head;
-	t_token	*prev;
-
-	head = data->input.tokens;
-	prev = head;
-	if (!data->input.tokens)
-		return ;
-	data->input.tokens = data->input.tokens->next;
-	while (data->input.tokens)
-	{
-		data->input.tokens->prev = prev;
-		prev = data->input.tokens;
-		data->input.tokens = data->input.tokens->next;
-	}
-	data->input.tokens = head;
-}
 
 static void	single_quote(t_data *data, t_var *var)
 {
@@ -102,7 +83,7 @@ static void	characters(t_data *data, t_var *var)
 	add_back_token(&(data->input.tokens), new_token(var->aux, 0, NO_QUOTE));
 }
 
-void	parse_tokens(t_data *data)
+void	tokenizer(t_data *data)
 {
 	t_var	var;
 
@@ -122,8 +103,6 @@ void	parse_tokens(t_data *data)
 			characters(data, &var);
 		var.aux1 = var.aux1 + var.i;
 	}
-	print_types(data);
-	exit (0);
 	set_prev_token(data);
 	assign_types(data);
 	remove_equal(data);

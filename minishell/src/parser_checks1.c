@@ -6,7 +6,7 @@
 /*   By: smoore-a <smoore-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/03 15:13:34 by smoore-a          #+#    #+#             */
-/*   Updated: 2024/10/05 10:58:22 by smoore-a         ###   ########.fr       */
+/*   Updated: 2024/10/11 13:51:40 by smoore-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,17 +65,17 @@ static int	check_variables(t_data *data, t_token *ptr, int i)
 	return (0);
 }
 
-int	type_checks(t_data *data, t_token *ptr, int i)
+void	type_checks(t_data *data, t_token *ptr, int i)
 {
 	if (check_redirections(data, ptr, i))
-		return (1);
+		return ;
 	if (check_files(data, ptr, i))
-		return (1);
+		return ;
 	if (check_local_variables(data, ptr, i))
-		return (1);
+		return ;
 	if (check_variables(data, ptr, i))
-		return (1);
+		return ;
 	if (check_heredoc(data, ptr, i))
-		return (1);
-	return (check_cmds(data, ptr, i));
+		return ;
+	check_cmds(data, ptr, i);
 }

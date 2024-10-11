@@ -6,7 +6,7 @@
 /*   By: smoore-a <smoore-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/19 12:17:44 by smoore-a          #+#    #+#             */
-/*   Updated: 2024/10/11 12:18:54 by smoore-a         ###   ########.fr       */
+/*   Updated: 2024/10/11 13:51:52 by smoore-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -158,8 +158,6 @@ typedef struct s_data
 }	t_data;
 
 t_l_var	*get_l_var(t_l_var *l_variables, char *l_variable);
-t_token	*new_token(void *token, int type, int quote);
-t_token	*last_token(t_token *lst);
 t_env	*get_env_var(t_env *env, char *variable);
 t_env	*new_variable(void *variable, char *value);
 t_env	*last_variable(t_env *lst);
@@ -182,12 +180,16 @@ void	add_l_variables(t_data *data);
 //parser
 void	parser(t_data *data);
 void	access_to_types(t_data *data, int target, int type);
-int		type_checks(t_data *data, t_token *ptr, int i);
+void	type_checks(t_data *data, t_token *ptr, int i);
 void	parse_cmd_opt(t_data *data);
 void	assign_paths(t_data *data);
 
-// token
-void	parse_tokens(t_data *data);
+// tokenizer
+void	tokenizer(t_data *data);
+//tokenizer_utils
+void	set_prev_token(t_data *data);
+t_token	*new_token(void *token, int type, int quote);
+t_token	*last_token(t_token *lst);
 
 //executer
 void	execute(t_data *data);

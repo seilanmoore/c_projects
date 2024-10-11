@@ -6,7 +6,7 @@
 /*   By: smoore-a <smoore-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/03 13:58:17 by smoore-a          #+#    #+#             */
-/*   Updated: 2024/10/11 09:58:06 by smoore-a         ###   ########.fr       */
+/*   Updated: 2024/10/11 14:06:13 by smoore-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -203,6 +203,8 @@ void	execute(t_data *data)
 	pid_t	*pid;
 	int		i;
 
+	if (!data->input.command)
+		return ;
 	if (!data->n_pipe && !ft_strncmp(data->input.command->cmd, "exit", ft_strlen(data->input.command->cmd)))
 		exit_builtin(data);
 	if (!data->n_pipe && data->input.command->builtin)
