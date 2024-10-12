@@ -6,7 +6,7 @@
 /*   By: smoore-a <smoore-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/25 10:56:20 by smoore-a          #+#    #+#             */
-/*   Updated: 2024/10/12 13:56:13 by smoore-a         ###   ########.fr       */
+/*   Updated: 2024/10/12 21:02:39 by smoore-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,23 +25,20 @@ void	print_locals(t_data *data)
 	data->locals = head;
 }
 
-static void	check_l_variable(t_data *data, t_env *new_l_var, t_token *value)
+static void	check_l_variable(t_data *data, t_env *new_l_var, char *value)
 {
 	if (new_l_var)
 	{
 		free(new_l_var->value);
 		if (value)
-			new_l_var->value = ft_strdup(value->token);
+			new_l_var->value = ft_strdup(value);
 		else
 			new_l_var->value = ft_strdup("");
 	}
 	else
 	{
 		if (value)
-		{
-			new_l_var = new_variable(data->input.tokens->token, \
-			value->token);
-		}
+			new_l_var = new_variable(data->input.tokens->token, value);
 		else
 			new_l_var = new_variable(data->input.tokens->token, "");
 		if (last_variable(data->locals))
@@ -51,26 +48,54 @@ static void	check_l_variable(t_data *data, t_env *new_l_var, t_token *value)
 	}
 }
 
-void	add_locals(t_data *data)
+static char	**split_local(char *local)
+{
+	char	**array;
+	int		i;
+
+	array = ft_calloc(3, sizeof(char *));
+	i = -1;
+	while (local[++i])
+	{
+		if (local[i] == '=')
+		{
+			array[0] = ft_substr(local, 0, i);
+			array[1] = ft_strdup(&local[++i]);
+			return (array);
+		}
+	}
+	return (NULL);
+}
+
+static void	add_local(t_data *data)
 {
 	t_env	*new_l_var;
-	t_token	*head;
 	t_env	*env_var;
+	char	**local;
+
+	local = split_local(data->input.tokens->token);
+	if (!local)
+		return ;
+	new_l_var = get_env_var(data->locals, local[0]);
+	check_l_variable(data, new_l_var, local[1]);
+	env_var = get_env_var(data->env, new_l_var->variable);
+	if (env_var)
+	{
+		free(env_var->value);
+		env_var->value = new_l_var->value;
+	}
+	free_array(local);
+}
+
+void	locals(t_data *data)
+{
+	t_token	*head;
 
 	head = data->input.tokens;
 	while (data->input.tokens)
 	{
-		if (data->input.tokens->type == L_VARIABLE)
-		{
-			new_l_var = get_env_var(data->locals, data->input.tokens->token);
-			check_l_variable(data, new_l_var, data->input.tokens->next);
-			env_var = get_env_var(data->env, new_l_var->variable);
-			if (env_var)
-			{
-				free(env_var->value);
-				env_var->value = new_l_var->value;
-			}
-		}
+		if (data->input.tokens->type == LOCAL)
+			add_local(data);
 		data->input.tokens = data->input.tokens->next;
 	}
 	data->input.tokens = head;

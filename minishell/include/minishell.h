@@ -6,7 +6,7 @@
 /*   By: smoore-a <smoore-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/19 12:17:44 by smoore-a          #+#    #+#             */
-/*   Updated: 2024/10/12 14:51:24 by smoore-a         ###   ########.fr       */
+/*   Updated: 2024/10/12 22:23:51 by smoore-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,15 +66,12 @@
 # define RIGHTT 107 	// >>
 # define FILE 108		// file
 # define HERE 109 		// heredoc
-// # define VARIABLE 110 	// variable=value
-// # define VALUE 111 		// variable=value
-# define L_VARIABLE 112 // local variable=value
-# define L_VALUE 113 	// local variable=value
+# define LOCAL 110 		// variable=value
 # define NO_QUOTE 120
 # define S_QUOTE 121 	// ''
 # define D_QUOTE 122 	// ""
 
-extern volatile int	g_signal;
+extern int	g_signal;
 
 void	signal_handler(int sig);
 
@@ -170,7 +167,7 @@ void	del_env(t_env *env, char *variable);
 
 // locals
 void	print_locals(t_data *data);
-void	add_locals(t_data *data);
+void	locals(t_data *data);
 
 //parser
 void	parser(t_data *data);
@@ -179,6 +176,21 @@ void	type_checks(t_data *data, t_token *ptr, int i);
 void	parse_cmd_opt(t_data *data);
 void	assign_paths(t_data *data);
 
+//syntax
+void	syntax_msg(char *wildcard);
+int		is_redirection(int type);
+int		is_word(int type);
+int		syntax_error(t_data *data);
+
+//syntax_circles
+int		circle_1(t_token *token);
+int		circle_2(t_token *token, t_token *prev);
+int		circle_3(t_token *token, t_token *prev);
+int		circle_4(t_token *token, t_token *prev);
+
+//executer
+int		execute(t_data *data);
+
 // tokenizer
 void	tokenizer(t_data *data);
 //tokenizer_utils
@@ -186,11 +198,7 @@ void	set_prev_token(t_data *data);
 t_token	*new_token(void *token, int type, int quote);
 t_token	*last_token(t_token *lst);
 
-//executer
-int		execute(t_data *data);
-
 // parser_checks2
-int		check_heredoc(t_data *data, t_token *ptr, int i);
 int		check_cmds(t_data *data, t_token *ptr, int i);
 
 // types

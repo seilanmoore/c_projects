@@ -6,13 +6,13 @@
 /*   By: smoore-a <smoore-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/19 12:17:10 by smoore-a          #+#    #+#             */
-/*   Updated: 2024/10/12 14:50:33 by smoore-a         ###   ########.fr       */
+/*   Updated: 2024/10/12 22:19:09 by smoore-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 
-volatile int	g_signal = 0;
+int	g_signal = 0;
 
 void	handle_signal(int sig)
 {
@@ -97,7 +97,10 @@ int	main(int argc, char **argv, char **envp)
 				add_history(data.history);
 			save_history();
 			parser(&data);
-			data.exit_code = execute(&data);
+			if (syntax_error(&data))
+				data.exit_code = 1;
+			// else
+			// 	data.exit_code = execute(&data);
 			free(data.prev_exit_code);
 			data.prev_exit_code = ft_itoa(data.exit_code);
 		}

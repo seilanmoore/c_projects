@@ -6,7 +6,7 @@
 #    By: smoore-a <smoore-a@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/02/27 20:48:30 by smoore-a          #+#    #+#              #
-#    Updated: 2024/10/12 13:55:46 by smoore-a         ###   ########.fr        #
+#    Updated: 2024/10/12 22:18:04 by smoore-a         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -35,7 +35,7 @@ OBJ_DIR = obj/
 SRC = main init free_func get_path environment env_utils \
 	parser parser_checks1 parser_checks2 parser_types \
 	tokenizer tokenizer_utils expand expand_utils utils \
-	command command_utils locals \
+	command command_utils locals syntax syntax_circles \
 	cd_builtin export_builtin unset_builtin exit_builtin env_builtin \
 	pwd_builtin echo_builtin \
 	executer path_checks dir_checks handle_error

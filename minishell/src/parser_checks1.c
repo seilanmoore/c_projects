@@ -6,7 +6,7 @@
 /*   By: smoore-a <smoore-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/03 15:13:34 by smoore-a          #+#    #+#             */
-/*   Updated: 2024/10/12 11:17:41 by smoore-a         ###   ########.fr       */
+/*   Updated: 2024/10/12 21:19:02 by smoore-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,30 +37,24 @@ static int	check_redirections(t_data *data, t_token *ptr, int i)
 
 static int	check_files(t_data *data, t_token *ptr, int i)
 {
-	if (ptr->prev && \
-		(ptr->prev->type == LEFT || \
+	if (ptr->prev)
+	{
+		if (ptr->prev->type == LEFTT)
+			return (access_to_types(data, i, HERE), 1);
+		if (ptr->prev->type == LEFT || \
 		ptr->prev->type == RIGHT || \
-		ptr->prev->type == RIGHTT))
-		return (access_to_types(data, i, FILE), 1);
+		ptr->prev->type == RIGHTT)
+			return (access_to_types(data, i, FILE), 1);
+	}
 	return (0);
 }
 
-static int	check_local_values(t_data *data, t_token *ptr, int i)
+static int	check_locals(t_data *data, t_token *ptr, int i)
 {
-	if (ptr->prev && ptr->prev->type == L_VARIABLE)
-		return (access_to_types(data, i, L_VALUE), 1);
-	return (0);
+	if (!ft_strchr(ptr->token, '='))
+		return (0);
+	return (access_to_types(data, i, LOCAL), 1);
 }
-
-/* static int	check_variables(t_data *data, t_token *ptr, int i)
-{
-	if (ptr->quote == NO_QUOTE && \
-		ptr->token[ft_strlen(ptr->token) - 1] == '=')
-		return (access_to_types(data, i, VARIABLE), 1);
-	if (ptr->prev && ptr->prev->type == VARIABLE)
-		return (access_to_types(data, i, VALUE), 1);
-	return (0);
-} */
 
 void	type_checks(t_data *data, t_token *ptr, int i)
 {
@@ -68,11 +62,7 @@ void	type_checks(t_data *data, t_token *ptr, int i)
 		return ;
 	if (check_files(data, ptr, i))
 		return ;
-	if (check_local_values(data, ptr, i))
+	if (check_cmds(data, ptr, i))
 		return ;
-	/* if (check_variables(data, ptr, i))
-		return ; */
-	if (check_heredoc(data, ptr, i))
-		return ;
-	check_cmds(data, ptr, i);
+	check_locals(data, ptr, i);
 }

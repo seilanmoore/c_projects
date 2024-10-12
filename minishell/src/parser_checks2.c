@@ -6,35 +6,11 @@
 /*   By: smoore-a <smoore-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/03 15:14:41 by smoore-a          #+#    #+#             */
-/*   Updated: 2024/10/12 11:53:12 by smoore-a         ###   ########.fr       */
+/*   Updated: 2024/10/12 20:51:16 by smoore-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
-
-int	check_heredoc(t_data *data, t_token *ptr, int i)
-{
-	if (ptr->prev && ptr->prev->type == LEFTT)
-		return (access_to_types(data, i, HERE), 1);
-	return (0);
-}
-
-static int	check_local(t_data *data, t_token *ptr, int i)
-{
-	int	x;
-
-	x = -1;
-	while (ptr->token[++x])
-	{
-		if (!is_cmd(ptr->token[x]))
-		{
-			if (ptr->token[x] == '=')
-				return (access_to_types(data, i, L_VARIABLE), 1);
-			return (1);
-		}
-	}
-	return (0);
-}
 
 static int	check_option_arg(t_data *data, t_token *ptr, int i)
 {
@@ -54,9 +30,17 @@ static int	check_option_arg(t_data *data, t_token *ptr, int i)
 
 int	check_cmds(t_data *data, t_token *ptr, int i)
 {
+	int	x;
+
 	if (check_option_arg(data, ptr, i))
 		return (1);
-	if (check_local(data, ptr, i))
-		return (1);
-	return (data->n_cmd++, access_to_types(data, i, CMD), 1);
+	x = -1;
+	while (ptr->token[++x])
+	{
+		if (!is_cmd(ptr->token[x]))
+			return (0);
+	}
+	data->n_cmd++;
+	access_to_types(data, i, CMD);
+	return (1);
 }

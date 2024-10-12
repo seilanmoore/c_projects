@@ -6,7 +6,7 @@
 /*   By: smoore-a <smoore-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/26 09:54:56 by smoore-a          #+#    #+#             */
-/*   Updated: 2024/10/12 14:12:46 by smoore-a         ###   ########.fr       */
+/*   Updated: 2024/10/12 21:18:18 by smoore-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,40 +93,28 @@ void	print_array(char **array)
 
 char	*type_to_char(int type)
 {
-	if (type == 100)
+	if (type == CMD)
 		return ("CMD");
-	if (type == 101)
+	if (type == OPTION)
 		return ("OPTION");
-	if (type == 102)
+	if (type == ARG)
 		return ("ARGUMENT");
-	if (type == 103)
+	if (type == PIPE)
 		return ("PIPE");
-	if (type == 104)
+	if (type == LEFT)
 		return ("<");
-	if (type == 105)
+	if (type == RIGHT)
 		return (">");
-	if (type == 106)
+	if (type == LEFTT)
 		return ("<<");
-	if (type == 107)
+	if (type == RIGHTT)
 		return (">>");
-	if (type == 108)
+	if (type == FILE)
 		return ("FILE");
-	if (type == 109)
+	if (type == HERE)
 		return ("HEREDOC");
-	if (type == 110)
-		return ("VARIABLE");
-	if (type == 111)
-		return ("VALUE");
-	if (type == 112)
-		return ("LOCAL VARIABLE");
-	if (type == 113)
-		return ("LOCAL VALUE");
-	if (type == 114)
-		return ("SINGLE QUOTES");
-	if (type == 115)
-		return ("DOUBLE QUOTES");
-	if (type == 116)
-		return ("NO QUOTES");
+	if (type == LOCAL)
+		return ("LOCAL");
 	return ("NO_TYPE");
 }
 
@@ -138,7 +126,8 @@ void	print_types(t_data *data)
 	head = data->input.tokens;
 	while (head)
 	{
-		printf("TOKEN: \"%s\"	TYPE: %s\n", head->token, type_to_char(head->type));
+		printf("TOKEN: \"%s\"	TYPE: %s(%d)\n", \
+		head->token, type_to_char(head->type), head->type);
 		aux = head->opt;
 		if (aux)
 			printf("\t--> OPTIONS:");
