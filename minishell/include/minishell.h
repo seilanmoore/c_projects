@@ -6,7 +6,7 @@
 /*   By: smoore-a <smoore-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/19 12:17:44 by smoore-a          #+#    #+#             */
-/*   Updated: 2024/10/11 13:51:52 by smoore-a         ###   ########.fr       */
+/*   Updated: 2024/10/12 14:51:24 by smoore-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,8 +66,8 @@
 # define RIGHTT 107 	// >>
 # define FILE 108		// file
 # define HERE 109 		// heredoc
-# define VARIABLE 110 	// variable=value
-# define VALUE 111 		// variable=value
+// # define VARIABLE 110 	// variable=value
+// # define VALUE 111 		// variable=value
 # define L_VARIABLE 112 // local variable=value
 # define L_VALUE 113 	// local variable=value
 # define NO_QUOTE 120
@@ -77,13 +77,6 @@
 extern volatile int	g_signal;
 
 void	signal_handler(int sig);
-
-typedef struct s_l_variable
-{
-	char				*variable;
-	char				*value;
-	struct s_l_variable	*next;
-}	t_l_var;
 
 typedef struct s_command
 {
@@ -151,17 +144,11 @@ typedef struct s_data
 	char	*prev_exit_code;
 	char	*process;
 	pid_t	pid;
-	t_l_var	*local;
+	t_env	*locals;
 	t_env	*env;
 	t_pipe	*pipes;
 	t_input	input;
 }	t_data;
-
-t_l_var	*get_l_var(t_l_var *l_variables, char *l_variable);
-t_env	*get_env_var(t_env *env, char *variable);
-t_env	*new_variable(void *variable, char *value);
-t_env	*last_variable(t_env *lst);
-void	del_env(t_env *env, char *variable);
 
 // init
 void	init_data(t_data *data, int argc, char **argv, char **envp);
@@ -173,9 +160,17 @@ void	free_environment(t_data *data);
 void	free_array(char **array);
 void	free_data(t_data *data);
 
-// local
+
+//env_utils
+t_env	*get_env(t_env *l_variables, char *l_variable);
+t_env	*get_env_var(t_env *env, char *variable);
+t_env	*new_variable(void *variable, char *value);
+t_env	*last_variable(t_env *lst);
+void	del_env(t_env *env, char *variable);
+
+// locals
 void	print_locals(t_data *data);
-void	add_l_variables(t_data *data);
+void	add_locals(t_data *data);
 
 //parser
 void	parser(t_data *data);
@@ -192,7 +187,7 @@ t_token	*new_token(void *token, int type, int quote);
 t_token	*last_token(t_token *lst);
 
 //executer
-void	execute(t_data *data);
+int		execute(t_data *data);
 
 // parser_checks2
 int		check_heredoc(t_data *data, t_token *ptr, int i);
@@ -214,8 +209,8 @@ void	expand(t_data *data);
 
 //builtin
 int		exit_builtin(t_data *data);
-int		export_builtin(t_data *data);
-int		unset_builtin(t_data *data, t_token *token);
+int		export_builtin(t_data *data, t_cmd *cmd);
+int		unset_builtin(t_data *data, t_cmd *cmd);
 int		cd_builtin(t_data *data, t_token *token);
 int		echo_builtin(t_data *data, t_token *token);
 int		pwd_builtin(t_data *data);
@@ -244,11 +239,12 @@ void	print_msg(t_data *data, char *msg, int status);
 char	*rev_split(char **array);
 void	print_array(char **array);
 int		valid_char(char c);
-int		valid_str(char *str);
+int		valid_ident(char *str);
 char	*get_envp_var(char **envp, char *var);
 int		is_redir(int c);
 int		is_space(int c);
-int		is_group_valid(int c);
+int		is_cmd(int c);
+void	print_locals(t_data *data);
 
 //command
 void	add_back_cmd(t_cmd **lst, t_cmd *node);

@@ -6,7 +6,7 @@
 /*   By: smoore-a <smoore-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/03 15:14:41 by smoore-a          #+#    #+#             */
-/*   Updated: 2024/10/05 10:59:47 by smoore-a         ###   ########.fr       */
+/*   Updated: 2024/10/12 11:53:12 by smoore-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,24 @@ int	check_heredoc(t_data *data, t_token *ptr, int i)
 	return (0);
 }
 
-int	check_cmds(t_data *data, t_token *ptr, int i)
+static int	check_local(t_data *data, t_token *ptr, int i)
+{
+	int	x;
+
+	x = -1;
+	while (ptr->token[++x])
+	{
+		if (!is_cmd(ptr->token[x]))
+		{
+			if (ptr->token[x] == '=')
+				return (access_to_types(data, i, L_VARIABLE), 1);
+			return (1);
+		}
+	}
+	return (0);
+}
+
+static int	check_option_arg(t_data *data, t_token *ptr, int i)
 {
 	if (ptr->prev)
 	{
@@ -32,5 +49,14 @@ int	check_cmds(t_data *data, t_token *ptr, int i)
 			ptr->prev->type == ARG)
 			return (access_to_types(data, i, ARG), 1);
 	}
+	return (0);
+}
+
+int	check_cmds(t_data *data, t_token *ptr, int i)
+{
+	if (check_option_arg(data, ptr, i))
+		return (1);
+	if (check_local(data, ptr, i))
+		return (1);
 	return (data->n_cmd++, access_to_types(data, i, CMD), 1);
 }

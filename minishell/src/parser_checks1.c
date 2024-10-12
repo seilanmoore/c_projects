@@ -6,7 +6,7 @@
 /*   By: smoore-a <smoore-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/03 15:13:34 by smoore-a          #+#    #+#             */
-/*   Updated: 2024/10/11 13:51:40 by smoore-a         ###   ########.fr       */
+/*   Updated: 2024/10/12 11:17:41 by smoore-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,17 +45,14 @@ static int	check_files(t_data *data, t_token *ptr, int i)
 	return (0);
 }
 
-static int	check_local_variables(t_data *data, t_token *ptr, int i)
+static int	check_local_values(t_data *data, t_token *ptr, int i)
 {
-	if (!ptr->prev && ptr->quote == NO_QUOTE && \
-		ptr->token[ft_strlen(ptr->token) - 1] == '=')
-		return (access_to_types(data, i, L_VARIABLE), 1);
 	if (ptr->prev && ptr->prev->type == L_VARIABLE)
 		return (access_to_types(data, i, L_VALUE), 1);
 	return (0);
 }
 
-static int	check_variables(t_data *data, t_token *ptr, int i)
+/* static int	check_variables(t_data *data, t_token *ptr, int i)
 {
 	if (ptr->quote == NO_QUOTE && \
 		ptr->token[ft_strlen(ptr->token) - 1] == '=')
@@ -63,7 +60,7 @@ static int	check_variables(t_data *data, t_token *ptr, int i)
 	if (ptr->prev && ptr->prev->type == VARIABLE)
 		return (access_to_types(data, i, VALUE), 1);
 	return (0);
-}
+} */
 
 void	type_checks(t_data *data, t_token *ptr, int i)
 {
@@ -71,10 +68,10 @@ void	type_checks(t_data *data, t_token *ptr, int i)
 		return ;
 	if (check_files(data, ptr, i))
 		return ;
-	if (check_local_variables(data, ptr, i))
+	if (check_local_values(data, ptr, i))
 		return ;
-	if (check_variables(data, ptr, i))
-		return ;
+	/* if (check_variables(data, ptr, i))
+		return ; */
 	if (check_heredoc(data, ptr, i))
 		return ;
 	check_cmds(data, ptr, i);

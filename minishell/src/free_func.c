@@ -6,7 +6,7 @@
 /*   By: smoore-a <smoore-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/25 11:02:07 by smoore-a          #+#    #+#             */
-/*   Updated: 2024/10/05 14:18:35 by smoore-a         ###   ########.fr       */
+/*   Updated: 2024/10/12 13:44:13 by smoore-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,16 +26,16 @@ void	free_array(char **array)
 
 void	free_local(t_data *data)
 {
-	t_l_var	*tmp;
+	t_env	*tmp;
 
-	while (data->local)
+	while (data->locals)
 	{
-		free(data->local->variable);
-		data->local->variable = NULL;
-		free(data->local->value);
-		data->local->value = NULL;
-		tmp = data->local;
-		data->local = data->local->next;
+		free(data->locals->variable);
+		data->locals->variable = NULL;
+		free(data->locals->value);
+		data->locals->value = NULL;
+		tmp = data->locals;
+		data->locals = data->locals->next;
 		free(tmp);
 	}
 }
@@ -95,14 +95,14 @@ void	free_data(t_data *data)
 {
 	int		i;
 	t_env	*env_head;
-	t_l_var	*local_head;
+	t_env	*local_head;
 	char	**env_ptr;
 	char	*aux;
 
 	aux = data->prev_exit_code;
 	env_head = data->env;
 	env_ptr = data->envp_cpy;
-	local_head = data->local;
+	local_head = data->locals;
 	free(data->prompt);
 	free(data->input.raw_line);
 	free(data->history);
@@ -122,7 +122,7 @@ void	free_data(t_data *data)
 	init_data(data, data->argc, data->argv, data->envp);
 	data->env = env_head;
 	data->envp_cpy = env_ptr;
-	data->local = local_head;
+	data->locals = local_head;
 	data->status = i;
 	free(data->prev_exit_code);
 	data->prev_exit_code = aux;

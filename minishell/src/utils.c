@@ -6,7 +6,7 @@
 /*   By: smoore-a <smoore-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/26 09:54:56 by smoore-a          #+#    #+#             */
-/*   Updated: 2024/10/11 12:16:39 by smoore-a         ###   ########.fr       */
+/*   Updated: 2024/10/12 14:12:46 by smoore-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ int	is_space(int c)
 	return (0);
 }
 
-int	is_group_valid(int c)
+int	is_cmd(int c)
 {
 	if (c && (\
 	(c >= 'a' && c <= 'z') || \
@@ -188,7 +188,7 @@ int	valid_char(char c)
 	return (1);
 }
 
-int	valid_str(char *str)
+int	valid_ident(char *str)
 {
 	if (!str)
 		return (0);

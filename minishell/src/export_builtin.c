@@ -6,58 +6,54 @@
 /*   By: smoore-a <smoore-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/02 10:49:42 by smoore-a          #+#    #+#             */
-/*   Updated: 2024/10/03 15:35:39 by smoore-a         ###   ########.fr       */
+/*   Updated: 2024/10/12 12:56:10 by smoore-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 
-void	check_new_var(t_data *data, t_env *new_var)
+void	check_new_var(t_data *data, t_env *new_var, char **var)
 {
 	if (new_var)
 	{
 		free(new_var->value);
-		if (data->input.tokens->next)
-			new_var->value = ft_strdup(data->input.tokens->next->token);
+		if (*(var + 1))
+			new_var->value = ft_strdup(*(var + 1));
 		else
 			new_var->value = ft_strdup("");
 	}
 	else
 	{
-		if (data->input.tokens->next)
-		{
-			new_var = new_variable(data->input.tokens->token,
-					data->input.tokens->next->token);
-		}
+		if (*(var + 1))
+			new_var = new_variable(*var, *(var + 1));
 		else
-			new_var = new_variable(data->input.tokens->token, "");
+			new_var = new_variable(*var, "");
 		last_variable(data->env)->next = new_var;
 	}
 }
 
-int	export_builtin(t_data *data)
+int	export_builtin(t_data *data, t_cmd *cmd)
 {
+	char	**arg;
 	t_env	*new_var;
-	t_token	*head;
 	int		modified;
-	int		valid_id;
+	int		i;
 
 	modified = 0;
-	head = data->input.tokens;
-	while (data->input.tokens)
+	arg = cmd->args;
+	i = 0;
+	while (arg[i])
 	{
-		valid_id = valid_str(data->input.tokens->token);
-		if (data->input.tokens->type == VARIABLE && valid_id)
+		if (valid_ident(arg[i]))
 		{
-			new_var = get_env_var(data->env, data->input.tokens->token);
-			check_new_var(data, new_var);
+			new_var = get_env_var(data->env, arg[i]);
+			check_new_var(data, new_var, &arg[i]);
 			modified = 1;
 		}
-		else if (data->input.tokens->type == VARIABLE)
+		else
 			print_msg(data, MS EXPORT EXPORT_ID, 1);
-		data->input.tokens = data->input.tokens->next;
+		i += 2;
 	}
-	data->input.tokens = head;
 	if (modified)
 		upd_env(data);
 	return (0);

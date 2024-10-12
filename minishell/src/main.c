@@ -6,7 +6,7 @@
 /*   By: smoore-a <smoore-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/19 12:17:10 by smoore-a          #+#    #+#             */
-/*   Updated: 2024/10/09 19:28:22 by smoore-a         ###   ########.fr       */
+/*   Updated: 2024/10/12 14:50:33 by smoore-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,7 +97,7 @@ int	main(int argc, char **argv, char **envp)
 				add_history(data.history);
 			save_history();
 			parser(&data);
-			execute(&data);
+			data.exit_code = execute(&data);
 			free(data.prev_exit_code);
 			data.prev_exit_code = ft_itoa(data.exit_code);
 		}

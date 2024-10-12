@@ -6,7 +6,7 @@
 /*   By: smoore-a <smoore-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/03 13:58:17 by smoore-a          #+#    #+#             */
-/*   Updated: 2024/10/11 14:06:13 by smoore-a         ###   ########.fr       */
+/*   Updated: 2024/10/12 14:55:17 by smoore-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,10 +21,9 @@ static t_token	*get_redirecction(t_token *token)
 		redir = redir->next;
 	while (redir)
 	{
-		if (redir->type != CMD && redir->type != OPTION && \
-		redir->type != ARG && redir->type != FILE && \
-		redir->type != VARIABLE && redir->type != VALUE && \
-		redir->type != L_VARIABLE && redir->type != L_VALUE)
+		if (redir->type == PIPE || \
+		redir->type == LEFT || redir->type == LEFTT || \
+		redir->type == RIGHT || redir->type == RIGHTT)
 			return (redir);
 		redir = redir->next;
 	}
@@ -61,16 +60,18 @@ static int	builtin_out(t_data *data)
 
 	cmd = data->input.command->cmd;
 	len = ft_strlen(cmd);
-	if (!ft_strncmp(cmd, "echo", len))
+	if (!ft_strncmp(cmd, "exit", len))
+		return (exit_builtin(data));
+	else if (!ft_strncmp(cmd, "echo", len))
 		return (echo_builtin(data, get_token(data->input.tokens, "echo")));
 	else if (!ft_strncmp(cmd, "cd", len))
 		return (cd_builtin(data, get_token(data->input.tokens, "cd")));
 	else if (!ft_strncmp(cmd, "pwd", len))
 		return (pwd_builtin(data));
 	else if (!ft_strncmp(cmd, "export", len))
-		return (export_builtin(data));
+		return (export_builtin(data, data->input.command));
 	else if (!ft_strncmp(cmd, "unset", len))
-		return (unset_builtin(data, get_token(data->input.tokens, "cd")));
+		return (unset_builtin(data, data->input.command));
 	else if (!ft_strncmp(cmd, "env", len))
 		return (env_builtin(data));
 	return (0);
@@ -196,25 +197,22 @@ static void	create_child(t_data *data, t_token *redir, pid_t *pid, int i)
 	}
 }
 
-void	execute(t_data *data)
+int	execute(t_data *data)
 {
 	t_cmd	*cmd_head;
 	t_token	*redir;
 	pid_t	*pid;
 	int		i;
+	int		exit_var;
 
+	exit_var = 0;
 	if (!data->input.command)
-		return ;
-	if (!data->n_pipe && !ft_strncmp(data->input.command->cmd, "exit", ft_strlen(data->input.command->cmd)))
-		exit_builtin(data);
+		return (exit_var);
 	if (!data->n_pipe && data->input.command->builtin)
-	{
-		data->exit_code = builtin_redir(data);
-		return ;
-	}
+		return (builtin_redir(data));
 	pid = ft_calloc(data->n_cmd, sizeof(pid_t));
 	if (!pid)
-		return ;
+		return (0);
 	data->pipes = ft_calloc(data->n_pipe, sizeof(t_pipe));
 	i = -1;
 	cmd_head = data->input.command;
@@ -228,7 +226,8 @@ void	execute(t_data *data)
 	}
 	data->input.command = cmd_head;
 	if (WIFEXITED(data->status))
-		data->exit_code = WEXITSTATUS(data->status);
+		exit_var = WEXITSTATUS(data->status);
 	free(data->pipes);
 	free(pid);
+	return (exit_var);
 }
