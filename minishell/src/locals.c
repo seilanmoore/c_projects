@@ -6,7 +6,7 @@
 /*   By: smoore-a <smoore-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/25 10:56:20 by smoore-a          #+#    #+#             */
-/*   Updated: 2024/10/12 21:02:39 by smoore-a         ###   ########.fr       */
+/*   Updated: 2024/10/13 20:03:35 by smoore-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,64 +25,55 @@ void	print_locals(t_data *data)
 	data->locals = head;
 }
 
-static void	check_l_variable(t_data *data, t_env *new_l_var, char *value)
+/* static void	check_l_variable(t_data *data, t_env *new_l_var, char **local)
 {
 	if (new_l_var)
 	{
 		free(new_l_var->value);
-		if (value)
-			new_l_var->value = ft_strdup(value);
+		if (local[1])
+			new_l_var->value = ft_strdup(local[1]);
 		else
 			new_l_var->value = ft_strdup("");
 	}
 	else
 	{
-		if (value)
-			new_l_var = new_variable(data->input.tokens->token, value);
+		if (local[1])
+			new_l_var = new_variable(local[0], local[1]);
 		else
-			new_l_var = new_variable(data->input.tokens->token, "");
+			new_l_var = new_variable(local[0], "");
 		if (last_variable(data->locals))
 			last_variable(data->locals)->next = new_l_var;
 		else
 			data->locals = new_l_var;
 	}
-}
+} */
 
-static char	**split_local(char *local)
-{
-	char	**array;
-	int		i;
-
-	array = ft_calloc(3, sizeof(char *));
-	i = -1;
-	while (local[++i])
-	{
-		if (local[i] == '=')
-		{
-			array[0] = ft_substr(local, 0, i);
-			array[1] = ft_strdup(&local[++i]);
-			return (array);
-		}
-	}
-	return (NULL);
-}
+//está rota, new_local no se asigna bien
 
 static void	add_local(t_data *data)
 {
-	t_env	*new_l_var;
+	t_env	*new_local;
 	t_env	*env_var;
 	char	**local;
 
-	local = split_local(data->input.tokens->token);
+	local = split_token(data->input.tokens->token);
 	if (!local)
 		return ;
-	new_l_var = get_env_var(data->locals, local[0]);
-	check_l_variable(data, new_l_var, local[1]);
-	env_var = get_env_var(data->env, new_l_var->variable);
+	if (!valid_ident(local[0]))
+	{
+		ft_putstr_fd(MS "`", 2);
+		ft_putstr_fd(local[0], 2);
+		ft_putendl_fd("\': " EXPORT_ID, 2);
+		free_array(local);
+		return ;
+	}
+	new_local = get_env_var(data->locals, local[0]);
+	check_new_var(&(data->locals), new_local, local);
+	env_var = get_env_var(data->env, local[0]);
 	if (env_var)
 	{
 		free(env_var->value);
-		env_var->value = new_l_var->value;
+		env_var->value = ft_strdup(local[1]);
 	}
 	free_array(local);
 }

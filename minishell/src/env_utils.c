@@ -6,7 +6,7 @@
 /*   By: smoore-a <smoore-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/21 12:03:30 by smoore-a          #+#    #+#             */
-/*   Updated: 2024/10/11 10:40:32 by smoore-a         ###   ########.fr       */
+/*   Updated: 2024/10/13 13:28:26 by smoore-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,13 +97,13 @@ t_env	*get_env_var(t_env *env, char *variable)
 	return (NULL);
 }
 
-t_env	*new_variable(void *variable, char *value)
+t_env	*new_variable(char *variable, char *value)
 {
 	t_env	*new_node;
 
 	if (!variable)
 		return (NULL);
-	new_node = (t_env *)malloc(sizeof(t_env));
+	new_node = malloc(sizeof(t_env));
 	if (!new_node)
 		return (NULL);
 	new_node->variable = ft_strdup(variable);

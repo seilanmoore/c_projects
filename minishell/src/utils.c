@@ -6,7 +6,7 @@
 /*   By: smoore-a <smoore-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/26 09:54:56 by smoore-a          #+#    #+#             */
-/*   Updated: 2024/10/12 21:18:18 by smoore-a         ###   ########.fr       */
+/*   Updated: 2024/10/12 23:00:45 by smoore-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -189,6 +189,30 @@ int	valid_ident(char *str)
 		str++;
 	}
 	return (1);
+}
+
+char	**split_token(char *token)
+{
+	char	**array;
+	int		i;
+
+	array = ft_calloc(3, sizeof(char *));
+	i = -1;
+	if (token[0] == '=')
+	{
+		array[0] = ft_strdup(token);
+		return (array);
+	}
+	while (token[++i])
+	{
+		if (token[i] == '=')
+		{
+			array[0] = ft_substr(token, 0, i);
+			array[1] = ft_strdup(&token[++i]);
+			return (array);
+		}
+	}
+	return (NULL);
 }
 
 char	*rev_split(char **array)

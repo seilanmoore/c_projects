@@ -6,7 +6,7 @@
 /*   By: smoore-a <smoore-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/19 12:17:44 by smoore-a          #+#    #+#             */
-/*   Updated: 2024/10/12 22:23:51 by smoore-a         ###   ########.fr       */
+/*   Updated: 2024/10/13 20:02:10 by smoore-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -161,7 +161,7 @@ void	free_data(t_data *data);
 //env_utils
 t_env	*get_env(t_env *l_variables, char *l_variable);
 t_env	*get_env_var(t_env *env, char *variable);
-t_env	*new_variable(void *variable, char *value);
+t_env	*new_variable(char *variable, char *value);
 t_env	*last_variable(t_env *lst);
 void	del_env(t_env *env, char *variable);
 
@@ -253,6 +253,8 @@ int		is_redir(int c);
 int		is_space(int c);
 int		is_cmd(int c);
 void	print_locals(t_data *data);
+char	**split_token(char *token);
+void	check_new_var(t_env **lst, t_env *new_var, char **var);
 
 //command
 void	add_back_cmd(t_cmd **lst, t_cmd *node);
