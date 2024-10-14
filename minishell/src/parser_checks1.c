@@ -6,7 +6,7 @@
 /*   By: smoore-a <smoore-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/03 15:13:34 by smoore-a          #+#    #+#             */
-/*   Updated: 2024/10/12 21:19:02 by smoore-a         ###   ########.fr       */
+/*   Updated: 2024/10/14 12:13:47 by smoore-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,11 @@ static int	check_redirections(t_data *data, t_token *ptr, int i)
 	if (ft_strlen(ptr->token) == 1)
 	{
 		if (ptr->token[0] == '|')
-			return (data->n_pipe++, access_to_types(data, i, PIPE), 1);
+		{
+			data->n_pipe++;
+			data->in_cmd = 0;
+			return (access_to_types(data, i, PIPE), 1);
+		}
 		else if (ptr->token[0] == '<')
 			return (access_to_types(data, i, LEFT), 1);
 		else if (ptr->token[0] == '>')
@@ -27,9 +31,9 @@ static int	check_redirections(t_data *data, t_token *ptr, int i)
 	}
 	else if (ft_strlen(ptr->token) == 2)
 	{
-		if (!ft_strncmp(ptr->token, ">>", 2))
+		if (!ft_strcmp(ptr->token, ">>"))
 			return (access_to_types(data, i, RIGHTT), 1);
-		else if (!ft_strncmp(ptr->token, "<<", 2))
+		else if (!ft_strcmp(ptr->token, "<<"))
 			return (access_to_types(data, i, LEFTT), 1);
 	}
 	return (0);

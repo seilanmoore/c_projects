@@ -6,7 +6,7 @@
 /*   By: smoore-a <smoore-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/26 15:15:30 by smoore-a          #+#    #+#             */
-/*   Updated: 2024/10/07 11:02:13 by smoore-a         ###   ########.fr       */
+/*   Updated: 2024/10/14 13:58:51 by smoore-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,58 +32,47 @@ static void	append_slash(t_data *data)
 
 static void	get_env_paths(t_data *data)
 {
+	t_env	*tmp;
 	char	*line;
-	int		i;
 
 	line = NULL;
-	i = -1;
-	while (data->envp_cpy[++i] && ft_strncmp("PATH=", data->envp_cpy[i], 5))
-		;
-	if (!ft_strncmp("PATH=", data->envp_cpy[i], 5))
+	tmp = data->env;
+	while (tmp && ft_strcmp("PATH", tmp->variable))
+		tmp = tmp->next;
+	if (tmp)
 	{
-		line = &(data->envp_cpy[i][5]);
-		if (line[0] == '\0')
-			printf(MS EMPTY_PATH NL);
-		data->paths = ft_split(line, ':');
+		line = tmp->value;
+		if (line[0])
+			data->paths = ft_split(line, ':');
+		append_slash(data);
 	}
-	else
-		printf(MS NO_PATH NL);
-	append_slash(data);
 }
 
 void	assign_paths(t_data *data)
 {
 	t_cmd	*head;
-	char	*cmd;
+	char	*path;
 	int		i;
 
-	if (!data->input.command)
-		return ;
 	get_env_paths(data);
 	head = data->input.command;
 	while (head)
 	{
 		if (!head->builtin && !ft_strchr(head->cmd, '/'))
 		{
-			i = -1;
-			cmd = head->cmd;
-			head->cmd = NULL;
-			while (data->paths[++i] && head->cmd == NULL)
+			i = 0;
+			path = ft_strjoin(data->paths[i], head->cmd);
+			while (access(path, F_OK | X_OK) == -1)
 			{
-				head->cmd = ft_strjoin(data->paths[i], cmd);
-				if (access(head->cmd, F_OK | X_OK) == -1)
-				{
-					free(head->cmd);
-					head->cmd = NULL;
-				}
+				free(path);
+				path = ft_strjoin(data->paths[++i], head->cmd);
 			}
-			if (!head->cmd)
+			if (access(path, F_OK | X_OK) != -1)
 			{
-				head->cmd = ft_strdup(cmd);
+				free(head->cmd);
+				head->cmd = path;
 			}
 		}
-		else if (!head->builtin)
-			head->cmd = ft_strdup(head->cmd);
 		head = head->next;
 	}
 }

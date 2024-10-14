@@ -6,12 +6,28 @@
 /*   By: smoore-a <smoore-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/26 09:54:56 by smoore-a          #+#    #+#             */
-/*   Updated: 2024/10/12 23:00:45 by smoore-a         ###   ########.fr       */
+/*   Updated: 2024/10/14 14:07:08 by smoore-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
-#include <stdio.h>
+
+int	ft_strcmp(const char *str1, const char *str2)
+{
+	int	i;
+
+	if (!str1 || !str2)
+		return (1);
+	if (ft_strlen(str1) != ft_strlen(str2))
+		return (1);
+	i = -1;
+	while (str1[++i])
+	{
+		if (str1[i] != str2[i])
+			return (1);
+	}
+	return (0);
+}
 
 int	is_redir(int c)
 {
@@ -57,15 +73,13 @@ char	*cwd_compress(t_data *data)
 {
 	char	*short_cwd;
 	char	*home;
-	int		len;
 
 	short_cwd = NULL;
 	if (!data->envp_cpy)
-		home = get_envp_var(data->envp, "HOME=");
+		home = getenv("HOME");
 	else
 		home = get_envp_var(data->envp_cpy, "HOME=");
-	len = ft_strlen(home);
-	if (!ft_strncmp(data->cwd, home, len))
+	if (!ft_strcmp(data->cwd, home))
 		short_cwd = str_replace(data->cwd, home, "~");
 	return (short_cwd);
 }
@@ -157,12 +171,9 @@ void	print_cmd_array(t_data *data)
 	head = data->input.command;
 	while (head)
 	{
-		if (!(head->builtin))
-		{
-			printf("CMD_PATH: \"%s\" ARGUMENTS: ", head->cmd);
-			print_array(head->args);
-			printf("\n");
-		}
+		printf("CMD_PATH: \"%s\" ARGUMENTS: ", head->cmd);
+		print_array(head->args);
+		printf("\n");
 		head = head->next;
 	}
 }
@@ -183,7 +194,7 @@ int	valid_ident(char *str)
 		return (0);
 	while (*str)
 	{
-		if (*str != '_' && *str != '$' && \
+		if (*str != '_' && *str != '$' && (*str < 'a' || *str > 'z') && \
 			(*str < 'A' || *str > 'Z') && (*str < '0' || *str > '9'))
 			return (0);
 		str++;
@@ -243,7 +254,7 @@ char	*get_envp_var(char **envp, char *var)
 		return (NULL);
 	while (*envp)
 	{
-		if (!ft_strncmp(*envp, var, ft_strlen(var)))
+		if (!ft_strcmp(*envp, var))
 			return (ft_strchr(*envp, '=') + 1);
 		envp++;
 	}

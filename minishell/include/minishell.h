@@ -6,7 +6,7 @@
 /*   By: smoore-a <smoore-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/19 12:17:44 by smoore-a          #+#    #+#             */
-/*   Updated: 2024/10/13 20:02:10 by smoore-a         ###   ########.fr       */
+/*   Updated: 2024/10/14 12:08:44 by smoore-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -136,6 +136,9 @@ typedef struct s_data
 	char	*history;
 	int		n_cmd;
 	int		n_pipe;
+	int		n_files;
+	int		in_cmd;
+	int		in_arg;
 	int		status;
 	int		exit_code;
 	char	*prev_exit_code;
@@ -240,6 +243,7 @@ void	upd_env(t_data *data);
 void	print_env(t_data *data);
 
 // utils
+int		ft_strcmp(const char *str1, const char *str2);
 void	print_types(t_data *data);
 void	print_cmd_array(t_data *data);
 char	*str_replace(char *haystack, char *needle, char *replace);

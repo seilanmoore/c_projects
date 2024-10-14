@@ -6,7 +6,7 @@
 /*   By: smoore-a <smoore-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/21 12:03:30 by smoore-a          #+#    #+#             */
-/*   Updated: 2024/10/13 13:28:26 by smoore-a         ###   ########.fr       */
+/*   Updated: 2024/10/14 12:15:29 by smoore-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,19 +38,16 @@ static void	del_node(t_env *env)
 
 void	del_env(t_env *env, char *variable)
 {
-	size_t	len;
 	t_env	*head;
 	t_env	*current;
 
-	len = ft_strlen(variable);
 	head = env;
 	current = env->next;
 	if (!current)
 		return (del_node(env));
 	while (current)
 	{
-		if (ft_strlen(current->variable) == len && \
-			!ft_strncmp(current->variable, variable, len))
+		if (!ft_strcmp(current->variable, variable))
 		{
 			env->next = current->next;
 			del_node(current);
@@ -80,16 +77,13 @@ int	variable_len(char *envp_line)
 t_env	*get_env_var(t_env *env, char *variable)
 {
 	t_env	*head;
-	size_t	len;
 
 	if (!env || !variable)
 		return (NULL);
-	len = ft_strlen(variable);
 	head = env;
 	while (env)
 	{
-		if (ft_strlen(env->variable) == len && \
-			!ft_strncmp(env->variable, variable, len))
+		if (!ft_strcmp(env->variable, variable))
 			return (env);
 		env = env->next;
 	}

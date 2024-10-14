@@ -6,7 +6,7 @@
 /*   By: smoore-a <smoore-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/03 13:15:47 by smoore-a          #+#    #+#             */
-/*   Updated: 2024/10/13 09:01:16 by smoore-a         ###   ########.fr       */
+/*   Updated: 2024/10/14 12:16:06 by smoore-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,9 +39,9 @@ char	*get_dollar_value(t_data *data, char *variable)
 
 	if (!variable)
 		return (NULL);
-	if (!ft_strncmp(variable, "$", ft_strlen(variable)))
+	if (!ft_strcmp(variable, "$"))
 		return (data->process);
-	if (!ft_strncmp(variable, "?", ft_strlen(variable)))
+	if (!ft_strcmp(variable, "?"))
 		return (data->prev_exit_code);
 	env_var = get_env_var(data->env, variable);
 	if (env_var)

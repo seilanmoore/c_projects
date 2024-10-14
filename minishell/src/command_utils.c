@@ -6,7 +6,7 @@
 /*   By: smoore-a <smoore-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/03 14:52:01 by smoore-a          #+#    #+#             */
-/*   Updated: 2024/10/05 14:12:42 by smoore-a         ###   ########.fr       */
+/*   Updated: 2024/10/14 13:32:51 by smoore-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ t_cmd	*new_cmd(void *command, char **arguments, int builtin)
 
 	if (!command)
 		return (NULL);
-	new_node = (t_cmd *)malloc(sizeof(t_cmd));
+	new_node = malloc(sizeof(t_cmd));
 	if (!new_node)
 		return (NULL);
 	new_node->next = NULL;

@@ -6,7 +6,7 @@
 /*   By: smoore-a <smoore-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/03 15:15:54 by smoore-a          #+#    #+#             */
-/*   Updated: 2024/10/12 20:53:10 by smoore-a         ###   ########.fr       */
+/*   Updated: 2024/10/14 11:42:07 by smoore-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,8 +23,7 @@ void	assign_opt_arg(t_data *data)
 		if (tmp->type == CMD)
 		{
 			aux = tmp->next;
-			while (aux && \
-			(aux->type == OPTION || aux->type == ARG))
+			while (aux && aux->type != PIPE)
 			{
 				if (aux->type == OPTION && !tmp->opt)
 					tmp->opt = aux;

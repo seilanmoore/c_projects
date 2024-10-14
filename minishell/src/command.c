@@ -6,7 +6,7 @@
 /*   By: smoore-a <smoore-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/03 14:39:54 by smoore-a          #+#    #+#             */
-/*   Updated: 2024/10/07 09:10:26 by smoore-a         ###   ########.fr       */
+/*   Updated: 2024/10/14 14:06:48 by smoore-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,22 +15,19 @@
 
 int	is_built(char *cmd)
 {
-	int	len;
-
-	len = ft_strlen(cmd);
-	if (!ft_strncmp(cmd, "echo", len))
+	if (!ft_strcmp(cmd, "echo"))
 		return (1);
-	if (!ft_strncmp(cmd, "cd", len))
+	if (!ft_strcmp(cmd, "cd"))
 		return (1);
-	if (!ft_strncmp(cmd, "pwd", len))
+	if (!ft_strcmp(cmd, "pwd"))
 		return (1);
-	if (!ft_strncmp(cmd, "export", len))
+	if (!ft_strcmp(cmd, "export"))
 		return (1);
-	if (!ft_strncmp(cmd, "unset", len))
+	if (!ft_strcmp(cmd, "unset"))
 		return (1);
-	if (!ft_strncmp(cmd, "env", len))
+	if (!ft_strcmp(cmd, "env"))
 		return (1);
-	if (!ft_strncmp(cmd, "exit", len))
+	if (!ft_strcmp(cmd, "exit"))
 		return (1);
 	return (0);
 }
@@ -42,14 +39,10 @@ static int	count_args(t_token *token)
 
 	n_args = 1;
 	tmp = token->next;
-	while (tmp && tmp->type == OPTION)
+	while (tmp && tmp->type != PIPE)
 	{
-		n_args++;
-		tmp = tmp->next;
-	}
-	while (tmp && tmp->type == ARG)
-	{
-		n_args++;
+		if (tmp->type == OPTION || tmp->type == ARG)
+			n_args++;
 		tmp = tmp->next;
 	}
 	return (n_args);
@@ -76,7 +69,7 @@ static char	*put_quotes(t_token *token)
 	return (arg);
 }
 
-static char	**args_no_cmd(t_token *token)
+/* static char	**args_no_cmd(t_token *token)
 {
 	t_token	*tmp;
 	char	**args;
@@ -97,36 +90,37 @@ static char	**args_no_cmd(t_token *token)
 		tmp = tmp->next;
 	}
 	return (args);
-}
+} */
 
-static char	**extract_args(t_token *token)
+static char	**extract_args(t_token *token, int built)
 {
-	t_token	*tmp;
 	char	**args;
-	int		n_args;
 	int		i;
 
-	tmp = token->next;
-	n_args = count_args(token);
-	args = ft_calloc(n_args + 1, sizeof(char *));
+	args = ft_calloc(count_args(token) + 1, sizeof(char *));
 	if (!args)
 		return (NULL);
 	args[0] = ft_strdup(token->token);
-	i = 0;
-	while (++i < n_args)
+	token = token->next;
+	i = 1;
+	while (token && token->type != PIPE)
 	{
-		if (tmp->quote == S_QUOTE || tmp->quote == D_QUOTE)
-			args[i] = put_quotes(tmp);
-		else
-			args[i] = ft_strdup(tmp->token);
-		if (!args[i])
-			return (args);
-		tmp = tmp->next;
+		if (token->type == OPTION || token->type == ARG)
+		{
+			if (!built && (token->quote == S_QUOTE || token->quote == D_QUOTE))
+				args[i] = put_quotes(token);
+			else
+				args[i] = ft_strdup(token->token);
+			if (!args[i])
+				return (args);
+			i++;
+		}
+		token = token->next;
 	}
 	return (args);
 }
 
-void	parse_cmd_opt(t_data *data)
+/* void	parse_cmd_opt(t_data *data)
 {
 	t_token	*tmp;
 	char	**args;
@@ -147,4 +141,26 @@ void	parse_cmd_opt(t_data *data)
 		tmp = tmp->next;
 	}
 	assign_paths(data);
+} */
+
+void	parse_cmd_opt(t_data *data)
+{
+	t_token	*tmp;
+	char	**args;
+	int		built;
+
+	tmp = data->input.tokens;
+	while (tmp)
+	{
+		if (tmp->token && tmp->type == CMD)
+		{
+			built = is_built(tmp->token);
+			args = extract_args(tmp, built);
+			add_back_cmd(&(data->input.command),
+				new_cmd(ft_strdup(tmp->token), args, built));
+		}
+		tmp = tmp->next;
+	}
+	assign_paths(data);
+	print_cmd_array(data);
 }

@@ -6,7 +6,7 @@
 /*   By: smoore-a <smoore-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/25 11:02:34 by smoore-a          #+#    #+#             */
-/*   Updated: 2024/10/13 13:37:58 by smoore-a         ###   ########.fr       */
+/*   Updated: 2024/10/14 11:46:41 by smoore-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,8 +23,7 @@ pid_t	ft_get_pid(void)
 	tmp = get_next_line(fd);
 	pid = ft_atoi(tmp);
 	free(tmp);
-	if (fd)
-		close(fd);
+	close(fd);
 	return (pid);
 }
 
@@ -39,6 +38,9 @@ void	init_data(t_data *data, int argc, char **argv, char **envp)
 	data->argv = argv;
 	data->status = -1;
 	data->exit_code = -1;
+	data->n_files = 0;
+	data->in_cmd = 0;
+	data->in_arg = 0;
 	data->pid = ft_get_pid();
 	data->process = ft_itoa(data->pid);
 	data->prev_exit_code = ft_itoa(0);

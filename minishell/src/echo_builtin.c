@@ -6,7 +6,7 @@
 /*   By: smoore-a <smoore-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/02 12:47:35 by smoore-a          #+#    #+#             */
-/*   Updated: 2024/10/08 10:45:25 by smoore-a         ###   ########.fr       */
+/*   Updated: 2024/10/14 14:34:45 by smoore-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,46 +26,73 @@ static void	print_arg(char *arg)
 	}
 }
 
+int	next_opt(t_token *token)
+{
+	while (token && token->type != PIPE)
+	{
+		if (token->type == OPTION)
+			return (1);
+	}
+	return (0);
+}
+
+static int	next_arg(t_token *token)
+{
+	while (token && token->type != PIPE)
+	{
+		if (token->type == ARG)
+			return (1);
+	}
+	return (0);
+}
+
 static int	check_options(t_data *data, t_token *token)
 {
-	t_token	*arg;
-
-	if ((token->opt->next && token->opt->next->type == OPTION) || \
-	ft_strlen(token->opt->token) > 2)
-		return (print_msg(data, MS ECHO ECHO_OPTS, -1), 1);
-	if (token->opt->token[1] != 'n')
-		return (print_msg(data, MS ECHO ECHO_OPT, -1), 1);
-	arg = token->arg;
-	while (arg && arg->type == ARG)
+	while (token && token->type != PIPE)
 	{
-		print_arg(arg->token);
-		if (arg->token && *(arg->token) && \
-		arg->next && arg->next->type == ARG)
-			ft_putchar_fd(' ', 1);
-		arg = arg->next;
+		if (token->type == OPTION)
+		{
+			if (ft_strlen(token->token) > 2 || next_opt(token))
+				return (print_msg(data, MS ECHO ECHO_OPTS, -1), 1);
+			if (token->token[1] != 'n')
+				return (print_msg(data, MS ECHO ECHO_OPT, -1), 1);
+			token = token->next;
+			while (token && token->type != PIPE)
+			{
+				if (token->type == ARG)
+				{
+					print_arg(token->token);
+					if (token->token && *(token->token) && \
+					token->next && token->next->type == ARG)
+						ft_putchar_fd(' ', 1);
+				}
+				token = token->next;
+			}
+			return (2);
+		}
+		token = token->next;
 	}
 	return (0);
 }
 
 int	echo_builtin(t_data *data, t_token *token)
 {
-	t_token	*arg;
+	int	options;
 
-	if (token->opt)
+	options = check_options(data, token);
+	if (options == 1)
+		return (1);
+	if (!options)
 	{
-		if (check_options(data, token) == 1)
-			return (1);
-	}
-	else
-	{
-		arg = token->arg;
-		while (arg && arg->type == ARG)
+		while (token && token->type != PIPE)
 		{
-			print_arg(arg->token);
-			if (arg->token && *(arg->token) && \
-			arg->next && arg->next->type == ARG)
-				ft_putchar_fd(' ', 1);
-			arg = arg->next;
+			if (token->type == ARG)
+			{
+				print_arg(token->token);
+				if (next_arg(token))
+					ft_putchar_fd(' ', 1);
+			}
+			token = token->next;
 		}
 		ft_putchar_fd('\n', 1);
 	}

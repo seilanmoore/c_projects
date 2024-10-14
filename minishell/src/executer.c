@@ -6,7 +6,7 @@
 /*   By: smoore-a <smoore-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/03 13:58:17 by smoore-a          #+#    #+#             */
-/*   Updated: 2024/10/12 14:55:17 by smoore-a         ###   ########.fr       */
+/*   Updated: 2024/10/14 13:23:28 by smoore-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,13 +40,11 @@ static void	cmd_not_found(t_data *data, char *cmd)
 static	t_token	*get_token(t_token *tokens, char *token)
 {
 	t_token	*tmp;
-	int		tmp_len;
 
 	tmp = tokens;
 	while (tmp)
 	{
-		tmp_len = ft_strlen(tmp->token);
-		if (!ft_strncmp(tmp->token, token, tmp_len))
+		if (!ft_strcmp(tmp->token, token))
 			return (tmp);
 		tmp = tmp->next;
 	}
@@ -56,23 +54,21 @@ static	t_token	*get_token(t_token *tokens, char *token)
 static int	builtin_out(t_data *data)
 {
 	char	*cmd;
-	int		len;
 
 	cmd = data->input.command->cmd;
-	len = ft_strlen(cmd);
-	if (!ft_strncmp(cmd, "exit", len))
+	if (!ft_strcmp(cmd, "exit"))
 		return (exit_builtin(data));
-	else if (!ft_strncmp(cmd, "echo", len))
+	else if (!ft_strcmp(cmd, "echo"))
 		return (echo_builtin(data, get_token(data->input.tokens, "echo")));
-	else if (!ft_strncmp(cmd, "cd", len))
+	else if (!ft_strcmp(cmd, "cd"))
 		return (cd_builtin(data, get_token(data->input.tokens, "cd")));
-	else if (!ft_strncmp(cmd, "pwd", len))
+	else if (!ft_strcmp(cmd, "pwd"))
 		return (pwd_builtin(data));
-	else if (!ft_strncmp(cmd, "export", len))
+	else if (!ft_strcmp(cmd, "export"))
 		return (export_builtin(data, data->input.command));
-	else if (!ft_strncmp(cmd, "unset", len))
+	else if (!ft_strcmp(cmd, "unset"))
 		return (unset_builtin(data, data->input.command));
-	else if (!ft_strncmp(cmd, "env", len))
+	else if (!ft_strcmp(cmd, "env"))
 		return (env_builtin(data));
 	return (0);
 }
@@ -206,6 +202,7 @@ int	execute(t_data *data)
 	int		exit_var;
 
 	exit_var = 0;
+	//open_files(data);
 	if (!data->input.command)
 		return (exit_var);
 	if (!data->n_pipe && data->input.command->builtin)

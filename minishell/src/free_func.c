@@ -6,7 +6,7 @@
 /*   By: smoore-a <smoore-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/25 11:02:07 by smoore-a          #+#    #+#             */
-/*   Updated: 2024/10/12 13:44:13 by smoore-a         ###   ########.fr       */
+/*   Updated: 2024/10/14 13:30:48 by smoore-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,11 +64,8 @@ void	free_cmds(t_data *data)
 
 	while (data->input.command)
 	{
-		if (!data->input.command->builtin)
-		{
-			free(data->input.command->cmd);
-			data->input.command->cmd = NULL;
-		}
+		free(data->input.command->cmd);
+		data->input.command->cmd = NULL;
 		free_array(data->input.command->args);
 		data->input.command->args = NULL;
 		tmp = data->input.command;
