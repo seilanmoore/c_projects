@@ -6,7 +6,7 @@
 /*   By: smoore-a <smoore-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/19 12:17:44 by smoore-a          #+#    #+#             */
-/*   Updated: 2024/10/14 12:08:44 by smoore-a         ###   ########.fr       */
+/*   Updated: 2024/10/15 17:18:49 by smoore-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -139,6 +139,7 @@ typedef struct s_data
 	int		n_files;
 	int		in_cmd;
 	int		in_arg;
+	int		in_local;
 	int		status;
 	int		exit_code;
 	char	*prev_exit_code;
@@ -173,11 +174,11 @@ void	print_locals(t_data *data);
 void	locals(t_data *data);
 
 //parser
-void	parser(t_data *data);
+int		parser(t_data *data);
 void	access_to_types(t_data *data, int target, int type);
 void	type_checks(t_data *data, t_token *ptr, int i);
-void	parse_cmd_opt(t_data *data);
-void	assign_paths(t_data *data);
+int		parse_cmd_opt(t_data *data);
+int		assign_paths(t_data *data);
 
 //syntax
 void	syntax_msg(char *wildcard);
@@ -235,7 +236,6 @@ void	add_back_token(t_token **lst, t_token *node);
 
 void	add_back_variable(t_env **lst, t_env *node);
 int		env_size(t_env *lst);
-void	upd_env(t_data *data);
 
 void	parse_environment(t_data *data);
 void	envp_to_array(t_data *data);

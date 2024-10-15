@@ -6,7 +6,7 @@
 /*   By: smoore-a <smoore-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/03 15:21:13 by smoore-a          #+#    #+#             */
-/*   Updated: 2024/10/12 20:02:36 by smoore-a         ###   ########.fr       */
+/*   Updated: 2024/10/15 17:14:02 by smoore-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,9 @@ static void	characters(t_data *data, t_var *var)
 		handle_redir_char(data, var);
 		return ;
 	}
-	while (var->aux1[var->i] && !is_space(var->aux1[var->i]))
+	while (var->aux1[var->i] && \
+	!is_space(var->aux1[var->i]) && \
+	!is_redir(var->aux1[var->i]))
 		var->i++;
 	var->aux = ft_substr(var->aux1, 0, var->i);
 	add_back_token(&(data->input.tokens), new_token(var->aux, 0, NO_QUOTE));
@@ -102,7 +104,6 @@ void	tokenizer(t_data *data)
 		var.aux1 = var.aux1 + var.i;
 	}
 	set_prev_token(data);
-	expand(data);
 	assign_types(data);
 	//remove_equal(data);
 }

@@ -6,7 +6,7 @@
 /*   By: smoore-a <smoore-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/19 12:17:10 by smoore-a          #+#    #+#             */
-/*   Updated: 2024/10/14 13:29:50 by smoore-a         ###   ########.fr       */
+/*   Updated: 2024/10/15 16:22:47 by smoore-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,7 +88,7 @@ int	main(int argc, char **argv, char **envp)
 	get_history();
 	while (1)
 	{
-		data.input.raw_line = readline(prompter(&data));
+		data.input.raw_line = readline(prompter(&data)); 
 		handle_eof(&data);
 		if (data.input.raw_line && ft_strlen(data.input.raw_line) > 0)
 		{
@@ -96,11 +96,16 @@ int	main(int argc, char **argv, char **envp)
 			if (data.history && ft_strlen(data.history) > 0)
 				add_history(data.history);
 			save_history();
-			parser(&data);
-			if (syntax_error(&data))
-				data.exit_code = 1;
-			/* else
-				data.exit_code = execute(&data); */
+			if (!parser(&data))
+			{
+				print_types(&data);
+				if (syntax_error(&data))
+					data.exit_code = 1;
+				/* while (1 && !g_signal)
+					printf("a\n"); */
+				else
+					data.exit_code = execute(&data);
+			}
 			free(data.prev_exit_code);
 			data.prev_exit_code = ft_itoa(data.exit_code);
 		}

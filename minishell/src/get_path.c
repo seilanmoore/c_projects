@@ -6,7 +6,7 @@
 /*   By: smoore-a <smoore-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/26 15:15:30 by smoore-a          #+#    #+#             */
-/*   Updated: 2024/10/14 13:58:51 by smoore-a         ###   ########.fr       */
+/*   Updated: 2024/10/15 15:32:38 by smoore-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ static void	get_env_paths(t_data *data)
 	}
 }
 
-void	assign_paths(t_data *data)
+int	assign_paths(t_data *data)
 {
 	t_cmd	*head;
 	char	*path;
@@ -60,19 +60,22 @@ void	assign_paths(t_data *data)
 	{
 		if (!head->builtin && !ft_strchr(head->cmd, '/'))
 		{
-			i = 0;
-			path = ft_strjoin(data->paths[i], head->cmd);
-			while (access(path, F_OK | X_OK) == -1)
+			i = -1;
+			while (data->paths[++i] && !ft_strchr(head->cmd, '/'))
 			{
-				free(path);
-				path = ft_strjoin(data->paths[++i], head->cmd);
-			}
-			if (access(path, F_OK | X_OK) != -1)
-			{
-				free(head->cmd);
-				head->cmd = path;
+				path = ft_strjoin(data->paths[i], head->cmd);
+				if (access(path, F_OK | X_OK) == -1)
+					free(path);
+				else
+				{
+					free(head->cmd);
+					head->cmd = path;
+				}
 			}
 		}
+		else if (!head->builtin && access(head->cmd, F_OK | X_OK) == -1)
+			return (handle_errno(head->cmd), errno);
 		head = head->next;
 	}
+	return (0);
 }

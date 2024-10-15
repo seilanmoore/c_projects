@@ -6,7 +6,7 @@
 /*   By: smoore-a <smoore-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/26 09:53:56 by smoore-a          #+#    #+#             */
-/*   Updated: 2024/10/12 14:31:59 by smoore-a         ###   ########.fr       */
+/*   Updated: 2024/10/15 17:04:10 by smoore-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,6 @@ static void	update_token(t_data *data, t_token *token, char **ptr)
 	(*ptr)++;
 	if (*ptr && **ptr == '$' && *(*ptr - 1) == '$')
 		(*ptr)++;
-
 }
 
 static void	check_token(t_data *data, char *aux)

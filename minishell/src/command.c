@@ -6,7 +6,7 @@
 /*   By: smoore-a <smoore-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/03 14:39:54 by smoore-a          #+#    #+#             */
-/*   Updated: 2024/10/14 14:06:48 by smoore-a         ###   ########.fr       */
+/*   Updated: 2024/10/15 15:12:34 by smoore-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -143,7 +143,7 @@ static char	**extract_args(t_token *token, int built)
 	assign_paths(data);
 } */
 
-void	parse_cmd_opt(t_data *data)
+int	parse_cmd_opt(t_data *data)
 {
 	t_token	*tmp;
 	char	**args;
@@ -161,6 +161,6 @@ void	parse_cmd_opt(t_data *data)
 		}
 		tmp = tmp->next;
 	}
-	assign_paths(data);
 	print_cmd_array(data);
+	return (assign_paths(data));
 }
