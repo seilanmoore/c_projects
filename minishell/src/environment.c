@@ -6,7 +6,7 @@
 /*   By: smoore-a <smoore-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/22 12:13:57 by smoore-a          #+#    #+#             */
-/*   Updated: 2024/10/17 13:52:15 by smoore-a         ###   ########.fr       */
+/*   Updated: 2024/10/17 20:18:31 by smoore-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,10 +61,8 @@ void	parse_environment(t_data *data)
 	int		modified;
 
 	envp_to_lst(data);
-	printf("SHLVL from env_lst when parse environment: %s\n", get_env_var(data->env, "SHLVL")->value);
 	modified = 0;
-	//upd_env(data);
-	/* variable = get_env_var(data->env, "OLDPWD");
+	variable = get_env_var(data->env, "OLDPWD");
 	if (variable)
 	{
 		modified = 1;
@@ -79,5 +77,5 @@ void	parse_environment(t_data *data)
 		variable->value = ft_strdup(data->cwd);
 	}
 	if (modified)
-		upd_env(data); */
+		upd_env(data); //no actualiza correctamente
 }
