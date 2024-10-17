@@ -6,14 +6,14 @@
 /*   By: smoore-a <smoore-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/03 14:39:54 by smoore-a          #+#    #+#             */
-/*   Updated: 2024/10/15 15:12:34 by smoore-a         ###   ########.fr       */
+/*   Updated: 2024/10/17 12:44:43 by smoore-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 #include <unistd.h>
 
-int	is_built(char *cmd)
+static int	is_built(char *cmd)
 {
 	if (!ft_strcmp(cmd, "echo"))
 		return (1);
@@ -69,29 +69,6 @@ static char	*put_quotes(t_token *token)
 	return (arg);
 }
 
-/* static char	**args_no_cmd(t_token *token)
-{
-	t_token	*tmp;
-	char	**args;
-	int		n_args;
-	int		i;
-
-	tmp = token->next;
-	n_args = count_args(token) - 1;
-	args = ft_calloc(n_args + 1, sizeof(char *));
-	if (!args)
-		return (NULL);
-	i = -1;
-	while (++i < n_args)
-	{
-		args[i] = ft_strdup(tmp->token);
-		if (!args[i])
-			return (args);
-		tmp = tmp->next;
-	}
-	return (args);
-} */
-
 static char	**extract_args(t_token *token, int built)
 {
 	char	**args;
@@ -120,30 +97,7 @@ static char	**extract_args(t_token *token, int built)
 	return (args);
 }
 
-/* void	parse_cmd_opt(t_data *data)
-{
-	t_token	*tmp;
-	char	**args;
-
-	tmp = data->input.tokens;
-	while (tmp)
-	{
-		if (tmp->token && tmp->type == CMD && !is_built(tmp->token))
-		{
-			args = extract_args(tmp);
-			add_back_cmd(&(data->input.command), new_cmd(tmp->token, args, 0));
-		}
-		else if (tmp->token && tmp->type == CMD && is_built(tmp->token))
-		{
-			args = args_no_cmd(tmp);
-			add_back_cmd(&(data->input.command), new_cmd(tmp->token, args, 1));
-		}
-		tmp = tmp->next;
-	}
-	assign_paths(data);
-} */
-
-int	parse_cmd_opt(t_data *data)
+void	parse_cmd_opt(t_data *data)
 {
 	t_token	*tmp;
 	char	**args;
@@ -162,5 +116,5 @@ int	parse_cmd_opt(t_data *data)
 		tmp = tmp->next;
 	}
 	print_cmd_array(data);
-	return (assign_paths(data));
+	assign_paths(data);
 }

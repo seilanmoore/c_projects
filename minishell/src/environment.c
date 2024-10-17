@@ -6,35 +6,11 @@
 /*   By: smoore-a <smoore-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/22 12:13:57 by smoore-a          #+#    #+#             */
-/*   Updated: 2024/10/11 10:45:32 by smoore-a         ###   ########.fr       */
+/*   Updated: 2024/10/17 13:52:15 by smoore-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
-
-int	count_vars(char **env)
-{
-	int	i;
-
-	i = -1;
-	while (env[++i])
-		;
-	return (i);
-}
-
-void	copy_envp(t_data *data)
-{
-	int	i;
-
-	if (!data->envp)
-		return ;
-	data->envp_cpy = ft_calloc(count_vars(data->envp) + 1, sizeof(char *));
-	if (!data->envp_cpy)
-		return ;
-	i = -1;
-	while (data->envp[++i])
-		data->envp_cpy[i] = ft_strdup(data->envp[i]);
-}
 
 void	envp_to_array(t_data *data)
 {
@@ -46,11 +22,11 @@ void	envp_to_array(t_data *data)
 		return ;
 	head = data->env;
 	i = 0;
-	data->envp_cpy = ft_calloc(env_size(data->env) + 1, sizeof(char *));
+	data->envp = ft_calloc(env_size(data->env) + 1, sizeof(char *));
 	while (data->env)
 	{
 		tmp = ft_strjoin(data->env->variable, "=");
-		data->envp_cpy[i++] = ft_strjoin(tmp, data->env->value);
+		data->envp[i++] = ft_strjoin(tmp, data->env->value);
 		free(tmp);
 		data->env = data->env->next;
 	}
@@ -65,14 +41,14 @@ void	envp_to_lst(t_data *data)
 	int				i;
 
 	i = -1;
-	if (!data->envp_cpy)
+	if (!data->envp)
 		return ;
-	while (data->envp_cpy[++i])
+	while (data->envp[++i])
 	{
-		len = ft_strchr(data->envp_cpy[i], '=') - data->envp_cpy[i];
-		variable = ft_substr(data->envp_cpy[i], 0, len);
+		len = ft_strchr(data->envp[i], '=') - data->envp[i];
+		variable = ft_substr(data->envp[i], 0, len);
 		value = ft_substr(
-				data->envp_cpy[i], len + 1, ft_strlen(data->envp_cpy[i]));
+				data->envp[i], len + 1, ft_strlen(data->envp[i]));
 		add_back_variable(&(data->env), new_variable(variable, value));
 		free(variable);
 		free(value);
@@ -82,24 +58,26 @@ void	envp_to_lst(t_data *data)
 void	parse_environment(t_data *data)
 {
 	t_env	*variable;
+	int		modified;
 
-	if (!data->envp_cpy)
+	envp_to_lst(data);
+	printf("SHLVL from env_lst when parse environment: %s\n", get_env_var(data->env, "SHLVL")->value);
+	modified = 0;
+	//upd_env(data);
+	/* variable = get_env_var(data->env, "OLDPWD");
+	if (variable)
 	{
-		copy_envp(data);
-		envp_to_lst(data);
-		variable = get_env_var(data->env, "OLDPWD");
-		if (variable)
-		{
-			free(variable->value);
-			variable->value = ft_strdup(data->cwd);
-			upd_env(data);
-		}
+		modified = 1;
+		free(variable->value);
+		variable->value = ft_strdup(data->cwd);
 	}
 	variable = get_env_var(data->env, "PWD");
 	if (variable)
 	{
+		modified = 1;
 		free(variable->value);
 		variable->value = ft_strdup(data->cwd);
-		upd_env(data);
 	}
+	if (modified)
+		upd_env(data); */
 }

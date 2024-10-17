@@ -6,12 +6,53 @@
 /*   By: smoore-a <smoore-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/25 11:02:34 by smoore-a          #+#    #+#             */
-/*   Updated: 2024/10/14 11:46:41 by smoore-a         ###   ########.fr       */
+/*   Updated: 2024/10/17 13:43:31 by smoore-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 #include <fcntl.h>
+
+void	upd_shlvl(t_data *data)
+{
+	t_env	*shlvl;
+	int		lvl;
+
+	shlvl = get_env_var(data->env, "SHLVL");
+	if (shlvl && shlvl->value)
+	{
+		printf("firt SHLVL inside upd_shlvl: %s\n", shlvl->value);
+		lvl = ft_atoi(shlvl->value);
+		free(shlvl->value);
+		shlvl->value = ft_itoa(lvl + 1);
+		upd_env(data);
+		printf("second SHLVL inside upd_shlvl: %s\n", get_envp_var(data->envp, "SHLVL"));
+	}
+}
+
+int	count_vars(char **env)
+{
+	int	i;
+
+	i = -1;
+	while (env[++i])
+		;
+	return (i);
+}
+
+void	copy_envp(t_data *data, char **envp)
+{
+	int	i;
+
+	if (!envp)
+		return ;
+	data->envp = ft_calloc(count_vars(envp) + 1, sizeof(char *));
+	if (!data->envp)
+		return ;
+	i = -1;
+	while (envp[++i])
+		data->envp[i] = ft_strdup(envp[i]);
+}
 
 pid_t	ft_get_pid(void)
 {
@@ -27,21 +68,18 @@ pid_t	ft_get_pid(void)
 	return (pid);
 }
 
-void	init_data(t_data *data, int argc, char **argv, char **envp)
+void	init_data(t_data *data, char **envp)
 {
 	*data = (t_data){0};
 	data->env = (t_env *){0};
 	data->locals = (t_env *){0};
 	data->input = (t_input){0};
-	data->envp = envp;
-	data->argc = argc;
-	data->argv = argv;
-	data->status = -1;
-	data->exit_code = -1;
-	data->n_files = 0;
-	data->in_cmd = 0;
-	data->in_arg = 0;
 	data->pid = ft_get_pid();
 	data->process = ft_itoa(data->pid);
 	data->prev_exit_code = ft_itoa(0);
+	copy_envp(data, envp);
+	printf("SHLVL from envp of last session: %s\n", get_envp_var(envp, "SHLVL"));
+	envp_to_lst(data);
+	upd_shlvl(data);
+	printf("SHLVL: %s\n", get_envp_var(data->envp, "SHLVL"));
 }

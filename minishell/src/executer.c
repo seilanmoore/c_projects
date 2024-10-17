@@ -6,7 +6,7 @@
 /*   By: smoore-a <smoore-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/03 13:58:17 by smoore-a          #+#    #+#             */
-/*   Updated: 2024/10/15 15:33:15 by smoore-a         ###   ########.fr       */
+/*   Updated: 2024/10/17 12:18:22 by smoore-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -135,7 +135,7 @@ static void	cmd_out(t_data *data)
 		args = data->input.command->args;
 		if (!path)
 			exit(1);
-		if (execve(path, args, data->envp_cpy) == -1)
+		if (execve(path, args, data->envp) == -1)
 		{
 			cmd_not_found(data, data->input.command->cmd);
 			exit(127);

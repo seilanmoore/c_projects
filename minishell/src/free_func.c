@@ -6,7 +6,7 @@
 /*   By: smoore-a <smoore-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/25 11:02:07 by smoore-a          #+#    #+#             */
-/*   Updated: 2024/10/14 13:30:48 by smoore-a         ###   ########.fr       */
+/*   Updated: 2024/10/17 13:40:25 by smoore-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,8 +54,8 @@ void	free_environment(t_data *data)
 		data->env = data->env->next;
 		free(tmp);
 	}
-	free_array(data->envp_cpy);
-	data->envp_cpy = NULL;
+	free_array(data->envp);
+	data->envp = NULL;
 }
 
 void	free_cmds(t_data *data)
@@ -90,7 +90,6 @@ void	free_tokens(t_data *data)
 
 void	free_data(t_data *data)
 {
-	int		i;
 	t_env	*env_head;
 	t_env	*local_head;
 	char	**env_ptr;
@@ -98,7 +97,7 @@ void	free_data(t_data *data)
 
 	aux = data->prev_exit_code;
 	env_head = data->env;
-	env_ptr = data->envp_cpy;
+	env_ptr = data->envp;
 	local_head = data->locals;
 	free(data->prompt);
 	free(data->input.raw_line);
@@ -107,20 +106,14 @@ void	free_data(t_data *data)
 	free(data->cwd);
 	free_tokens(data);
 	free_cmds(data);
-	i = -1;
-	if (data->input.command)
-	{
-		while (data->input.command[++i].cmd)
-			free(data->input.command[i].cmd);
-		free(data->input.command);
-	}
 	free_array(data->paths);
-	i = data->status;
-	init_data(data, data->argc, data->argv, data->envp);
+	*data = (t_data){0};
+	data->env = (t_env *){0};
+	data->locals = (t_env *){0};
+	data->input = (t_input){0};
 	data->env = env_head;
-	data->envp_cpy = env_ptr;
+	data->envp = env_ptr;
 	data->locals = local_head;
-	data->status = i;
 	free(data->prev_exit_code);
 	data->prev_exit_code = aux;
 }

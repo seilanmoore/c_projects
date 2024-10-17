@@ -6,7 +6,7 @@
 /*   By: smoore-a <smoore-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/26 09:54:56 by smoore-a          #+#    #+#             */
-/*   Updated: 2024/10/15 16:03:57 by smoore-a         ###   ########.fr       */
+/*   Updated: 2024/10/17 13:25:32 by smoore-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,10 +75,10 @@ char	*cwd_compress(t_data *data)
 	char	*home;
 
 	short_cwd = NULL;
-	if (!data->envp_cpy)
+	if (!data->envp)
 		home = getenv("HOME");
 	else
-		home = get_envp_var(data->envp_cpy, "HOME=");
+		home = get_envp_var(data->envp, "HOME=");
 	if (!ft_strncmp(data->cwd, home, ft_strlen(home)))
 		short_cwd = str_replace(data->cwd, home, "~");
 	return (short_cwd);
@@ -250,12 +250,18 @@ char	*rev_split(char **array)
 
 char	*get_envp_var(char **envp, char *var)
 {
+	int	v_len;
+
 	if (!envp)
 		return (NULL);
 	while (*envp)
 	{
-		if (!ft_strcmp(*envp, var))
-			return (ft_strchr(*envp, '=') + 1);
+		v_len = ft_strchr(*envp, '=') - *envp;
+		if (!ft_strncmp(*envp, var, v_len))
+		{
+			if (ft_strlen(var) == (size_t)v_len)
+				return (ft_strchr(*envp, '=') + 1);
+		}
 		envp++;
 	}
 	return (NULL);

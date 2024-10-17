@@ -6,7 +6,7 @@
 /*   By: smoore-a <smoore-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/03 15:21:13 by smoore-a          #+#    #+#             */
-/*   Updated: 2024/10/15 17:14:02 by smoore-a         ###   ########.fr       */
+/*   Updated: 2024/10/17 12:58:17 by smoore-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,10 @@ static void	single_quote(t_data *data, t_var *var)
 	var->aux = ft_substr(var->aux1, 0, var->i);
 	if (var->aux1[var->i])
 		var->i++;
-	add_back_token(&(data->input.tokens), new_token(var->aux, 0, S_QUOTE));
+	if (is_space(var->aux1[var->i]))
+		add_back_token(&(data->input.tokens), new_token(var->aux, 0, S_QUOTE, 1));
+	else
+		add_back_token(&(data->input.tokens), new_token(var->aux, 0, S_QUOTE, 0));
 }
 
 static void	double_quote(t_data *data, t_var *var)
@@ -45,7 +48,10 @@ static void	double_quote(t_data *data, t_var *var)
 	var->aux = ft_substr(var->aux1, 0, var->i);
 	if (var->aux1[var->i])
 		var->i++;
-	add_back_token(&(data->input.tokens), new_token(var->aux, 0, D_QUOTE));
+	if (is_space(var->aux1[var->i]))
+		add_back_token(&(data->input.tokens), new_token(var->aux, 0, D_QUOTE, 1));
+	else
+		add_back_token(&(data->input.tokens), new_token(var->aux, 0, D_QUOTE, 0));
 }
 
 void	handle_redir_char(t_data *data, t_var *var)
@@ -65,22 +71,27 @@ void	handle_redir_char(t_data *data, t_var *var)
 	else if (var->aux1[var->i] == '|')
 		var->i++;
 	var->aux = ft_substr(var->aux1, 0, var->i);
-	add_back_token(&(data->input.tokens), new_token(var->aux, 0, NO_QUOTE));
+	if (is_space(var->aux1[var->i]))
+		add_back_token(&(data->input.tokens), new_token(var->aux, 0, NO_QUOTE, 1));
+	else
+		add_back_token(&(data->input.tokens), new_token(var->aux, 0, NO_QUOTE, 0));
 }
 
 static void	characters(t_data *data, t_var *var)
 {
 	if (is_redir(var->aux1[var->i]))
-	{
-		handle_redir_char(data, var);
-		return ;
-	}
+		return (handle_redir_char(data, var));
 	while (var->aux1[var->i] && \
 	!is_space(var->aux1[var->i]) && \
-	!is_redir(var->aux1[var->i]))
+	var->aux1[var->i] != '=')
 		var->i++;
 	var->aux = ft_substr(var->aux1, 0, var->i);
-	add_back_token(&(data->input.tokens), new_token(var->aux, 0, NO_QUOTE));
+	if (is_space(var->aux1[var->i]))
+		add_back_token(&(data->input.tokens), \
+		new_token(var->aux, 0, NO_QUOTE, 1));
+	else
+		add_back_token(&(data->input.tokens), \
+		new_token(var->aux, 0, NO_QUOTE, 0));
 }
 
 void	tokenizer(t_data *data)

@@ -6,7 +6,7 @@
 /*   By: smoore-a <smoore-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/03 13:15:47 by smoore-a          #+#    #+#             */
-/*   Updated: 2024/10/14 12:16:06 by smoore-a         ###   ########.fr       */
+/*   Updated: 2024/10/17 12:18:22 by smoore-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ void	expand_home(t_data *data)
 		data->input.tokens->type == FILE) && \
 		*(data->input.tokens->token) == '~')
 	{
-		value = get_envp_var(data->envp_cpy, "HOME=");
+		value = get_envp_var(data->envp, "HOME=");
 		if (!value)
 			value = get_envp_var(data->envp, "HOME=");
 		tmp = str_replace(data->input.tokens->token, "~", value);

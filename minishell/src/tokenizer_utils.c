@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   token_utils.c                                      :+:      :+:    :+:   */
+/*   tokenizer_utils.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: smoore-a <smoore-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/21 12:03:30 by smoore-a          #+#    #+#             */
-/*   Updated: 2024/10/11 13:41:52 by smoore-a         ###   ########.fr       */
+/*   Updated: 2024/10/16 12:44:54 by smoore-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ void	add_back_token(t_token **lst, t_token *node)
 	}
 }
 
-t_token	*new_token(void *token, int type, int quote)
+t_token	*new_token(void *token, int type, int quote, int end_space)
 {
 	t_token	*new_node;
 
@@ -63,6 +63,7 @@ t_token	*new_token(void *token, int type, int quote)
 	new_node->token = token;
 	new_node->type = type;
 	new_node->quote = quote;
+	new_node->end_space = end_space;
 	new_node->opt = NULL;
 	new_node->arg = NULL;
 	new_node->prev = NULL;

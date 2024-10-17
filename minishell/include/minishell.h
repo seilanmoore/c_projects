@@ -6,7 +6,7 @@
 /*   By: smoore-a <smoore-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/19 12:17:44 by smoore-a          #+#    #+#             */
-/*   Updated: 2024/10/15 17:18:49 by smoore-a         ###   ########.fr       */
+/*   Updated: 2024/10/17 13:28:34 by smoore-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,6 +88,7 @@ typedef struct s_tokens
 	char				*token;
 	int					type;
 	int					quote;
+	int					end_space;
 	struct s_tokens		*opt;
 	struct s_tokens		*arg;
 	struct s_tokens		*prev;
@@ -125,10 +126,7 @@ typedef struct s_pipe
 typedef struct s_data
 {
 	int		fd[2];
-	int		argc;
-	char	**argv;
 	char	**envp;
-	char	**envp_cpy;
 	char	**paths;
 	char	*user;
 	char	*cwd;
@@ -152,7 +150,7 @@ typedef struct s_data
 }	t_data;
 
 // init
-void	init_data(t_data *data, int argc, char **argv, char **envp);
+void	init_data(t_data *data, char **envp);
 
 // free_func
 void	free_tokens(t_data *data);
@@ -161,6 +159,8 @@ void	free_environment(t_data *data);
 void	free_array(char **array);
 void	free_data(t_data *data);
 
+//environment
+void	envp_to_lst(t_data *data);
 
 //env_utils
 t_env	*get_env(t_env *l_variables, char *l_variable);
@@ -174,11 +174,20 @@ void	print_locals(t_data *data);
 void	locals(t_data *data);
 
 //parser
-int		parser(t_data *data);
+void	parser(t_data *data);
 void	access_to_types(t_data *data, int target, int type);
 void	type_checks(t_data *data, t_token *ptr, int i);
-int		parse_cmd_opt(t_data *data);
-int		assign_paths(t_data *data);
+
+//command
+void	parse_cmd_opt(t_data *data);
+
+//command_path
+void	assign_paths(t_data *data);
+
+//command_utils
+void	add_back_cmd(t_cmd **lst, t_cmd *node);
+t_cmd	*new_cmd(void *command, char **arguments, int builtin);
+t_cmd	*last_cmd(t_cmd *lst);
 
 //syntax
 void	syntax_msg(char *wildcard);
@@ -199,7 +208,7 @@ int		execute(t_data *data);
 void	tokenizer(t_data *data);
 //tokenizer_utils
 void	set_prev_token(t_data *data);
-t_token	*new_token(void *token, int type, int quote);
+t_token	*new_token(void *token, int type, int quote, int end_space);
 t_token	*last_token(t_token *lst);
 
 // parser_checks2
@@ -260,10 +269,6 @@ void	print_locals(t_data *data);
 char	**split_token(char *token);
 void	check_new_var(t_env **lst, t_env *new_var, char **var);
 
-//command
-void	add_back_cmd(t_cmd **lst, t_cmd *node);
-t_cmd	*new_cmd(void *command, char **arguments, int builtin);
-t_cmd	*last_cmd(t_cmd *lst);
 
 // path_checks
 
