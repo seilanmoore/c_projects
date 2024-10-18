@@ -6,7 +6,7 @@
 /*   By: smoore-a <smoore-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/03 13:58:17 by smoore-a          #+#    #+#             */
-/*   Updated: 2024/10/18 14:25:41 by smoore-a         ###   ########.fr       */
+/*   Updated: 2024/10/18 16:03:29 by smoore-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -154,6 +154,7 @@ static void	create_child(t_data *data, t_token *redir, pid_t *pid, int i)
 			return ;
 	}
 	*pid = fork();
+	g_signal = pid[i];
 	if (*pid == -1)
 		return ;
 	if (*pid == 0)

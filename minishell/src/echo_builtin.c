@@ -6,7 +6,7 @@
 /*   By: smoore-a <smoore-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/02 12:47:35 by smoore-a          #+#    #+#             */
-/*   Updated: 2024/10/14 14:34:45 by smoore-a         ###   ########.fr       */
+/*   Updated: 2024/10/18 15:13:02 by smoore-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,7 @@ int	next_opt(t_token *token)
 	{
 		if (token->type == OPTION)
 			return (1);
+		token = token->next;
 	}
 	return (0);
 }
@@ -42,6 +43,7 @@ static int	next_arg(t_token *token)
 	{
 		if (token->type == ARG)
 			return (1);
+		token = token->next;
 	}
 	return (0);
 }
@@ -52,12 +54,12 @@ static int	check_options(t_data *data, t_token *token)
 	{
 		if (token->type == OPTION)
 		{
-			if (ft_strlen(token->token) > 2 || next_opt(token))
+			if (ft_strlen(token->token) > 2 || next_opt(token->next))
 				return (print_msg(data, MS ECHO ECHO_OPTS, -1), 1);
 			if (token->token[1] != 'n')
 				return (print_msg(data, MS ECHO ECHO_OPT, -1), 1);
 			token = token->next;
-			while (token && token->type != PIPE)
+			while (token && token->type != PIPE && !g_signal)
 			{
 				if (token->type == ARG)
 				{
