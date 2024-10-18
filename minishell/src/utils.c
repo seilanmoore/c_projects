@@ -6,7 +6,7 @@
 /*   By: smoore-a <smoore-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/26 09:54:56 by smoore-a          #+#    #+#             */
-/*   Updated: 2024/10/17 13:25:32 by smoore-a         ###   ########.fr       */
+/*   Updated: 2024/10/18 14:25:49 by smoore-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -251,18 +251,19 @@ char	*rev_split(char **array)
 char	*get_envp_var(char **envp, char *var)
 {
 	int	v_len;
+	int	i;
 
 	if (!envp)
 		return (NULL);
-	while (*envp)
+	i = -1;
+	while (envp[++i])
 	{
-		v_len = ft_strchr(*envp, '=') - *envp;
-		if (!ft_strncmp(*envp, var, v_len))
+		v_len = ft_strchr(envp[i], '=') - envp[i];
+		if (!ft_strncmp(envp[i], var, v_len))
 		{
 			if (ft_strlen(var) == (size_t)v_len)
-				return (ft_strchr(*envp, '=') + 1);
+				return (ft_strchr(envp[i], '=') + 1);
 		}
-		envp++;
 	}
 	return (NULL);
 }

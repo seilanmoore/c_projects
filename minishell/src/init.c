@@ -6,14 +6,14 @@
 /*   By: smoore-a <smoore-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/25 11:02:34 by smoore-a          #+#    #+#             */
-/*   Updated: 2024/10/17 13:43:31 by smoore-a         ###   ########.fr       */
+/*   Updated: 2024/10/18 14:26:32 by smoore-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 #include <fcntl.h>
 
-void	upd_shlvl(t_data *data)
+static void	upd_shlvl(t_data *data)
 {
 	t_env	*shlvl;
 	int		lvl;
@@ -21,12 +21,10 @@ void	upd_shlvl(t_data *data)
 	shlvl = get_env_var(data->env, "SHLVL");
 	if (shlvl && shlvl->value)
 	{
-		printf("firt SHLVL inside upd_shlvl: %s\n", shlvl->value);
 		lvl = ft_atoi(shlvl->value);
 		free(shlvl->value);
 		shlvl->value = ft_itoa(lvl + 1);
 		upd_env(data);
-		printf("second SHLVL inside upd_shlvl: %s\n", get_envp_var(data->envp, "SHLVL"));
 	}
 }
 
@@ -78,8 +76,6 @@ void	init_data(t_data *data, char **envp)
 	data->process = ft_itoa(data->pid);
 	data->prev_exit_code = ft_itoa(0);
 	copy_envp(data, envp);
-	printf("SHLVL from envp of last session: %s\n", get_envp_var(envp, "SHLVL"));
 	envp_to_lst(data);
 	upd_shlvl(data);
-	printf("SHLVL: %s\n", get_envp_var(data->envp, "SHLVL"));
 }

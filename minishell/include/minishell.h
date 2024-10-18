@@ -6,7 +6,7 @@
 /*   By: smoore-a <smoore-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/19 12:17:44 by smoore-a          #+#    #+#             */
-/*   Updated: 2024/10/17 13:28:34 by smoore-a         ###   ########.fr       */
+/*   Updated: 2024/10/18 14:26:06 by smoore-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -155,8 +155,9 @@ void	init_data(t_data *data, char **envp);
 // free_func
 void	free_tokens(t_data *data);
 void	free_local(t_data *data);
+void	free_env_lst(t_data *data);
 void	free_environment(t_data *data);
-void	free_array(char **array);
+void	free_array(char ***array);
 void	free_data(t_data *data);
 
 //environment

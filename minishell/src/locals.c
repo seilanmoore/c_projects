@@ -6,7 +6,7 @@
 /*   By: smoore-a <smoore-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/25 10:56:20 by smoore-a          #+#    #+#             */
-/*   Updated: 2024/10/13 20:03:35 by smoore-a         ###   ########.fr       */
+/*   Updated: 2024/10/18 13:08:17 by smoore-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,7 @@ static void	add_local(t_data *data)
 		ft_putstr_fd(MS "`", 2);
 		ft_putstr_fd(local[0], 2);
 		ft_putendl_fd("\': " EXPORT_ID, 2);
-		free_array(local);
+		free_array(&(local));
 		return ;
 	}
 	new_local = get_env_var(data->locals, local[0]);
@@ -75,7 +75,7 @@ static void	add_local(t_data *data)
 		free(env_var->value);
 		env_var->value = ft_strdup(local[1]);
 	}
-	free_array(local);
+	free_array(&(local));
 }
 
 void	locals(t_data *data)

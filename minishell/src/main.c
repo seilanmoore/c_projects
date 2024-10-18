@@ -6,7 +6,7 @@
 /*   By: smoore-a <smoore-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/19 12:17:10 by smoore-a          #+#    #+#             */
-/*   Updated: 2024/10/17 12:41:56 by smoore-a         ###   ########.fr       */
+/*   Updated: 2024/10/18 13:32:08 by smoore-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,7 +99,7 @@ int	main(int argc, char **argv, char **envp)
 				add_history(data.history);
 			save_history();
 			parser(&data);
-			print_types(&data);
+			//print_types(&data);
 			if (!data.exit_code)
 			{
 				if (syntax_error(&data))

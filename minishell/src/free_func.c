@@ -6,22 +6,26 @@
 /*   By: smoore-a <smoore-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/25 11:02:07 by smoore-a          #+#    #+#             */
-/*   Updated: 2024/10/17 13:40:25 by smoore-a         ###   ########.fr       */
+/*   Updated: 2024/10/18 14:05:38 by smoore-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 
-void	free_array(char **array)
+void	free_array(char ***array)
 {
 	int	i;
 
 	i = -1;
-	if (!array)
+	if (!(*array))
 		return ;
-	while (array[++i])
-		free(array[i]);
-	free(array);
+	while ((*array)[++i])
+	{
+		free((*array)[i]);
+		(*array)[i] = NULL;
+	}
+	free(*array);
+	*array = NULL;
 }
 
 void	free_local(t_data *data)
@@ -40,7 +44,7 @@ void	free_local(t_data *data)
 	}
 }
 
-void	free_environment(t_data *data)
+void	free_env_lst(t_data *data)
 {
 	t_env	*tmp;
 
@@ -53,9 +57,14 @@ void	free_environment(t_data *data)
 		tmp = data->env;
 		data->env = data->env->next;
 		free(tmp);
+		tmp = NULL;
 	}
-	free_array(data->envp);
-	data->envp = NULL;
+}
+
+void	free_environment(t_data *data)
+{
+	free_env_lst(data);
+	free_array(&(data->envp));
 }
 
 void	free_cmds(t_data *data)
@@ -66,7 +75,7 @@ void	free_cmds(t_data *data)
 	{
 		free(data->input.command->cmd);
 		data->input.command->cmd = NULL;
-		free_array(data->input.command->args);
+		free_array(&(data->input.command->args));
 		data->input.command->args = NULL;
 		tmp = data->input.command;
 		data->input.command = data->input.command->next;
@@ -106,9 +115,8 @@ void	free_data(t_data *data)
 	free(data->cwd);
 	free_tokens(data);
 	free_cmds(data);
-	free_array(data->paths);
+	free_array(&(data->paths));
 	*data = (t_data){0};
-	data->env = (t_env *){0};
 	data->locals = (t_env *){0};
 	data->input = (t_input){0};
 	data->env = env_head;

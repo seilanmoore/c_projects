@@ -6,7 +6,7 @@
 /*   By: smoore-a <smoore-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/22 12:13:57 by smoore-a          #+#    #+#             */
-/*   Updated: 2024/10/17 20:18:31 by smoore-a         ###   ########.fr       */
+/*   Updated: 2024/10/18 13:52:41 by smoore-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,9 +40,10 @@ void	envp_to_lst(t_data *data)
 	int				len;
 	int				i;
 
-	i = -1;
+	free_env_lst(data);
 	if (!data->envp)
 		return ;
+	i = -1;
 	while (data->envp[++i])
 	{
 		len = ft_strchr(data->envp[i], '=') - data->envp[i];
@@ -77,5 +78,5 @@ void	parse_environment(t_data *data)
 		variable->value = ft_strdup(data->cwd);
 	}
 	if (modified)
-		upd_env(data); //no actualiza correctamente
+		upd_env(data);
 }
