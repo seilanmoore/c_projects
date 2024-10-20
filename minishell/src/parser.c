@@ -6,7 +6,7 @@
 /*   By: smoore-a <smoore-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/19 12:17:10 by smoore-a          #+#    #+#             */
-/*   Updated: 2024/10/18 13:52:19 by smoore-a         ###   ########.fr       */
+/*   Updated: 2024/10/19 10:06:49 by smoore-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 void	parser(t_data *data)
 {
-	parse_environment(data);
+	envp_to_lst(data);
 	expand(data);
 	tokenizer(data);
 	locals(data);

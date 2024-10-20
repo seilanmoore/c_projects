@@ -6,7 +6,7 @@
 /*   By: smoore-a <smoore-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/19 12:17:44 by smoore-a          #+#    #+#             */
-/*   Updated: 2024/10/18 14:26:06 by smoore-a         ###   ########.fr       */
+/*   Updated: 2024/10/19 10:15:43 by smoore-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -162,6 +162,7 @@ void	free_data(t_data *data);
 
 //environment
 void	envp_to_lst(t_data *data);
+void	envp_to_array(t_data *data);
 
 //env_utils
 t_env	*get_env(t_env *l_variables, char *l_variable);
@@ -222,7 +223,6 @@ void	assign_opt_arg(t_data *data);
 
 // expand_utils
 
-void	expand_home(t_data *data);
 char	*get_dollar_value(t_data *data, char *variable);
 char	*extract_id(char *token);
 
@@ -247,8 +247,6 @@ void	add_back_token(t_token **lst, t_token *node);
 void	add_back_variable(t_env **lst, t_env *node);
 int		env_size(t_env *lst);
 
-void	parse_environment(t_data *data);
-void	envp_to_array(t_data *data);
 void	upd_env(t_data *data);
 void	print_env(t_data *data);
 

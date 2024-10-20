@@ -6,7 +6,7 @@
 /*   By: smoore-a <smoore-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/26 09:54:56 by smoore-a          #+#    #+#             */
-/*   Updated: 2024/10/18 14:25:49 by smoore-a         ###   ########.fr       */
+/*   Updated: 2024/10/19 10:12:26 by smoore-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,7 @@ char	*cwd_compress(t_data *data)
 	if (!data->envp)
 		home = getenv("HOME");
 	else
-		home = get_envp_var(data->envp, "HOME=");
+		home = get_envp_var(data->envp, "HOME");
 	if (!ft_strncmp(data->cwd, home, ft_strlen(home)))
 		short_cwd = str_replace(data->cwd, home, "~");
 	return (short_cwd);
