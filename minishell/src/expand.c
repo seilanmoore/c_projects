@@ -6,7 +6,7 @@
 /*   By: smoore-a <smoore-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/26 09:53:56 by smoore-a          #+#    #+#             */
-/*   Updated: 2024/10/22 13:36:40 by smoore-a         ###   ########.fr       */
+/*   Updated: 2024/10/22 16:00:03 by smoore-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -161,7 +161,6 @@ char	*seek_replace(t_data *data, char *term, t_list *next)
 	while (dollar)
 	{
 		dollar = ft_strchr(new_term, '$');
-		printf("Con dollar: %s NEW_TERM: %s\n", dollar, new_term);
 		if (dollar)
 		{
 			next_to = dollar + 1;
@@ -224,5 +223,5 @@ void	expand(t_data *data)
 	free(data->input.raw_line);
 	data->input.raw_line = lst_str_join(lst);
 	free_lst(&lst);
-	printf("Expanded raw line: %s\n", data->input.raw_line);
+	//printf("Expanded raw line: %s\n", data->input.raw_line);
 }

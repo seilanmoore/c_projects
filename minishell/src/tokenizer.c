@@ -6,7 +6,7 @@
 /*   By: smoore-a <smoore-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/03 15:21:13 by smoore-a          #+#    #+#             */
-/*   Updated: 2024/10/22 12:45:35 by smoore-a         ###   ########.fr       */
+/*   Updated: 2024/10/22 16:29:12 by smoore-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,8 @@ static void	single_quote(t_data *data, t_var *var)
 		var->aux1++;
 		return ;
 	}
-	while (var->aux1[var->i] && var->aux1[var->i] != '\'')
+	while (var->aux1[var->i] && var->aux1[var->i] != '\'' && \
+	!g_signal)
 		var->i++;
 	var->aux = ft_substr(var->aux1, 0, var->i);
 	if (var->aux1[var->i])
@@ -43,7 +44,8 @@ static void	double_quote(t_data *data, t_var *var)
 		var->aux1++;
 		return ;
 	}
-	while (var->aux1[var->i] && var->aux1[var->i] != '\"')
+	while (var->aux1[var->i] && var->aux1[var->i] != '\"' && \
+	!g_signal)
 		var->i++;
 	var->aux = ft_substr(var->aux1, 0, var->i);
 	if (var->aux1[var->i])
@@ -83,9 +85,9 @@ static void	characters(t_data *data, t_var *var)
 		return (handle_redir_char(data, var));
 	while (var->aux1[var->i] && \
 	!is_space(var->aux1[var->i]) && \
-	var->aux1[var->i] != '=' && \
 	var->aux1[var->i] != '\'' && \
-	var->aux1[var->i] != '\"')
+	var->aux1[var->i] != '\"' && \
+	!g_signal)
 		var->i++;
 	var->aux = ft_substr(var->aux1, 0, var->i);
 	if (is_space(var->aux1[var->i]))
@@ -102,11 +104,12 @@ void	tokenizer(t_data *data)
 
 	var = (t_var){0};
 	var.aux1 = data->input.raw_line;
+
 	while (*var.aux1 && !g_signal)
 	{
 		var.i = 0;
 		var.aux = NULL;
-		while (is_space(*var.aux1))
+		while (is_space(*var.aux1) && !g_signal)
 			var.aux1++;
 		if (*var.aux1 && *var.aux1 == '\'')
 			single_quote(data, &var);

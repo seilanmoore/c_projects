@@ -6,7 +6,7 @@
 /*   By: smoore-a <smoore-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/02 10:49:42 by smoore-a          #+#    #+#             */
-/*   Updated: 2024/10/17 13:01:18 by smoore-a         ###   ########.fr       */
+/*   Updated: 2024/10/22 16:32:16 by smoore-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,8 @@ void	check_new_var(t_env **lst, t_env *new_var, char **var)
 	}
 }
 
+// Me llegan los argumentos separados y los necesito juntos (var="value")
+
 int	export_builtin(t_data *data, t_cmd *cmd)
 {
 	char	**arg;
@@ -43,7 +45,8 @@ int	export_builtin(t_data *data, t_cmd *cmd)
 	int		i;
 	char	**token;
 
-
+	print_cmd_array(data);
+	exit(0);
 	modified = 0;
 	arg = cmd->args;
 	i = -1;
