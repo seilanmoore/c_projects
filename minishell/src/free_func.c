@@ -6,7 +6,7 @@
 /*   By: smoore-a <smoore-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/25 11:02:07 by smoore-a          #+#    #+#             */
-/*   Updated: 2024/10/18 14:05:38 by smoore-a         ###   ########.fr       */
+/*   Updated: 2024/10/22 12:31:49 by smoore-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,15 +103,16 @@ void	free_data(t_data *data)
 	t_env	*local_head;
 	char	**env_ptr;
 	char	*aux;
+	char	*proc;
 
 	aux = data->prev_exit_code;
 	env_head = data->env;
 	env_ptr = data->envp;
 	local_head = data->locals;
+	proc = data->process;
 	free(data->prompt);
 	free(data->input.raw_line);
 	free(data->history);
-	free(data->process);
 	free(data->cwd);
 	free_tokens(data);
 	free_cmds(data);
@@ -122,6 +123,7 @@ void	free_data(t_data *data)
 	data->env = env_head;
 	data->envp = env_ptr;
 	data->locals = local_head;
+	data->process = proc;
 	free(data->prev_exit_code);
 	data->prev_exit_code = aux;
 }

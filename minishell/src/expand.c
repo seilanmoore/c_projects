@@ -6,7 +6,7 @@
 /*   By: smoore-a <smoore-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/26 09:53:56 by smoore-a          #+#    #+#             */
-/*   Updated: 2024/10/21 12:16:43 by smoore-a         ###   ########.fr       */
+/*   Updated: 2024/10/22 13:36:40 by smoore-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,20 +102,16 @@ void	add_terms(t_list **lst, char *str, int *i, int *j)
 		*j = *i;
 		while (str[++(*i)] && str[*i] != '\'')
 			;
-		if (str[*i])
-			(*i)++;
-		ft_lstadd_back(lst, ft_lstnew(ft_substr(str, *j, *i - *j)));
-		*j = *i;
+		ft_lstadd_back(lst, ft_lstnew(ft_substr(str, *j, *i - *j + 1)));
+		*j = *i + 1;
 	}
 	else if (str[*i] == '\"')
 	{
 		*j = *i;
 		while (str[++(*i)] && str[*i] != '\"')
 			;
-		if (str[*i])
-			(*i)++;
-		ft_lstadd_back(lst, ft_lstnew(ft_substr(str, *j, *i - *j)));
-		*j = *i;
+		ft_lstadd_back(lst, ft_lstnew(ft_substr(str, *j, *i - *j + 1)));
+		*j = *i + 1;
 	}
 	else if (!str[*i + 1] || \
 	(str[*i + 1] && (str[*i + 1] == '\'' || str[*i + 1] == '\"')))
@@ -154,7 +150,7 @@ void	replace_dollar(t_data *data, char **new_term)
 	free(tmp);
 }
 
-char	*seek_replace(t_data *data, char *term)
+char	*seek_replace(t_data *data, char *term, t_list *next)
 {
 	char	*new_term;
 	char	*dollar;
@@ -165,11 +161,12 @@ char	*seek_replace(t_data *data, char *term)
 	while (dollar)
 	{
 		dollar = ft_strchr(new_term, '$');
+		printf("Con dollar: %s NEW_TERM: %s\n", dollar, new_term);
 		if (dollar)
 		{
 			next_to = dollar + 1;
-			if (*next_to && \
-			(*next_to == '$' || *next_to == '?' || valid_char(*next_to)))
+			if (*next_to || next)//&& \
+			//(*next_to == '$' || *next_to == '?' || valid_char(*next_to)))
 				replace_dollar(data, &new_term);
 			else
 				dollar = NULL;
@@ -186,9 +183,13 @@ void	expand_terms(t_data *data, t_list **lst)
 	head = *lst;
 	while ((*lst))
 	{
+		//printf("String: /%s/\n", (char *)(*lst)->content);
 		if (*(char *)(*lst)->content != '\'')
 		{
-			new_term = seek_replace(data, (char *)(*lst)->content);
+			if ((*lst)->next)
+				new_term = seek_replace(data, (char *)(*lst)->content, ((*lst)->next));
+			else
+				new_term = seek_replace(data, (char *)(*lst)->content, NULL);
 			free((*lst)->content);
 			(*lst)->content = new_term;
 		}
@@ -219,8 +220,6 @@ void	expand(t_data *data)
 	t_list	*lst;
 
 	lst = split_terms(data);
-	print_list(lst);
-	exit(0);
 	expand_terms(data, &lst);
 	free(data->input.raw_line);
 	data->input.raw_line = lst_str_join(lst);

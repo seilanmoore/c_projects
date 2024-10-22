@@ -6,7 +6,7 @@
 /*   By: smoore-a <smoore-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/03 13:15:47 by smoore-a          #+#    #+#             */
-/*   Updated: 2024/10/19 10:15:22 by smoore-a         ###   ########.fr       */
+/*   Updated: 2024/10/22 13:24:51 by smoore-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,8 @@ char	*get_dollar_value(t_data *data, char *variable)
 	t_env	*local_head;
 
 	if (!variable)
+		return (NULL);
+	if (*variable == '\0')
 		return (NULL);
 	if (!ft_strcmp(variable, "$"))
 		return (data->process);
@@ -45,5 +47,7 @@ char	*extract_id(char *token)
 	len = 1;
 	while (identifier[len] && valid_char(identifier[len]))
 		len++;
+	if (len == 1)
+		return (ft_strdup("$"));
 	return (ft_substr(identifier, 0, len));
 }

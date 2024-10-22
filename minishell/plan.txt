@@ -32,5 +32,7 @@ Con redireccion mas compleja
 
 command < file | cmd1 -eaw -w argument | cmd2 -a -e --asdf "argu ment" > path/to/file
 
-
 echo y ls solo reciben input por argumentos no por fd
+
+Antes de tokenizar las redirecciones, word, pipe, etc (tokenizar=separar tokens) expandir variables.
+Implementar el reemplazo de is_space() por un espacio echo "test""test" != (test test)

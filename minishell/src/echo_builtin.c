@@ -6,7 +6,7 @@
 /*   By: smoore-a <smoore-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/02 12:47:35 by smoore-a          #+#    #+#             */
-/*   Updated: 2024/10/18 15:13:02 by smoore-a         ###   ########.fr       */
+/*   Updated: 2024/10/22 12:42:19 by smoore-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ int	next_opt(t_token *token)
 	return (0);
 }
 
-static int	next_arg(t_token *token)
+/* static int	next_arg(t_token *token)
 {
 	while (token && token->type != PIPE)
 	{
@@ -46,7 +46,7 @@ static int	next_arg(t_token *token)
 		token = token->next;
 	}
 	return (0);
-}
+} */
 
 static int	check_options(t_data *data, t_token *token)
 {
@@ -91,7 +91,7 @@ int	echo_builtin(t_data *data, t_token *token)
 			if (token->type == ARG)
 			{
 				print_arg(token->token);
-				if (next_arg(token))
+				if (token->end_space)
 					ft_putchar_fd(' ', 1);
 			}
 			token = token->next;
