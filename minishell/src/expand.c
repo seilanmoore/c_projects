@@ -6,31 +6,27 @@
 /*   By: smoore-a <smoore-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/26 09:53:56 by smoore-a          #+#    #+#             */
-/*   Updated: 2024/10/22 16:00:03 by smoore-a         ###   ########.fr       */
+/*   Updated: 2024/10/23 12:31:16 by smoore-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
+#include <stdio.h>
 
-/* static void	expand_home(t_data *data, char **ptr, int *i)
+/* static void	expand_home(t_data *data, t_list **lst, char **home)
 {
 	char	*value;
 	char	*tmp;
-	char	*pre;
 
 	value = get_envp_var(data->envp, "HOME");
 	if (value)
 	{
-		pre = ft_substr(data->input.raw_line, 0, *i);
-		tmp = ft_strjoin(pre, value);
-		free(pre);
-		pre = data->input.raw_line;
-		data->input.raw_line = ft_strjoin(tmp, *ptr + 1);
+		tmp = (*lst)->content;
+		(*lst)->content = ft_strjoin(value, (*lst)->content + 1);
 		free(tmp);
-		free(pre);
 	}
-}
-
+} */
+/*
 static void	update_token(t_data *data, char **ptr, int *i)
 {
 	char		*identifier;
@@ -94,27 +90,56 @@ void	print_list(t_list *lst)
 		lst = lst->next;
 	}
 }
+void	d_quote_term(t_list **lst, char *str, int *i, int *j)
+{
+	*j = *i;
+	while (str[++(*i)] && str[*i] != '\"')
+		;
+	ft_lstadd_back(lst, ft_lstnew(ft_substr(str, *j, *i - *j + 1)));
+	*j = *i + 1;
+}
+
+void	s_quote_term(t_list **lst, char *str, int *i, int *j)
+{
+	*j = *i;
+	while (str[++(*i)] && str[*i] != '\'')
+		;
+	ft_lstadd_back(lst, ft_lstnew(ft_substr(str, *j, *i - *j + 1)));
+	*j = *i + 1;
+}
+
+void	dollar_term(t_list **lst, char *str, int *i, int *j)
+{
+	*j = *i;
+	if (str[(*i) + 1] && \
+	(str[(*i) + 1] == '$' || str[(*i) + 1] == '?'))
+	{
+		ft_lstadd_back(lst, ft_lstnew(ft_substr(str, *j, 2)));
+		(*i)++;
+		*j = *i + 1;
+	}
+	else
+	{
+		while (str[++(*i)] && str[*i] != '$' && \
+		str[*i] != '\'' && str[*i] != '\"')
+			;
+		ft_lstadd_back(lst, ft_lstnew(ft_substr(str, *j, *i - *j)));
+		if (str[*i])
+			(*i)--;
+		*j = *i;
+	}
+}
 
 void	add_terms(t_list **lst, char *str, int *i, int *j)
 {
 	if (str[*i] == '\'')
-	{
-		*j = *i;
-		while (str[++(*i)] && str[*i] != '\'')
-			;
-		ft_lstadd_back(lst, ft_lstnew(ft_substr(str, *j, *i - *j + 1)));
-		*j = *i + 1;
-	}
+		s_quote_term(lst, str, i, j);
 	else if (str[*i] == '\"')
-	{
-		*j = *i;
-		while (str[++(*i)] && str[*i] != '\"')
-			;
-		ft_lstadd_back(lst, ft_lstnew(ft_substr(str, *j, *i - *j + 1)));
-		*j = *i + 1;
-	}
-	else if (!str[*i + 1] || \
-	(str[*i + 1] && (str[*i + 1] == '\'' || str[*i + 1] == '\"')))
+		d_quote_term(lst, str, i, j);
+	else if (str[*i] == '$')
+		dollar_term(lst, str, i, j);
+	else if (!str[*i + 1] || (str[*i + 1] && \
+	(str[*i + 1] == '\'' || str[*i + 1] == '\"' || str[*i + 1] == '$')))
 		ft_lstadd_back(lst, ft_lstnew(ft_substr(str, *j, *i - *j + 1)));
 	if (str[*i])
 		(*i)++;
@@ -164,8 +189,9 @@ char	*seek_replace(t_data *data, char *term, t_list *next)
 		if (dollar)
 		{
 			next_to = dollar + 1;
-			if (*next_to || next)//&& \
-			//(*next_to == '$' || *next_to == '?' || valid_char(*next_to)))
+			if ((*next_to && \
+			(*next_to == '$' || *next_to == '?' || valid_char(*next_to))) \
+			|| (!(*next_to) && next))
 				replace_dollar(data, &new_term);
 			else
 				dollar = NULL;
@@ -182,13 +208,10 @@ void	expand_terms(t_data *data, t_list **lst)
 	head = *lst;
 	while ((*lst))
 	{
-		//printf("String: /%s/\n", (char *)(*lst)->content);
 		if (*(char *)(*lst)->content != '\'')
 		{
-			if ((*lst)->next)
-				new_term = seek_replace(data, (char *)(*lst)->content, ((*lst)->next));
-			else
-				new_term = seek_replace(data, (char *)(*lst)->content, NULL);
+			new_term = seek_replace(
+					data, (char *)(*lst)->content, ((*lst)->next));
 			free((*lst)->content);
 			(*lst)->content = new_term;
 		}
@@ -219,9 +242,9 @@ void	expand(t_data *data)
 	t_list	*lst;
 
 	lst = split_terms(data);
+	print_list(lst);
 	expand_terms(data, &lst);
 	free(data->input.raw_line);
 	data->input.raw_line = lst_str_join(lst);
 	free_lst(&lst);
-	//printf("Expanded raw line: %s\n", data->input.raw_line);
 }
