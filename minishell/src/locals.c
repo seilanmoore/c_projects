@@ -6,7 +6,7 @@
 /*   By: smoore-a <smoore-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/25 10:56:20 by smoore-a          #+#    #+#             */
-/*   Updated: 2024/10/18 13:08:17 by smoore-a         ###   ########.fr       */
+/*   Updated: 2024/10/23 22:10:30 by smoore-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ void	print_locals(t_data *data)
 
 //está rota, new_local no se asigna bien
 
-static void	add_local(t_data *data)
+/* static void	add_local(t_data *data)
 {
 	t_env	*new_local;
 	t_env	*env_var;
@@ -76,7 +76,7 @@ static void	add_local(t_data *data)
 		env_var->value = ft_strdup(local[1]);
 	}
 	free_array(&(local));
-}
+} */
 
 void	locals(t_data *data)
 {
@@ -86,7 +86,7 @@ void	locals(t_data *data)
 	while (data->input.tokens)
 	{
 		if (data->input.tokens->type == LOCAL)
-			add_local(data);
+			;//add_local(data);
 		data->input.tokens = data->input.tokens->next;
 	}
 	data->input.tokens = head;

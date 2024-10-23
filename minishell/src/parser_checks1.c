@@ -6,7 +6,7 @@
 /*   By: smoore-a <smoore-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/03 15:13:34 by smoore-a          #+#    #+#             */
-/*   Updated: 2024/10/15 16:56:50 by smoore-a         ###   ########.fr       */
+/*   Updated: 2024/10/23 20:38:51 by smoore-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,9 +55,20 @@ static int	check_files(t_data *data, t_token *ptr, int i)
 
 static int	check_locals(t_data *data, t_token *ptr, int i)
 {
-	if (!ft_strchr(ptr->token, '='))
+	t_token	*prev;
+	int		prev_len;
+
+	if (data->in_cmd)
 		return (0);
-	return (access_to_types(data, i, LOCAL), 1);
+	prev = ptr->prev;
+	if (prev)
+		prev_len = ft_strlen(prev->token);
+	if (prev && prev->type == LOCAL && \
+	prev->token[prev_len - 1] == '=' && prev->end_space == 0)
+		return (access_to_types(data, i, LOCAL_VAL), 1);
+	else if (ft_strchr(ptr->token, '='))
+		return (access_to_types(data, i, LOCAL), 1);
+	return (0);
 }
 
 void	type_checks(t_data *data, t_token *ptr, int i)
@@ -66,7 +77,7 @@ void	type_checks(t_data *data, t_token *ptr, int i)
 		return ;
 	if (check_files(data, ptr, i))
 		return ;
-	if (check_cmds(data, ptr, i))
+	if (check_locals(data, ptr, i))
 		return ;
-	check_locals(data, ptr, i);
+	check_cmds(data, ptr, i);
 }

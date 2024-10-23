@@ -6,7 +6,7 @@
 /*   By: smoore-a <smoore-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/19 12:17:44 by smoore-a          #+#    #+#             */
-/*   Updated: 2024/10/20 22:17:32 by smoore-a         ###   ########.fr       */
+/*   Updated: 2024/10/23 22:09:37 by smoore-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,6 +67,7 @@
 # define FILE 108		// file
 # define HERE 109 		// heredoc
 # define LOCAL 110 		// variable=value
+# define LOCAL_VAL 111	// " value "
 # define NO_QUOTE 120
 # define S_QUOTE 121 	// ''
 # define D_QUOTE 122 	// ""
@@ -231,7 +232,7 @@ void	expand(t_data *data);
 
 //builtin
 int		exit_builtin(t_data *data);
-int		export_builtin(t_data *data, t_cmd *cmd);
+int		export_builtin(t_data *data, t_token *args);
 int		unset_builtin(t_data *data, t_cmd *cmd);
 int		cd_builtin(t_data *data, t_token *token);
 int		echo_builtin(t_data *data, t_token *token);
@@ -266,7 +267,7 @@ int		is_space(int c);
 int		is_cmd(int c);
 void	print_locals(t_data *data);
 char	**split_token(char *token);
-void	check_new_var(t_env **lst, t_env *new_var, char **var);
+void	check_new_var(t_env **lst, t_env *new_var, char *var, char *value);
 
 
 // path_checks

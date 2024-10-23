@@ -6,7 +6,7 @@
 /*   By: smoore-a <smoore-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/26 09:54:56 by smoore-a          #+#    #+#             */
-/*   Updated: 2024/10/19 10:12:26 by smoore-a         ###   ########.fr       */
+/*   Updated: 2024/10/23 20:14:53 by smoore-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -129,6 +129,8 @@ char	*type_to_char(int type)
 		return ("HEREDOC");
 	if (type == LOCAL)
 		return ("LOCAL");
+	if (type == LOCAL_VAL)
+		return ("VALUE");
 	return ("NO_TYPE");
 }
 
@@ -140,8 +142,8 @@ void	print_types(t_data *data)
 	head = data->input.tokens;
 	while (head)
 	{
-		printf("TOKEN: \"%s\"	TYPE: %s(%d)\n", \
-		head->token, type_to_char(head->type), head->type);
+		printf("TOKEN: \"%s\"	TYPE: %s(%d)	END_SPACE: %d\n", \
+		head->token, type_to_char(head->type), head->type, head->end_space);
 		aux = head->opt;
 		if (aux)
 			printf("\t--> OPTIONS:");

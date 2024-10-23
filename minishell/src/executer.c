@@ -6,7 +6,7 @@
 /*   By: smoore-a <smoore-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/03 13:58:17 by smoore-a          #+#    #+#             */
-/*   Updated: 2024/10/18 16:03:29 by smoore-a         ###   ########.fr       */
+/*   Updated: 2024/10/23 22:28:24 by smoore-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,7 @@ static int	builtin_out(t_data *data)
 	else if (!ft_strcmp(cmd, "pwd"))
 		return (pwd_builtin(data));
 	else if (!ft_strcmp(cmd, "export"))
-		return (export_builtin(data, data->input.command));
+		return (export_builtin(data, get_token(data->input.tokens, "export")));
 	else if (!ft_strcmp(cmd, "unset"))
 		return (unset_builtin(data, data->input.command));
 	else if (!ft_strcmp(cmd, "env"))

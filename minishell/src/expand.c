@@ -6,7 +6,7 @@
 /*   By: smoore-a <smoore-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/26 09:53:56 by smoore-a          #+#    #+#             */
-/*   Updated: 2024/10/23 12:31:16 by smoore-a         ###   ########.fr       */
+/*   Updated: 2024/10/23 18:54:25 by smoore-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,6 +90,7 @@ void	print_list(t_list *lst)
 		lst = lst->next;
 	}
 }
+
 void	d_quote_term(t_list **lst, char *str, int *i, int *j)
 {
 	*j = *i;
@@ -118,7 +119,7 @@ void	dollar_term(t_list **lst, char *str, int *i, int *j)
 		(*i)++;
 		*j = *i + 1;
 	}
-	else
+	else if (str[(*i) + 1])
 	{
 		while (str[++(*i)] && str[*i] != '$' && \
 		str[*i] != '\'' && str[*i] != '\"')
@@ -242,7 +243,6 @@ void	expand(t_data *data)
 	t_list	*lst;
 
 	lst = split_terms(data);
-	print_list(lst);
 	expand_terms(data, &lst);
 	free(data->input.raw_line);
 	data->input.raw_line = lst_str_join(lst);

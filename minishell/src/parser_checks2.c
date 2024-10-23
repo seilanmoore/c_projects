@@ -6,7 +6,7 @@
 /*   By: smoore-a <smoore-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/03 15:14:41 by smoore-a          #+#    #+#             */
-/*   Updated: 2024/10/14 11:47:44 by smoore-a         ###   ########.fr       */
+/*   Updated: 2024/10/23 20:26:11 by smoore-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,18 +28,8 @@ static int	check_option_arg(t_data *data, t_token *ptr, int i)
 
 int	check_cmds(t_data *data, t_token *ptr, int i)
 {
-	//int	x;
-
 	if (check_option_arg(data, ptr, i))
 		return (1);
-	if (ft_strchr(ptr->token, '='))
-		return (0);
-	/* x = -1;
-	while (ptr->token[++x])
-	{
-		if (!is_cmd(ptr->token[x]))
-			return (0);
-	} */
 	data->n_cmd++;
 	data->in_cmd = 1;
 	data->in_arg = 0;
