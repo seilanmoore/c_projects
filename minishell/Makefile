@@ -6,7 +6,7 @@
 #    By: smoore-a <smoore-a@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/02/27 20:48:30 by smoore-a          #+#    #+#              #
-#    Updated: 2024/10/17 12:35:24 by smoore-a         ###   ########.fr        #
+#    Updated: 2024/10/24 20:36:41 by smoore-a         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -37,7 +37,7 @@ SRC = main init free_func command_path environment env_utils \
 	tokenizer tokenizer_utils expand expand_utils utils \
 	command command_utils locals syntax syntax_circles \
 	cd_builtin export_builtin unset_builtin exit_builtin env_builtin \
-	pwd_builtin echo_builtin \
+	pwd_builtin echo_builtin appender \
 	executer path_checks dir_checks handle_error
 
 UTILS =

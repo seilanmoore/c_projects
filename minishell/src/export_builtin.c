@@ -6,7 +6,7 @@
 /*   By: smoore-a <smoore-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/02 10:49:42 by smoore-a          #+#    #+#             */
-/*   Updated: 2024/10/23 22:36:21 by smoore-a         ###   ########.fr       */
+/*   Updated: 2024/10/24 20:45:13 by smoore-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,18 +37,41 @@ void	check_new_var(t_env **lst, t_env *new_var, char *var, char *value)
 
 int	export_builtin(t_data *data, t_token *args)
 {
+	t_token	*head;
 	t_env	*new_var;
 	char	*variable;
-	int		len;
+	char	*value;
+	//int		len;
 	int		modified;
 
+
+	head = data->input.tokens;
+	while (data->input.tokens && data->input.tokens->type != CMD \
+	&& ft_strcmp(data->input.tokens->token, "export"))
+		data->input.tokens = data->input.tokens->next;
 	modified = 0;
-	args = args->next;
+	args = data->input.tokens;
 	while (args && args->type == OPTION)
 		args = args->next;
 	while (args && args->type == ARG)
 	{
-		variable = args->token;
+		variable = variable_append(&(args));
+		if (variable)
+		{
+			if (!valid_ident(variable))
+				print_msg(data, MS EXPORT EXPORT_ID, 1);
+			else
+			{
+				value = variable_append(&(args));
+				new_var = get_env_var(data->env, variable);
+				check_new_var(\
+						&(data->env), new_var, variable, value);
+				modified = 1;
+				free(value);
+			}
+			free(variable);
+		}
+		/* variable = args->token;
 		len = ft_strlen(variable);
 		if (ft_strchr(variable, '=') && variable[len - 1] == '=')
 		{
@@ -66,7 +89,6 @@ int	export_builtin(t_data *data, t_token *args)
 					check_new_var(\
 						&(data->env), new_var, variable, NULL);
 				modified = 1;
-				printf("variable: /%s/\n", variable);
 			}
 			free(variable);
 		}
@@ -81,15 +103,34 @@ int	export_builtin(t_data *data, t_token *args)
 				new_var = get_env_var(data->env, variable);
 				check_new_var(&(data->env), new_var, \
 					variable, ft_strchr(args->token, '=') + 1);
-				printf("Llega\n");
 				modified = 1;
-				printf("variable: /%s/\n", variable);
 			}
 			free(variable);
 		}
-		args = args->next;
+		else if (args->end_space == 0 && args->next && *(args->next->token) == '=')
+		{
+			variable = args->token;
+			if (!valid_ident(variable))
+				print_msg(data, MS EXPORT EXPORT_ID, 1);
+			else
+			{
+				new_var = get_env_var(data->env, variable);
+				if (*(args->next->token + 1))
+					check_new_var(&(data->env), new_var, \
+						variable, args->next->token + 1);
+				else if (args->next->end_space == 0 && args->next->next)
+				{
+					check_new_var(&(data->env), new_var, \
+						variable, args->next->next->token);
+				}
+				modified = 1;
+			}
+			free(variable);
+		}
+		args = args->next; */
 	}
 	if (modified)
 		upd_env(data);
+	data->input.tokens = head;
 	return (0);
 }

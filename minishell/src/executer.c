@@ -6,7 +6,7 @@
 /*   By: smoore-a <smoore-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/03 13:58:17 by smoore-a          #+#    #+#             */
-/*   Updated: 2024/10/23 22:28:24 by smoore-a         ###   ########.fr       */
+/*   Updated: 2024/10/24 20:45:31 by smoore-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,8 +53,10 @@ static	t_token	*get_token(t_token *tokens, char *token)
 
 static int	builtin_out(t_data *data)
 {
+	t_token	*args;
 	char	*cmd;
 
+	args = NULL;
 	cmd = data->input.command->cmd;
 	if (!ft_strcmp(cmd, "exit"))
 		return (exit_builtin(data));
@@ -65,7 +67,7 @@ static int	builtin_out(t_data *data)
 	else if (!ft_strcmp(cmd, "pwd"))
 		return (pwd_builtin(data));
 	else if (!ft_strcmp(cmd, "export"))
-		return (export_builtin(data, get_token(data->input.tokens, "export")));
+		return (export_builtin(data, args));
 	else if (!ft_strcmp(cmd, "unset"))
 		return (unset_builtin(data, data->input.command));
 	else if (!ft_strcmp(cmd, "env"))

@@ -6,7 +6,7 @@
 /*   By: smoore-a <smoore-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/19 12:17:44 by smoore-a          #+#    #+#             */
-/*   Updated: 2024/10/23 22:09:37 by smoore-a         ###   ########.fr       */
+/*   Updated: 2024/10/24 20:44:58 by smoore-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -231,8 +231,11 @@ char	*extract_id(char *token);
 void	expand(t_data *data);
 
 //builtin
-int		exit_builtin(t_data *data);
 int		export_builtin(t_data *data, t_token *args);
+char	*variable_append(t_token **args);
+char	*value_append(t_token **args);
+
+int		exit_builtin(t_data *data);
 int		unset_builtin(t_data *data, t_cmd *cmd);
 int		cd_builtin(t_data *data, t_token *token);
 int		echo_builtin(t_data *data, t_token *token);
