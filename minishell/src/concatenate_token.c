@@ -6,7 +6,7 @@
 /*   By: smoore-a <smoore-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/03 15:21:13 by smoore-a          #+#    #+#             */
-/*   Updated: 2024/10/25 14:02:00 by smoore-a         ###   ########.fr       */
+/*   Updated: 2024/10/25 21:57:25 by smoore-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@ static void	concatenate(t_data *data, t_token **new_lst)
 		tmp = full_str;
 		full_str = ft_strjoin(full_str, data->input.tokens->next->token);
 		data->input.tokens = data->input.tokens->next;
+		free (tmp);
 	}
 	add_back_token(new_lst, new_token( \
 	full_str, 0, data->input.tokens->quote, \
