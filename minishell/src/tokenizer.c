@@ -6,11 +6,50 @@
 /*   By: smoore-a <smoore-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/03 15:21:13 by smoore-a          #+#    #+#             */
-/*   Updated: 2024/10/23 20:15:50 by smoore-a         ###   ########.fr       */
+/*   Updated: 2024/10/25 12:47:12 by smoore-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
+
+static int	end_space(t_var *var)
+{
+	char	*quotes;
+	int		in_s_quote;
+	int		in_d_quote;
+
+	quotes = &(var->aux1[var->i]);
+	in_d_quote = 0;
+	in_s_quote = 0;
+	while (*quotes && (*quotes == '\'' || *quotes == '\"'))
+	{
+		if (*quotes == '\'')
+		{
+			in_s_quote = 1;
+			while (*(++quotes) != '\'')
+				;
+			if (*quotes == '\'')
+			{
+				quotes++;
+				in_s_quote = 0;
+			}
+		}
+		else if (*quotes == '\"')
+		{
+			in_d_quote = 1;
+			while (*(++quotes) && *quotes != '\"')
+				;
+			if (*quotes == '\"')
+			{
+				quotes++;
+				in_d_quote = 0;
+			}
+		}
+	}
+	if (is_space(*quotes) && in_d_quote == 0 && in_s_quote == 0)
+		return (1);
+	return (0);
+}
 
 static void	single_quote(t_data *data, t_var *var)
 {
@@ -28,7 +67,7 @@ static void	single_quote(t_data *data, t_var *var)
 	var->aux = ft_substr(var->aux1, 0, var->i);
 	if (var->aux1[var->i])
 		var->i++;
-	if (is_space(var->aux1[var->i]))
+	if (end_space(var))
 		add_back_token(\
 			&(data->input.tokens), new_token(var->aux, 0, S_QUOTE, 1));
 	else
@@ -52,7 +91,7 @@ static void	double_quote(t_data *data, t_var *var)
 	var->aux = ft_substr(var->aux1, 0, var->i);
 	if (var->aux1[var->i])
 		var->i++;
-	if (is_space(var->aux1[var->i]))
+	if (end_space(var))
 		add_back_token(\
 			&(data->input.tokens), new_token(var->aux, 0, D_QUOTE, 1));
 	else
@@ -77,7 +116,7 @@ void	handle_redir_char(t_data *data, t_var *var)
 	else if (var->aux1[var->i] == '|')
 		var->i++;
 	var->aux = ft_substr(var->aux1, 0, var->i);
-	if (is_space(var->aux1[var->i]))
+	if (end_space(var))
 		add_back_token(\
 			&(data->input.tokens), new_token(var->aux, 0, NO_QUOTE, 1));
 	else
@@ -96,7 +135,7 @@ static void	characters(t_data *data, t_var *var)
 	!g_signal)
 		var->i++;
 	var->aux = ft_substr(var->aux1, 0, var->i);
-	if (is_space(var->aux1[var->i]))
+	if (end_space(var))
 		add_back_token(&(data->input.tokens), \
 		new_token(var->aux, 0, NO_QUOTE, 1));
 	else
@@ -126,5 +165,5 @@ void	tokenizer(t_data *data)
 		var.aux1 = var.aux1 + var.i;
 	}
 	set_prev_token(data);
-	assign_types(data);
+	//assign_types(data);
 }
