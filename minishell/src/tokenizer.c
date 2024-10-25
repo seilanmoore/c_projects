@@ -6,7 +6,7 @@
 /*   By: smoore-a <smoore-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/03 15:21:13 by smoore-a          #+#    #+#             */
-/*   Updated: 2024/10/25 12:47:12 by smoore-a         ###   ########.fr       */
+/*   Updated: 2024/10/25 13:58:54 by smoore-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -164,6 +164,6 @@ void	tokenizer(t_data *data)
 			characters(data, &var);
 		var.aux1 = var.aux1 + var.i;
 	}
-	set_prev_token(data);
+	//set_prev_token(data);
 	//assign_types(data);
 }

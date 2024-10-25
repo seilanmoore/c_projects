@@ -6,7 +6,7 @@
 /*   By: smoore-a <smoore-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/19 12:17:44 by smoore-a          #+#    #+#             */
-/*   Updated: 2024/10/25 12:38:36 by smoore-a         ###   ########.fr       */
+/*   Updated: 2024/10/25 13:58:37 by smoore-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -215,7 +215,7 @@ t_token	*new_token(void *token, int type, int quote, int end_space);
 t_token	*last_token(t_token *lst);
 
 //concatenate_token
-//void	concatenate_tokens(t_data *data);
+void	concatenate_tokens(t_data *data);
 
 // parser_checks2
 int		check_cmds(t_data *data, t_token *ptr, int i);
