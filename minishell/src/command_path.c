@@ -6,7 +6,7 @@
 /*   By: smoore-a <smoore-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/26 15:15:30 by smoore-a          #+#    #+#             */
-/*   Updated: 2024/10/26 11:15:09 by smoore-a         ###   ########.fr       */
+/*   Updated: 2024/10/26 19:11:14 by smoore-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,8 @@ static int	check_paths(t_data *data, t_cmd **head)
 	if (!(*head)->builtin && !ft_strchr((*head)->cmd, '/'))
 	{
 		i = -1;
-		while (data->paths[++i] && !ft_strchr((*head)->cmd, '/'))
+		while (data->paths && data->paths[++i] \
+		&& !ft_strchr((*head)->cmd, '/'))
 		{
 			path = ft_strjoin(data->paths[i], (*head)->cmd);
 			if (access(path, F_OK | X_OK) == -1)
