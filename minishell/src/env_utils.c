@@ -6,7 +6,7 @@
 /*   By: smoore-a <smoore-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/21 12:03:30 by smoore-a          #+#    #+#             */
-/*   Updated: 2024/10/18 13:07:35 by smoore-a         ###   ########.fr       */
+/*   Updated: 2024/10/26 18:02:55 by smoore-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -145,6 +145,5 @@ int	env_size(t_env *lst)
 void	upd_env(t_data *data)
 {
 	free_array(&(data->envp));
-	data->envp = NULL;
 	envp_to_array(data);
 }

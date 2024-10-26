@@ -6,7 +6,7 @@
 /*   By: smoore-a <smoore-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/26 09:53:56 by smoore-a          #+#    #+#             */
-/*   Updated: 2024/10/23 18:54:25 by smoore-a         ###   ########.fr       */
+/*   Updated: 2024/10/26 19:05:01 by smoore-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,6 +77,8 @@ void	free_lst(t_list **lst)
 		*lst = (*lst)->next;
 		free(tmp);
 	}
+	free(*lst);
+	*lst = NULL;
 }
 
 void	print_list(t_list *lst)
@@ -166,14 +168,18 @@ void	replace_dollar(t_data *data, char **new_term)
 {
 	char		*identifier;
 	char		*value;
+	char		*value_quoted;
 	char		*tmp;
 
 	identifier = extract_id(*new_term);
-	value = get_dollar_value(data, identifier + 1);
+	value = ft_strjoin("\"", get_dollar_value(data, identifier + 1));
+	value_quoted = ft_strjoin(value, "\"");
+	free(value);
 	tmp = *new_term;
-	*new_term = str_replace(*new_term, identifier, value);
+	*new_term = str_replace(*new_term, identifier, value_quoted);
 	free(identifier);
 	free(tmp);
+	free(value_quoted);
 }
 
 char	*seek_replace(t_data *data, char *term, t_list *next)

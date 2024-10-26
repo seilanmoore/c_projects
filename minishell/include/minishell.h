@@ -6,7 +6,7 @@
 /*   By: smoore-a <smoore-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/19 12:17:44 by smoore-a          #+#    #+#             */
-/*   Updated: 2024/10/25 13:58:37 by smoore-a         ###   ########.fr       */
+/*   Updated: 2024/10/26 18:37:34 by smoore-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -154,6 +154,7 @@ typedef struct s_data
 void	init_data(t_data *data, char **envp);
 
 // free_func
+void	ft_free(char **str);
 void	free_tokens(t_data *data);
 void	free_local(t_data *data);
 void	free_env_lst(t_data *data);
@@ -210,6 +211,7 @@ int		execute(t_data *data);
 // tokenizer
 void	tokenizer(t_data *data);
 //tokenizer_utils
+int		end_space(t_var *var);
 void	set_prev_token(t_data *data);
 t_token	*new_token(void *token, int type, int quote, int end_space);
 t_token	*last_token(t_token *lst);
@@ -234,14 +236,11 @@ char	*extract_id(char *token);
 void	expand(t_data *data);
 
 //builtin
-int		export_builtin(t_data *data, t_token *args);
-char	*variable_append(t_token **args);
-char	*value_append(t_token **args);
-
 int		exit_builtin(t_data *data);
 int		unset_builtin(t_data *data, t_cmd *cmd);
-int		cd_builtin(t_data *data, t_token *token);
-int		echo_builtin(t_data *data, t_token *token);
+int		cd_builtin(t_data *data, t_cmd *cmd);
+int		export_builtin(t_data *data, t_cmd *cmd);
+int		echo_builtin(t_cmd *cmd);
 int		pwd_builtin(t_data *data);
 int		env_builtin(t_data *data);
 

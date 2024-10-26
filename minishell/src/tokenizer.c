@@ -6,51 +6,22 @@
 /*   By: smoore-a <smoore-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/03 15:21:13 by smoore-a          #+#    #+#             */
-/*   Updated: 2024/10/25 22:24:53 by smoore-a         ###   ########.fr       */
+/*   Updated: 2024/10/26 10:57:44 by smoore-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 
-static int	end_space(t_var *var)
-{
-	char	*quotes;
-
-	quotes = &(var->aux1[var->i]);
-	while (*quotes && (*quotes == '\'' || *quotes == '\"'))
-	{
-		if (*quotes == '\'')
-		{
-			if (*(++quotes) == '\'')
-				quotes++;
-			else
-				return (0);
-		}
-		else if (*quotes == '\"')
-		{
-			if (*(++quotes) == '\"')
-				quotes++;
-			else
-				return (0);
-		}
-	}
-	if (is_space(*quotes))
-		return (1);
-	return (0);
-}
-
 static void	single_quote(t_data *data, t_var *var)
 {
 	var->aux1++;
-	if (*(var->aux1) == '\0')
-		return ;
-	if (*(var->aux1) == '\'')
+	if (*(var->aux1) == '\0' || *(var->aux1) == '\'')
 	{
-		var->aux1++;
+		if (*(var->aux1) == '\'')
+			var->aux1++;
 		return ;
 	}
-	while (var->aux1[var->i] && var->aux1[var->i] != '\'' && \
-	!g_signal)
+	while (var->aux1[var->i] && var->aux1[var->i] != '\'')
 		var->i++;
 	var->aux = ft_substr(var->aux1, 0, var->i);
 	if (var->aux1[var->i])
@@ -146,7 +117,7 @@ void	tokenizer(t_data *data)
 	{
 		var.i = 0;
 		var.aux = NULL;
-		while (is_space(*var.aux1) && !g_signal)
+		while (is_space(*var.aux1))
 			var.aux1++;
 		if (*var.aux1 && *var.aux1 == '\'')
 			single_quote(data, &var);

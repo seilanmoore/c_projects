@@ -6,7 +6,7 @@
 /*   By: smoore-a <smoore-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/03 15:15:54 by smoore-a          #+#    #+#             */
-/*   Updated: 2024/10/14 11:42:07 by smoore-a         ###   ########.fr       */
+/*   Updated: 2024/10/26 18:06:31 by smoore-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,7 @@ void	assign_types(t_data	*data)
 	t_token	*ptr;
 	int		i;
 
+	set_prev_token(data);
 	ptr = data->input.tokens;
 	i = 0;
 	while (ptr)

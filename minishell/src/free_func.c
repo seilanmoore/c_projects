@@ -6,11 +6,18 @@
 /*   By: smoore-a <smoore-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/25 11:02:07 by smoore-a          #+#    #+#             */
-/*   Updated: 2024/10/22 12:31:49 by smoore-a         ###   ########.fr       */
+/*   Updated: 2024/10/26 18:38:35 by smoore-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
+
+void	ft_free(char **str)
+{
+	if (*str)
+		free(*str);
+	*str = NULL;
+}
 
 void	free_array(char ***array)
 {
@@ -76,7 +83,6 @@ void	free_cmds(t_data *data)
 		free(data->input.command->cmd);
 		data->input.command->cmd = NULL;
 		free_array(&(data->input.command->args));
-		data->input.command->args = NULL;
 		tmp = data->input.command;
 		data->input.command = data->input.command->next;
 		free(tmp);
@@ -110,10 +116,10 @@ void	free_data(t_data *data)
 	env_ptr = data->envp;
 	local_head = data->locals;
 	proc = data->process;
-	free(data->prompt);
-	free(data->input.raw_line);
-	free(data->history);
-	free(data->cwd);
+	ft_free(&(data->prompt));
+	ft_free(&(data->input.raw_line));
+	ft_free(&(data->history));
+	ft_free(&(data->cwd));
 	free_tokens(data);
 	free_cmds(data);
 	free_array(&(data->paths));

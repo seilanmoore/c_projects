@@ -6,7 +6,7 @@
 /*   By: smoore-a <smoore-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/19 12:17:10 by smoore-a          #+#    #+#             */
-/*   Updated: 2024/10/25 12:12:23 by smoore-a         ###   ########.fr       */
+/*   Updated: 2024/10/26 11:27:44 by smoore-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -121,14 +121,10 @@ int	main(int argc, char **argv, char **envp)
 			save_history();
 			parser(&data);
 			print_types(&data);
-			exit (0);
-			if (!data.exit_code)
-			{
-				if (syntax_error(&data))
-					data.exit_code = 1;
-				else
-					data.exit_code = execute(&data);
-			}
+			if (syntax_error(&data))
+				data.exit_code = 1;
+			else
+				data.exit_code = execute(&data);
 			free(data.prev_exit_code);
 			data.prev_exit_code = ft_itoa(data.exit_code);
 		}

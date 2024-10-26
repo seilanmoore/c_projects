@@ -6,7 +6,7 @@
 /*   By: smoore-a <smoore-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/02 10:51:43 by smoore-a          #+#    #+#             */
-/*   Updated: 2024/10/12 23:10:48 by smoore-a         ###   ########.fr       */
+/*   Updated: 2024/10/26 14:43:09 by smoore-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ int	unset_builtin(t_data *data, t_cmd *cmd)
 	int		i;
 
 	arg = cmd->args;
-	i = -1;
+	i = 0;
 	while (arg[++i])
 	{
 		if (get_env_var(data->env, arg[i]))

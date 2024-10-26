@@ -6,7 +6,7 @@
 /*   By: smoore-a <smoore-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/26 09:54:56 by smoore-a          #+#    #+#             */
-/*   Updated: 2024/10/23 20:14:53 by smoore-a         ###   ########.fr       */
+/*   Updated: 2024/10/26 18:01:22 by smoore-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,7 +99,7 @@ void	print_array(char **array)
 	i = -1;
 	while (array[++i])
 	{
-		printf("%s", array[i]);
+		printf("\"%s\"", array[i]);
 		if (array[i + 1])
 			printf(" ");
 	}

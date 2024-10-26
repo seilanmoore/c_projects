@@ -6,7 +6,7 @@
 /*   By: smoore-a <smoore-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/19 12:17:10 by smoore-a          #+#    #+#             */
-/*   Updated: 2024/10/25 13:58:59 by smoore-a         ###   ########.fr       */
+/*   Updated: 2024/10/26 17:59:06 by smoore-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,9 +18,10 @@ void	parser(t_data *data)
 	expand(data);
 	tokenizer(data);
 	concatenate_tokens(data);
+	assign_types(data);
 	//locals(data);
 	assign_opt_arg(data);
 	parse_cmd_opt(data);
-	//print_cmd_array(data);
+	print_cmd_array(data);
 	//print_types(data);
 }

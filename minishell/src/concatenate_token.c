@@ -6,7 +6,7 @@
 /*   By: smoore-a <smoore-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/03 15:21:13 by smoore-a          #+#    #+#             */
-/*   Updated: 2024/10/25 21:57:25 by smoore-a         ###   ########.fr       */
+/*   Updated: 2024/10/26 11:00:22 by smoore-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ static void	concatenate(t_data *data, t_token **new_lst)
 		data->input.tokens = data->input.tokens->next;
 		free (tmp);
 	}
-	add_back_token(new_lst, new_token( \
+	add_back_token(new_lst, new_token(\
 	full_str, 0, data->input.tokens->quote, \
 	data->input.tokens->end_space));
 }
@@ -37,7 +37,7 @@ void	concatenate_tokens(t_data *data)
 	t_token	*new_lst;
 	t_token	*head;
 
-	new_lst = (t_token *) {0};
+	new_lst = (t_token *){0};
 	head = data->input.tokens;
 	while (data->input.tokens)
 	{
@@ -47,6 +47,4 @@ void	concatenate_tokens(t_data *data)
 	data->input.tokens = head;
 	free_tokens(data);
 	data->input.tokens = new_lst;
-	set_prev_token(data);
-	assign_types(data);
 }

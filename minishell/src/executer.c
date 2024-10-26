@@ -6,11 +6,12 @@
 /*   By: smoore-a <smoore-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/03 13:58:17 by smoore-a          #+#    #+#             */
-/*   Updated: 2024/10/24 20:45:31 by smoore-a         ###   ########.fr       */
+/*   Updated: 2024/10/26 15:22:21 by smoore-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
+#include <string.h>
 
 static t_token	*get_redirecction(t_token *token)
 {
@@ -34,43 +35,26 @@ static void	cmd_not_found(t_data *data, char *cmd)
 {
 	ft_putstr_fd(MS, 2);
 	ft_putstr_fd(cmd, 2);
-	print_msg(data, ": " NOT_FOUND, 127);
+	ft_putstr_fd(": ", 2);
+	ft_putstr_fd(strerror(errno), 2);
+	print_msg(data, "", errno);
 }
 
-static	t_token	*get_token(t_token *tokens, char *token)
+static int	builtin_out(t_data *data, t_cmd *cmd)
 {
-	t_token	*tmp;
-
-	tmp = tokens;
-	while (tmp)
-	{
-		if (!ft_strcmp(tmp->token, token))
-			return (tmp);
-		tmp = tmp->next;
-	}
-	return (NULL);
-}
-
-static int	builtin_out(t_data *data)
-{
-	t_token	*args;
-	char	*cmd;
-
-	args = NULL;
-	cmd = data->input.command->cmd;
-	if (!ft_strcmp(cmd, "exit"))
+	if (!ft_strcmp(cmd->cmd, "exit"))
 		return (exit_builtin(data));
-	else if (!ft_strcmp(cmd, "echo"))
-		return (echo_builtin(data, get_token(data->input.tokens, "echo")));
-	else if (!ft_strcmp(cmd, "cd"))
-		return (cd_builtin(data, get_token(data->input.tokens, "cd")));
-	else if (!ft_strcmp(cmd, "pwd"))
+	else if (!ft_strcmp(cmd->cmd, "echo"))
+		return (echo_builtin(cmd));
+	else if (!ft_strcmp(cmd->cmd, "cd"))
+		return (cd_builtin(data, cmd));
+	else if (!ft_strcmp(cmd->cmd, "pwd"))
 		return (pwd_builtin(data));
-	else if (!ft_strcmp(cmd, "export"))
-		return (export_builtin(data, args));
-	else if (!ft_strcmp(cmd, "unset"))
-		return (unset_builtin(data, data->input.command));
-	else if (!ft_strcmp(cmd, "env"))
+	else if (!ft_strcmp(cmd->cmd, "export"))
+		return (export_builtin(data, cmd));
+	else if (!ft_strcmp(cmd->cmd, "unset"))
+		return (unset_builtin(data, cmd));
+	else if (!ft_strcmp(cmd->cmd, "env"))
 		return (env_builtin(data));
 	return (0);
 }
@@ -113,7 +97,7 @@ static int	builtin_redir(t_data *data)
 		dup2(fd[1], STDOUT_FILENO);
 		close(fd[1]);
 	}
-	exit_code = builtin_out(data);
+	exit_code = builtin_out(data, data->input.command);
 	if (fd[1] > 2)
 	{
 		dup2(stdout_backup, STDOUT_FILENO);
@@ -130,7 +114,7 @@ static void	cmd_out(t_data *data)
 	char	**args;
 
 	if (data->input.command->builtin)
-		builtin_out(data);
+		builtin_out(data, data->input.command);
 	else
 	{
 		path = data->input.command->cmd;
@@ -140,7 +124,7 @@ static void	cmd_out(t_data *data)
 		if (execve(path, args, data->envp) == -1)
 		{
 			cmd_not_found(data, data->input.command->cmd);
-			exit(127);
+			exit(errno);
 		}
 	}
 }
@@ -206,9 +190,9 @@ int	execute(t_data *data)
 
 	exit_var = 0;
 	//open_files(data);
-	if (!data->input.command)
-		return (exit_var);
-	if (!data->n_pipe && data->input.command->builtin)
+	/* if (!data->input.command)
+		return (no_cmd(data)); */
+	if (data->input.command && !data->n_pipe && data->input.command->builtin)
 		return (builtin_redir(data));
 	pid = ft_calloc(data->n_cmd, sizeof(pid_t));
 	if (!pid)

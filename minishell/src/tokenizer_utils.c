@@ -6,11 +6,38 @@
 /*   By: smoore-a <smoore-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/21 12:03:30 by smoore-a          #+#    #+#             */
-/*   Updated: 2024/10/16 12:44:54 by smoore-a         ###   ########.fr       */
+/*   Updated: 2024/10/26 10:57:55 by smoore-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
+
+int	end_space(t_var *var)
+{
+	char	*quotes;
+
+	quotes = &(var->aux1[var->i]);
+	while (*quotes && (*quotes == '\'' || *quotes == '\"'))
+	{
+		if (*quotes == '\'')
+		{
+			if (*(++quotes) == '\'')
+				quotes++;
+			else
+				return (0);
+		}
+		else if (*quotes == '\"')
+		{
+			if (*(++quotes) == '\"')
+				quotes++;
+			else
+				return (0);
+		}
+	}
+	if (is_space(*quotes))
+		return (1);
+	return (0);
+}
 
 void	set_prev_token(t_data *data)
 {

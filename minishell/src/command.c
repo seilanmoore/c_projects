@@ -6,7 +6,7 @@
 /*   By: smoore-a <smoore-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/03 14:39:54 by smoore-a          #+#    #+#             */
-/*   Updated: 2024/10/22 15:55:55 by smoore-a         ###   ########.fr       */
+/*   Updated: 2024/10/26 13:56:18 by smoore-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,18 +80,15 @@ static char	**extract_args(t_token *token, int built)
 	args[0] = ft_strdup(token->token);
 	token = token->next;
 	i = 1;
-	while (token && token->type != PIPE)
+	while (token && (token->type == OPTION || token->type == ARG))
 	{
-		if (token->type == OPTION || token->type == ARG)
-		{
-			if (!built && (token->quote == S_QUOTE || token->quote == D_QUOTE))
-				args[i] = put_quotes(token);
-			else
-				args[i] = ft_strdup(token->token);
-			if (!args[i])
-				return (args);
-			i++;
-		}
+		if (!built && (token->quote == S_QUOTE || token->quote == D_QUOTE))
+			args[i] = put_quotes(token);
+		else
+			args[i] = ft_strdup(token->token);
+		if (!args[i])
+			return (args);
+		i++;
 		token = token->next;
 	}
 	return (args);
