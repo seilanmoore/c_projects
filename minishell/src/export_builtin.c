@@ -6,7 +6,7 @@
 /*   By: smoore-a <smoore-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/02 10:49:42 by smoore-a          #+#    #+#             */
-/*   Updated: 2024/10/26 18:52:13 by smoore-a         ###   ########.fr       */
+/*   Updated: 2024/10/28 10:22:48 by smoore-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,21 +53,22 @@ int	export_builtin(t_data *data, t_cmd *cmd)
 		equal = ft_strchr(args[i], '=');
 		if (equal)
 			variable = ft_substr(args[i], 0, equal - args[i]);
-		if (variable)
+		if (!valid_ident(variable))
 		{
-			if (!valid_ident(variable))
-				print_msg(data, MS EXPORT EXPORT_ID, 1);
-			else
-			{
-				new_var = get_env_var(data->env, variable);
-				check_new_var(\
-						&(data->env), new_var, variable, equal + 1);
-				modified = 1;
-			}
-			free(variable);
+			ft_putstr_fd(MS EXPORT "`", 1);
+			ft_putstr_fd(args[i], 1);
+			print_msg(data, "': " EXPORT_ID, 1);
 		}
+		else
+		{
+			new_var = get_env_var(data->env, variable);
+			check_new_var(\
+					&(data->env), new_var, variable, equal + 1);
+			modified = 1;
+		}
+		free(variable);
 	}
 	if (modified)
 		upd_env(data);
-	return (0);
+	return (data->status);
 }

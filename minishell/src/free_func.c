@@ -6,7 +6,7 @@
 /*   By: smoore-a <smoore-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/25 11:02:07 by smoore-a          #+#    #+#             */
-/*   Updated: 2024/10/26 18:38:35 by smoore-a         ###   ########.fr       */
+/*   Updated: 2024/10/28 12:49:49 by smoore-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,12 +41,11 @@ void	free_local(t_data *data)
 
 	while (data->locals)
 	{
-		free(data->locals->variable);
-		data->locals->variable = NULL;
-		free(data->locals->value);
-		data->locals->value = NULL;
+		ft_free(&(data->locals->variable));
+		ft_free(&(data->locals->value));
 		tmp = data->locals;
 		data->locals = data->locals->next;
+		*tmp = (t_env){0};
 		free(tmp);
 	}
 }
@@ -57,14 +56,12 @@ void	free_env_lst(t_data *data)
 
 	while (data->env)
 	{
-		free(data->env->variable);
-		data->env->variable = NULL;
-		free(data->env->value);
-		data->env->value = NULL;
+		ft_free(&(data->env->variable));
+		ft_free(&(data->env->value));
 		tmp = data->env;
 		data->env = data->env->next;
+		*tmp = (t_env){0};
 		free(tmp);
-		tmp = NULL;
 	}
 }
 
@@ -80,11 +77,11 @@ void	free_cmds(t_data *data)
 
 	while (data->input.command)
 	{
-		free(data->input.command->cmd);
-		data->input.command->cmd = NULL;
+		ft_free(&(data->input.command->cmd));
 		free_array(&(data->input.command->args));
 		tmp = data->input.command;
 		data->input.command = data->input.command->next;
+		*tmp = (t_cmd){0};
 		free(tmp);
 	}
 }
@@ -95,41 +92,37 @@ void	free_tokens(t_data *data)
 
 	while (data->input.tokens)
 	{
-		free(data->input.tokens->token);
-		data->input.tokens->token = NULL;
+		ft_free(&(data->input.tokens->token));
 		tmp = data->input.tokens;
 		data->input.tokens = data->input.tokens->next;
+		*tmp = (t_token){0};
 		free(tmp);
 	}
 }
 
+void	reset_var(t_data *data)
+{
+	data->fd[0] = 0;
+	data->fd[1] = 0;
+	data->in_cmd = 0;
+	data->in_arg = 0;
+	data->in_local = 0;
+	data->n_cmd = 0;
+	data->n_pipe = 0;
+	data->n_files = 0;
+	data->status = 0;
+	data->exit_code = 0;
+	data->input = (t_input){0};
+}
+
 void	free_data(t_data *data)
 {
-	t_env	*env_head;
-	t_env	*local_head;
-	char	**env_ptr;
-	char	*aux;
-	char	*proc;
-
-	aux = data->prev_exit_code;
-	env_head = data->env;
-	env_ptr = data->envp;
-	local_head = data->locals;
-	proc = data->process;
-	ft_free(&(data->prompt));
 	ft_free(&(data->input.raw_line));
 	ft_free(&(data->history));
 	ft_free(&(data->cwd));
+	ft_free(&(data->prompt));
+	free_array(&(data->paths));
 	free_tokens(data);
 	free_cmds(data);
-	free_array(&(data->paths));
-	*data = (t_data){0};
-	data->locals = (t_env *){0};
-	data->input = (t_input){0};
-	data->env = env_head;
-	data->envp = env_ptr;
-	data->locals = local_head;
-	data->process = proc;
-	free(data->prev_exit_code);
-	data->prev_exit_code = aux;
+	reset_var(data);
 }

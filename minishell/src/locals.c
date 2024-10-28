@@ -6,7 +6,7 @@
 /*   By: smoore-a <smoore-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/25 10:56:20 by smoore-a          #+#    #+#             */
-/*   Updated: 2024/10/23 22:10:30 by smoore-a         ###   ########.fr       */
+/*   Updated: 2024/10/28 11:49:59 by smoore-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,69 +25,83 @@ void	print_locals(t_data *data)
 	data->locals = head;
 }
 
-/* static void	check_l_variable(t_data *data, t_env *new_l_var, char **local)
+static void	mod_env_value(t_env *node, char *new_value)
 {
-	if (new_l_var)
+	if (node)
 	{
-		free(new_l_var->value);
-		if (local[1])
-			new_l_var->value = ft_strdup(local[1]);
+		free(node->value);
+		if (new_value)
+			node->value = ft_strdup(new_value);
 		else
-			new_l_var->value = ft_strdup("");
+			node->value = ft_strdup("");
+	}
+}
+
+static t_env	*get_loc_var(t_env *locals, char *variable)
+{
+	while (locals)
+	{
+		if (!ft_strcmp(locals->variable, variable))
+			return (locals);
+		locals = locals->next;
+	}
+	return (locals);
+}
+
+static void	mod_loc_value(t_env **lst, t_env *node, char *var, char *val)
+{
+	if (node)
+	{
+		free(node->value);
+		if (val)
+			node->value = ft_strdup(val);
+		else
+			node->value = ft_strdup("");
 	}
 	else
 	{
-		if (local[1])
-			new_l_var = new_variable(local[0], local[1]);
+		if (val)
+			add_back_variable(lst, new_variable(var, val));
 		else
-			new_l_var = new_variable(local[0], "");
-		if (last_variable(data->locals))
-			last_variable(data->locals)->next = new_l_var;
-		else
-			data->locals = new_l_var;
+			add_back_variable(lst, new_variable(var, ""));
 	}
-} */
+}
 
-//está rota, new_local no se asigna bien
-
-/* static void	add_local(t_data *data)
+static void	add_local(t_data *data, char *token)
 {
-	t_env	*new_local;
-	t_env	*env_var;
-	char	**local;
+	t_env	*node;
+	char	*variable;
+	char	*equal;
 
-	local = split_token(data->input.tokens->token);
-	if (!local)
-		return ;
-	if (!valid_ident(local[0]))
+	variable = NULL;
+	equal = ft_strchr(token, '=');
+	if (equal)
+		variable = ft_substr(token, 0, equal - token);
+	if (!valid_ident(variable))
 	{
-		ft_putstr_fd(MS "`", 2);
-		ft_putstr_fd(local[0], 2);
-		ft_putendl_fd("\': " EXPORT_ID, 2);
-		free_array(&(local));
-		return ;
+		ft_putstr_fd(MS "`", 1);
+		ft_putstr_fd(token, 1);
+		print_msg(data, "': " EXPORT_ID, 1);
 	}
-	new_local = get_env_var(data->locals, local[0]);
-	check_new_var(&(data->locals), new_local, local);
-	env_var = get_env_var(data->env, local[0]);
-	if (env_var)
+	else
 	{
-		free(env_var->value);
-		env_var->value = ft_strdup(local[1]);
+		node = get_env_var(data->env, variable);
+		mod_env_value(node, equal + 1);
+		node = get_loc_var(data->locals, variable);
+		mod_loc_value(&(data->locals), node, variable, equal + 1);
 	}
-	free_array(&(local));
-} */
+	free(variable);
+}
 
 void	locals(t_data *data)
 {
-	t_token	*head;
+	t_token	*tmp;
 
-	head = data->input.tokens;
-	while (data->input.tokens)
+	tmp = data->input.tokens;
+	while (tmp)
 	{
-		if (data->input.tokens->type == LOCAL)
-			;//add_local(data);
-		data->input.tokens = data->input.tokens->next;
+		if (tmp->type == LOCAL)
+			add_local(data, tmp->token);
+		tmp = tmp->next;
 	}
-	data->input.tokens = head;
 }

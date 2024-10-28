@@ -6,7 +6,7 @@
 /*   By: smoore-a <smoore-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/02 10:50:58 by smoore-a          #+#    #+#             */
-/*   Updated: 2024/10/05 13:59:40 by smoore-a         ###   ########.fr       */
+/*   Updated: 2024/10/28 12:03:58 by smoore-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ int	exit_builtin(t_data *data)
 	if (data && data->input.command && data->input.command->args[0])
 		exit_ = ft_atoi(data->input.command->args[0]);
 	ft_putendl_fd("exit", 1);
-	free(data->prev_exit_code);
+	ft_free(&(data->prev_exit_code));
 	free_local(data);
 	free_environment(data);
 	free_data(data);
