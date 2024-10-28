@@ -6,7 +6,7 @@
 /*   By: smoore-a <smoore-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/21 12:03:30 by smoore-a          #+#    #+#             */
-/*   Updated: 2024/10/28 13:32:02 by smoore-a         ###   ########.fr       */
+/*   Updated: 2024/10/28 13:40:59 by smoore-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,11 +27,12 @@ void	print_env(t_data *data)
 	data->env = head;
 }
 
-static void	del_node(t_env *env)
+static void	del_node(t_env **lst, t_env *node)
 {
-	ft_free(&(env->variable));
-	ft_free(&(env->value));
-	free(env);
+	ft_free(&(node->variable));
+	ft_free(&(node->value));
+	free(node);
+	*lst = NULL;
 }
 
 void	del_env(t_env **env, char *variable)
@@ -43,8 +44,7 @@ void	del_env(t_env **env, char *variable)
 	current = (*env)->next;
 	if (!current)
 	{
-		del_node(head);
-		*env = NULL;
+		del_node(env, head);
 		return ;
 	}
 	while (current)
@@ -52,8 +52,7 @@ void	del_env(t_env **env, char *variable)
 		if (!ft_strcmp(current->variable, variable))
 		{
 			(*env)->next = current->next;
-			del_node(current);
-			current = NULL;
+			del_node(&(current), current);
 		}
 		else
 		{
