@@ -6,7 +6,7 @@
 /*   By: smoore-a <smoore-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/02 10:49:42 by smoore-a          #+#    #+#             */
-/*   Updated: 2024/10/28 10:22:48 by smoore-a         ###   ########.fr       */
+/*   Updated: 2024/10/28 13:17:58 by smoore-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,10 +41,10 @@ int	export_builtin(t_data *data, t_cmd *cmd)
 	char	**args;
 	char	*variable;
 	char	*equal;
-	int		modified;
+	int		update;
 	int		i;
 
-	modified = 0;
+	update = 0;
 	args = cmd->args;
 	i = 0;
 	while (args[++i])
@@ -64,11 +64,11 @@ int	export_builtin(t_data *data, t_cmd *cmd)
 			new_var = get_env_var(data->env, variable);
 			check_new_var(\
 					&(data->env), new_var, variable, equal + 1);
-			modified = 1;
+			update = 1;
 		}
 		free(variable);
 	}
-	if (modified)
+	if (update)
 		upd_env(data);
 	return (data->status);
 }

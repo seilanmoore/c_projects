@@ -6,7 +6,7 @@
 /*   By: smoore-a <smoore-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/19 12:17:44 by smoore-a          #+#    #+#             */
-/*   Updated: 2024/10/26 18:37:34 by smoore-a         ###   ########.fr       */
+/*   Updated: 2024/10/28 13:29:54 by smoore-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -171,7 +171,7 @@ t_env	*get_env(t_env *l_variables, char *l_variable);
 t_env	*get_env_var(t_env *env, char *variable);
 t_env	*new_variable(char *variable, char *value);
 t_env	*last_variable(t_env *lst);
-void	del_env(t_env *env, char *variable);
+void	del_env(t_env **env, char *variable);
 
 // locals
 void	print_locals(t_data *data);

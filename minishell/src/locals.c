@@ -6,7 +6,7 @@
 /*   By: smoore-a <smoore-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/25 10:56:20 by smoore-a          #+#    #+#             */
-/*   Updated: 2024/10/28 11:49:59 by smoore-a         ###   ########.fr       */
+/*   Updated: 2024/10/28 13:18:29 by smoore-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,15 +25,16 @@ void	print_locals(t_data *data)
 	data->locals = head;
 }
 
-static void	mod_env_value(t_env *node, char *new_value)
+static void	mod_env_value(t_env *node, char *value, int *upd)
 {
 	if (node)
 	{
 		free(node->value);
-		if (new_value)
-			node->value = ft_strdup(new_value);
+		if (value)
+			node->value = ft_strdup(value);
 		else
 			node->value = ft_strdup("");
+		*upd = 1;
 	}
 }
 
@@ -67,7 +68,7 @@ static void	mod_loc_value(t_env **lst, t_env *node, char *var, char *val)
 	}
 }
 
-static void	add_local(t_data *data, char *token)
+static void	add_local(t_data *data, char *token, int *upd)
 {
 	t_env	*node;
 	char	*variable;
@@ -86,7 +87,7 @@ static void	add_local(t_data *data, char *token)
 	else
 	{
 		node = get_env_var(data->env, variable);
-		mod_env_value(node, equal + 1);
+		mod_env_value(node, equal + 1, upd);
 		node = get_loc_var(data->locals, variable);
 		mod_loc_value(&(data->locals), node, variable, equal + 1);
 	}
@@ -96,12 +97,16 @@ static void	add_local(t_data *data, char *token)
 void	locals(t_data *data)
 {
 	t_token	*tmp;
+	int		update;
 
+	update = 0;
 	tmp = data->input.tokens;
 	while (tmp)
 	{
 		if (tmp->type == LOCAL)
-			add_local(data, tmp->token);
+			add_local(data, tmp->token, &update);
 		tmp = tmp->next;
 	}
+	if (update)
+		upd_env(data);
 }

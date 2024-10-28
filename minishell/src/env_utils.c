@@ -6,7 +6,7 @@
 /*   By: smoore-a <smoore-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/21 12:03:30 by smoore-a          #+#    #+#             */
-/*   Updated: 2024/10/26 18:02:55 by smoore-a         ###   ########.fr       */
+/*   Updated: 2024/10/28 13:32:02 by smoore-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,37 +29,39 @@ void	print_env(t_data *data)
 
 static void	del_node(t_env *env)
 {
-	free(env->variable);
-	env->variable = NULL;
-	free(env->value);
-	env->value = NULL;
+	ft_free(&(env->variable));
+	ft_free(&(env->value));
 	free(env);
 }
 
-void	del_env(t_env *env, char *variable)
+void	del_env(t_env **env, char *variable)
 {
 	t_env	*head;
 	t_env	*current;
 
-	head = env;
-	current = env->next;
+	head = *env;
+	current = (*env)->next;
 	if (!current)
-		return (del_node(env));
+	{
+		del_node(head);
+		*env = NULL;
+		return ;
+	}
 	while (current)
 	{
 		if (!ft_strcmp(current->variable, variable))
 		{
-			env->next = current->next;
+			(*env)->next = current->next;
 			del_node(current);
 			current = NULL;
 		}
 		else
 		{
-			env = env->next;
+			*env = (*env)->next;
 			current = current->next;
 		}
 	}
-	env = head;
+	*env = head;
 }
 
 int	variable_len(char *envp_line)
