@@ -6,7 +6,7 @@
 /*   By: smoore-a <smoore-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/26 15:15:30 by smoore-a          #+#    #+#             */
-/*   Updated: 2024/10/28 17:08:09 by smoore-a         ###   ########.fr       */
+/*   Updated: 2024/10/29 10:31:14 by smoore-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ static void	get_env_paths(t_data *data)
 	}
 }
 
-static int	check_paths(t_data *data, t_cmd **head)
+static void	check_paths(t_data *data, t_cmd **head)
 {
 	char	*path;
 	int		i;
@@ -70,9 +70,6 @@ static int	check_paths(t_data *data, t_cmd **head)
 			}
 		}
 	}
-	/* else if (!(*head)->builtin)
-		return (check_path((*head)->cmd)); */
-	return (0);
 }
 
 void	assign_paths(t_data *data)
@@ -82,7 +79,7 @@ void	assign_paths(t_data *data)
 	head = data->input.command;
 	while (head)
 	{
-		data->exit_code = check_paths(data, &head);
+		check_paths(data, &head);
 		head = head->next;
 	}
 }

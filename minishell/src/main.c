@@ -6,7 +6,7 @@
 /*   By: smoore-a <smoore-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/19 12:17:10 by smoore-a          #+#    #+#             */
-/*   Updated: 2024/10/28 17:08:26 by smoore-a         ###   ########.fr       */
+/*   Updated: 2024/10/29 20:21:12 by smoore-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,6 +75,7 @@ void	save_history(void)
 
 char	*prompter(t_data *data)
 {
+	t_env	*pwd;
 	char	*prompt;
 	char	*tmp;
 	char	*short_cwd;
@@ -84,6 +85,12 @@ char	*prompter(t_data *data)
 	prompt = ft_strjoin(tmp, ": ");
 	free (tmp);
 	data->cwd = getcwd(NULL, 0);
+	if (!(data->cwd))
+	{
+		pwd = get_env_var(data->env, "PWD");
+		if (pwd)
+			data->cwd = ft_strdup(pwd->value);
+	}
 	short_cwd = cwd_compress(data);
 	if (short_cwd)
 	{
