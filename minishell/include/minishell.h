@@ -6,7 +6,7 @@
 /*   By: smoore-a <smoore-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/19 12:17:44 by smoore-a          #+#    #+#             */
-/*   Updated: 2024/10/28 13:29:54 by smoore-a         ###   ########.fr       */
+/*   Updated: 2024/10/29 10:17:50 by smoore-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 # define MINISHELL_H
 
 # include "../libft/include/libft.h"
+#include <fcntl.h>
 # include <readline/readline.h>
 # include <readline/history.h>
 # include <stdio.h>
@@ -126,28 +127,29 @@ typedef struct s_pipe
 
 typedef struct s_data
 {
-	int		fd[2];
-	char	**envp;
-	char	**paths;
-	char	*user;
-	char	*cwd;
-	char	*prompt;
-	char	*history;
-	int		n_cmd;
-	int		n_pipe;
-	int		n_files;
-	int		in_cmd;
-	int		in_arg;
-	int		in_local;
-	int		status;
-	int		exit_code;
-	char	*prev_exit_code;
-	char	*process;
-	pid_t	pid;
-	t_env	*locals;
-	t_env	*env;
-	t_pipe	*pipes;
-	t_input	input;
+	int			fd[2];
+	char		**envp;
+	char		**paths;
+	char		*user;
+	char		*cwd;
+	char		*prompt;
+	char		*history;
+	int			n_cmd;
+	int			n_pipe;
+	int			n_files;
+	int			in_cmd;
+	int			in_arg;
+	int			in_local;
+	int			status;
+	int			exit_code;
+	char		*prev_exit_code;
+	char		*process;
+	pid_t		pid;
+	t_env		*locals;
+	t_env		*env;
+	t_pipe		*pipes;
+	t_input		input;
+	struct stat	stat;
 }	t_data;
 
 // init
@@ -286,5 +288,7 @@ int		path_w_check(char *path);
 
 // handle_error
 int		handle_errno(char *wildcard);
+int		cmd_error(char *cmd, int status, int print);
+
 
 #endif

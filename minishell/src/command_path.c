@@ -6,7 +6,7 @@
 /*   By: smoore-a <smoore-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/26 15:15:30 by smoore-a          #+#    #+#             */
-/*   Updated: 2024/10/26 19:11:14 by smoore-a         ###   ########.fr       */
+/*   Updated: 2024/10/28 17:08:09 by smoore-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,8 +70,8 @@ static int	check_paths(t_data *data, t_cmd **head)
 			}
 		}
 	}
-	else if (!(*head)->builtin && access((*head)->cmd, F_OK | X_OK) == -1)
-		return (handle_errno((*head)->cmd), errno);
+	/* else if (!(*head)->builtin)
+		return (check_path((*head)->cmd)); */
 	return (0);
 }
 
@@ -83,8 +83,6 @@ void	assign_paths(t_data *data)
 	while (head)
 	{
 		data->exit_code = check_paths(data, &head);
-		if (data->exit_code)
-			return ;
 		head = head->next;
 	}
 }

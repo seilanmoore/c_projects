@@ -6,12 +6,12 @@
 /*   By: smoore-a <smoore-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/03 13:58:17 by smoore-a          #+#    #+#             */
-/*   Updated: 2024/10/26 15:22:21 by smoore-a         ###   ########.fr       */
+/*   Updated: 2024/10/29 10:25:04 by smoore-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
-#include <string.h>
+#include <sys/stat.h>
 
 static t_token	*get_redirecction(t_token *token)
 {
@@ -29,15 +29,6 @@ static t_token	*get_redirecction(t_token *token)
 		redir = redir->next;
 	}
 	return (NULL);
-}
-
-static void	cmd_not_found(t_data *data, char *cmd)
-{
-	ft_putstr_fd(MS, 2);
-	ft_putstr_fd(cmd, 2);
-	ft_putstr_fd(": ", 2);
-	ft_putstr_fd(strerror(errno), 2);
-	print_msg(data, "", errno);
 }
 
 static int	builtin_out(t_data *data, t_cmd *cmd)
@@ -123,7 +114,14 @@ static void	cmd_out(t_data *data)
 			exit(1);
 		if (execve(path, args, data->envp) == -1)
 		{
-			cmd_not_found(data, data->input.command->cmd);
+			if (!stat(path, &(data->stat)) && S_ISDIR(data->stat.st_mode))
+			{
+				ft_putstr_fd(MS, 2);
+				ft_putstr_fd(path, 2);
+				ft_putendl_fd(": " IS_DIR, 2);
+			}
+			else
+				cmd_error(data->input.command->cmd, errno, 1);
 			exit(errno);
 		}
 	}
@@ -198,19 +196,23 @@ int	execute(t_data *data)
 	if (!pid)
 		return (0);
 	data->pipes = ft_calloc(data->n_pipe, sizeof(t_pipe));
-	i = -1;
 	cmd_head = data->input.command;
 	redir = get_redirecction(data->input.tokens);
+	i = -1;
 	while (++i < data->n_cmd)
 	{
 		create_child(data, redir, &(pid[i]), i);
 		redir = get_redirecction(redir);
-		data->input.command = data->input.command->next;
+		if (data->input.command->next)
+			data->input.command = data->input.command->next;
 		waitpid(pid[i], &data->status, 0);
 	}
-	data->input.command = cmd_head;
 	if (WIFEXITED(data->status))
-		exit_var = WEXITSTATUS(data->status);
+	{
+		exit_var = cmd_error(\
+		data->input.command->cmd, WEXITSTATUS(data->status), 0);
+	}
+	data->input.command = cmd_head;
 	free(data->pipes);
 	free(pid);
 	return (exit_var);
