@@ -6,7 +6,7 @@
 /*   By: smoore-a <smoore-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/03 15:21:13 by smoore-a          #+#    #+#             */
-/*   Updated: 2024/10/26 10:57:44 by smoore-a         ###   ########.fr       */
+/*   Updated: 2024/11/01 20:13:51 by smoore-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,7 +81,7 @@ void	handle_redir_char(t_data *data, t_var *var)
 
 static void	characters(t_data *data, t_var *var)
 {
-	if (is_redir(var->aux1[var->i]))
+	if (no_word(var->aux1[var->i]))
 		return (handle_redir_char(data, var));
 	while (var->aux1[var->i] && \
 	!is_space(var->aux1[var->i]) && \
@@ -113,7 +113,7 @@ void	tokenizer(t_data *data)
 	var = (t_var){0};
 	var.aux1 = data->input.raw_line;
 
-	while (*var.aux1 && !g_signal)
+	while (*var.aux1)
 	{
 		var.i = 0;
 		var.aux = NULL;

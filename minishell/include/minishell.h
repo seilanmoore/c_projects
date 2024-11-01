@@ -6,7 +6,7 @@
 /*   By: smoore-a <smoore-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/19 12:17:44 by smoore-a          #+#    #+#             */
-/*   Updated: 2024/10/29 10:17:50 by smoore-a         ###   ########.fr       */
+/*   Updated: 2024/11/01 20:11:07 by smoore-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 # define MINISHELL_H
 
 # include "../libft/include/libft.h"
-#include <fcntl.h>
+# include <fcntl.h>
 # include <readline/readline.h>
 # include <readline/history.h>
 # include <stdio.h>
@@ -73,28 +73,32 @@
 # define S_QUOTE 121 	// ''
 # define D_QUOTE 122 	// ""
 
-extern int	g_signal;
+extern int				g_signal;
 
 void	signal_handler(int sig);
+
+typedef struct s_tokens	t_token;
 
 typedef struct s_command
 {
 	char				*cmd;
 	char				**args;
 	int					builtin;
+	t_token				*token;
 	struct s_command	*next;
 }	t_cmd;
 
 typedef struct s_tokens
 {
-	char				*token;
-	int					type;
-	int					quote;
-	int					end_space;
-	struct s_tokens		*opt;
-	struct s_tokens		*arg;
-	struct s_tokens		*prev;
-	struct s_tokens		*next;
+	char		*token;
+	int			type;
+	int			quote;
+	int			end_space;
+	t_cmd		*cmd;
+	t_token		*opt;
+	t_token		*arg;
+	t_token		*prev;
+	t_token		*next;
 }	t_token;
 
 typedef struct s_input
@@ -128,6 +132,9 @@ typedef struct s_pipe
 typedef struct s_data
 {
 	int			fd[2];
+	int			l_pipe[2];
+	int			r_pipe[2];
+	char		*heredoc;
 	char		**envp;
 	char		**paths;
 	char		*user;
@@ -147,7 +154,6 @@ typedef struct s_data
 	pid_t		pid;
 	t_env		*locals;
 	t_env		*env;
-	t_pipe		*pipes;
 	t_input		input;
 	struct stat	stat;
 }	t_data;
@@ -192,7 +198,7 @@ void	assign_paths(t_data *data);
 
 //command_utils
 void	add_back_cmd(t_cmd **lst, t_cmd *node);
-t_cmd	*new_cmd(void *command, char **arguments, int builtin);
+t_cmd	*new_cmd(t_token *token, char **arguments, int builtin);
 t_cmd	*last_cmd(t_cmd *lst);
 
 //syntax
@@ -269,6 +275,7 @@ void	print_array(char **array);
 int		valid_char(char c);
 int		valid_ident(char *str);
 char	*get_envp_var(char **envp, char *var);
+int		no_word(int c);
 int		is_redir(int c);
 int		is_space(int c);
 int		is_cmd(int c);
@@ -289,6 +296,12 @@ int		path_w_check(char *path);
 // handle_error
 int		handle_errno(char *wildcard);
 int		cmd_error(char *cmd, int status, int print);
+
+// open_files
+int		open_files(t_data *data);
+
+//heredoc
+int		write_heredoc(t_data *data);
 
 
 #endif

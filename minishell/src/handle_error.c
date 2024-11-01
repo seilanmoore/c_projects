@@ -6,7 +6,7 @@
 /*   By: smoore-a <smoore-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/09 17:37:35 by smoore-a          #+#    #+#             */
-/*   Updated: 2024/10/29 10:06:30 by smoore-a         ###   ########.fr       */
+/*   Updated: 2024/11/01 18:44:53 by smoore-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,16 +25,10 @@ int	handle_errno(char *wildcard)
 	return (0);
 }
 
-int	change_status(int status)
-{
-	if (status == ENOENT)
-		return (127);
-	else
-		return (126);
-}
-
 int	cmd_error(char *cmd, int status, int print)
 {
+	if (!status)
+		return (0);
 	if (print)
 	{
 		ft_putstr_fd(MS, 2);
@@ -43,25 +37,16 @@ int	cmd_error(char *cmd, int status, int print)
 	}
 	if (status == ENOENT)
 	{
-		if (!ft_strchr(cmd, '/'))
+		if (print)
 		{
-			if (print)
-			{
-				ft_putstr_fd("command not found", 2);
-				ft_putendl_fd(": 127", 2);
-			}
-		}
-		else
-		{
-			if (print)
+			if (!ft_strchr(cmd, '/'))
+				ft_putendl_fd(NOT_FOUND ": 127", 2);
+			else
 				ft_putendl_fd(strerror(status), 2);
 		}
 		return (127);
 	}
-	else
-	{
-		if (print)
-			ft_putendl_fd(strerror(status), 2);
-		return (126);
-	}
+	if (print)
+		ft_putendl_fd(strerror(status), 2);
+	return (126);
 }

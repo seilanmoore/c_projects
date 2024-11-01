@@ -6,64 +6,11 @@
 /*   By: smoore-a <smoore-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/26 09:53:56 by smoore-a          #+#    #+#             */
-/*   Updated: 2024/10/26 19:05:01 by smoore-a         ###   ########.fr       */
+/*   Updated: 2024/10/30 19:54:43 by smoore-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
-#include <stdio.h>
-
-/* static void	expand_home(t_data *data, t_list **lst, char **home)
-{
-	char	*value;
-	char	*tmp;
-
-	value = get_envp_var(data->envp, "HOME");
-	if (value)
-	{
-		tmp = (*lst)->content;
-		(*lst)->content = ft_strjoin(value, (*lst)->content + 1);
-		free(tmp);
-	}
-} */
-/*
-static void	update_token(t_data *data, char **ptr, int *i)
-{
-	char		*identifier;
-	char		*value;
-	char		*tmp;
-	char		*pre;
-
-	if ((*ptr) + 1 && \
-	(*((*ptr) + 1) == '$' || *((*ptr) + 1) == '?' || valid_char(*((*ptr) + 1))))
-	{
-		identifier = extract_id(*ptr);
-		value = get_dollar_value(data, identifier + 1);
-		pre = ft_substr(data->input.raw_line, 0, *i);
-		tmp = ft_strjoin(pre, value);
-		free(pre);
-		pre = data->input.raw_line;
-		data->input.raw_line = ft_strjoin(tmp, *ptr + ft_strlen(identifier));
-		free(tmp);
-		free(pre);
-		free(identifier);
-		*ptr = *ptr + ft_strlen(identifier);
-		*i = *i + ft_strlen(identifier);
-		if (**ptr == '$' && (*ptr) + 1 && (*((*ptr) + 1) == '$'))
-		{
-			(*ptr)++;
-			(*i)++;
-		}
-	}
-}
-
-static void	check_char(t_data *data, char **ptr, int *i)
-{
-	if (**ptr == '~' && is_space(*((*ptr) - 1)))
-		expand_home(data, ptr, i);
-	if (*((*ptr) - 1) != '\\' && **ptr == '$')
-		update_token(data, ptr, i);
-} */
 
 void	free_lst(t_list **lst)
 {

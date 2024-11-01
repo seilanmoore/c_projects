@@ -6,7 +6,7 @@
 /*   By: smoore-a <smoore-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/03 14:39:54 by smoore-a          #+#    #+#             */
-/*   Updated: 2024/10/26 13:56:18 by smoore-a         ###   ########.fr       */
+/*   Updated: 2024/10/30 20:00:19 by smoore-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,15 +80,18 @@ static char	**extract_args(t_token *token, int built)
 	args[0] = ft_strdup(token->token);
 	token = token->next;
 	i = 1;
-	while (token && (token->type == OPTION || token->type == ARG))
+	while (token && token->type != PIPE)
 	{
-		if (!built && (token->quote == S_QUOTE || token->quote == D_QUOTE))
-			args[i] = put_quotes(token);
-		else
-			args[i] = ft_strdup(token->token);
-		if (!args[i])
-			return (args);
-		i++;
+		if (token->type == OPTION || token->type == ARG)
+		{
+			if (!built && (token->quote == S_QUOTE || token->quote == D_QUOTE))
+				args[i] = put_quotes(token);
+			else
+				args[i] = ft_strdup(token->token);
+			if (!args[i])
+				return (args);
+			i++;
+		}
 		token = token->next;
 	}
 	return (args);
@@ -96,10 +99,12 @@ static char	**extract_args(t_token *token, int built)
 
 void	parse_cmd_opt(t_data *data)
 {
+	t_cmd	*cmd;
 	t_token	*tmp;
 	char	**args;
 	int		built;
 
+	cmd = NULL;
 	tmp = data->input.tokens;
 	while (tmp)
 	{
@@ -107,8 +112,12 @@ void	parse_cmd_opt(t_data *data)
 		{
 			built = is_built(tmp->token);
 			args = extract_args(tmp, built);
-			add_back_cmd(&(data->input.command),
-				new_cmd(ft_strdup(tmp->token), args, built));
+			cmd = new_cmd(tmp, args, built);
+			if (cmd)
+			{
+				tmp->cmd = cmd;
+				add_back_cmd(&(data->input.command), cmd);
+			}
 		}
 		tmp = tmp->next;
 	}

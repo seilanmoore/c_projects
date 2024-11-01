@@ -6,30 +6,11 @@
 /*   By: smoore-a <smoore-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/03 13:58:17 by smoore-a          #+#    #+#             */
-/*   Updated: 2024/10/29 10:25:04 by smoore-a         ###   ########.fr       */
+/*   Updated: 2024/11/01 21:16:38 by smoore-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
-#include <sys/stat.h>
-
-static t_token	*get_redirecction(t_token *token)
-{
-	t_token	*redir;
-
-	redir = token;
-	if (redir)
-		redir = redir->next;
-	while (redir)
-	{
-		if (redir->type == PIPE || \
-		redir->type == LEFT || redir->type == LEFTT || \
-		redir->type == RIGHT || redir->type == RIGHTT)
-			return (redir);
-		redir = redir->next;
-	}
-	return (NULL);
-}
 
 static int	builtin_out(t_data *data, t_cmd *cmd)
 {
@@ -52,168 +33,226 @@ static int	builtin_out(t_data *data, t_cmd *cmd)
 
 static int	builtin_redir(t_data *data)
 {
-	t_token		*redir;
-	int			fd[2];
 	int			exit_code;
-	int			stdout_backup;
+	int			stdout_fd;
+	int			pipe_used;
 
-	fd[0] = -1;
-	fd[1] = -1;
-	redir = get_redirecction(data->input.tokens);
-	while (redir)
+	pipe_used = 0;
+	stdout_fd = -1;
+	if (data->fd[0] != -1)
 	{
-		if (redir && redir->type == LEFT && redir->next)
-		{
-			fd[0] = open(redir->next->token, O_RDONLY);
-			if (fd[0] == -1 && handle_errno(redir->next->token) == 1)
-				return (1);
-		}
-		else if (redir && redir->type == RIGHT && redir->next)
-		{
-			fd[1] = open(redir->next->token, O_CREAT | O_TRUNC | O_WRONLY, 0644);
-			if (fd[1] == -1 && handle_errno(redir->next->token) == 1)
-				return (1);
-		}
-		else if (redir && redir->type == RIGHTT && redir->next)
-		{
-			fd[1] = open(redir->next->token, O_CREAT | O_APPEND | O_WRONLY, 0644);
-			if (fd[1] == -1 && handle_errno(redir->next->token) == 1)
-				return (1);
-		}
-		redir = get_redirecction(redir);
+		close(data->fd[0]);
+		data->fd[0] = -1;
 	}
-	if (fd[1] > 2)
+	else if (data->l_pipe[0] != -1)
 	{
-		stdout_backup = dup(STDOUT_FILENO);
-		dup2(fd[1], STDOUT_FILENO);
-		close(fd[1]);
+		if (data->heredoc)
+			write_heredoc(data);
+		else
+		{
+			close(data->l_pipe[1]);
+			data->l_pipe[1] = -1;
+			close(data->l_pipe[0]);
+			data->l_pipe[0] = -1;
+		}
+	}
+	if (data->fd[1] != -1)
+	{
+		stdout_fd = dup(STDOUT_FILENO);
+		dup2(data->fd[1], STDOUT_FILENO);
+		close(data->fd[1]);
+		data->fd[1] = -1;
+	}
+	else if (data->r_pipe[1] != -1)
+	{
+		close(data->r_pipe[0]);
+		data->r_pipe[0] = -1;
+		stdout_fd = dup(STDOUT_FILENO);
+		dup2(data->r_pipe[1], STDOUT_FILENO);
+		close(data->r_pipe[1]);
+		data->r_pipe[1] = -1;
+		pipe_used = 1;
 	}
 	exit_code = builtin_out(data, data->input.command);
-	if (fd[1] > 2)
+	if (stdout_fd != -1 && !pipe_used)
 	{
-		dup2(stdout_backup, STDOUT_FILENO);
-		close(stdout_backup);
+		dup2(stdout_fd, STDOUT_FILENO);
+		close(stdout_fd);
 	}
-	while (fd[1] > 2)
-		close(fd[1]--);
+	else if (pipe_used)
+	{
+		if (pipe(data->r_pipe) != -1)
+		{
+			dup2(STDOUT_FILENO, data->r_pipe[1]);
+			dup2(stdout_fd, STDOUT_FILENO);
+			close(stdout_fd);
+		}
+	}
 	return (exit_code);
 }
 
-static void	cmd_out(t_data *data)
+static void	cmd_out(t_data *data, t_cmd *command)
 {
 	char	*path;
 	char	**args;
 
-	if (data->input.command->builtin)
-		builtin_out(data, data->input.command);
-	else
+	path = command->cmd;
+	args = command->args;
+	ft_putstr_fd("PATH: ", 2);
+	ft_putendl_fd(path, 2);
+	ft_putstr_fd("ARGS: ", 2);
+	ft_putendl_fd(args[0], 2);
+	if (!path)
+		exit(1);
+	if (execve(path, args, data->envp) == -1)
 	{
-		path = data->input.command->cmd;
-		args = data->input.command->args;
-		if (!path)
-			exit(1);
-		if (execve(path, args, data->envp) == -1)
+		if (!stat(path, &(data->stat)) && S_ISDIR(data->stat.st_mode))
 		{
-			if (!stat(path, &(data->stat)) && S_ISDIR(data->stat.st_mode))
-			{
-				ft_putstr_fd(MS, 2);
-				ft_putstr_fd(path, 2);
-				ft_putendl_fd(": " IS_DIR, 2);
-			}
-			else
-				cmd_error(data->input.command->cmd, errno, 1);
-			exit(errno);
+			ft_putstr_fd(MS, 2);
+			ft_putstr_fd(path, 2);
+			ft_putendl_fd(": " IS_DIR, 2);
 		}
+		else
+			cmd_error(command->cmd, errno, 1);
+		exit(errno);
 	}
 }
 
-static void	create_child(t_data *data, t_token *redir, pid_t *pid, int i)
+static int	exe_cmd(t_data *data, pid_t *pid)
 {
-	//t_token *next_redir;
+	t_token	*cmd;
+	int		exit_var;
 
-	(void)redir;
-	if (i < data->n_pipe)
+	cmd = data->input.tokens;
+	data->input.tokens = data->input.tokens->next;
+	exit_var = open_files(data);
+	ft_putstr_fd("Current command: ", 2);
+	ft_putendl_fd(cmd->token, 2);
+	if (data->r_pipe[0] != -1)
 	{
-		if (pipe(data->pipes[i].fd) == -1)
-			return ;
+		if (pipe(data->l_pipe) == -1)
+			return (1);
+		ft_putstr_fd("r_pipe[0]: ", 2);
+		ft_putnbr_fd(data->r_pipe[0], 2);
+		ft_putendl_fd("", 2);
+		ft_putstr_fd("r_pipe[1]: ", 2);
+		ft_putnbr_fd(data->r_pipe[1], 2);
+		ft_putendl_fd("", 2);
+		ft_putstr_fd("l_pipe[0]: ", 2);
+		ft_putnbr_fd(data->l_pipe[0], 2);
+		ft_putendl_fd("", 2);
+		ft_putstr_fd("l_pipe[1]: ", 2);
+		ft_putnbr_fd(data->l_pipe[1], 2);
+		ft_putendl_fd("", 2);
+		dup2(data->r_pipe[0], data->l_pipe[0]);
+		dup2(data->r_pipe[1], data->l_pipe[1]);
+		close(data->r_pipe[0]);
+		close(data->r_pipe[1]);
+		data->r_pipe[0] = -1;
+		data->r_pipe[1] = -1;
 	}
-	*pid = fork();
-	g_signal = pid[i];
-	if (*pid == -1)
-		return ;
-	if (*pid == 0)
+	ft_putstr_fd("Current command: ", 2);
+	ft_putendl_fd(cmd->token, 2);
+	if (data->input.tokens)
 	{
-		/* if (redir)
+		if (data->fd[1] == -1 && data->input.tokens->prev && \
+		data->input.tokens->prev->type == PIPE && \
+		pipe(data->r_pipe) == -1)
+			return (1);
+	}
+	if (cmd->cmd->builtin)
+		exit_var = builtin_redir(data);
+	else
+	{
+		*pid = fork();
+		g_signal = *pid;
+		if (*pid == -1)
+			return (1);
+		if (*pid == 0)
 		{
-			next_redir = get_redirecction(redir);
-			if (redir->type == LEFT)
+			if (data->fd[0] != -1)
 			{
-				if (next_redir)
-				{
-					if (next_redir->type == PIPE)
-						infile_cmd_pipe();
-					else if (next_redir->type == RIGHT || next_redir->type == RIGHTT)
-						infile_cmd_outfile()
-				}
-				else
-					infile_cmd_out();
+				ft_putstr_fd("fd[0]: ", 2);
+				ft_putnbr_fd(data->fd[0], 2);
+				ft_putendl_fd("", 2);
+				dup2(data->fd[0], STDIN_FILENO);
+				close(data->fd[0]);
 			}
-			else if (redir->type == PIPE)
+			else if (data->l_pipe[0] != -1)
 			{
-				if (next_redir)
-				{
-					if (next_redir->type == PIPE)
-						pipe_cmd_pipe();
-					else if (next_redir->type == RIGHT || next_redir->type == RIGHTT)
-						pipe_cmd_outfile()
-				}
-				else
-					pipe_cmd_out();
+				ft_putstr_fd("l_pipe[0]: ", 2);
+				ft_putnbr_fd(data->l_pipe[0], 2);
+				ft_putendl_fd("", 2);
+				close(data->l_pipe[1]);
+				dup2(data->l_pipe[0], STDIN_FILENO);
+				close(data->l_pipe[0]);
 			}
-			else if (redir->type == RIGHT || \
-			redir->type == RIGHTT)
-				cmd_outfile();
-		} */
-		cmd_out(data);
+			if (data->fd[1] != -1)
+			{
+				ft_putstr_fd("fd[1]: ", 2);
+				ft_putnbr_fd(data->fd[1], 2);
+				ft_putendl_fd("", 2);
+				dup2(data->fd[1], STDOUT_FILENO);
+				close(data->fd[1]);
+			}
+			else if (data->r_pipe[1] != -1)
+			{
+				ft_putendl_fd(cmd->token, 2);
+				ft_putstr_fd(": r_pipe[1]: ", 2);
+				ft_putnbr_fd(data->r_pipe[1], 2);
+				ft_putendl_fd("", 2);
+				close(data->r_pipe[0]);
+				dup2(data->r_pipe[1], STDOUT_FILENO);
+				close(data->r_pipe[1]);
+				ft_putendl_fd(cmd->token, 2);
+			}
+			cmd_out(data, cmd->cmd);
+		}
+		if (data->l_pipe[0] != -1)
+		{
+			if (data->heredoc)
+				write_heredoc(data);
+			else
+			{
+				close(data->l_pipe[0]);
+				close(data->l_pipe[1]);
+				data->l_pipe[0] = -1;
+				data->l_pipe[1] = -1;
+			}
+		}
+		waitpid(*pid, &data->status, 0);
+		if (WIFEXITED(data->status))
+		{
+			exit_var = cmd_error(cmd->token,
+					WEXITSTATUS(data->status), 0);
+		}
 	}
+	return (exit_var);
 }
 
 int	execute(t_data *data)
 {
-	t_cmd	*cmd_head;
-	t_token	*redir;
+	t_token	*head;
 	pid_t	*pid;
 	int		i;
 	int		exit_var;
 
-	exit_var = 0;
-	//open_files(data);
-	/* if (!data->input.command)
-		return (no_cmd(data)); */
-	if (data->input.command && !data->n_pipe && data->input.command->builtin)
-		return (builtin_redir(data));
+	head = data->input.tokens;
 	pid = ft_calloc(data->n_cmd, sizeof(pid_t));
 	if (!pid)
 		return (0);
-	data->pipes = ft_calloc(data->n_pipe, sizeof(t_pipe));
-	cmd_head = data->input.command;
-	redir = get_redirecction(data->input.tokens);
 	i = -1;
-	while (++i < data->n_cmd)
+	while (data->input.tokens)
 	{
-		create_child(data, redir, &(pid[i]), i);
-		redir = get_redirecction(redir);
-		if (data->input.command->next)
-			data->input.command = data->input.command->next;
-		waitpid(pid[i], &data->status, 0);
+		if (is_redir(data->input.tokens->type))
+		{
+			exit_var = open_files(data);
+			data->input.tokens = data->input.tokens->next;
+		}
+		else if (data->input.tokens->type == CMD)
+			exit_var = exe_cmd(data, &(pid[++i]));
 	}
-	if (WIFEXITED(data->status))
-	{
-		exit_var = cmd_error(\
-		data->input.command->cmd, WEXITSTATUS(data->status), 0);
-	}
-	data->input.command = cmd_head;
-	free(data->pipes);
 	free(pid);
+	data->input.tokens = head;
 	return (exit_var);
 }

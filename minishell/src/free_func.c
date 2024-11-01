@@ -6,7 +6,7 @@
 /*   By: smoore-a <smoore-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/25 11:02:07 by smoore-a          #+#    #+#             */
-/*   Updated: 2024/10/28 12:49:49 by smoore-a         ###   ########.fr       */
+/*   Updated: 2024/11/01 14:48:55 by smoore-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,8 +102,12 @@ void	free_tokens(t_data *data)
 
 void	reset_var(t_data *data)
 {
-	data->fd[0] = 0;
-	data->fd[1] = 0;
+	data->fd[0] = -1;
+	data->fd[1] = -1;
+	data->l_pipe[0] = -1;
+	data->l_pipe[1] = -1;
+	data->r_pipe[0] = -1;
+	data->r_pipe[1] = -1;
 	data->in_cmd = 0;
 	data->in_arg = 0;
 	data->in_local = 0;
@@ -112,6 +116,7 @@ void	reset_var(t_data *data)
 	data->n_files = 0;
 	data->status = 0;
 	data->exit_code = 0;
+	data->heredoc = NULL;
 	data->input = (t_input){0};
 }
 

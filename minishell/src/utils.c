@@ -6,7 +6,7 @@
 /*   By: smoore-a <smoore-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/26 09:54:56 by smoore-a          #+#    #+#             */
-/*   Updated: 2024/10/28 10:13:26 by smoore-a         ###   ########.fr       */
+/*   Updated: 2024/11/01 20:10:28 by smoore-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,12 +29,21 @@ int	ft_strcmp(const char *str1, const char *str2)
 	return (0);
 }
 
+int	no_word(int c)
+{
+	if (c == '<' || \
+	c == '>' || \
+	c == '|')
+		return (1);
+	return (0);
+}
+
 int	is_redir(int c)
 {
-	if (c && (\
-	c == '<' || \
-	c == '>' || \
-	c == '|'))
+	if (c == LEFT || \
+	c == LEFTT || \
+	c == RIGHT || \
+	c == RIGHTT)
 		return (1);
 	return (0);
 }

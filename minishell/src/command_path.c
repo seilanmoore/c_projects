@@ -6,7 +6,7 @@
 /*   By: smoore-a <smoore-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/26 15:15:30 by smoore-a          #+#    #+#             */
-/*   Updated: 2024/10/29 10:31:14 by smoore-a         ###   ########.fr       */
+/*   Updated: 2024/11/01 21:30:55 by smoore-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,8 @@ static void	check_paths(t_data *data, t_cmd **head)
 	char	*path;
 	int		i;
 
-	get_env_paths(data);
+	if (!(data->paths))
+		get_env_paths(data);
 	if (!(*head)->builtin && !ft_strchr((*head)->cmd, '/'))
 	{
 		i = -1;

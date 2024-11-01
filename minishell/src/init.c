@@ -6,7 +6,7 @@
 /*   By: smoore-a <smoore-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/25 11:02:34 by smoore-a          #+#    #+#             */
-/*   Updated: 2024/10/28 12:59:46 by smoore-a         ###   ########.fr       */
+/*   Updated: 2024/11/01 18:00:38 by smoore-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,6 +70,12 @@ void	init_data(t_data *data, char **envp)
 {
 	*data = (t_data){0};
 	data->input = (t_input){0};
+	data->fd[0] = -1;
+	data->fd[1] = -1;
+	data->l_pipe[0] = -1;
+	data->l_pipe[1] = -1;
+	data->r_pipe[0] = -1;
+	data->r_pipe[1] = -1;
 	data->pid = ft_get_pid();
 	data->process = ft_itoa(data->pid);
 	data->prev_exit_code = ft_itoa(0);

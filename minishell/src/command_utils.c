@@ -6,7 +6,7 @@
 /*   By: smoore-a <smoore-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/03 14:52:01 by smoore-a          #+#    #+#             */
-/*   Updated: 2024/10/14 13:32:51 by smoore-a         ###   ########.fr       */
+/*   Updated: 2024/10/30 12:13:00 by smoore-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,18 +32,24 @@ void	add_back_cmd(t_cmd **lst, t_cmd *node)
 	}
 }
 
-t_cmd	*new_cmd(void *command, char **arguments, int builtin)
+t_cmd	*new_cmd(t_token *token, char **arguments, int builtin)
 {
 	t_cmd	*new_node;
 
-	if (!command)
+	if (!token)
 		return (NULL);
 	new_node = malloc(sizeof(t_cmd));
 	if (!new_node)
 		return (NULL);
 	new_node->next = NULL;
-	new_node->cmd = command;
+	new_node->cmd = ft_strdup(token->token);
+	if (!(new_node->cmd))
+	{
+		free(new_node);
+		return (NULL);
+	}
 	new_node->args = arguments;
 	new_node->builtin = builtin;
+	new_node->token = token;
 	return (new_node);
 }
