@@ -6,7 +6,7 @@
 /*   By: smoore-a <smoore-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/21 12:03:30 by smoore-a          #+#    #+#             */
-/*   Updated: 2024/10/26 10:57:55 by smoore-a         ###   ########.fr       */
+/*   Updated: 2024/11/02 16:53:53 by smoore-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ int	end_space(t_var *var)
 				return (0);
 		}
 	}
-	if (is_space(*quotes))
+	if (is_space(*quotes) || no_word(*quotes))
 		return (1);
 	return (0);
 }
