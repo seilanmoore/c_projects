@@ -6,7 +6,7 @@
 /*   By: smoore-a <smoore-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/26 09:54:56 by smoore-a          #+#    #+#             */
-/*   Updated: 2024/11/01 20:10:28 by smoore-a         ###   ########.fr       */
+/*   Updated: 2024/11/02 09:55:33 by smoore-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -202,7 +202,7 @@ int	valid_char(char c)
 int	valid_ident(char *str)
 {
 	if (!str)
-		return (0);
+		return (1);
 	if (*str == '\0')
 		return (0);
 	while (*str)

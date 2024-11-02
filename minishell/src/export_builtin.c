@@ -6,7 +6,7 @@
 /*   By: smoore-a <smoore-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/02 10:49:42 by smoore-a          #+#    #+#             */
-/*   Updated: 2024/10/30 16:46:32 by smoore-a         ###   ########.fr       */
+/*   Updated: 2024/11/02 09:56:01 by smoore-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ int	export_builtin(t_data *data, t_cmd *cmd)
 			ft_putstr_fd(args[i], 1);
 			print_msg(data, "': " EXPORT_ID, 1);
 		}
-		else
+		else if (variable)
 		{
 			new_var = get_env_var(data->env, variable);
 			check_new_var(\

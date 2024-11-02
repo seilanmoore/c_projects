@@ -6,7 +6,7 @@
 /*   By: smoore-a <smoore-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/03 13:58:17 by smoore-a          #+#    #+#             */
-/*   Updated: 2024/11/01 21:16:38 by smoore-a         ###   ########.fr       */
+/*   Updated: 2024/11/02 10:13:44 by smoore-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 static int	builtin_out(t_data *data, t_cmd *cmd)
 {
 	if (!ft_strcmp(cmd->cmd, "exit"))
-		return (exit_builtin(data));
+		return (exit_builtin(data, cmd));
 	else if (!ft_strcmp(cmd->cmd, "echo"))
 		return (echo_builtin(cmd));
 	else if (!ft_strcmp(cmd->cmd, "cd"))
@@ -31,31 +31,31 @@ static int	builtin_out(t_data *data, t_cmd *cmd)
 	return (0);
 }
 
-static int	builtin_redir(t_data *data)
+static int	builtin_redir(t_data *data, t_cmd *cmd)
 {
 	int			exit_code;
 	int			stdout_fd;
-	int			pipe_used;
+	//int			pipe_used;
 
-	pipe_used = 0;
+	//pipe_used = 0;
 	stdout_fd = -1;
 	if (data->fd[0] != -1)
 	{
 		close(data->fd[0]);
 		data->fd[0] = -1;
 	}
-	else if (data->l_pipe[0] != -1)
-	{
+	// else if (data->l_pipe[0] != -1)
+	// {
 		if (data->heredoc)
 			write_heredoc(data);
-		else
+/* 		else
 		{
 			close(data->l_pipe[1]);
 			data->l_pipe[1] = -1;
 			close(data->l_pipe[0]);
 			data->l_pipe[0] = -1;
-		}
-	}
+		} */
+	//}
 	if (data->fd[1] != -1)
 	{
 		stdout_fd = dup(STDOUT_FILENO);
@@ -63,7 +63,7 @@ static int	builtin_redir(t_data *data)
 		close(data->fd[1]);
 		data->fd[1] = -1;
 	}
-	else if (data->r_pipe[1] != -1)
+/* 	else if (data->r_pipe[1] != -1)
 	{
 		close(data->r_pipe[0]);
 		data->r_pipe[0] = -1;
@@ -72,14 +72,14 @@ static int	builtin_redir(t_data *data)
 		close(data->r_pipe[1]);
 		data->r_pipe[1] = -1;
 		pipe_used = 1;
-	}
-	exit_code = builtin_out(data, data->input.command);
-	if (stdout_fd != -1 && !pipe_used)
+	} */
+	exit_code = builtin_out(data, cmd);
+	if (stdout_fd != -1) // && !pipe_used)
 	{
 		dup2(stdout_fd, STDOUT_FILENO);
 		close(stdout_fd);
 	}
-	else if (pipe_used)
+	/* else if (pipe_used)
 	{
 		if (pipe(data->r_pipe) != -1)
 		{
@@ -87,7 +87,7 @@ static int	builtin_redir(t_data *data)
 			dup2(stdout_fd, STDOUT_FILENO);
 			close(stdout_fd);
 		}
-	}
+	} */
 	return (exit_code);
 }
 
@@ -126,44 +126,44 @@ static int	exe_cmd(t_data *data, pid_t *pid)
 	cmd = data->input.tokens;
 	data->input.tokens = data->input.tokens->next;
 	exit_var = open_files(data);
-	ft_putstr_fd("Current command: ", 2);
-	ft_putendl_fd(cmd->token, 2);
-	if (data->r_pipe[0] != -1)
-	{
-		if (pipe(data->l_pipe) == -1)
-			return (1);
-		ft_putstr_fd("r_pipe[0]: ", 2);
-		ft_putnbr_fd(data->r_pipe[0], 2);
-		ft_putendl_fd("", 2);
-		ft_putstr_fd("r_pipe[1]: ", 2);
-		ft_putnbr_fd(data->r_pipe[1], 2);
-		ft_putendl_fd("", 2);
-		ft_putstr_fd("l_pipe[0]: ", 2);
-		ft_putnbr_fd(data->l_pipe[0], 2);
-		ft_putendl_fd("", 2);
-		ft_putstr_fd("l_pipe[1]: ", 2);
-		ft_putnbr_fd(data->l_pipe[1], 2);
-		ft_putendl_fd("", 2);
-		dup2(data->r_pipe[0], data->l_pipe[0]);
-		dup2(data->r_pipe[1], data->l_pipe[1]);
-		close(data->r_pipe[0]);
-		close(data->r_pipe[1]);
-		data->r_pipe[0] = -1;
-		data->r_pipe[1] = -1;
-	}
-	ft_putstr_fd("Current command: ", 2);
-	ft_putendl_fd(cmd->token, 2);
-	if (data->input.tokens)
-	{
-		if (data->fd[1] == -1 && data->input.tokens->prev && \
-		data->input.tokens->prev->type == PIPE && \
-		pipe(data->r_pipe) == -1)
-			return (1);
-	}
-	if (cmd->cmd->builtin)
-		exit_var = builtin_redir(data);
+	if (cmd->cmd->builtin && data->n_pipe == 0)
+		exit_var = builtin_redir(data, cmd->cmd);
 	else
 	{
+		ft_putstr_fd("Current command: ", 2);
+		ft_putendl_fd(cmd->token, 2);
+		if (data->r_pipe[0] != -1)
+		{
+			if (pipe(data->l_pipe) == -1)
+				return (1);
+			ft_putstr_fd("r_pipe[0]: ", 2);
+			ft_putnbr_fd(data->r_pipe[0], 2);
+			ft_putendl_fd("", 2);
+			ft_putstr_fd("r_pipe[1]: ", 2);
+			ft_putnbr_fd(data->r_pipe[1], 2);
+			ft_putendl_fd("", 2);
+			ft_putstr_fd("l_pipe[0]: ", 2);
+			ft_putnbr_fd(data->l_pipe[0], 2);
+			ft_putendl_fd("", 2);
+			ft_putstr_fd("l_pipe[1]: ", 2);
+			ft_putnbr_fd(data->l_pipe[1], 2);
+			ft_putendl_fd("", 2);
+			dup2(data->r_pipe[0], data->l_pipe[0]);
+			dup2(data->r_pipe[1], data->l_pipe[1]);
+			close(data->r_pipe[0]);
+			close(data->r_pipe[1]);
+			data->r_pipe[0] = -1;
+			data->r_pipe[1] = -1;
+		}
+		ft_putstr_fd("Current command: ", 2);
+		ft_putendl_fd(cmd->token, 2);
+		if (data->input.tokens)
+		{
+			if (data->fd[1] == -1 && data->input.tokens->prev && \
+			data->input.tokens->prev->type == PIPE && \
+			pipe(data->r_pipe) == -1)
+				return (1);
+		}
 		*pid = fork();
 		g_signal = *pid;
 		if (*pid == -1)
@@ -206,7 +206,10 @@ static int	exe_cmd(t_data *data, pid_t *pid)
 				close(data->r_pipe[1]);
 				ft_putendl_fd(cmd->token, 2);
 			}
-			cmd_out(data, cmd->cmd);
+			if (cmd->cmd->builtin)
+				exit_var = builtin_out(data, cmd->cmd);
+			else
+				cmd_out(data, cmd->cmd);
 		}
 		if (data->l_pipe[0] != -1)
 		{

@@ -6,7 +6,7 @@
 /*   By: smoore-a <smoore-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/19 12:17:10 by smoore-a          #+#    #+#             */
-/*   Updated: 2024/11/01 20:14:21 by smoore-a         ###   ########.fr       */
+/*   Updated: 2024/11/02 09:37:21 by smoore-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ void	handle_signal(int sig)
 void	handle_eof(t_data *data)
 {
 	if (!data->input.raw_line)
-		exit_builtin(data);
+		exit_builtin(data, NULL);
 }
 
 void	get_history(void)
