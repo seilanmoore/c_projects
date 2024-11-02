@@ -6,7 +6,7 @@
 /*   By: smoore-a <smoore-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/14 10:41:47 by smoore-a          #+#    #+#             */
-/*   Updated: 2024/11/02 13:29:29 by smoore-a         ###   ########.fr       */
+/*   Updated: 2024/11/02 15:36:41 by smoore-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,12 @@ static int	open_infile(t_data *data, t_token *token)
 		close(data->r_pipe[1]);
 	data->r_pipe[0] = -1;
 	data->r_pipe[1] = -1;
+	if (data->l_pipe[0] != -1)
+		close(data->l_pipe[0]);
+	if (data->l_pipe[1] != -1)
+		close(data->l_pipe[1]);
+	data->l_pipe[0] = -1;
+	data->l_pipe[1] = -1;
 	file = token->token;
 	if (!stat(file, &(data->stat)) && S_ISDIR(data->stat.st_mode))
 	{
@@ -119,7 +125,10 @@ int	open_files(t_data *data)
 		if (data->input.tokens)
 			type = data->input.tokens->type;
 		if (status)
+		{
+			data->input.tokens = data->input.tokens->next;
 			return (1);
+		}
 	}
 	return (0);
 }

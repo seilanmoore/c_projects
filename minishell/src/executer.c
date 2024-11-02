@@ -6,59 +6,52 @@
 /*   By: smoore-a <smoore-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/03 13:58:17 by smoore-a          #+#    #+#             */
-/*   Updated: 2024/11/02 15:07:17 by smoore-a         ###   ########.fr       */
+/*   Updated: 2024/11/02 15:38:49 by smoore-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 
-static int	builtin_out(t_data *data, t_cmd *cmd)
+static int	builtin_out(t_data *data, t_cmd *cmd, int fork)
 {
+	int	status;
+
+	status = 0;
 	if (!ft_strcmp(cmd->cmd, "exit"))
-		return (exit_builtin(data, cmd));
+		status = exit_builtin(data, cmd);
 	else if (!ft_strcmp(cmd->cmd, "echo"))
-		return (echo_builtin(cmd));
+		status = echo_builtin(cmd);
 	else if (!ft_strcmp(cmd->cmd, "cd"))
-		return (cd_builtin(data, cmd));
+		status = cd_builtin(data, cmd);
 	else if (!ft_strcmp(cmd->cmd, "pwd"))
-		return (pwd_builtin(data));
+		status = pwd_builtin(data);
 	else if (!ft_strcmp(cmd->cmd, "export"))
-		return (export_builtin(data, cmd));
+		status = export_builtin(data, cmd);
 	else if (!ft_strcmp(cmd->cmd, "unset"))
-		return (unset_builtin(data, cmd));
+		status = unset_builtin(data, cmd);
 	else if (!ft_strcmp(cmd->cmd, "env"))
-		return (env_builtin(data));
-	return (0);
+		status = env_builtin(data);
+	if (fork)
+		exit (status);
+	return (status);
 }
 
 static int	builtin_redir(t_data *data, t_cmd *cmd)
 {
 	int			exit_code;
 	int			stdout_fd;
-	//int			pipe_used;
 
-	//pipe_used = 0;
 	stdout_fd = -1;
 	if (data->fd[0] != -1)
 	{
 		close(data->fd[0]);
 		data->fd[0] = -1;
 	}
-	// else if (data->l_pipe[0] != -1)
-	// {
-		if (data->heredoc)
-		{
-			ft_putstr_fd("Escribe en heredoc\n", 2);
-			write_heredoc(data);
-		}
-/* 		else
-		{
-			close(data->l_pipe[1]);
-			data->l_pipe[1] = -1;
-			close(data->l_pipe[0]);
-			data->l_pipe[0] = -1;
-		} */
-	//}
+	if (data->heredoc)
+	{
+		ft_putstr_fd("Escribe en heredoc\n", 2);
+		write_heredoc(data);
+	}
 	if (data->fd[1] != -1)
 	{
 		stdout_fd = dup(STDOUT_FILENO);
@@ -66,31 +59,12 @@ static int	builtin_redir(t_data *data, t_cmd *cmd)
 		close(data->fd[1]);
 		data->fd[1] = -1;
 	}
-/* 	else if (data->r_pipe[1] != -1)
-	{
-		close(data->r_pipe[0]);
-		data->r_pipe[0] = -1;
-		stdout_fd = dup(STDOUT_FILENO);
-		dup2(data->r_pipe[1], STDOUT_FILENO);
-		close(data->r_pipe[1]);
-		data->r_pipe[1] = -1;
-		pipe_used = 1;
-	} */
-	exit_code = builtin_out(data, cmd);
-	if (stdout_fd != -1) // && !pipe_used)
+	exit_code = builtin_out(data, cmd, 0);
+	if (stdout_fd != -1)
 	{
 		dup2(stdout_fd, STDOUT_FILENO);
 		close(stdout_fd);
 	}
-	/* else if (pipe_used)
-	{
-		if (pipe(data->r_pipe) != -1)
-		{
-			dup2(STDOUT_FILENO, data->r_pipe[1]);
-			dup2(stdout_fd, STDOUT_FILENO);
-			close(stdout_fd);
-		}
-	} */
 	return (exit_code);
 }
 
@@ -129,6 +103,8 @@ static int	exe_cmd(t_data *data, pid_t *pid)
 	cmd = data->input.tokens;
 	data->input.tokens = data->input.tokens->next;
 	exit_var = open_files(data);
+	if (exit_var)
+		return (exit_var);
 	ft_putstr_fd("-> exit_var despues de primer open_files: ", 2);
 	ft_putnbr_fd(exit_var, 2);
 	ft_putendl_fd("", 2);
@@ -211,7 +187,7 @@ static int	exe_cmd(t_data *data, pid_t *pid)
 				ft_putendl_fd(cmd->token, 2);
 			}
 			if (cmd->cmd->builtin)
-				exit_var = builtin_out(data, cmd->cmd);
+				exit_var = builtin_out(data, cmd->cmd, 1);
 			else
 				cmd_out(data, cmd->cmd);
 		}
@@ -254,6 +230,7 @@ int	execute(t_data *data)
 	i = -1;
 	while (data->input.tokens)
 	{
+		ft_putendl_fd(data->input.tokens->token, 2);
 		if (is_redir(data->input.tokens->type))
 			exit_var = open_files(data);
 		else if (data->input.tokens->type == CMD)
