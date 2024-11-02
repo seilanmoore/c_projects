@@ -6,7 +6,7 @@
 /*   By: smoore-a <smoore-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/03 13:58:17 by smoore-a          #+#    #+#             */
-/*   Updated: 2024/11/02 10:13:44 by smoore-a         ###   ########.fr       */
+/*   Updated: 2024/11/02 15:07:17 by smoore-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,10 @@ static int	builtin_redir(t_data *data, t_cmd *cmd)
 	// else if (data->l_pipe[0] != -1)
 	// {
 		if (data->heredoc)
+		{
+			ft_putstr_fd("Escribe en heredoc\n", 2);
 			write_heredoc(data);
+		}
 /* 		else
 		{
 			close(data->l_pipe[1]);
@@ -126,37 +129,38 @@ static int	exe_cmd(t_data *data, pid_t *pid)
 	cmd = data->input.tokens;
 	data->input.tokens = data->input.tokens->next;
 	exit_var = open_files(data);
+	ft_putstr_fd("-> exit_var despues de primer open_files: ", 2);
+	ft_putnbr_fd(exit_var, 2);
+	ft_putendl_fd("", 2);
 	if (cmd->cmd->builtin && data->n_pipe == 0)
+	{
+		ft_putstr_fd("-> entramos en builtin_redir\n", 2);
 		exit_var = builtin_redir(data, cmd->cmd);
+	}
 	else
 	{
-		ft_putstr_fd("Current command: ", 2);
-		ft_putendl_fd(cmd->token, 2);
 		if (data->r_pipe[0] != -1)
 		{
-			if (pipe(data->l_pipe) == -1)
-				return (1);
-			ft_putstr_fd("r_pipe[0]: ", 2);
-			ft_putnbr_fd(data->r_pipe[0], 2);
-			ft_putendl_fd("", 2);
-			ft_putstr_fd("r_pipe[1]: ", 2);
-			ft_putnbr_fd(data->r_pipe[1], 2);
-			ft_putendl_fd("", 2);
-			ft_putstr_fd("l_pipe[0]: ", 2);
-			ft_putnbr_fd(data->l_pipe[0], 2);
-			ft_putendl_fd("", 2);
-			ft_putstr_fd("l_pipe[1]: ", 2);
-			ft_putnbr_fd(data->l_pipe[1], 2);
-			ft_putendl_fd("", 2);
-			dup2(data->r_pipe[0], data->l_pipe[0]);
-			dup2(data->r_pipe[1], data->l_pipe[1]);
-			close(data->r_pipe[0]);
-			close(data->r_pipe[1]);
+			if (!(data->heredoc) && data->fd[0] == -1)
+			{
+				if (data->l_pipe[0] != -1)
+					close(data->l_pipe[0]);
+				if (data->l_pipe[1] != -1)
+					close(data->l_pipe[1]);
+				if (pipe(data->l_pipe) == -1)
+					return (1);
+				dup2(data->r_pipe[0], data->l_pipe[0]);
+				dup2(data->r_pipe[1], data->l_pipe[1]);
+			}
+			if (data->r_pipe[0] != -1)
+				close(data->r_pipe[0]);
+			if (data->r_pipe[1] != -1)
+				close(data->r_pipe[1]);
 			data->r_pipe[0] = -1;
 			data->r_pipe[1] = -1;
 		}
-		ft_putstr_fd("Current command: ", 2);
-		ft_putendl_fd(cmd->token, 2);
+		if (data->heredoc)
+			write_heredoc(data);
 		if (data->input.tokens)
 		{
 			if (data->fd[1] == -1 && data->input.tokens->prev && \
@@ -211,17 +215,20 @@ static int	exe_cmd(t_data *data, pid_t *pid)
 			else
 				cmd_out(data, cmd->cmd);
 		}
-		if (data->l_pipe[0] != -1)
+		else
 		{
-			if (data->heredoc)
-				write_heredoc(data);
-			else
-			{
+			if (data->l_pipe[0] != -1)
 				close(data->l_pipe[0]);
+			if (data->l_pipe[1] != -1)
 				close(data->l_pipe[1]);
-				data->l_pipe[0] = -1;
-				data->l_pipe[1] = -1;
-			}
+			data->l_pipe[0] = -1;
+			data->l_pipe[1] = -1;
+			if (data->fd[0] != -1)
+				close(data->fd[0]);
+			if (data->fd[1] != -1)
+				close(data->fd[1]);
+			data->fd[0] = -1;
+			data->fd[1] = -1;
 		}
 		waitpid(*pid, &data->status, 0);
 		if (WIFEXITED(data->status))
@@ -248,10 +255,7 @@ int	execute(t_data *data)
 	while (data->input.tokens)
 	{
 		if (is_redir(data->input.tokens->type))
-		{
 			exit_var = open_files(data);
-			data->input.tokens = data->input.tokens->next;
-		}
 		else if (data->input.tokens->type == CMD)
 			exit_var = exe_cmd(data, &(pid[++i]));
 	}
