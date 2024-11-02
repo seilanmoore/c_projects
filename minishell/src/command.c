@@ -6,7 +6,7 @@
 /*   By: smoore-a <smoore-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/03 14:39:54 by smoore-a          #+#    #+#             */
-/*   Updated: 2024/10/30 20:00:19 by smoore-a         ###   ########.fr       */
+/*   Updated: 2024/11/02 17:17:59 by smoore-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ static int	count_args(t_token *token)
 	return (n_args);
 }
 
-static char	*put_quotes(t_token *token)
+/* static char	*put_quotes(t_token *token)
 {
 	char	*arg;
 	char	*tmp;
@@ -67,9 +67,9 @@ static char	*put_quotes(t_token *token)
 		free(tmp);
 	}
 	return (arg);
-}
+} */
 
-static char	**extract_args(t_token *token, int built)
+static char	**extract_args(t_token *token)//, int built)
 {
 	char	**args;
 	int		i;
@@ -84,9 +84,9 @@ static char	**extract_args(t_token *token, int built)
 	{
 		if (token->type == OPTION || token->type == ARG)
 		{
-			if (!built && (token->quote == S_QUOTE || token->quote == D_QUOTE))
+			/* if (!built && (token->quote == S_QUOTE || token->quote == D_QUOTE))
 				args[i] = put_quotes(token);
-			else
+			else */
 				args[i] = ft_strdup(token->token);
 			if (!args[i])
 				return (args);
@@ -111,7 +111,7 @@ void	parse_cmd_opt(t_data *data)
 		if (tmp->token && tmp->type == CMD)
 		{
 			built = is_built(tmp->token);
-			args = extract_args(tmp, built);
+			args = extract_args(tmp);//, built);
 			cmd = new_cmd(tmp, args, built);
 			if (cmd)
 			{

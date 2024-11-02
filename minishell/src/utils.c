@@ -6,7 +6,7 @@
 /*   By: smoore-a <smoore-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/26 09:54:56 by smoore-a          #+#    #+#             */
-/*   Updated: 2024/11/02 17:02:25 by smoore-a         ###   ########.fr       */
+/*   Updated: 2024/11/02 17:15:44 by smoore-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,9 +108,9 @@ void	print_array(char **array)
 	i = -1;
 	while (array[++i])
 	{
-		printf("\"%s\"", array[i]);
+		ft_putstr_fd(array[i], 2);
 		if (array[i + 1])
-			printf(" ");
+			ft_putstr_fd(" ", 2);
 	}
 }
 

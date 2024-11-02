@@ -6,7 +6,7 @@
 /*   By: smoore-a <smoore-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/03 13:58:17 by smoore-a          #+#    #+#             */
-/*   Updated: 2024/11/02 16:59:09 by smoore-a         ###   ########.fr       */
+/*   Updated: 2024/11/02 17:13:40 by smoore-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,6 +77,12 @@ static void	cmd_out(t_data *data, t_cmd *command)
 	args = command->args;
 	if (!path)
 		exit(1);
+	ft_putstr_fd("CMD path: ", 2);
+	ft_putstr_fd(path, 2);
+	ft_putendl_fd("", 2);
+	ft_putstr_fd("CMD args: ", 2);
+	print_array(args);
+	ft_putendl_fd("", 2);
 	if (execve(path, args, data->envp) == -1)
 	{
 		if (!stat(path, &(data->stat)) && S_ISDIR(data->stat.st_mode))
