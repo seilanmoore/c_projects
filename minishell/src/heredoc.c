@@ -6,7 +6,7 @@
 /*   By: smoore-a <smoore-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/01 11:35:09 by smoore-a          #+#    #+#             */
-/*   Updated: 2024/11/04 14:53:19 by smoore-a         ###   ########.fr       */
+/*   Updated: 2024/11/04 17:24:41 by smoore-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ int	write_heredoc(t_data *data)
 		endl = ft_strjoin(line, "\n");
 		while (line && ft_strcmp(line, limiter))
 		{
-			write(data->l_pipe[1], endl, ft_strlen(line));
+			write(data->l_pipe[1], endl, ft_strlen(endl));
 			ft_free(&line);
 			line = readline("> ");
 			free(endl);
