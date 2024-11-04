@@ -6,7 +6,7 @@
 /*   By: smoore-a <smoore-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/03 13:58:17 by smoore-a          #+#    #+#             */
-/*   Updated: 2024/11/04 11:46:12 by smoore-a         ###   ########.fr       */
+/*   Updated: 2024/11/04 17:14:38 by smoore-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,14 +108,8 @@ static int	exe_cmd(t_data *data, pid_t *pid)
 	exit_var = open_files(data);
 	if (exit_var)
 		return (exit_var);
-	/* ft_putstr_fd("-> exit_var despues de primer open_files: ", 2);
-	ft_putnbr_fd(exit_var, 2);
-	ft_putendl_fd("", 2); */
 	if (cmd->cmd->builtin && data->n_pipe == 0)
-	{
-		// ft_putstr_fd("-> entramos en builtin_redir\n", 2);
 		exit_var = builtin_redir(data, cmd->cmd);
-	}
 	else
 	{
 		if (data->r_pipe[0] != -1)
@@ -139,7 +133,10 @@ static int	exe_cmd(t_data *data, pid_t *pid)
 			data->r_pipe[1] = -1;
 		}
 		if (data->heredoc)
-			write_heredoc(data);
+		{
+			if (write_heredoc(data) == 130)
+				return (130);
+		}
 		if (data->input.tokens)
 		{
 			if (data->fd[1] == -1 && data->input.tokens->prev && \
@@ -198,11 +195,6 @@ static int	exe_cmd(t_data *data, pid_t *pid)
 			if (!WIFEXITED(data->status))
 				return (130);
 		}
-		/* if (WIFEXITED(data->status))
-		{
-			exit_var = cmd_error(cmd->token,
-					WEXITSTATUS(data->status), 0);
-		} */
 	}
 	return (exit_var);
 }
@@ -220,7 +212,7 @@ int	execute(t_data *data)
 		return (0);
 	exit_var = 0;
 	i = -1;
-	while (data->input.tokens && exit_var != 130)
+	while (data->input.tokens && !exit_var)
 	{
 		if (is_redir(data->input.tokens->type))
 			exit_var = open_files(data);

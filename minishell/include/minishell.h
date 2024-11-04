@@ -6,7 +6,7 @@
 /*   By: smoore-a <smoore-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/19 12:17:44 by smoore-a          #+#    #+#             */
-/*   Updated: 2024/11/04 11:20:25 by smoore-a         ###   ########.fr       */
+/*   Updated: 2024/11/04 12:50:20 by smoore-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -158,6 +158,8 @@ typedef struct s_data
 	struct stat	stat;
 }	t_data;
 
+void	handle_signal(int sig);
+
 // init
 void	init_data(t_data *data, char **envp);
 
@@ -251,6 +253,7 @@ int		export_builtin(t_data *data, t_cmd *cmd);
 int		echo_builtin(t_cmd *cmd);
 int		pwd_builtin(t_data *data);
 int		env_builtin(t_data *data);
+int		history_builtin(t_data *data);
 
 char	*cwd_compress(t_data *data);
 
@@ -302,6 +305,7 @@ int		open_files(t_data *data);
 
 //heredoc
 int		write_heredoc(t_data *data);
+
 
 
 #endif

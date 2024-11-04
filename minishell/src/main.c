@@ -6,12 +6,12 @@
 /*   By: smoore-a <smoore-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/19 12:17:10 by smoore-a          #+#    #+#             */
-/*   Updated: 2024/11/04 11:17:54 by smoore-a         ###   ########.fr       */
+/*   Updated: 2024/11/04 14:48:06 by smoore-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
-#include <signal.h>
+#include <unistd.h>
 
 int	g_signal;
 
@@ -21,15 +21,16 @@ void	handle_signal(int sig)
 	{
 		if (g_signal)
 		{
-			printf("\n");
+			write(1, "\n", 1);
 			kill(g_signal, SIGINT);
 		}
-		else if (!g_signal)
+		else
 		{
 			write(1, "\n", 1);
 			rl_on_new_line();
 			rl_replace_line("", 0);
 			rl_redisplay();
+			g_signal = 0;
 		}
 	}
 }
@@ -120,7 +121,7 @@ int	main(int argc, char **argv, char **envp)
 		g_signal = 0;
 		data.input.raw_line = readline(prompter(&data));
 		handle_eof(&data);
-		if (data.input.raw_line && ft_strlen(data.input.raw_line) > 0)
+		if (data.input.raw_line && ft_strlen(data.input.raw_line) > 0 && !g_signal)
 		{
 			data.history = ft_strtrim(data.input.raw_line, "\n");
 			if (data.history && ft_strlen(data.history) > 0)

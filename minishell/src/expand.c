@@ -6,7 +6,7 @@
 /*   By: smoore-a <smoore-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/26 09:53:56 by smoore-a          #+#    #+#             */
-/*   Updated: 2024/10/30 19:54:43 by smoore-a         ###   ########.fr       */
+/*   Updated: 2024/11/04 17:04:37 by smoore-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,7 @@ void	dollar_term(t_list **lst, char *str, int *i, int *j)
 		(*i)++;
 		*j = *i + 1;
 	}
-	else if (str[(*i) + 1])
+	else// if (str[(*i) + 1])
 	{
 		while (str[++(*i)] && str[*i] != '$' && \
 		str[*i] != '\'' && str[*i] != '\"')
@@ -142,6 +142,7 @@ char	*seek_replace(t_data *data, char *term, t_list *next)
 		dollar = ft_strchr(new_term, '$');
 		if (dollar)
 		{
+			printf("dollar: %s\n", dollar);
 			next_to = dollar + 1;
 			if ((*next_to && \
 			(*next_to == '$' || *next_to == '?' || valid_char(*next_to))) \
