@@ -6,7 +6,7 @@
 /*   By: smoore-a <smoore-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/03 13:58:17 by smoore-a          #+#    #+#             */
-/*   Updated: 2024/11/04 11:29:49 by smoore-a         ###   ########.fr       */
+/*   Updated: 2024/11/04 11:46:12 by smoore-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -194,8 +194,10 @@ static int	exe_cmd(t_data *data, pid_t *pid)
 				close(data->fd[1]);
 			data->fd[0] = -1;
 			data->fd[1] = -1;
+			waitpid(*pid, &data->status, 0);
+			if (!WIFEXITED(data->status))
+				return (130);
 		}
-		waitpid(*pid, &data->status, 0);
 		/* if (WIFEXITED(data->status))
 		{
 			exit_var = cmd_error(cmd->token,
@@ -216,20 +218,17 @@ int	execute(t_data *data)
 	pid = ft_calloc(data->n_cmd, sizeof(pid_t));
 	if (!pid)
 		return (0);
+	exit_var = 0;
 	i = -1;
-	while (data->input.tokens && !g_signal)
+	while (data->input.tokens && exit_var != 130)
 	{
 		if (is_redir(data->input.tokens->type))
 			exit_var = open_files(data);
 		else if (data->input.tokens->type == CMD)
 			exit_var = exe_cmd(data, &(pid[++i]));
 	}
-	if (WIFEXITED(data->status) && !g_signal)
-	{
+	if (WIFEXITED(data->status))
 		exit_var = cmd_error(NULL, WEXITSTATUS(data->status), 0);
-	}
-	else if (g_signal)
-		exit_var = 130;
 	free(pid);
 	data->input.tokens = head;
 	return (exit_var);
