@@ -6,7 +6,7 @@
 /*   By: smoore-a <smoore-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/12 19:22:37 by smoore-a          #+#    #+#             */
-/*   Updated: 2024/10/12 22:16:14 by smoore-a         ###   ########.fr       */
+/*   Updated: 2024/11/12 16:48:56 by smoore-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ int	syntax_error(t_data *data)
 	t_token	*token;
 
 	token = data->input.tokens;
-	if (circle_1(token))
+	if (token && circle_1(token))
 		return (1);
 	return (0);
 }

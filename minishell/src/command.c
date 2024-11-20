@@ -6,7 +6,7 @@
 /*   By: smoore-a <smoore-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/03 14:39:54 by smoore-a          #+#    #+#             */
-/*   Updated: 2024/11/02 17:17:59 by smoore-a         ###   ########.fr       */
+/*   Updated: 2024/11/11 14:23:56 by smoore-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,8 @@ static int	is_built(char *cmd)
 	if (!ft_strcmp(cmd, "unset"))
 		return (1);
 	if (!ft_strcmp(cmd, "env"))
+		return (1);
+	if (!ft_strcmp(cmd, "history"))
 		return (1);
 	if (!ft_strcmp(cmd, "exit"))
 		return (1);
@@ -69,6 +71,9 @@ static int	count_args(t_token *token)
 	return (arg);
 } */
 
+/* if (!built && (token->quote == S_QUOTE || token->quote == D_QUOTE))
+				args[i] = put_quotes(token);
+			else */
 static char	**extract_args(t_token *token)//, int built)
 {
 	char	**args;
@@ -84,10 +89,7 @@ static char	**extract_args(t_token *token)//, int built)
 	{
 		if (token->type == OPTION || token->type == ARG)
 		{
-			/* if (!built && (token->quote == S_QUOTE || token->quote == D_QUOTE))
-				args[i] = put_quotes(token);
-			else */
-				args[i] = ft_strdup(token->token);
+			args[i] = ft_strdup(token->token);
 			if (!args[i])
 				return (args);
 			i++;
@@ -97,6 +99,7 @@ static char	**extract_args(t_token *token)//, int built)
 	return (args);
 }
 
+//, built);
 void	parse_cmd_opt(t_data *data)
 {
 	t_cmd	*cmd;
@@ -111,7 +114,7 @@ void	parse_cmd_opt(t_data *data)
 		if (tmp->token && tmp->type == CMD)
 		{
 			built = is_built(tmp->token);
-			args = extract_args(tmp);//, built);
+			args = extract_args(tmp);
 			cmd = new_cmd(tmp, args, built);
 			if (cmd)
 			{

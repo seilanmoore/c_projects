@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   tokenizer.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: smoore-a <smoore-a@student.42.fr>          +#+  +:+       +#+        */
+/*   By: smoore-a <smoore-a@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/03 15:21:13 by smoore-a          #+#    #+#             */
-/*   Updated: 2024/11/02 16:52:19 by smoore-a         ###   ########.fr       */
+/*   Updated: 2024/11/10 20:45:08 by smoore-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,8 +44,7 @@ static void	double_quote(t_data *data, t_var *var)
 		var->aux1++;
 		return ;
 	}
-	while (var->aux1[var->i] && var->aux1[var->i] != '\"' && \
-	!g_signal)
+	while (var->aux1[var->i] && var->aux1[var->i] != '\"')
 		var->i++;
 	var->aux = ft_substr(var->aux1, 0, var->i);
 	if (var->aux1[var->i])
@@ -112,7 +111,6 @@ void	tokenizer(t_data *data)
 
 	var = (t_var){0};
 	var.aux1 = data->input.raw_line;
-
 	while (*var.aux1)
 	{
 		var.i = 0;

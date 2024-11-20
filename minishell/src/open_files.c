@@ -6,33 +6,19 @@
 /*   By: smoore-a <smoore-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/14 10:41:47 by smoore-a          #+#    #+#             */
-/*   Updated: 2024/11/02 15:36:41 by smoore-a         ###   ########.fr       */
+/*   Updated: 2024/11/12 13:44:39 by smoore-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
-#include <fcntl.h>
-#include <unistd.h>
+#include <ctype.h>
 
 static int	open_infile(t_data *data, t_token *token)
 {
 	char	*file;
 
-	if (data->fd[0] != -1)
-		close(data->fd[0]);
-	if (data->r_pipe[0] != -1)
-		close(data->r_pipe[0]);
-	if (data->r_pipe[1] != -1)
-		close(data->r_pipe[1]);
-	data->r_pipe[0] = -1;
-	data->r_pipe[1] = -1;
-	if (data->l_pipe[0] != -1)
-		close(data->l_pipe[0]);
-	if (data->l_pipe[1] != -1)
-		close(data->l_pipe[1]);
-	data->l_pipe[0] = -1;
-	data->l_pipe[1] = -1;
 	file = token->token;
+	close_infiles(data);
 	if (!stat(file, &(data->stat)) && S_ISDIR(data->stat.st_mode))
 	{
 		ft_putstr_fd(MS, 2);
@@ -49,25 +35,13 @@ static int	open_infile(t_data *data, t_token *token)
 
 static int	open_heredoc(t_data *data)
 {
-	if (data->r_pipe[0] != -1)
-	{
-		close(data->r_pipe[0]);
-		data->r_pipe[0] = -1;
-	}
-	if (data->r_pipe[1] != -1)
-	{
-		close(data->r_pipe[1]);
-		data->r_pipe[1] = -1;
-	}
-	if (data->fd[0] != -1)
-	{
-		close(data->fd[0]);
-		data->fd[0] = -1;
-	}
+	close_infiles(data);
 	if (pipe(data->l_pipe) == -1)
 		return (1);
 	data->input.tokens = data->input.tokens->next;
 	data->heredoc = data->input.tokens->token;
+	if (write_heredoc(data) == 130)
+		return (130);
 	return (0);
 }
 
@@ -102,33 +76,27 @@ static int	append_file(t_data *data, t_token *token)
 int	open_files(t_data *data)
 {
 	int	status;
-	int	type;
 
 	status = 0;
-	type = CMD;
-	if (data->input.tokens)
-		type = data->input.tokens->type;
-	while (data->input.tokens && type != CMD)
+	while (data->input.tokens && data->input.tokens->type != PIPE)
 	{
-		if (type == LEFT)
+		if (data->input.tokens->type == LEFT)
 			status = open_infile(data, data->input.tokens->next);
-		else if (type == LEFTT)
-		{
-			ft_putendl_fd("-> Abre heredoc\n", 2);
+		else if (data->input.tokens->type == LEFTT)
 			status = open_heredoc(data);
-		}
-		else if (type == RIGHT)
+		else if (data->input.tokens->type == RIGHT)
 			status = trunc_file(data, data->input.tokens->next);
-		else if (type == RIGHTT)
+		else if (data->input.tokens->type == RIGHTT)
 			status = append_file(data, data->input.tokens->next);
 		data->input.tokens = data->input.tokens->next;
-		if (data->input.tokens)
-			type = data->input.tokens->type;
 		if (status)
 		{
-			data->input.tokens = data->input.tokens->next;
-			return (1);
+			while (data->input.tokens && data->input.tokens->type != CMD)
+				data->input.tokens = data->input.tokens->next;
+			return (status);
 		}
 	}
+	if (data->input.tokens)
+		data->input.tokens = data->input.tokens->next;
 	return (0);
 }

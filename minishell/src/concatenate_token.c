@@ -17,7 +17,6 @@ static void	concatenate(t_data *data, t_token **new_lst)
 	char	*full_str;
 	char	*tmp;
 
-
 	full_str = ft_strdup(data->input.tokens->token);
 	while (data->input.tokens->next && \
 	!data->input.tokens->end_space)

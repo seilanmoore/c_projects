@@ -6,7 +6,7 @@
 /*   By: smoore-a <smoore-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/12 21:44:49 by smoore-a          #+#    #+#             */
-/*   Updated: 2024/10/12 22:27:54 by smoore-a         ###   ########.fr       */
+/*   Updated: 2024/11/12 16:48:50 by smoore-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,13 +49,9 @@ int	circle_2(t_token *token, t_token *prev)
 
 int	circle_1(t_token *token)
 {
-	if (token)
-	{
-		if (is_word(token->type))
-			return (circle_3(token->next, token));
-		if (is_redirection(token->type))
-			return (circle_2(token->next, token));
-		return (syntax_msg(token->token), 1);
-	}
-	return (1);
+	if (is_word(token->type))
+		return (circle_3(token->next, token));
+	if (is_redirection(token->type))
+		return (circle_2(token->next, token));
+	return (syntax_msg(token->token), 1);
 }

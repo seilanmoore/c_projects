@@ -6,104 +6,37 @@
 /*   By: smoore-a <smoore-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/19 12:17:10 by smoore-a          #+#    #+#             */
-/*   Updated: 2024/11/04 14:48:06 by smoore-a         ###   ########.fr       */
+/*   Updated: 2024/11/12 15:03:59 by smoore-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
-#include <unistd.h>
 
 int	g_signal;
 
+void	handle_quit(int sig)
+{
+	(void)sig;
+	g_signal = 131;
+	ft_putendl_fd("Quit (core dumped)", 2);
+}
+
 void	handle_signal(int sig)
 {
-	if (sig == SIGINT)
+	(void)sig;
+	if (g_signal)
 	{
-		if (g_signal)
-		{
-			write(1, "\n", 1);
-			kill(g_signal, SIGINT);
-		}
-		else
-		{
-			write(1, "\n", 1);
-			rl_on_new_line();
-			rl_replace_line("", 0);
-			rl_redisplay();
-			g_signal = 0;
-		}
-	}
-}
-/* void	handle_signal(int sig)
-{
-	kill(g_signal, SIGQUIT);
-	write(1, "\n", 1);
-	rl_on_new_line();
-	rl_replace_line("", 0);
-	rl_redisplay();
-	g_signal = 0;
-} */
-
-void	handle_eof(t_data *data)
-{
-	if (!data->input.raw_line)
-		exit_builtin(data, NULL);
-}
-
-void	get_history(void)
-{
-	char	*ms_history;
-
-	ms_history = ft_strjoin(getenv("HOME"), "/.ms_history");
-	if (ms_history)
-	{
-		read_history(ms_history);
-		free(ms_history);
-	}
-}
-
-void	save_history(void)
-{
-	char	*ms_history;
-
-	ms_history = ft_strjoin(getenv("HOME"), "/.ms_history");
-	if (ms_history)
-	{
-		write_history(ms_history);
-		free(ms_history);
-	}
-}
-
-char	*prompter(t_data *data)
-{
-	t_env	*pwd;
-	char	*prompt;
-	char	*tmp;
-	char	*short_cwd;
-
-	data->user = getenv("USER");
-	tmp = ft_strjoin("[", data->user);
-	prompt = ft_strjoin(tmp, ": ");
-	free (tmp);
-	data->cwd = getcwd(NULL, 0);
-	if (!(data->cwd))
-	{
-		pwd = get_env_var(data->env, "PWD");
-		if (pwd)
-			data->cwd = ft_strdup(pwd->value);
-	}
-	short_cwd = cwd_compress(data);
-	if (short_cwd)
-	{
-		tmp = ft_strjoin(prompt, short_cwd);
-		free(short_cwd);
+		write(1, "\n", 1);
+		kill(g_signal, SIGINT);
 	}
 	else
-		tmp = ft_strjoin(prompt, data->cwd);
-	free(prompt);
-	data->prompt = ft_strjoin(tmp, "]$ ");
-	free(tmp);
-	return (data->prompt);
+	{
+		write(1, "\n", 1);
+		rl_on_new_line();
+		rl_replace_line("", 0);
+		rl_redisplay();
+	}
+	g_signal = 0;
 }
 
 int	main(int argc, char **argv, char **envp)
@@ -117,27 +50,6 @@ int	main(int argc, char **argv, char **envp)
 	init_data(&data, envp);
 	get_history();
 	while (1)
-	{
-		g_signal = 0;
-		data.input.raw_line = readline(prompter(&data));
-		handle_eof(&data);
-		if (data.input.raw_line && ft_strlen(data.input.raw_line) > 0 && !g_signal)
-		{
-			data.history = ft_strtrim(data.input.raw_line, "\n");
-			if (data.history && ft_strlen(data.history) > 0)
-				add_history(data.history);
-			save_history();
-			parser(&data);
-			print_types(&data);
-			//print_locals(&data);
-			if (syntax_error(&data))
-				data.exit_code = 1;
-			else
-				data.exit_code = execute(&data);
-			free(data.prev_exit_code);
-			data.prev_exit_code = ft_itoa(data.exit_code);
-		}
-		free_data(&data);
-	}
+		minishell(&data);
 	exit(0);
 }

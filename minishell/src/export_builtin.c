@@ -6,7 +6,7 @@
 /*   By: smoore-a <smoore-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/02 10:49:42 by smoore-a          #+#    #+#             */
-/*   Updated: 2024/11/02 09:56:01 by smoore-a         ###   ########.fr       */
+/*   Updated: 2024/11/12 09:40:39 by smoore-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,40 +35,52 @@ void	check_new_var(t_env **lst, t_env *new_var, char *var, char *value)
 	}
 }
 
-int	export_builtin(t_data *data, t_cmd *cmd)
+static int	seek_and_replace(t_data *data, char *arg)
 {
 	t_env	*new_var;
-	char	**args;
 	char	*variable;
 	char	*equal;
+
+	variable = NULL;
+	equal = ft_strchr(arg, '=');
+	if (equal)
+		variable = ft_substr(arg, 0, equal - arg);
+	if (id_error(data, arg, variable, 1))
+	{
+		free(variable);
+		return (0);
+	}
+	if (variable)
+	{
+		new_var = get_env_var(data->env, variable);
+		check_new_var(\
+				&(data->env), new_var, variable, equal + 1);
+		free(variable);
+	}
+	return (1);
+}
+
+int	export_builtin(t_data *data, t_cmd *cmd)
+{
+	char	**args;
 	int		update;
+	int		fail;
 	int		i;
 
+	fail = 0;
 	update = 0;
 	args = cmd->args;
 	i = 0;
 	while (args[++i])
 	{
-		variable = NULL;
-		equal = ft_strchr(args[i], '=');
-		if (equal)
-			variable = ft_substr(args[i], 0, equal - args[i]);
-		if (!valid_ident(variable))
-		{
-			ft_putstr_fd(MS EXPORT "`", 1);
-			ft_putstr_fd(args[i], 1);
-			print_msg(data, "': " EXPORT_ID, 1);
-		}
-		else if (variable)
-		{
-			new_var = get_env_var(data->env, variable);
-			check_new_var(\
-					&(data->env), new_var, variable, equal + 1);
+		if (seek_and_replace(data, args[i]))
 			update = 1;
-		}
-		free(variable);
+		else
+			fail = 1;
 	}
 	if (update)
 		upd_env(data);
-	return (data->status);
+	if (fail)
+		return (1);
+	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: smoore-a <smoore-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/19 12:17:44 by smoore-a          #+#    #+#             */
-/*   Updated: 2024/11/04 12:50:20 by smoore-a         ###   ########.fr       */
+/*   Updated: 2024/11/12 15:04:43 by smoore-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@
 # include <sys/wait.h>
 # include <errno.h>
 # include <sys/stat.h>
+# include <dirent.h>
 
 // ANSI color codes
 # define RED	"\x1b[31m"
@@ -34,7 +35,6 @@
 
 # define HISTORY_FILE ".history"
 
-# define NL "\n"
 # define MS "minishell: "
 # define EMPTY_PATH "PATH variable is empty"
 # define NO_PATH "PATH variable not found"
@@ -104,7 +104,6 @@ typedef struct s_tokens
 typedef struct s_input
 {
 	char		*raw_line;
-	//char		*file_name;
 	t_token		*tokens;
 	t_cmd		*command;
 }	t_input;
@@ -114,7 +113,6 @@ typedef struct s_var
 	char	*aux;
 	char	*aux1;
 	int		i;
-
 }	t_var;
 
 typedef struct s_environment
@@ -134,6 +132,7 @@ typedef struct s_data
 	int			fd[2];
 	int			l_pipe[2];
 	int			r_pipe[2];
+	int			here_pipe[2];
 	char		*heredoc;
 	char		**envp;
 	char		**paths;
@@ -141,6 +140,7 @@ typedef struct s_data
 	char		*cwd;
 	char		*prompt;
 	char		*history;
+	t_token		*last_cmd;
 	int			n_cmd;
 	int			n_pipe;
 	int			n_files;
@@ -158,18 +158,26 @@ typedef struct s_data
 	struct stat	stat;
 }	t_data;
 
+void	handle_quit(int sig);
 void	handle_signal(int sig);
 
 // init
 void	init_data(t_data *data, char **envp);
 
-// free_func
-void	ft_free(char **str);
-void	free_tokens(t_data *data);
+//minishell
+void	minishell(t_data *data);
+
+// Free data types
+void	free_array(char ***array);
 void	free_local(t_data *data);
 void	free_env_lst(t_data *data);
+void	free_cmds(t_data *data);
+void	free_lst(t_list **lst);
+
+// free_func
+void	ft_free(char **str);
 void	free_environment(t_data *data);
-void	free_array(char ***array);
+void	free_tokens(t_data *data);
 void	free_data(t_data *data);
 
 //environment
@@ -185,7 +193,7 @@ void	del_env(t_env **env, char *variable);
 
 // locals
 void	print_locals(t_data *data);
-void	locals(t_data *data);
+int		locals(t_data *data);
 
 //parser
 void	parser(t_data *data);
@@ -215,9 +223,6 @@ int		circle_2(t_token *token, t_token *prev);
 int		circle_3(t_token *token, t_token *prev);
 int		circle_4(t_token *token, t_token *prev);
 
-//executer
-int		execute(t_data *data);
-
 // tokenizer
 void	tokenizer(t_data *data);
 //tokenizer_utils
@@ -243,7 +248,12 @@ char	*get_dollar_value(t_data *data, char *variable);
 char	*extract_id(char *token);
 
 // expand
+void	expand_terms(t_data *data, t_list **lst);
+char	*lst_str_join(t_list *lst);
 void	expand(t_data *data);
+
+// expand_later
+void	expand_later(t_data *data, char **line);
 
 //builtin
 int		exit_builtin(t_data *data, t_cmd *cmd);
@@ -253,7 +263,7 @@ int		export_builtin(t_data *data, t_cmd *cmd);
 int		echo_builtin(t_cmd *cmd);
 int		pwd_builtin(t_data *data);
 int		env_builtin(t_data *data);
-int		history_builtin(t_data *data);
+int		history_builtin(void);
 
 char	*cwd_compress(t_data *data);
 
@@ -286,19 +296,11 @@ void	print_locals(t_data *data);
 char	**split_token(char *token);
 void	check_new_var(t_env **lst, t_env *new_var, char *var, char *value);
 
-
-// path_checks
-
-int		dir_f_check(char *path);
-int		dir_r_check(char *path);
-int		dir_w_check(char *path);
-int		path_f_check(char *path);
-int		path_r_check(char *path);
-int		path_w_check(char *path);
-
 // handle_error
 int		handle_errno(char *wildcard);
-int		cmd_error(char *cmd, int status, int print);
+int		execve_error(t_data *data, t_cmd *cmd);
+int		id_error(t_data *data, char *arg, char *variable, int exp);
+//int		cmd_error(t_data *data, int status, int print);
 
 // open_files
 int		open_files(t_data *data);
@@ -306,6 +308,36 @@ int		open_files(t_data *data);
 //heredoc
 int		write_heredoc(t_data *data);
 
+// history
+void	get_history(void);
+void	save_history(void);
 
+//Expand terms
+t_list	*split_terms(char *line);
+
+// dir get
+char	*get_dir(char *path);
+
+//String utils
+char	*type_to_char(int type);
+
+//close_files
+void	close_infiles(t_data *data);
+void	close_parent_files(t_data *data);
+
+//open_pipe
+int		change_pipe(t_data *data);
+int		open_r_pipe(t_data *data);
+
+// handle_io
+int		handle_io(t_data *data);
+
+//execute_io
+int		execute(t_data *data);
+
+//execute
+int		builtin_out(t_data *data, t_cmd *cmd, int fork);
+int		builtin_redir(t_data *data, t_cmd *cmd);
+void	cmd_out(t_data *data, t_cmd *command);
 
 #endif

@@ -6,13 +6,11 @@
 #    By: smoore-a <smoore-a@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/02/27 20:48:30 by smoore-a          #+#    #+#              #
-#    Updated: 2024/11/01 11:35:30 by smoore-a         ###   ########.fr        #
+#    Updated: 2024/11/12 16:34:07 by smoore-a         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = minishell
-
-# BONUS = bonus/pipex_bonus
 
 INCLUDE = -Iinclude -Ilibft/include -I/usr/include
 
@@ -20,7 +18,7 @@ HEADER = minishell.h
 
 CC = clang
 
-CFLAGS = -g -Wall -Werror -Wextra -O0 #-O3 -fsanitize=address
+CFLAGS = -g -Wall -Werror -Wextra -O3 # -O0 -fsanitize=address
 
 L_FLAGS = -Llibft -lft -lreadline
 
@@ -37,10 +35,11 @@ SRC = main init free_func command_path environment env_utils \
 	tokenizer tokenizer_utils expand expand_utils utils \
 	command command_utils locals syntax syntax_circles \
 	cd_builtin export_builtin unset_builtin exit_builtin env_builtin \
-	pwd_builtin echo_builtin \
-	executer path_checks dir_checks handle_error concatenate_token \
-	open_files heredoc 
-
+	pwd_builtin echo_builtin close_files expand_later open_pipe handle_io \
+	execute_io executers handle_error concatenate_token \
+	open_files heredoc j_bool_utils j_expand_terms j_free_data_type \
+	j_history j_print_utils j_string_utils j_env_utils_2 minishell \
+	history_builtin
 
 UTILS =
 
