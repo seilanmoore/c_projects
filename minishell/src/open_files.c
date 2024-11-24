@@ -6,12 +6,11 @@
 /*   By: smoore-a <smoore-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/14 10:41:47 by smoore-a          #+#    #+#             */
-/*   Updated: 2024/11/12 13:44:39 by smoore-a         ###   ########.fr       */
+/*   Updated: 2024/11/24 21:53:09 by smoore-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
-#include <ctype.h>
 
 static int	open_infile(t_data *data, t_token *token)
 {

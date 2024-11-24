@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   open_pipe.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: smoore-a <smoore-a@student.42malaga.com    +#+  +:+       +#+        */
+/*   By: smoore-a <smoore-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/09 14:28:40 by smoore-a          #+#    #+#             */
-/*   Updated: 2024/11/10 21:33:04 by smoore-a         ###   ########.fr       */
+/*   Updated: 2024/11/24 21:43:34 by smoore-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ int	open_r_pipe(t_data *data)
 {
 	if (data->input.tokens)
 	{
-		if (data->fd[1] == -1 && data->input.tokens->prev && \
+		if (data->input.tokens->prev && \
 		data->input.tokens->prev->type == PIPE && \
 		pipe(data->r_pipe) == -1)
 			return (1);

@@ -6,7 +6,7 @@
 /*   By: smoore-a <smoore-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/31 14:00:16 by smoore-a          #+#    #+#             */
-/*   Updated: 2024/02/29 18:25:44 by smoore-a         ###   ########.fr       */
+/*   Updated: 2024/11/13 11:25:34 by smoore-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,25 +111,24 @@ char	*get_next_line(int fd)
 	return (line);
 }
 
-/* int	main(void)
+int	main(void)
 {
 	int		fd;
+	int		i;
 	char	*line;
 
-	fd = open("tests/variable_nls.txt", O_RDONLY);
-	printf("FOPEN_MAX = %d\n", FOPEN_MAX);
-	line = get_next_line(fd);
-	printf("%s", line);
-	free(line);
-	while (line)
+	fd = open("/home/smoore-a/Downloads/duoshell/lorem.txt", O_RDONLY);
+	printf("Counting lines\n");
+	i = 0;
+	while (1)
 	{
 		line = get_next_line(fd);
-		if (line)
-		{
-			printf("%s", line);
-			free(line);
-		}
+		if (!line)
+			break ;
+		free (line);
+		i++;
 	}
+	printf("Result: %d lines\n", i);
 	close(fd);
 	return (0);
-} */
+}
