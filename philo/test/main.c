@@ -3,42 +3,44 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: smoore-a <smoore-a@student.42.fr>          +#+  +:+       +#+        */
+/*   By: smoore-a <smoore-a@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/11/24 21:01:51 by smoore-a          #+#    #+#             */
-/*   Updated: 2024/11/24 21:29:10 by smoore-a         ###   ########.fr       */
+/*   Created: 2024/11/26 20:39:32 by smoore-a          #+#    #+#             */
+/*   Updated: 2024/11/26 20:50:19 by smoore-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "include.h"
-#include <pthread.h>
-#include <time.h>
+#include "philo.h"
 
-void	routine(void *n_thread)
+int				cont = 0;
+pthread_mutex_t	lock;
+
+void	*routine()
 {
-	int	*n;
+	int	i;
 
-	n = (int *)n_thread;
-	printf("Test from thread %d\n", *n + 1);
-	sleep(2);
-	printf("Ending from thread %d\n", *n + 1);
+	i = -1;
+	while (++i < 1000000)
+	{
+		pthread_mutex_lock(&lock);
+		if (cont == 1015000)
+			printf("Ha llegado a 1015000. Valor actual %d\n", cont);
+		cont++;
+		pthread_mutex_unlock(&lock);
+	}
+	return (NULL);
 }
 
-int	main(int argc, char **argv)
+int	main(void)
 {
-	pthread_t	t1, t2;
-	int			i, j;
+	pthread_t	tid1, tid2;
 
-	i = 0;
-	if (pthread_create(&t1, NULL, (void *)routine, &i) != 0)
-		return (1);
-	i = 99;
-	if (pthread_create(&t2, NULL, (void *)routine, &i) != 0)
-		return (1);
-	i = 0;
-	if (pthread_join(t1, NULL) != 0)
-		return (1);
-	if (pthread_join(t2, NULL) != 0)
-		return (1);
-	return (0);
+	pthread_mutex_init(&lock, NULL);
+	pthread_create(&tid1, NULL, &routine, NULL);
+	pthread_create(&tid2, NULL, &routine, NULL);
+
+	pthread_join(tid1, NULL);
+	pthread_join(tid2, NULL);
+	pthread_mutex_destroy(&lock);
+	printf("cont: %d\n", cont);
 }

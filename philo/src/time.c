@@ -1,23 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   time_related.c                                     :+:      :+:    :+:   */
+/*   time.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: smoore-a <smoore-a@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/06/18 11:02:56 by smoore-a          #+#    #+#             */
-/*   Updated: 2024/06/18 11:56:41 by smoore-a         ###   ########.fr       */
+/*   Created: 2024/11/27 14:29:42 by smoore-a          #+#    #+#             */
+/*   Updated: 2024/11/27 17:19:14 by smoore-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../include/philo.h"
+#include "../include/philo.h"
 
 time_t	get_time(void)
 {
 	t_timeval	tv;
 
-	if (gettimeofday(&tv, NULL) == ERROR)
-		return (write (2, EGETTIME, 32));
+	if (gettimeofday(&tv, NULL))
+		return (print_msg(E_GET_TIME, E_TIME));
 	return ((tv.tv_sec * 1000) + (tv.tv_usec / 1000));
 }
 

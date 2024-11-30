@@ -1,30 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   time_related.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: smoore-a <smoore-a@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/11/27 00:38:52 by smoore-a          #+#    #+#             */
-/*   Updated: 2024/11/30 11:12:39 by smoore-a         ###   ########.fr       */
+/*   Created: 2024/06/18 11:02:56 by smoore-a          #+#    #+#             */
+/*   Updated: 2024/11/24 18:00:43 by smoore-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/philo.h"
+#include "../../include/philo.h"
 
-int	main(int argc, char **argv)
+time_t	get_time(void)
 {
-	t_data	data;
-	int		i;
+	t_timeval	tv;
 
-	data = (t_data){0};
-	if (check_info(&data, argc, argv))
-		return (data.e_code);
-	if (init(&data))
-		return (cleanup(&data), data.e_code);
-	i = -1;
-	while (++i < data.info.n_philo)
-		pthread_join(data.philo[i].thread, NULL);
-	cleanup(&data);
-	return (EXIT_SUCCESS);
+	if (gettimeofday(&tv, NULL) == ERROR)
+		return (write (2, EGETTIME, 32));
+	return ((tv.tv_sec * 1000) + (tv.tv_usec / 1000));
+}
+
+void	ft_usleep(time_t time)
+{
+	time_t	start;
+
+	start = get_time();
+	while ((get_time() - start) < time)
+		usleep(time / 10);
 }

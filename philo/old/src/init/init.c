@@ -6,7 +6,7 @@
 /*   By: smoore-a <smoore-a@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/18 08:42:08 by smoore-a          #+#    #+#             */
-/*   Updated: 2024/06/18 11:04:18 by smoore-a         ###   ########.fr       */
+/*   Updated: 2024/11/25 10:55:02 by smoore-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,43 +23,37 @@ static int	init_data(t_data *data, char **argv, int argc)
 		data->must_eat = ft_atoi(argv[5]);
 	else
 		data->must_eat = -1;
-	pthread_mutex_init(&data->write, NULL);
-	pthread_mutex_init(&data->lock, NULL);
+	if (pthread_mutex_init(&data->write, NULL))
+		return (EXIT_FAILURE);
+	if (pthread_mutex_init(&data->lock, NULL))
+		return (ft_clear(data), EXIT_FAILURE);
 	return (SUCCESS);
 }
 
 static int	alloc(t_data *data)
 {
-	int	i;
-
-	data->tid = malloc(sizeof(pthread_t) * data->philo_num);
+	data->tid = ft_calloc(data->philo_num, sizeof(pthread_t));
 	if (!data->tid)
-		ft_error(data, PHILO EALLOC, NULL);
-	i = -1;
-	while (++i < data->philo_num)
-		data->tid[i] = (pthread_t){0};
-	data->fork = malloc(sizeof(pthread_mutex_t) * data->philo_num);
+		return (ft_clear(data), EXIT_FAILURE);
+	data->fork = ft_calloc(data->philo_num, sizeof(pthread_mutex_t));
 	if (!data->fork)
-		ft_error(data, PHILO EALLOC, NULL);
-	i = -1;
-	while (++i < data->philo_num)
-		data->fork[i] = (pthread_mutex_t){0};
-	data->philo = malloc(sizeof(t_philo) * data->philo_num);
-	if (data->philo == NULL)
-		ft_error(data, PHILO EALLOC, NULL);
-	i = -1;
-	while (++i < data->philo_num)
-		data->philo[i] = (t_philo){0};
+		return (ft_clear(data), EXIT_FAILURE);
+	data->philo = ft_calloc(data->philo_num, sizeof(t_philo));
+	if (!data->philo)
+		return (ft_clear(data), EXIT_FAILURE);
 	return (SUCCESS);
 }
 
-static void	init_forks(t_data *data)
+static int	init_forks(t_data *data)
 {
 	int	i;
 
 	i = -1;
 	while (++i < data->philo_num)
-		pthread_mutex_init(&(data->fork[i]), NULL);
+	{
+		if (pthread_mutex_init(&(data->fork[i]), NULL))
+			return (ft_clear(data), EXIT_FAILURE);
+	}
 	data->philo[0].l_fork = &(data->fork[0]);
 	data->philo[0].r_fork = &(data->fork[data->philo_num - 1]);
 	i = 0;
@@ -68,9 +62,10 @@ static void	init_forks(t_data *data)
 		data->philo[i].l_fork = &(data->fork[i]);
 		data->philo[i].r_fork = &(data->fork[i - 1]);
 	}
+	return (SUCCESS);
 }
 
-static void	init_philos(t_data *data)
+static int	init_philos(t_data *data)
 {
 	int	i;
 
@@ -80,8 +75,10 @@ static void	init_philos(t_data *data)
 		data->philo[i].data = data;
 		data->philo[i].id = i + 1;
 		data->philo[i].time_to_die = data->death_time;
-		pthread_mutex_init(&(data->philo[i].lock), NULL);
+		if (pthread_mutex_init(&(data->philo[i].lock), NULL))
+			return (ft_clear(data), EXIT_FAILURE);
 	}
+	return (SUCCESS);
 }
 
 int	init(t_data *data, char **argv, int argc)
@@ -90,7 +87,9 @@ int	init(t_data *data, char **argv, int argc)
 		return (EXIT_FAILURE);
 	if (alloc(data) == EXIT_FAILURE)
 		return (EXIT_FAILURE);
-	init_forks(data);
-	init_philos(data);
+	if (init_forks(data) == EXIT_FAILURE)
+		return (EXIT_FAILURE);
+	if (init_philos(data) == EXIT_FAILURE)
+		return (EXIT_FAILURE);
 	return (SUCCESS);
 }

@@ -6,7 +6,7 @@
 /*   By: smoore-a <smoore-a@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/18 10:05:16 by smoore-a          #+#    #+#             */
-/*   Updated: 2024/06/18 12:59:03 by smoore-a         ###   ########.fr       */
+/*   Updated: 2024/11/25 10:04:20 by smoore-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,29 +57,22 @@ static void	*routine(void *philo_pointer)
 	t_philo	*philo;
 
 	philo = (t_philo *) philo_pointer;
-	philo->time_to_die = philo->data->death_time + get_time();
+	pthread_mutex_lock(&(philo->data->lock));
+	philo->time_to_die = get_time() + philo->data->death_time;
+	pthread_mutex_unlock(&(philo->data->lock));
 	if (pthread_create(&(philo->t1), NULL, &supervisor, (void *)philo))
 		return ((void *)ERROR);
+	pthread_mutex_lock(&(philo->data->lock));
 	while (philo->data->dead == FALSE)
 	{
+		pthread_mutex_unlock(&(philo->data->lock));
 		eat(philo);
 		logs(THINKING, philo);
+		pthread_mutex_lock(&(philo->data->lock));
 	}
-	if (pthread_join(philo->t1, NULL) == ERROR)
-		return ((void *)ERROR);
+	pthread_mutex_unlock(&(philo->data->lock));
+	pthread_join(philo->t1, NULL);
 	return ((void *)SUCCESS);
-}
-
-int	case_one(t_data *data)
-{
-	data->start_time = get_time();
-	if (pthread_create(&(data->tid[0]), NULL, &routine, &(data->philo[0])))
-		return (ft_error(data, PHILO ECREATE, NULL));
-	pthread_detach(data->tid[0]);
-	while (data->dead == 0)
-		ft_usleep (0);
-	ft_clear(data);
-	return (SUCCESS);
 }
 
 int	simulation(t_data *data)
@@ -102,9 +95,6 @@ int	simulation(t_data *data)
 	}
 	i = -1;
 	while (++i < data->philo_num)
-	{
-		if (pthread_join(data->tid[i], NULL))
-			return (ft_error(data, PHILO EJOIN, "tid[i]"));
-	}
+		pthread_join(data->tid[i], NULL);
 	return (SUCCESS);
 }

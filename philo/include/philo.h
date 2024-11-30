@@ -5,87 +5,128 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: smoore-a <smoore-a@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/06/15 22:52:23 by smoore-a          #+#    #+#             */
-/*   Updated: 2024/06/18 12:04:28 by smoore-a         ###   ########.fr       */
+/*   Created: 2024/11/27 00:39:26 by smoore-a          #+#    #+#             */
+/*   Updated: 2024/11/30 12:35:09 by smoore-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef PHILO_H
 # define PHILO_H
 
+# include <stdint.h>
 # include <string.h>
 # include <stdio.h>
 # include <stdlib.h>
 # include <unistd.h>
 # include <sys/time.h>
 # include <pthread.h>
+# include <curses.h>
 
-# define TRUE 1
-# define FALSE 0
-# define ERROR -1
-# define SUCCESS 0
-# define INVALID "invalid argument"
-# define USAGE "usage: ./philo "
+# define NL "\n"
+# define PRO "Prototype: "
+# define EXE "./philo "
 # define ARGS "number_of_philosophers time_to_die time_to_eat time_to_sleep "
-# define OPTIONAL "[number_of_times_each_philosopher_must_eat]"
-# define PHILO "philo: "
-# define ECREATE "pthread_create: could not create thread"
-# define EJOIN "pthread_join: could not join thread"
-# define EALLOC "malloc: could not alocate memory"
-# define EGETTIME "gettimeofday: could not set time"
-# define TAKE_FORK "has taken a fork"
-# define EATING "is eating"
-# define SLEEPING "is sleeping"
-# define THINKING "is thinking"
-# define DIED "died"
+# define OPT "[number_of_times_each_philosopher_must_eat]"
+# define E_ARG "Error: invalid number of arguments. "
+# define E_ARG_N_PHILO "Error: number_of_philosophers (<= 0 OR > 200)"
+# define E_ARG_DIE_TIME "Error: time_to_die < 60"
+# define E_ARG_EAT_TIME "Error: time_to_eat < 60"
+# define E_ARG_SLEEP_TIME "Error: time_to_sleep < 60"
+# define E_ARG_N_MEALS "Error: number_of_meals < 0"
+# define E_GET_TIME "Error: couldn't get time"
+
+enum e_exit_code
+{
+	ERROR = 1,
+	E_INFO,
+	E_TIME,
+	E_MUTEX_INIT,
+	E_THREAD_CREATE
+};
+
+enum e_state
+{
+	THINK = 0,
+	FORK,
+	EAT,
+	SLEEP,
+	DIE
+};
+
+typedef pthread_mutex_t	t_t_mutex;
 
 typedef struct timeval	t_timeval;
 
 typedef struct s_data	t_data;
 
+typedef struct s_mutex
+{
+	int			to_destroy;
+	t_t_mutex	lock;
+}	t_mutex;
+
 typedef struct s_philo
 {
-	struct s_data	*data;
-	pthread_t		t1;
-	int				id;
-	int				eat_count;
-	int				status;
-	int				eating;
-	time_t			time_to_die;
-	pthread_mutex_t	lock;
-	pthread_mutex_t	*r_fork;
-	pthread_mutex_t	*l_fork;
+	pthread_t	thread;
+	int			id;
+	int			n_meal;
+	int			last_meal;
+	t_mutex		*r_fork;
+	t_mutex		*l_fork;
+	t_data		*data;
 }	t_philo;
+
+typedef struct s_info
+{
+	int	n_philo;
+	int	die_t;
+	int	eat_t;
+	int	sleep_t;
+	int	n_meal;
+}	t_info;
 
 typedef struct s_data
 {
-	int				philo_num;
-	int				must_eat;
-	int				finished;
-	int				dead;
-	time_t			start_time;
-	time_t			eat_time;
-	time_t			sleep_time;
-	time_t			death_time;
-	pthread_t		*tid;
-	t_philo			*philo;
-	pthread_mutex_t	*fork;
-	pthread_mutex_t	lock;
-	pthread_mutex_t	write;
+	t_philo		*philo;
+	t_info		info;
+	t_mutex		*fork;
+	int			start_time;
+	bool		dead;
+	t_mutex		print_m;
+	t_mutex		die_t_m;
+	t_mutex		n_meal_m;
+	t_mutex		state_m;
+	t_mutex		err_code_m;
+	int			e_code;
 }	t_data;
 
-size_t	ft_strlen(char *str);
-int		ft_atoi(const char *str);
-int		ft_strcmp(char *str1, char *str2);
-void	ft_usleep(time_t ms);
+// check_info //
+int		check_info(t_data *data, int argc, char **argv);
+
+// init //
+int		init(t_data *data);
+
+// routine //
+void	*routine(void *data);
+void	*monitor(void *data_);
+
+// action //
+void	logs(t_philo *philo, int state, time_t time);
+void	take_fork(t_philo *philo);
+
+// time //
 time_t	get_time(void);
-int		ft_error(void *data, char *message, void *aux);
-void	ft_clear(t_data *data);
-int		check_args(int argc, char **argv);
-int		init(t_data *data, char **argv, int argc);
-int		case_one(t_data *data);
-int		simulation(t_data *data);
-void	logs(char *log, t_philo *philo);
-void	eat(t_philo *philo);
+void	ft_usleep(time_t time);
+
+// error //
+int		print_msg(char *msg, int code);
+
+// cleanup //
+void	cleanup(t_data *data);
+
+// utils //
+int		ft_strlen(char *str);
+int		ft_atoi(const char *str);
+void	*ft_calloc(size_t nmemb, size_t size);
 
 #endif

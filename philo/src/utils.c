@@ -5,20 +5,22 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: smoore-a <smoore-a@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/06/16 19:03:07 by smoore-a          #+#    #+#             */
-/*   Updated: 2024/06/18 11:09:10 by smoore-a         ###   ########.fr       */
+/*   Created: 2024/11/27 01:13:54 by smoore-a          #+#    #+#             */
+/*   Updated: 2024/11/27 17:38:22 by smoore-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../include/philo.h"
+#include "../include/philo.h"
 
-size_t	ft_strlen(char *str)
+int	ft_strlen(char *str)
 {
-	size_t	i;
+	int	i;
 
-	i = 0;
-	while (str && str[i])
-		i++;
+	if (!str)
+		return (0);
+	i = -1;
+	while (str[++i])
+		;
 	return (i);
 }
 
@@ -50,14 +52,19 @@ int	ft_atoi(const char *str)
 	return (nbr);
 }
 
-int	ft_strcmp(char *str1, char *str2)
+void	*ft_calloc(size_t nmemb, size_t size)
 {
-	if (str1 == NULL || str2 == NULL)
-		return (-1);
-	while (*str1 != '\0' && (*str1 == *str2))
-	{
-		str1++;
-		str2++;
-	}
-	return (*str1 - *str2);
+	size_t	total_size;
+	void	*ptr;
+
+	if (nmemb == 0 || size == 0)
+		return (NULL);
+	if (nmemb > SIZE_MAX / size)
+		return (NULL);
+	total_size = nmemb * size;
+	ptr = malloc(total_size);
+	if (!ptr)
+		return (NULL);
+	memset(ptr, 0, total_size);
+	return (ptr);
 }

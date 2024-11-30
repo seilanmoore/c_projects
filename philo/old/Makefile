@@ -5,8 +5,8 @@
 #                                                     +:+ +:+         +:+      #
 #    By: smoore-a <smoore-a@student.42malaga.com    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2024/11/27 00:38:01 by smoore-a          #+#    #+#              #
-#    Updated: 2024/11/30 12:36:56 by smoore-a         ###   ########.fr        #
+#    Created: 2024/06/15 22:42:26 by smoore-a          #+#    #+#              #
+#    Updated: 2024/11/25 10:00:15 by smoore-a         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,7 +18,7 @@ HEADER = philo.h
 
 CC = clang
 
-CFLAGS = -Wall -Werror -Wextra -g -O0 -pthread
+CFLAGS = -Wall -Werror -Wextra -O0 -g #-pthread
 
 RM = rm -rf
 
@@ -26,7 +26,10 @@ SRC_DIR = src/
 
 OBJ_DIR = obj/
 
-SRC = main init check_info routine action time error utils cleanup
+SRC = main \
+	check init \
+	simulation actions only_one\
+	error utils cleanup time_related
 
 OBJ_FILES = $(addprefix $(OBJ_DIR), $(addsuffix .o, $(SRC)))
 
