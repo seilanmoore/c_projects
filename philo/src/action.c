@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   action.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: smoore-a <smoore-a@student.42malaga.com    +#+  +:+       +#+        */
+/*   By: smoore-a <smoore-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/27 22:38:02 by smoore-a          #+#    #+#             */
-/*   Updated: 2024/11/30 12:48:46 by smoore-a         ###   ########.fr       */
+/*   Updated: 2024/11/30 19:58:45 by smoore-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ void	logs(t_philo *philo, int state, time_t time)
 {
 	pthread_mutex_lock(&(philo->data->print_m.lock));
 	if (state == DIE)
-		printf("%ld\t%d %s\n", time, philo->id, "died");
+		printf("%ld\t%d died\n", time, philo->id);
 	else if (state == FORK)
 		printf("%ld\t%d has taken a fork\n", time, philo->id);
 	else if (state == EAT)
@@ -35,12 +35,12 @@ void	take_fork(t_philo *philo)
 
 	start = philo->data->start_time;
 	if (philo->id % 2)
-		ft_usleep(50);
+		ft_usleep(200);
 	pthread_mutex_lock(&(philo->data->state_m.lock));
 	while (philo->data->dead == FALSE)
 	{
 		pthread_mutex_unlock(&(philo->data->state_m.lock));
-		if (pthread_mutex_lock(&(philo->r_fork->lock)) == 0)
+		if (!pthread_mutex_lock(&(philo->r_fork->lock)))
 		{
 			time = get_time() - start;
 			logs(philo, FORK, time);
@@ -48,8 +48,8 @@ void	take_fork(t_philo *philo)
 			while (philo->data->dead == FALSE)
 			{
 				pthread_mutex_unlock(&(philo->data->state_m.lock));
-				if (pthread_mutex_lock(&(philo->l_fork->lock)) == 0)
-				{	
+				if (!pthread_mutex_lock(&(philo->l_fork->lock)))
+				{
 					time = get_time() - start;
 					logs(philo, FORK, time);
 					logs(philo, EAT, time);
@@ -58,7 +58,9 @@ void	take_fork(t_philo *philo)
 					pthread_mutex_unlock(&(philo->r_fork->lock));
 					pthread_mutex_unlock(&(philo->l_fork->lock));
 					pthread_mutex_lock(&(philo->data->state_m.lock));
-					philo->last_meal = time;
+					philo->last_meal = get_time();
+					pthread_mutex_unlock(&(philo->data->state_m.lock));
+					pthread_mutex_lock(&(philo->data->state_m.lock));
 					if (philo->data->dead == FALSE)
 						logs(philo, SLEEP, time);
 					pthread_mutex_unlock(&(philo->data->state_m.lock));

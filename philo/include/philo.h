@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   philo.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: smoore-a <smoore-a@student.42malaga.com    +#+  +:+       +#+        */
+/*   By: smoore-a <smoore-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/27 00:39:26 by smoore-a          #+#    #+#             */
-/*   Updated: 2024/11/30 12:35:09 by smoore-a         ###   ########.fr       */
+/*   Updated: 2024/11/30 19:46:01 by smoore-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,7 @@ typedef struct s_philo
 	pthread_t	thread;
 	int			id;
 	int			n_meal;
-	int			last_meal;
+	time_t		last_meal;
 	t_mutex		*r_fork;
 	t_mutex		*l_fork;
 	t_data		*data;
@@ -90,7 +90,7 @@ typedef struct s_data
 	t_philo		*philo;
 	t_info		info;
 	t_mutex		*fork;
-	int			start_time;
+	time_t		start_time;
 	bool		dead;
 	t_mutex		print_m;
 	t_mutex		die_t_m;
