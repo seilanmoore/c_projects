@@ -6,7 +6,7 @@
 /*   By: smoore-a <smoore-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/27 01:05:47 by smoore-a          #+#    #+#             */
-/*   Updated: 2024/11/30 19:46:32 by smoore-a         ###   ########.fr       */
+/*   Updated: 2024/12/02 19:49:35 by smoore-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,11 +18,10 @@ static int	init_threads(t_data *data)
 	int			j;
 
 	i = -1;
-	data->start_time = get_time();
 	while (++i < data->info.n_philo)
 	{
 		if (pthread_create(&(data->philo[i].thread), \
-		NULL, &routine, &(data->philo[i])))
+		NULL, &routine, (void *)&(data->philo[i])))
 		{
 			j = -1;
 			while (++j < i)

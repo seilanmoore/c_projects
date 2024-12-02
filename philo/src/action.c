@@ -6,26 +6,34 @@
 /*   By: smoore-a <smoore-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/27 22:38:02 by smoore-a          #+#    #+#             */
-/*   Updated: 2024/11/30 19:58:45 by smoore-a         ###   ########.fr       */
+/*   Updated: 2024/12/02 20:05:48 by smoore-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/philo.h"
+#include <pthread.h>
 
 void	logs(t_philo *philo, int state, time_t time)
 {
-	pthread_mutex_lock(&(philo->data->print_m.lock));
+	pthread_mutex_lock(&(philo->data->state_m.lock));
+	if (philo->data->dead == FALSE)
+	{
+		pthread_mutex_unlock(&(philo->data->state_m.lock));
+		pthread_mutex_lock(&(philo->data->print_m.lock));
+		if (state == FORK)
+			printf("%ld\t%d has taken a fork\n", time, philo->id);
+		else if (state == EAT)
+			printf("%ld\t%d is eating\n", time, philo->id);
+		else if (state == SLEEP)
+			printf("%ld\t%d is sleeping\n", time, philo->id);
+		else if (state == THINK)
+			printf("%ld\t%d is thinking\n", time, philo->id);
+		pthread_mutex_unlock(&(philo->data->print_m.lock));
+	}
+	else
+		pthread_mutex_unlock(&(philo->data->state_m.lock));
 	if (state == DIE)
 		printf("%ld\t%d died\n", time, philo->id);
-	else if (state == FORK)
-		printf("%ld\t%d has taken a fork\n", time, philo->id);
-	else if (state == EAT)
-		printf("%ld\t%d is eating\n", time, philo->id);
-	else if (state == SLEEP)
-		printf("%ld\t%d is sleeping\n", time, philo->id);
-	else if (state == THINK)
-		printf("%ld\t%d is thinking\n", time, philo->id);
-	pthread_mutex_unlock(&(philo->data->print_m.lock));
 }
 
 void	take_fork(t_philo *philo)
@@ -35,7 +43,7 @@ void	take_fork(t_philo *philo)
 
 	start = philo->data->start_time;
 	if (philo->id % 2)
-		ft_usleep(200);
+		ft_usleep(60);
 	pthread_mutex_lock(&(philo->data->state_m.lock));
 	while (philo->data->dead == FALSE)
 	{
