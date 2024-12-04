@@ -3,15 +3,27 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: smoore-a <smoore-a@student.42.fr>          +#+  +:+       +#+        */
+/*   By: smoore-a <smoore-a@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/25 11:02:34 by smoore-a          #+#    #+#             */
-/*   Updated: 2024/11/01 18:00:38 by smoore-a         ###   ########.fr       */
+/*   Updated: 2024/12/04 10:42:06 by smoore-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
-#include <fcntl.h>
+
+/*
+upd_shlvl
+
+Propósito: Incrementa el nivel de shell (`SHLVL`) en el entorno.
+
+Lógica:
+    Busca la variable `SHLVL` en el entorno.
+    Convierte su valor a entero, lo incrementa, y lo actualiza en el entorno.
+
+Comentarios: Se asegura de reflejar correctamente el nivel del shell en
+cada inicio.
+*/
 
 static void	upd_shlvl(t_data *data)
 {
@@ -28,6 +40,18 @@ static void	upd_shlvl(t_data *data)
 	}
 }
 
+/*
+count_vars
+
+Propósito: Cuenta la cantidad de variables en un array de cadenas.
+
+Lógica:
+    Itera sobre el array de cadenas `env` hasta encontrar un valor NULL.
+    Retorna el número de elementos encontrados.
+
+Comentarios: Es una función auxiliar para calcular el tamaño del entorno.
+*/
+
 int	count_vars(char **env)
 {
 	int	i;
@@ -37,6 +61,19 @@ int	count_vars(char **env)
 		;
 	return (i);
 }
+
+/*
+copy_envp
+
+Propósito: Copia el entorno (`envp`) en una estructura dinámica.
+
+Lógica:
+    Calcula el número de variables usando `count_vars`.
+    Reserva memoria para el nuevo array dinámico.
+    Copia cada cadena de `envp` al nuevo array.
+
+Comentarios: Se utiliza para inicializar las variables de entorno del shell.
+*/
 
 void	copy_envp(t_data *data, char **envp)
 {
@@ -52,6 +89,19 @@ void	copy_envp(t_data *data, char **envp)
 		data->envp[i] = ft_strdup(envp[i]);
 }
 
+/*
+ft_get_pid
+
+Propósito: Obtiene el PID del proceso actual.
+
+Lógica:
+    Abre el archivo `/proc/self/stat`.
+    Lee el contenido y extrae el PID usando `ft_atoi`.
+    Cierra el archivo y retorna el PID.
+
+Comentarios: Facilita el acceso al PID del shell para diversas operaciones.
+*/
+
 pid_t	ft_get_pid(void)
 {
 	int		fd;
@@ -65,6 +115,19 @@ pid_t	ft_get_pid(void)
 	close(fd);
 	return (pid);
 }
+
+/*
+init_data
+
+Propósito: Inicializa la estructura principal de datos del shell.
+
+Lógica:
+    Resetea los valores de la estructura `t_data`.
+    Configura las tuberías, el PID, el código de salida previo, y el entorno.
+    Llama a `upd_shlvl` para ajustar el nivel del shell.
+
+Comentarios: Prepara la estructura principal del shell antes de su ejecución.
+*/
 
 void	init_data(t_data *data, char **envp)
 {
@@ -83,3 +146,19 @@ void	init_data(t_data *data, char **envp)
 	envp_to_lst(data);
 	upd_shlvl(data);
 }
+
+/*
+Resumen del archivo
+
+Propósito: Proporciona funciones de inicialización para el shell.
+
+Lógica:
+    upd_shlvl: Incrementa el nivel del shell.
+    count_vars: Calcula el tamaño del entorno.
+    copy_envp: Copia las variables de entorno.
+    ft_get_pid: Obtiene el PID del shell.
+    init_data: Inicializa la estructura de datos del shell.
+
+Comentarios: Este archivo asegura que el shell esté correctamente preparado
+antes de entrar en el bucle principal.
+*/

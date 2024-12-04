@@ -3,14 +3,32 @@
 /*                                                        :::      ::::::::   */
 /*   unset_builtin.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: smoore-a <smoore-a@student.42.fr>          +#+  +:+       +#+        */
+/*   By: smoore-a <smoore-a@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/02 10:51:43 by smoore-a          #+#    #+#             */
-/*   Updated: 2024/10/28 13:45:20 by smoore-a         ###   ########.fr       */
+/*   Updated: 2024/12/04 11:55:36 by smoore-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
+
+/*
+unset_builtin
+
+Propósito:
+    Implementa el comando interno `unset` para eliminar variables del entorno.
+
+Lógica:
+    1. Itera sobre los argumentos proporcionados.
+    2. Para cada argumento:
+        - Si existe en `env`, lo elimina usando `del_env`.
+        - Si existe en `locals`, lo elimina de la lista local.
+    3. Si se realizaron cambios en `env`, llama a `upd_env` para sincronizar.
+    4. Retorna 0 al finalizar.
+
+Comentarios:
+    Este comando permite eliminar variables tanto del entorno global como local.
+*/
 
 int	unset_builtin(t_data *data, t_cmd *cmd)
 {
@@ -35,3 +53,19 @@ int	unset_builtin(t_data *data, t_cmd *cmd)
 		upd_env(data);
 	return (0);
 }
+
+/*
+Resumen del archivo
+
+Propósito:
+    Implementa la funcionalidad del comando interno `unset`.
+
+Lógica:
+    1. Itera sobre los argumentos.
+    2. Elimina las variables correspondientes de `env` y `locals`.
+    3. Actualiza el entorno si hubo cambios.
+
+Comentarios:
+    Este archivo proporciona la capacidad de gestionar dinámicamente
+    la eliminación de variables del entorno y lista local.
+*/

@@ -3,16 +3,30 @@
 /*                                                        :::      ::::::::   */
 /*   cd_builtin.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: smoore-a <smoore-a@student.42.fr>          +#+  +:+       +#+        */
+/*   By: smoore-a <smoore-a@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/02 10:48:46 by smoore-a          #+#    #+#             */
-/*   Updated: 2024/11/12 17:47:11 by smoore-a         ###   ########.fr       */
+/*   Updated: 2024/12/04 11:49:02 by smoore-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
-#include <string.h>
-#include <unistd.h>
+
+/*
+update_var
+
+Propósito:
+    Actualiza las variables de entorno `PWD` y `OLDPWD`
+	tras un cambio de directorio.
+
+Lógica:
+    1. Obtiene `OLDPWD` desde la lista de entorno y actualiza su valor con `cwd`.
+    2. Obtiene `PWD` y lo actualiza con la nueva ruta usando `getcwd`.
+    3. Llama a `upd_env` para sincronizar los cambios con el entorno.
+
+Comentarios:
+    Mantiene actualizadas las variables relacionadas con la ubicación actual.
+*/
 
 static void	update_var(t_data *data)
 {
@@ -33,6 +47,21 @@ static void	update_var(t_data *data)
 		upd_env(data);
 	}
 }
+
+/*
+cd_home
+
+Propósito:
+    Cambia el directorio actual al directorio `HOME`.
+
+Lógica:
+    1. Si `HOME` está definido, intenta cambiar al directorio indicado.
+    2. Si el cambio falla, intenta volver a `cwd` o, como último recurso, a `/`.
+    3. Si `HOME` no está definido, imprime un mensaje de error.
+
+Comentarios:
+    Gestiona los casos donde `cd` se invoca sin argumentos.
+*/
 
 static int	cd_home(t_data *data, char *home)
 {
@@ -56,6 +85,20 @@ static int	cd_home(t_data *data, char *home)
 	}
 }
 
+/*
+handle_cwd_fail
+
+Propósito:
+    Maneja fallos al recuperar el directorio actual tras un cambio de directorio.
+
+Lógica:
+    1. Intenta cambiar a `cwd` y verificar con `getcwd`.
+    2. Si falla, cambia al directorio raíz `/`.
+
+Comentarios:
+    Asegura un manejo adecuado en caso de errores al obtener el directorio.
+*/
+
 static int	handle_cwd_fail(t_data *data)
 {
 	char	*cwd;
@@ -70,6 +113,22 @@ static int	handle_cwd_fail(t_data *data)
 	chdir("/");
 	return (0);
 }
+
+/*
+cd_path
+
+Propósito:
+    Cambia el directorio actual al especificado en `path`.
+
+Lógica:
+    1. Si `path` no está definido, llama a `cd_home`.
+    2. Intenta cambiar al directorio especificado.
+    3. Si falla, imprime un mensaje de error y retorna 1.
+    4. Verifica `cwd` tras el cambio y maneja fallos con `handle_cwd_fail`.
+
+Comentarios:
+    Gestiona los cambios de directorio especificados en los argumentos.
+*/
 
 static int	cd_path(t_data *data, char *path, char *home)
 {
@@ -95,6 +154,22 @@ static int	cd_path(t_data *data, char *path, char *home)
 	return (0);
 }
 
+/*
+cd_builtin
+
+Propósito:
+    Implementa el comando interno `cd` para cambiar de directorio.
+
+Lógica:
+    1. Valida los argumentos para detectar
+	opciones no soportadas o demasiados argumentos.
+    2. Llama a `cd_path` con la ruta proporcionada o `HOME` como predeterminado.
+    3. Actualiza las variables `PWD` y `OLDPWD` tras el cambio.
+
+Comentarios:
+    Proporciona la funcionalidad del comando `cd` en el shell.
+*/
+
 int	cd_builtin(t_data *data, t_cmd *cmd)
 {
 	t_env	*home;
@@ -113,3 +188,22 @@ int	cd_builtin(t_data *data, t_cmd *cmd)
 	update_var(data);
 	return (exit_);
 }
+
+/*
+Resumen del archivo
+
+Propósito:
+    Implementa la funcionalidad del comando interno `cd`.
+
+Lógica:
+    1. update_var: Actualiza `PWD` y `OLDPWD` tras un cambio de directorio.
+    2. cd_home: Cambia al directorio `HOME` si está definido.
+    3. handle_cwd_fail: Maneja errores al obtener el directorio actual.
+    4. cd_path: Cambia al directorio especificado o maneja errores.
+    5. cd_builtin: Ejecuta el comando `cd`,
+	validando argumentos y actualizando variables.
+
+Comentarios:
+    Este archivo implementa el comando `cd`,
+	gestionando errores y actualizaciones del entorno.
+*/

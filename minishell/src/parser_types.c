@@ -3,14 +3,31 @@
 /*                                                        :::      ::::::::   */
 /*   parser_types.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: smoore-a <smoore-a@student.42.fr>          +#+  +:+       +#+        */
+/*   By: smoore-a <smoore-a@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/03 15:15:54 by smoore-a          #+#    #+#             */
-/*   Updated: 2024/10/26 18:06:31 by smoore-a         ###   ########.fr       */
+/*   Updated: 2024/12/04 10:53:57 by smoore-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
+
+/*
+assign_opt_arg
+
+Propósito:
+    Asigna opciones y argumentos a cada comando en la lista de tokens.
+
+Lógica:
+    1. Recorre los tokens buscando comandos (`type == CMD`).
+    2. Para cada comando, identifica el primer token de tipo `OPTION` y lo
+       asigna al campo `opt`.
+    3. Identifica el primer token de tipo `ARG` y lo asigna al campo `arg`.
+    4. Continúa hasta encontrar un `PIPE` o el final de la lista.
+
+Comentarios:
+    Relaciona cada comando con sus opciones y argumentos.
+*/
 
 void	assign_opt_arg(t_data *data)
 {
@@ -36,6 +53,21 @@ void	assign_opt_arg(t_data *data)
 	}
 }
 
+/*
+access_to_types
+
+Propósito:
+    Asigna un tipo específico a un token en una posición determinada.
+
+Lógica:
+    1. Recorre la lista de tokens hasta llegar a la posición `target`.
+    2. Asigna el tipo `type` al token correspondiente.
+    3. Restaura el puntero al inicio de la lista.
+
+Comentarios:
+    Permite modificar dinámicamente el tipo de un token específico.
+*/
+
 void	access_to_types(t_data *data, int target, int type)
 {
 	t_token	*head;
@@ -49,6 +81,22 @@ void	access_to_types(t_data *data, int target, int type)
 		data->input.tokens->type = type;
 	data->input.tokens = head;
 }
+
+/*
+assign_types
+
+Propósito:
+    Determina y asigna el tipo correspondiente a cada token.
+
+Lógica:
+    1. Configura los enlaces previos de los tokens con `set_prev_token`.
+    2. Recorre la lista de tokens.
+    3. Para cada token, invoca `type_checks` para determinar su tipo.
+    4. Actualiza los tipos según los resultados de `type_checks`.
+
+Comentarios:
+    Organiza la asignación de tipos para su uso posterior en el análisis.
+*/
 
 void	assign_types(t_data	*data)
 {
@@ -65,3 +113,18 @@ void	assign_types(t_data	*data)
 		i++;
 	}
 }
+
+/*
+Resumen del archivo
+
+Propósito:
+    Gestiona la asignación de tipos y relaciones entre tokens.
+
+Lógica:
+    1. assign_opt_arg: Relaciona comandos con sus opciones y argumentos.
+    2. access_to_types: Cambia el tipo de un token específico.
+    3. assign_types: Determina los tipos de todos los tokens.
+
+Comentarios:
+    Este archivo organiza los tokens para el análisis semántico posterior.
+*/

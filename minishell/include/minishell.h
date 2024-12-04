@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: smoore-a <smoore-a@student.42.fr>          +#+  +:+       +#+        */
+/*   By: smoore-a <smoore-a@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/19 12:17:44 by smoore-a          #+#    #+#             */
-/*   Updated: 2024/11/12 15:04:43 by smoore-a         ###   ########.fr       */
+/*   Updated: 2024/12/04 11:57:46 by smoore-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,15 +25,6 @@
 # include <errno.h>
 # include <sys/stat.h>
 # include <dirent.h>
-
-// ANSI color codes
-# define RED	"\x1b[31m"
-# define GREEN	"\x1b[32m"
-# define YELLOW	"\x1b[33m"
-# define BLUE	"\x1b[34m"
-# define WHITE	"\x1b[0m"
-
-# define HISTORY_FILE ".history"
 
 # define MS "minishell: "
 # define EMPTY_PATH "PATH variable is empty"
@@ -291,7 +282,6 @@ char	*get_envp_var(char **envp, char *var);
 int		no_word(int c);
 int		is_redir(int c);
 int		is_space(int c);
-int		is_cmd(int c);
 void	print_locals(t_data *data);
 char	**split_token(char *token);
 void	check_new_var(t_env **lst, t_env *new_var, char *var, char *value);

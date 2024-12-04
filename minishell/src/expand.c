@@ -6,11 +6,19 @@
 /*   By: smoore-a <smoore-a@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/26 09:53:56 by smoore-a          #+#    #+#             */
-/*   Updated: 2024/11/09 13:35:14 by smoore-a         ###   ########.fr       */
+/*   Updated: 2024/12/04 10:18:49 by smoore-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
+
+/*
+replace_dollar
+
+Reemplaza una variable $ en un término con su valor
+correspondiente (de las variables de entorno o locales). Utiliza funciones
+auxiliares para obtener el valor y concatenarlo.
+*/
 
 void	replace_dollar(t_data *data, char **new_term)
 {
@@ -30,8 +38,13 @@ void	replace_dollar(t_data *data, char **new_term)
 	free(value_quoted);
 }
 
-//In if dollar
-//printf("dollar: %s\n", dollar);
+/*
+seek_replace
+
+Busca dentro de una cadena términos con el prefijo $ y
+llama a replace_dollar si encuentra variables válidas.
+*/
+
 char	*seek_replace(t_data *data, char *term, t_list *next)
 {
 	char	*new_term;
@@ -57,6 +70,13 @@ char	*seek_replace(t_data *data, char *term, t_list *next)
 	return (new_term);
 }
 
+/*
+expand_terms
+
+Recorre una lista enlazada y aplica seek_replace en cada nodo,
+expandiendo todas las variables.
+*/
+
 void	expand_terms(t_data *data, t_list **lst)
 {
 	t_list	*head;
@@ -77,6 +97,13 @@ void	expand_terms(t_data *data, t_list **lst)
 	*lst = head;
 }
 
+/*
+lst_str_join
+
+Une los elementos de una lista enlazada en una
+sola cadena, útil para reconstruir la línea de entrada expandida.
+*/
+
 char	*lst_str_join(t_list *lst)
 {
 	char	*joined;
@@ -94,6 +121,14 @@ char	*lst_str_join(t_list *lst)
 	return (joined);
 }
 
+/*
+expand
+
+Función principal que realiza todo el proceso de
+expansión: divide la línea de entrada en términos, aplica las
+expansiones y la reconstruye.
+*/
+
 void	expand(t_data *data)
 {
 	t_list	*lst;
@@ -104,3 +139,8 @@ void	expand(t_data *data)
 	data->input.raw_line = lst_str_join(lst);
 	free_lst(&lst);
 }
+
+/*
+Este archivo se encarga principalmente de realizar la expansión de variables
+como $VAR, $$, y $? dentro de una línea de entrada del usuario
+*/

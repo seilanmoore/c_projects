@@ -3,16 +3,30 @@
 /*                                                        :::      ::::::::   */
 /*   execute_io.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: smoore-a <smoore-a@student.42.fr>          +#+  +:+       +#+        */
+/*   By: smoore-a <smoore-a@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/03 13:58:17 by smoore-a          #+#    #+#             */
-/*   Updated: 2024/11/12 15:13:21 by smoore-a         ###   ########.fr       */
+/*   Updated: 2024/12/04 11:24:24 by smoore-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
-#include <signal.h>
-#include <sys/types.h>
+
+/*
+wait_children
+
+Propósito:
+    Espera a que todos los procesos hijo terminen y captura su estado.
+
+Lógica:
+    1. Usa `waitpid` para esperar a cada proceso hijo.
+    2. Si no termina normalmente y no hay señal, retorna 130.
+    3. Si termina por señal (SIGQUIT), imprime mensaje y retorna 131.
+    4. Si termina normalmente, retorna el código de salida.
+
+Comentarios:
+    Maneja el estado de los procesos hijo y las señales asociadas.
+*/
 
 static int	wait_children(t_data *data, pid_t *pid)
 {
@@ -34,6 +48,21 @@ static int	wait_children(t_data *data, pid_t *pid)
 		return (0);
 }
 
+/*
+child_exe
+
+Propósito:
+    Ejecuta un comando en un proceso hijo.
+
+Lógica:
+    1. Si es el proceso hijo (`pid == 0`), ajusta las señales y maneja la I/O.
+    2. Ejecuta el comando como interno (`builtin_out`) o externo (`cmd_out`).
+    3. Termina el proceso hijo con `exit` y el código de error.
+
+Comentarios:
+    Separa la lógica del hijo del padre, manejando la ejecución en paralelo.
+*/
+
 static int	child_exe(t_data *data, pid_t *pid, t_token *cmd)
 {
 	int	fail;
@@ -54,29 +83,20 @@ static int	child_exe(t_data *data, pid_t *pid, t_token *cmd)
 	return (0);
 }
 
-/* static int	child_exe(t_data *data, pid_t *pid, t_token *cmd)
-{
-	int	fail;
+/*
+cmd_exe
 
-	fail = 0;
-	g_signal = *pid;
-	if (*pid == 0)
-	{
-		fail = handle_io(data);
-		if (cmd->cmd->builtin && !fail)
-			builtin_out(data, cmd->cmd, 1);
-		else if (!fail)
-			cmd_out(data, cmd->cmd);
-		exit (fail);
-	}
-	close_parent_files(data);
-	waitpid(*pid, &data->status, 0);
-	if (!WIFEXITED(data->status))
-		return (130);
-	else if (WIFEXITED(data->status))
-		return (WEXITSTATUS(data->status));
-	return (0);
-} */
+Propósito:
+    Gestiona la ejecución de un comando, ya sea interno o externo.
+
+Lógica:
+    1. Si no hay pipes y es un comando interno, redirige con `builtin_redir`.
+    2. Si hay pipes, cambia y abre pipes con `change_pipe` y `open_r_pipe`.
+    3. Crea un proceso hijo con `fork` y llama a `child_exe`.
+
+Comentarios:
+    Coordina la ejecución de comandos con o sin pipes.
+*/
 
 static int	cmd_exe(t_data *data, pid_t *pid, t_token *cmd)
 {
@@ -94,6 +114,21 @@ static int	cmd_exe(t_data *data, pid_t *pid, t_token *cmd)
 		return (child_exe(data, pid, cmd));
 	}
 }
+
+/*
+cmd_io
+
+Propósito:
+    Maneja la entrada/salida y la ejecución del comando actual.
+
+Lógica:
+    1. Abre archivos relacionados con redirecciones usando `open_files`.
+    2. Si hay errores en archivos o pipes, retorna el código de error.
+    3. Llama a `cmd_exe` para ejecutar el comando.
+
+Comentarios:
+    Integra la lógica de redirección, pipes y ejecución para un comando.
+*/
 
 static int	cmd_io(t_data *data, pid_t *pid)
 {
@@ -113,10 +148,22 @@ static int	cmd_io(t_data *data, pid_t *pid)
 	}
 	return (cmd_exe(data, pid, cmd));
 }
-//After while loop
-//if (WIFEXITED(data->status) &&
-//WEXITSTATUS(data->status)) //&& exit_var != 1 && exit_var != 130)
-//exit_var = cmd_error(data, WEXITSTATUS(data->status), 0);
+
+/*
+execute
+
+Propósito:
+    Ejecuta todos los comandos en la línea de entrada.
+
+Lógica:
+    1. Inicializa un array de `pid` para manejar procesos.
+    2. Itera sobre los tokens para procesar redirecciones y comandos.
+    3. Llama a `cmd_io` para cada comando y espera con `wait_children`.
+    4. Libera recursos y retorna el código de salida.
+
+Comentarios:
+    Es el punto de entrada principal para la ejecución de la línea de entrada.
+*/
 
 int	execute(t_data *data)
 {
@@ -146,3 +193,22 @@ int	execute(t_data *data)
 	data->input.tokens = head;
 	return (exit_var);
 }
+
+/*
+Resumen del archivo
+
+Propósito:
+    Implementa la ejecución de comandos, manejando procesos, redirecciones
+    y pipes.
+
+Lógica:
+    1. wait_children: Espera a los procesos hijo y maneja su estado.
+    2. child_exe: Ejecuta un comando en un proceso hijo.
+    3. cmd_exe: Coordina la ejecución de comandos internos o externos.
+    4. cmd_io: Maneja redirecciones, pipes y ejecución de comandos.
+    5. execute: Ejecuta todos los comandos de entrada.
+
+Comentarios:
+    Este archivo gestiona toda la lógica relacionada con la ejecución de
+    procesos y la interacción con I/O en el shell.
+*/

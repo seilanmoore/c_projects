@@ -3,14 +3,28 @@
 /*                                                        :::      ::::::::   */
 /*   locals.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: smoore-a <smoore-a@student.42.fr>          +#+  +:+       +#+        */
+/*   By: smoore-a <smoore-a@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/25 10:56:20 by smoore-a          #+#    #+#             */
-/*   Updated: 2024/11/12 16:54:33 by smoore-a         ###   ########.fr       */
+/*   Updated: 2024/12/04 11:16:23 by smoore-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
+
+/*
+mod_env_value
+
+Propósito:
+    Modifica el valor de una variable en la lista de entorno.
+
+Lógica:
+    1. Libera el valor actual del nodo.
+    2. Asigna el nuevo valor proporcionado o una cadena vacía si es nulo.
+
+Comentarios:
+    Actualiza dinámicamente los valores de variables en el entorno.
+*/
 
 static void	mod_env_value(t_env *node, char *value)
 {
@@ -24,6 +38,21 @@ static void	mod_env_value(t_env *node, char *value)
 	}
 }
 
+/*
+get_loc_var
+
+Propósito:
+    Busca una variable local específica en la lista de variables locales.
+
+Lógica:
+    1. Itera sobre la lista `locals`.
+    2. Compara el nombre de cada variable con `variable` usando `ft_strcmp`.
+    3. Retorna el nodo si encuentra coincidencia; `NULL` en caso contrario.
+
+Comentarios:
+    Facilita la búsqueda de variables locales en el entorno.
+*/
+
 static t_env	*get_loc_var(t_env *locals, char *variable)
 {
 	while (locals)
@@ -34,6 +63,21 @@ static t_env	*get_loc_var(t_env *locals, char *variable)
 	}
 	return (locals);
 }
+
+/*
+mod_loc_value
+
+Propósito:
+    Modifica o crea el valor de una variable local.
+
+Lógica:
+    1. Si el nodo ya existe, actualiza su valor.
+    2. Si no existe, crea una nueva variable con `var` y `val`.
+    3. Agrega la nueva variable al final de la lista.
+
+Comentarios:
+    Gestiona la actualización o adición de variables locales.
+*/
 
 static void	mod_loc_value(t_env **lst, t_env *node, char *var, char *val)
 {
@@ -53,6 +97,22 @@ static void	mod_loc_value(t_env **lst, t_env *node, char *var, char *val)
 			add_back_variable(lst, new_variable(var, ""));
 	}
 }
+
+/*
+add_local
+
+Propósito:
+    Añade una nueva variable local a las listas de entorno y locales.
+
+Lógica:
+    1. Divide el token en nombre (`variable`) y valor (`equal`).
+    2. Verifica errores de identificación con `id_error`.
+    3. Si es válida, actualiza la variable en `env` y `locals`.
+    4. Retorna 1 si se agregó correctamente, 0 en caso de error.
+
+Comentarios:
+    Integra variables locales en el entorno del shell.
+*/
 
 static int	add_local(t_data *data, char *token)
 {
@@ -80,6 +140,22 @@ static int	add_local(t_data *data, char *token)
 	return (1);
 }
 
+/*
+locals
+
+Propósito:
+    Procesa y actualiza las variables locales en los tokens de entrada.
+
+Lógica:
+    1. Recorre los tokens en busca de aquellos marcados como `LOCAL`.
+    2. Llama a `add_local` para agregar o actualizar las variables.
+    3. Si hubo cambios, sincroniza el entorno con `upd_env`.
+    4. Retorna 127 si hubo errores; 0 en caso de éxito.
+
+Comentarios:
+    Maneja las operaciones principales relacionadas con variables locales.
+*/
+
 int	locals(t_data *data)
 {
 	t_token	*tmp;
@@ -106,3 +182,21 @@ int	locals(t_data *data)
 		return (127);
 	return (0);
 }
+
+/*
+Resumen del archivo
+
+Propósito:
+    Gestiona la creación, actualización y sincronización de variables locales.
+
+Lógica:
+    1. mod_env_value: Modifica valores en la lista de entorno.
+    2. get_loc_var: Busca variables locales en la lista.
+    3. mod_loc_value: Modifica o crea variables locales.
+    4. add_local: Añade variables locales al entorno y lista local.
+    5. locals: Procesa y actualiza variables locales desde los tokens.
+
+Comentarios:
+    Este archivo centraliza la lógica para gestionar variables locales
+    en el shell.
+*/

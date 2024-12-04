@@ -3,14 +3,31 @@
 /*                                                        :::      ::::::::   */
 /*   export_builtin.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: smoore-a <smoore-a@student.42.fr>          +#+  +:+       +#+        */
+/*   By: smoore-a <smoore-a@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/02 10:49:42 by smoore-a          #+#    #+#             */
-/*   Updated: 2024/11/12 09:40:39 by smoore-a         ###   ########.fr       */
+/*   Updated: 2024/12/04 11:52:44 by smoore-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
+
+/*
+check_new_var
+
+Propósito:
+    Añade o actualiza una variable en la lista de entorno.
+
+Lógica:
+    1. Si la variable ya existe (`new_var` no es nulo):
+        - Libera su valor actual y asigna el nuevo valor.
+    2. Si no existe:
+        - Crea una nueva variable con el nombre y valor proporcionados.
+        - La añade al final de la lista de entorno.
+
+Comentarios:
+    Gestiona la lógica para añadir o actualizar variables de entorno.
+*/
 
 void	check_new_var(t_env **lst, t_env *new_var, char *var, char *value)
 {
@@ -34,6 +51,24 @@ void	check_new_var(t_env **lst, t_env *new_var, char *var, char *value)
 			*lst = new_var;
 	}
 }
+
+/*
+seek_and_replace
+
+Propósito:
+    Busca y actualiza una variable de entorno o la crea si no existe.
+
+Lógica:
+    1. Divide el argumento en `variable` y `value` usando `=` como delimitador.
+    2. Valida la `variable` con `id_error`.
+    3. Si es válida:
+        - Busca la variable en la lista de entorno.
+        - Llama a `check_new_var` para actualizarla o crearla.
+    4. Retorna 1 si se realiza correctamente, 0 en caso de error.
+
+Comentarios:
+    Maneja la lógica de actualización o creación de variables de entorno.
+*/
 
 static int	seek_and_replace(t_data *data, char *arg)
 {
@@ -60,6 +95,23 @@ static int	seek_and_replace(t_data *data, char *arg)
 	return (1);
 }
 
+/*
+export_builtin
+
+Propósito:
+    Implementa el comando interno `export` para gestionar variables de entorno.
+
+Lógica:
+    1. Itera sobre los argumentos recibidos.
+    2. Llama a `seek_and_replace` para cada argumento.
+        - Actualiza las variables de entorno si es necesario.
+    3. Llama a `upd_env` para sincronizar la lista de entorno con el array.
+    4. Retorna 0 si todos los argumentos son válidos, 1 si hay errores.
+
+Comentarios:
+    Gestiona la lógica principal del comando `export`.
+*/
+
 int	export_builtin(t_data *data, t_cmd *cmd)
 {
 	char	**args;
@@ -84,3 +136,20 @@ int	export_builtin(t_data *data, t_cmd *cmd)
 		return (1);
 	return (0);
 }
+
+/*
+Resumen del archivo
+
+Propósito:
+    Implementa el comando interno `export` para añadir o actualizar variables
+    de entorno.
+
+Lógica:
+    1. check_new_var: Añade o actualiza variables en la lista de entorno.
+    2. seek_and_replace: Valida, actualiza o crea variables en la lista.
+    3. export_builtin: Coordina la lógica para manejar múltiples argumentos.
+
+Comentarios:
+    Este archivo permite gestionar dinámicamente el entorno del shell
+    mediante el comando `export`.
+*/

@@ -3,14 +3,30 @@
 /*                                                        :::      ::::::::   */
 /*   environment.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: smoore-a <smoore-a@student.42.fr>          +#+  +:+       +#+        */
+/*   By: smoore-a <smoore-a@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/22 12:13:57 by smoore-a          #+#    #+#             */
-/*   Updated: 2024/10/19 10:06:35 by smoore-a         ###   ########.fr       */
+/*   Updated: 2024/12/04 11:35:25 by smoore-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
+
+/*
+envp_to_array
+
+Propósito:
+    Convierte la lista de variables de entorno (`t_env`) en un array de cadenas.
+
+Lógica:
+    1. Reserva memoria para el array de cadenas basado en el tamaño de la lista.
+    2. Itera sobre la lista `env`, concatenando cada variable y valor con `=`.
+    3. Almacena cada resultado en `data->envp` y libera recursos temporales.
+
+Comentarios:
+    Permite manejar las variables de entorno
+	en un formato compatible con `execve`.
+*/
 
 void	envp_to_array(t_data *data)
 {
@@ -32,6 +48,23 @@ void	envp_to_array(t_data *data)
 	}
 	data->env = head;
 }
+
+/*
+envp_to_lst
+
+Propósito:
+    Convierte el array de variables de entorno (`envp`) en
+	una lista de nodos `t_env`.
+
+Lógica:
+    1. Libera la lista de entorno actual si existe.
+    2. Itera sobre `envp`, separando cada cadena
+	en `variable` y `value` usando `=` como delimitador.
+    3. Crea nodos `t_env` con `new_variable` y los agrega a la lista.
+
+Comentarios:
+    Sincroniza el array de entorno con una representación en lista enlazada.
+*/
 
 void	envp_to_lst(t_data *data)
 {
@@ -55,3 +88,19 @@ void	envp_to_lst(t_data *data)
 		free(value);
 	}
 }
+
+/*
+Resumen del archivo
+
+Propósito:
+    Proporciona funciones para convertir entre el formato de array y lista
+    de variables de entorno.
+
+Lógica:
+    1. envp_to_array: Convierte una lista de entorno en un array.
+    2. envp_to_lst: Convierte un array de entorno en una lista enlazada.
+
+Comentarios:
+    Este archivo facilita la interoperabilidad entre representaciones de
+    variables de entorno en el shell.
+*/

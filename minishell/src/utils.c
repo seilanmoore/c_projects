@@ -3,14 +3,30 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: smoore-a <smoore-a@student.42.fr>          +#+  +:+       +#+        */
+/*   By: smoore-a <smoore-a@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/26 09:54:56 by smoore-a          #+#    #+#             */
-/*   Updated: 2024/11/02 17:15:44 by smoore-a         ###   ########.fr       */
+/*   Updated: 2024/12/04 11:04:21 by smoore-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
+
+/*
+valid_ident
+
+Propósito:
+    Verifica si una cadena es un identificador válido.
+
+Lógica:
+    1. Si la cadena es nula o vacía, retorna 1 o 0 respectivamente.
+    2. Si el primer carácter es un dígito, retorna 0.
+    3. Itera sobre la cadena para verificar que solo contiene letras, 
+       números, `$`, o `_`.
+
+Comentarios:
+    Garantiza que los identificadores sigan las reglas de sintaxis.
+*/
 
 int	valid_ident(char *str)
 {
@@ -29,6 +45,23 @@ int	valid_ident(char *str)
 	}
 	return (1);
 }
+
+/*
+split_token
+
+Propósito:
+    Divide un token en dos partes usando `=` como delimitador.
+
+Lógica:
+    1. Reserva memoria para un array de dos cadenas.
+    2. Si el token comienza con `=`, guarda la cadena completa en el array.
+    3. Busca el carácter `=` en el token:
+        - Divide el token antes y después de `=` en dos cadenas.
+    4. Retorna el array resultante.
+
+Comentarios:
+    Se utiliza para manejar asignaciones como `VAR=valor`.
+*/
 
 char	**split_token(char *token)
 {
@@ -54,6 +87,21 @@ char	**split_token(char *token)
 	return (NULL);
 }
 
+/*
+rev_split
+
+Propósito:
+    Combina un array de cadenas en una sola cadena, separada por espacios.
+
+Lógica:
+    1. Inicializa la cadena con el primer elemento del array.
+    2. Itera sobre el resto del array, concatenando cada elemento con un espacio.
+    3. Libera memoria intermedia y retorna la cadena combinada.
+
+Comentarios:
+    Inverso de un split; útil para reconstruir cadenas desde un array.
+*/
+
 char	*rev_split(char **array)
 {
 	char	*str;
@@ -76,6 +124,21 @@ char	*rev_split(char **array)
 	return (str);
 }
 
+/*
+get_envp_var
+
+Propósito:
+    Obtiene el valor de una variable de entorno desde un array `envp`.
+
+Lógica:
+    1. Itera sobre el array `envp` buscando un nombre de variable que coincida.
+    2. Calcula la longitud del nombre hasta `=`.
+    3. Si hay coincidencia exacta, retorna el valor asociado después de `=`.
+
+Comentarios:
+    Permite obtener valores de variables desde un entorno personalizado.
+*/
+
 char	*get_envp_var(char **envp, char *var)
 {
 	int	v_len;
@@ -95,3 +158,19 @@ char	*get_envp_var(char **envp, char *var)
 	}
 	return (NULL);
 }
+
+/*
+Resumen del archivo
+
+Propósito:
+    Proporciona funciones generales para validar, dividir y manipular cadenas.
+
+Lógica:
+    1. valid_ident: Verifica si una cadena es un identificador válido.
+    2. split_token: Divide cadenas por `=` en clave y valor.
+    3. rev_split: Reconstruye cadenas desde un array.
+    4. get_envp_var: Obtiene valores de variables desde el entorno.
+
+Comentarios:
+    Estas utilidades son fundamentales para procesar cadenas en el shell.
+*/
