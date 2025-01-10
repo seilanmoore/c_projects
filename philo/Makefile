@@ -18,7 +18,7 @@ HEADER = philo.h
 
 CC = clang
 
-CFLAGS = -Wall -Werror -Wextra -g -O0 -pthread
+CFLAGS = -Wall -Werror -Wextra -g -O0 -fsanitize=thread
 
 RM = rm -rf
 
@@ -55,7 +55,7 @@ fclean: clean
 re: fclean all
 
 nocflag:
-	$(MAKE) CFLAGS="-g -O0 -pthread" $(NAME)
+	$(MAKE) CFLAGS="-g -O0 -fsanitize=thread" $(NAME)
 
 .PHONY: all clean fclean re nocflag
 

@@ -6,7 +6,7 @@
 /*   By: smoore-a <smoore-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/07 20:28:36 by smoore-a          #+#    #+#             */
-/*   Updated: 2025/01/10 09:47:08 by smoore-a         ###   ########.fr       */
+/*   Updated: 2025/01/10 20:37:10 by smoore-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,8 +17,6 @@ void	logs(t_philo *philo, t_state state)
 	time_t	elapsed;
 
 	elapsed = get_time() - philo->data->start_time;
-	if (philo->full)
-		return ;
 	pthread_mutex_lock(&(philo->data->print_mutex));
 	if (state == FORK && !simulation_ended(philo->data))
 		printf("%ld\t%d has taken a fork\n", elapsed, philo->id);

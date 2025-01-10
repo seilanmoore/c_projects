@@ -6,7 +6,7 @@
 /*   By: smoore-a <smoore-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/07 21:14:13 by smoore-a          #+#    #+#             */
-/*   Updated: 2025/01/10 12:27:39 by smoore-a         ###   ########.fr       */
+/*   Updated: 2025/01/10 20:19:43 by smoore-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,26 @@ void	*monitor(void *data_)
 				logs(&(data->philo[i]), DIE);
 			}
 		}
+		if (all_philo_full(&(data->data_mutex), \
+		&(data->n_full_philo), data->info.n_philo))
+			set_bool(&(data->data_mutex), &(data->ended), true);
+	}
+	return (0);
+}
+
+void	*meals(void *data_)
+{
+	t_data	*data;
+
+	data = (t_data *)data_;
+	while (!all_threads_running(&(data->data_mutex), \
+	&(data->n_threads_running), data->info.n_philo))
+		;
+	while (!simulation_ended(data))
+	{
+		if (all_philo_full(&(data->data_mutex), \
+		&(data->n_full_philo), data->info.n_philo))
+			set_bool(&(data->data_mutex), &(data->ended), true);
 	}
 	return (0);
 }

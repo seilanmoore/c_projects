@@ -6,7 +6,7 @@
 /*   By: smoore-a <smoore-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/07 21:16:11 by smoore-a          #+#    #+#             */
-/*   Updated: 2025/01/10 12:21:08 by smoore-a         ###   ########.fr       */
+/*   Updated: 2025/01/10 20:23:23 by smoore-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,11 @@ void	eat(t_philo *philo)
 	ft_usleep(philo->data->info.eat_t, philo->data);
 	if (philo->data->info.n_meal > 0 && \
 	philo->n_meal == philo->data->info.n_meal)
+	{
 		set_bool(&(philo->philo_mutex), &(philo->full), true);
+		increase_full_philo(&(philo->data->data_mutex), \
+		&(philo->data->n_full_philo));
+	}
 	pthread_mutex_unlock(&(philo->first_fork->fork));
 	pthread_mutex_unlock(&(philo->second_fork->fork));
 }
@@ -108,6 +112,7 @@ void	start_simulation(t_data *data)
 			return ;
 	}
 	pthread_create(&(data->monitor), NULL, monitor, (void *)data);
+	pthread_create(&(data->meals), NULL, meals, (void *)data);
 	data->start_time = get_time();
 	set_bool(&(data->data_mutex), &(data->threads_ready), true);
 }

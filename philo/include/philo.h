@@ -6,7 +6,7 @@
 /*   By: smoore-a <smoore-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/07 21:29:09 by smoore-a          #+#    #+#             */
-/*   Updated: 2025/01/10 12:32:32 by smoore-a         ###   ########.fr       */
+/*   Updated: 2025/01/10 20:17:47 by smoore-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,11 +97,13 @@ typedef struct s_data
 	t_philo		*philo;
 	t_fork		*fork;
 	pthread_t	monitor;
+	pthread_t	meals;
 	int			n_threads_running;
 	time_t		start_time;
 	bool		threads_ready;
 	bool		started;
 	bool		ended;
+	int			n_full_philo;
 	t_mutex		data_mutex;
 	t_mutex		print_mutex;
 	int			e_code;
@@ -125,6 +127,7 @@ void	logs(t_philo *philo, t_state state);
 
 // monitor //
 void	*monitor(void *philo_);
+void	*meals(void *data_);
 
 // time //
 time_t	get_time(void);
@@ -144,7 +147,9 @@ long	get_long(t_mutex *mutex, long *var);
 bool	simulation_ended(t_data *data);
 
 // sync_utils //
+bool	all_philo_full(t_mutex *mutex, int *n_philos, int n_philo);
 bool	all_threads_running(t_mutex *mutex, int *n_thread, int n_philo);
+void	increase_full_philo(t_mutex *mutex, int *value);
 void	increase_running_threads(t_mutex *mutex, int *value);
 void	sync_threads(t_data *data);
 
