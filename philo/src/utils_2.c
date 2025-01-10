@@ -6,12 +6,11 @@
 /*   By: smoore-a <smoore-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/27 01:13:54 by smoore-a          #+#    #+#             */
-/*   Updated: 2025/01/09 20:43:16 by smoore-a         ###   ########.fr       */
+/*   Updated: 2025/01/10 12:30:42 by smoore-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/philo.h"
-#include <stdbool.h>
 
 int	ft_strlen(char *str)
 {
@@ -42,7 +41,7 @@ void	*ft_calloc(size_t nmemb, size_t size)
 	return (ptr);
 }
 
-void	reassign_forks(t_mutex **fork_x, t_mutex **fork_y, t_philo *philo)
+/* void	reassign_forks(t_mutex **fork_x, t_mutex **fork_y, t_philo *philo)
 {
 	if (philo->first_fork->fork_id > philo->second_fork->fork_id)
 	{
@@ -54,4 +53,4 @@ void	reassign_forks(t_mutex **fork_x, t_mutex **fork_y, t_philo *philo)
 		*fork_y = &(philo->first_fork->fork);
 		*fork_x = &(philo->second_fork->fork);
 	}
-}
+} */

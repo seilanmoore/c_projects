@@ -6,7 +6,7 @@
 /*   By: smoore-a <smoore-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/07 21:29:09 by smoore-a          #+#    #+#             */
-/*   Updated: 2025/01/09 20:44:44 by smoore-a         ###   ########.fr       */
+/*   Updated: 2025/01/10 12:32:32 by smoore-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,6 @@ typedef struct s_fork
 {
 	t_mutex		fork;
 	int			fork_id;
-	bool		started;
 }	t_fork;
 
 typedef struct s_philo
@@ -155,6 +154,6 @@ long	ft_atol(const char *str);
 // utils_2 //
 int		ft_strlen(char *str);
 void	*ft_calloc(size_t nmemb, size_t size);
-void	reassign_forks(t_mutex **fork_x, t_mutex **fork_y, t_philo *philo);
+//void	reassign_forks(t_mutex **fork_x, t_mutex **fork_y, t_philo *philo);
 
 #endif

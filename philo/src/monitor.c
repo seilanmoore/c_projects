@@ -6,12 +6,11 @@
 /*   By: smoore-a <smoore-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/07 21:14:13 by smoore-a          #+#    #+#             */
-/*   Updated: 2025/01/09 20:54:35 by smoore-a         ###   ########.fr       */
+/*   Updated: 2025/01/10 12:27:39 by smoore-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/philo.h"
-#include <stdbool.h>
 
 static bool	philo_died(t_philo *philo)
 {

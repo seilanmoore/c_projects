@@ -6,35 +6,11 @@
 /*   By: smoore-a <smoore-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/27 01:05:47 by smoore-a          #+#    #+#             */
-/*   Updated: 2025/01/09 20:31:17 by smoore-a         ###   ########.fr       */
+/*   Updated: 2025/01/10 12:33:03 by smoore-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/philo.h"
-#include <pthread.h>
-
-/* static int	init_locks(t_data *data)
-{
-	if (pthread_mutex_init(&(data->print_m.lock), NULL))
-		return (data->e_code = E_MUTEX_INIT);
-	data->print_m.to_destroy = 1;
-	if (pthread_mutex_init(&(data->die_t_m.lock), NULL))
-		return (data->e_code = E_MUTEX_INIT);
-	data->die_t_m.to_destroy = 1;
-	if (pthread_mutex_init(&(data->n_meal_m.lock), NULL))
-		return (data->e_code = E_MUTEX_INIT);
-	data->n_meal_m.to_destroy = 1;
-	if (pthread_mutex_init(&(data->state_m.lock), NULL))
-		return (data->e_code = E_MUTEX_INIT);
-	data->state_m.to_destroy = 1;
-	if (pthread_mutex_init(&(data->err_code_m.lock), NULL))
-		return (data->e_code = E_MUTEX_INIT);
-	data->err_code_m.to_destroy = 1;
-	if (pthread_mutex_init(&(data->start_sim.lock), NULL))
-		return (data->e_code = E_MUTEX_INIT);
-	data->start_sim.to_destroy = 1;
-	return (0);
-} */
 
 static int	init_philos(t_data *data)
 {
@@ -66,7 +42,6 @@ static int	init_forks(t_data *data)
 	while (++i < n_philo)
 	{
 		pthread_mutex_init(&(data->fork[i].fork), NULL);
-		data->fork[i].started = true;
 		data->fork[i].fork_id = i;
 		data->philo[i].first_fork = &(data->fork[i]);
 		data->philo[i].second_fork = &(data->fork[(i + 1) % n_philo]);

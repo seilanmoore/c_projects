@@ -6,12 +6,11 @@
 /*   By: smoore-a <smoore-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/07 21:16:11 by smoore-a          #+#    #+#             */
-/*   Updated: 2025/01/09 20:42:11 by smoore-a         ###   ########.fr       */
+/*   Updated: 2025/01/10 12:21:08 by smoore-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/philo.h"
-#include <pthread.h>
 
 void	*one_philo(void *philo_)
 {
@@ -31,13 +30,9 @@ void	*one_philo(void *philo_)
 
 void	eat(t_philo *philo)
 {
-	t_mutex	*fork_x;
-	t_mutex	*fork_y;
-
-	reassign_forks(&fork_x, &fork_y, philo);
-	pthread_mutex_lock(fork_x);
+	pthread_mutex_lock(&(philo->first_fork->fork));
 	logs(philo, FORK);
-	pthread_mutex_lock(fork_y);
+	pthread_mutex_lock(&(philo->second_fork->fork));
 	logs(philo, FORK);
 	set_long(&(philo->philo_mutex), &(philo->last_meal), get_time());
 	philo->n_meal++;
@@ -46,8 +41,8 @@ void	eat(t_philo *philo)
 	if (philo->data->info.n_meal > 0 && \
 	philo->n_meal == philo->data->info.n_meal)
 		set_bool(&(philo->philo_mutex), &(philo->full), true);
-	pthread_mutex_unlock(fork_y);
-	pthread_mutex_unlock(fork_x);
+	pthread_mutex_unlock(&(philo->first_fork->fork));
+	pthread_mutex_unlock(&(philo->second_fork->fork));
 }
 
 void	*simulation(void *philo_)

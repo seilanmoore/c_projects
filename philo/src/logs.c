@@ -6,12 +6,11 @@
 /*   By: smoore-a <smoore-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/07 20:28:36 by smoore-a          #+#    #+#             */
-/*   Updated: 2025/01/08 23:18:46 by smoore-a         ###   ########.fr       */
+/*   Updated: 2025/01/10 09:47:08 by smoore-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/philo.h"
-#include <time.h>
 
 void	logs(t_philo *philo, t_state state)
 {
