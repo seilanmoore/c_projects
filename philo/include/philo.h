@@ -6,7 +6,7 @@
 /*   By: smoore-a <smoore-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/07 21:29:09 by smoore-a          #+#    #+#             */
-/*   Updated: 2025/01/10 20:17:47 by smoore-a         ###   ########.fr       */
+/*   Updated: 2025/01/11 10:59:55 by smoore-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,8 +73,6 @@ typedef struct s_philo
 	pthread_t	thread;
 	int			id;
 	int			n_meal;
-	bool		full;
-	bool		eating;
 	time_t		last_meal;
 	t_fork		*first_fork;
 	t_fork		*second_fork;

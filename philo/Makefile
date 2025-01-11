@@ -6,7 +6,7 @@
 #    By: smoore-a <smoore-a@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/11/27 00:38:01 by smoore-a          #+#    #+#              #
-#    Updated: 2025/01/09 20:39:06 by smoore-a         ###   ########.fr        #
+#    Updated: 2025/01/11 11:07:54 by smoore-a         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,7 +18,7 @@ HEADER = philo.h
 
 CC = clang
 
-CFLAGS = -Wall -Werror -Wextra -g -O0 -fsanitize=thread
+CFLAGS = -Wall -Werror -Wextra -O3 # -g -pthread -fsanitize=thread
 
 RM = rm -rf
 
@@ -36,7 +36,7 @@ all:	$(NAME)
 VPATH = src:src/init:src/simulation:src/utils:include
 
 $(NAME): $(OBJ_FILES)
-	$(CC) $(INCLUDE) $^ -o $@
+	$(CC) $(CFLAGS) $(INCLUDE) $^ -o $@
 	@echo "$(NAME) compiled"
 
 $(OBJ_DIR)%.o: %.c $(HEADER)

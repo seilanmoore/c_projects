@@ -6,7 +6,7 @@
 /*   By: smoore-a <smoore-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/07 21:14:13 by smoore-a          #+#    #+#             */
-/*   Updated: 2025/01/10 20:19:43 by smoore-a         ###   ########.fr       */
+/*   Updated: 2025/01/11 10:59:42 by smoore-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,6 @@ static bool	philo_died(t_philo *philo)
 {
 	time_t	elapsed;
 
-	if (get_bool(&(philo->philo_mutex), &(philo->full)))
-		return (false);
 	elapsed = get_time() - get_long(&(philo->philo_mutex), \
 	&(philo->last_meal));
 	if (elapsed > philo->data->info.die_t)

@@ -6,7 +6,7 @@
 /*   By: smoore-a <smoore-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/07 21:16:11 by smoore-a          #+#    #+#             */
-/*   Updated: 2025/01/10 20:23:23 by smoore-a         ###   ########.fr       */
+/*   Updated: 2025/01/11 10:59:35 by smoore-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,6 @@ void	eat(t_philo *philo)
 	if (philo->data->info.n_meal > 0 && \
 	philo->n_meal == philo->data->info.n_meal)
 	{
-		set_bool(&(philo->philo_mutex), &(philo->full), true);
 		increase_full_philo(&(philo->data->data_mutex), \
 		&(philo->data->n_full_philo));
 	}
@@ -62,8 +61,6 @@ void	*simulation(void *philo_)
 		ft_usleep(60, philo->data);
 	while (!simulation_ended(philo->data))
 	{
-		if (get_bool(&(philo->data->data_mutex), &(philo->full)))
-			break ;
 		eat(philo);
 		logs(philo, SLEEP);
 		ft_usleep(philo->data->info.sleep_t, philo->data);
