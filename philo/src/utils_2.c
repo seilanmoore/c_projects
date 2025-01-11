@@ -6,7 +6,7 @@
 /*   By: smoore-a <smoore-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/27 01:13:54 by smoore-a          #+#    #+#             */
-/*   Updated: 2025/01/10 12:30:42 by smoore-a         ###   ########.fr       */
+/*   Updated: 2025/01/11 20:25:34 by smoore-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,16 @@ int	ft_strlen(char *str)
 	return (i);
 }
 
+static void	*ft_memset(void *b, int c, size_t len)
+{
+	unsigned char	*ptr;
+
+	ptr = (unsigned char *)b;
+	while (len-- > 0)
+		*ptr++ = c;
+	return (b);
+}
+
 void	*ft_calloc(size_t nmemb, size_t size)
 {
 	size_t	total_size;
@@ -37,7 +47,7 @@ void	*ft_calloc(size_t nmemb, size_t size)
 	ptr = malloc(total_size);
 	if (!ptr)
 		return (NULL);
-	memset(ptr, 0, total_size);
+	ft_memset(ptr, 0, total_size);
 	return (ptr);
 }
 
