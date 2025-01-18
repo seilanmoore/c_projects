@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: smoore-a <smoore-a@student.42malaga.com    +#+  +:+       +#+         #
+#    By: smoore-a <smoore-a@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/02/27 20:48:30 by smoore-a          #+#    #+#              #
-#    Updated: 2024/06/08 14:27:41 by smoore-a         ###   ########.fr        #
+#    Updated: 2025/01/18 12:54:35 by smoore-a         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,12 +18,12 @@ HEADER = so_long.h
 
 CC = clang
 
-CFLAGS = -Wall -Werror -Wextra -O3 #-O0
+CFLAGS = -Wall -Werror -Wextra -O0 -g #-O0
 
 LIBFT_FLAGS = -Llibft -lft
 
 MLX_FLAGS = -Lminilibx-linux -lmlx_Linux \
-	-L/usr/include/../lib -lXext -lX11 -lm -lbsd
+	-L/usr/lib -lXext -lX11 -lm -lbsd
 
 LIBFT = libft/libft.a
 
