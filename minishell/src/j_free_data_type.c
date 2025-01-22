@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   j_free_data_type.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: smoore-a <smoore-a@student.42malaga.com    +#+  +:+       +#+        */
+/*   By: smoore-a <smoore-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/25 11:02:07 by smoore-a          #+#    #+#             */
-/*   Updated: 2024/12/04 11:17:29 by smoore-a         ###   ########.fr       */
+/*   Updated: 2025/01/20 20:25:50 by smoore-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,8 +64,8 @@ void	free_local(t_data *data)
 
 	while (data->locals)
 	{
-		ft_free(&(data->locals->variable));
-		ft_free(&(data->locals->value));
+		ft_free((void *)&(data->locals->variable));
+		ft_free((void *)&(data->locals->value));
 		tmp = data->locals;
 		data->locals = data->locals->next;
 		*tmp = (t_env){0};
@@ -94,8 +94,8 @@ void	free_env_lst(t_data *data)
 
 	while (data->env)
 	{
-		ft_free(&(data->env->variable));
-		ft_free(&(data->env->value));
+		ft_free((void *)&(data->env->variable));
+		ft_free((void *)&(data->env->value));
 		tmp = data->env;
 		data->env = data->env->next;
 		*tmp = (t_env){0};
@@ -124,7 +124,7 @@ void	free_cmds(t_data *data)
 
 	while (data->input.command)
 	{
-		ft_free(&(data->input.command->cmd));
+		ft_free((void *)&(data->input.command->cmd));
 		free_array(&(data->input.command->args));
 		tmp = data->input.command;
 		data->input.command = data->input.command->next;

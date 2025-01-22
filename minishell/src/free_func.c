@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   free_func.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: smoore-a <smoore-a@student.42malaga.com    +#+  +:+       +#+        */
+/*   By: smoore-a <smoore-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/25 11:02:07 by smoore-a          #+#    #+#             */
-/*   Updated: 2024/12/04 11:42:33 by smoore-a         ###   ########.fr       */
+/*   Updated: 2025/01/20 22:28:48 by smoore-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ Comentarios:
     Facilita la gestión segura de la memoria para cadenas dinámicas.
 */
 
-void	ft_free(char **str)
+void	ft_free(void **str)
 {
 	if (*str)
 		free(*str);
@@ -75,10 +75,9 @@ void	free_tokens(t_data *data)
 
 	while (data->input.tokens)
 	{
-		ft_free(&(data->input.tokens->token));
+		free(data->input.tokens->token);
 		tmp = data->input.tokens;
 		data->input.tokens = data->input.tokens->next;
-		*tmp = (t_token){0};
 		free(tmp);
 	}
 }
@@ -135,10 +134,10 @@ Comentarios:
 
 void	free_data(t_data *data)
 {
-	ft_free(&(data->input.raw_line));
-	ft_free(&(data->history));
-	ft_free(&(data->cwd));
-	ft_free(&(data->prompt));
+	ft_free((void *)&(data->input.raw_line));
+	ft_free((void *)&(data->history));
+	ft_free((void *)&(data->cwd));
+	ft_free((void *)&(data->prompt));
 	free_array(&(data->paths));
 	free_tokens(data);
 	free_cmds(data);

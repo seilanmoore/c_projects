@@ -6,7 +6,7 @@
 #    By: smoore-a <smoore-a@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/02/27 20:48:30 by smoore-a          #+#    #+#              #
-#    Updated: 2024/11/12 16:34:07 by smoore-a         ###   ########.fr        #
+#    Updated: 2025/01/20 19:25:11 by smoore-a         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,7 +18,7 @@ HEADER = minishell.h
 
 CC = clang
 
-CFLAGS = -g -Wall -Werror -Wextra -O3 # -O0 -fsanitize=address
+CFLAGS = -g -Wall -Werror -Wextra -O0 # -O0 -fsanitize=address
 
 L_FLAGS = -Llibft -lft -lreadline
 

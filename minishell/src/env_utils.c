@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env_utils.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: smoore-a <smoore-a@student.42malaga.com    +#+  +:+       +#+        */
+/*   By: smoore-a <smoore-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/21 12:03:30 by smoore-a          #+#    #+#             */
-/*   Updated: 2024/12/04 11:36:54 by smoore-a         ###   ########.fr       */
+/*   Updated: 2025/01/20 20:25:02 by smoore-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,8 +57,8 @@ Comentarios:
 
 static void	del_node(t_env **lst, t_env *node)
 {
-	ft_free(&(node->variable));
-	ft_free(&(node->value));
+	ft_free((void *)&(node->variable));
+	ft_free((void *)&(node->value));
 	free(node);
 	*lst = NULL;
 }

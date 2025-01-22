@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute_io.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: smoore-a <smoore-a@student.42malaga.com    +#+  +:+       +#+        */
+/*   By: smoore-a <smoore-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/03 13:58:17 by smoore-a          #+#    #+#             */
-/*   Updated: 2024/12/04 11:24:24 by smoore-a         ###   ########.fr       */
+/*   Updated: 2025/01/20 22:27:16 by smoore-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -167,16 +167,14 @@ Comentarios:
 
 int	execute(t_data *data)
 {
-	t_token	*head;
-	pid_t	*pid;
 	int		i;
 	int		exit_var;
 
 	if (!data->n_cmd)
 		return (data->exit_code);
-	head = data->input.tokens;
-	pid = ft_calloc(data->n_cmd, sizeof(pid_t));
-	if (!pid)
+	data->first_token = data->input.tokens;
+	data->pids = ft_calloc(data->n_cmd, sizeof(pid_t));
+	if (!data->pids)
 		return (0);
 	exit_var = -1;
 	i = -1;
@@ -185,12 +183,12 @@ int	execute(t_data *data)
 		if (is_redir(data->input.tokens->type))
 			exit_var = open_files(data);
 		else if (data->input.tokens->type == CMD)
-			exit_var = cmd_io(data, &(pid[++i]));
+			exit_var = cmd_io(data, &(data->pids[++i]));
 	}
 	if ((!data->last_cmd->cmd->builtin || data->n_pipe) && exit_var != 1)
-		exit_var = wait_children(data, pid);
-	free(pid);
-	data->input.tokens = head;
+		exit_var = wait_children(data, data->pids);
+	ft_free((void *)&(data->pids));
+	data->input.tokens = data->first_token;
 	return (exit_var);
 }
 

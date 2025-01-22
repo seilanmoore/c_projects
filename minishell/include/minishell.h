@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: smoore-a <smoore-a@student.42malaga.com    +#+  +:+       +#+        */
+/*   By: smoore-a <smoore-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/19 12:17:44 by smoore-a          #+#    #+#             */
-/*   Updated: 2024/12/04 11:57:46 by smoore-a         ###   ########.fr       */
+/*   Updated: 2025/01/20 22:01:19 by smoore-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@
 # include <stdio.h>
 # include <stdlib.h>
 # include <signal.h>
+# include <sys/types.h>
 # include <unistd.h>
 # include <sys/wait.h>
 # include <errno.h>
@@ -132,6 +133,7 @@ typedef struct s_data
 	char		*prompt;
 	char		*history;
 	t_token		*last_cmd;
+	t_token		*first_token;
 	int			n_cmd;
 	int			n_pipe;
 	int			n_files;
@@ -143,6 +145,7 @@ typedef struct s_data
 	char		*prev_exit_code;
 	char		*process;
 	pid_t		pid;
+	pid_t		*pids;
 	t_env		*locals;
 	t_env		*env;
 	t_input		input;
@@ -166,7 +169,7 @@ void	free_cmds(t_data *data);
 void	free_lst(t_list **lst);
 
 // free_func
-void	ft_free(char **str);
+void	ft_free(void **str);
 void	free_environment(t_data *data);
 void	free_tokens(t_data *data);
 void	free_data(t_data *data);

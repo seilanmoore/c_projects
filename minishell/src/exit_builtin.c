@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exit_builtin.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: smoore-a <smoore-a@student.42malaga.com    +#+  +:+       +#+        */
+/*   By: smoore-a <smoore-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/02 10:50:58 by smoore-a          #+#    #+#             */
-/*   Updated: 2024/12/04 11:51:46 by smoore-a         ###   ########.fr       */
+/*   Updated: 2025/01/22 13:00:22 by smoore-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -136,8 +136,10 @@ int	exit_builtin(t_data *data, t_cmd *cmd)
 		if (not_valid_arg(args, &exit_))
 			several_args(args, &exit_);
 	}
-	ft_free(&(data->process));
-	ft_free(&(data->prev_exit_code));
+	data->input.tokens = data->first_token;
+	ft_free((void *)&(data->pids));
+	ft_free((void *)&(data->process));
+	ft_free((void *)&(data->prev_exit_code));
 	free_local(data);
 	free_environment(data);
 	free_data(data);
