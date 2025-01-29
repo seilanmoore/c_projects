@@ -6,7 +6,7 @@
 #    By: smoore-a <smoore-a@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/11/27 00:38:01 by smoore-a          #+#    #+#              #
-#    Updated: 2025/01/11 11:07:54 by smoore-a         ###   ########.fr        #
+#    Updated: 2025/01/29 22:08:01 by smoore-a         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,9 +16,9 @@ INCLUDE = -Iinclude -I/usr/include
 
 HEADER = philo.h
 
-CC = clang
+CC = gcc
 
-CFLAGS = -Wall -Werror -Wextra -O3 # -g -pthread -fsanitize=thread
+CFLAGS = -Wall -Werror -Wextra -O3 #-g -fsanitize=addres -fno-omit-frame-pointer
 
 RM = rm -rf
 
