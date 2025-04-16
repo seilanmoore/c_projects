@@ -1,34 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   megaphone.cpp                                      :+:      :+:    :+:   */
+/*   Contact.cpp                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: smoore-a <smoore-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/04/12 12:14:00 by smoore-a          #+#    #+#             */
-/*   Updated: 2025/04/13 15:02:21 by smoore-a         ###   ########.fr       */
+/*   Created: 2025/04/13 17:58:31 by smoore-a          #+#    #+#             */
+/*   Updated: 2025/04/16 11:29:46 by smoore-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <iostream>
+#include "Contact.hpp"
 
-int main(int argc, char **argv)
+Contact::Contact(void) : darkest_secret_("None"),
+						 first_name_("None"),
+						 index_(0),
+						 in_use_(false),
+						 last_name_("None"),
+						 nickname_("None"),
+						 phone_number_(0)
 {
-	if (argc == 1)
-	{
-		std::cout << "* LOUD AND UNBEARABLE FEEDBACK NOISE *" << std::endl;
-		return 0;
-	}
-	argv++;
-	while (*argv)
-	{
-		while (**argv)
-		{
-			std::cout << static_cast<char>(std::toupper(**argv));
-			(*argv)++;
-		}
-		argv++;
-	}
-	std::cout << std::endl;
-	return 0;
 }

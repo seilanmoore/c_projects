@@ -1,34 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   megaphone.cpp                                      :+:      :+:    :+:   */
+/*   PhoneBook.cpp                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: smoore-a <smoore-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/04/12 12:14:00 by smoore-a          #+#    #+#             */
-/*   Updated: 2025/04/13 15:02:21 by smoore-a         ###   ########.fr       */
+/*   Created: 2025/04/13 18:02:27 by smoore-a          #+#    #+#             */
+/*   Updated: 2025/04/16 11:44:42 by smoore-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <iostream>
+#include "PhoneBook.hpp"
 
-int main(int argc, char **argv)
+void PhoneBook::setLastIndex(const int index)
 {
-	if (argc == 1)
-	{
-		std::cout << "* LOUD AND UNBEARABLE FEEDBACK NOISE *" << std::endl;
-		return 0;
-	}
-	argv++;
-	while (*argv)
-	{
-		while (**argv)
-		{
-			std::cout << static_cast<char>(std::toupper(**argv));
-			(*argv)++;
-		}
-		argv++;
-	}
-	std::cout << std::endl;
-	return 0;
+	this->last_index_ = index;
+}
+
+int PhoneBook::getLastIndex(void) const
+{
+	return this->last_index_;
+}
+
+const Contact *PhoneBook::getContact(void)
+{
+	return this->contact_;
 }
