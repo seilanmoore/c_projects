@@ -6,14 +6,13 @@
 /*   By: smoore-a <smoore-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/16 19:14:49 by smoore-a          #+#    #+#             */
-/*   Updated: 2025/04/17 09:13:12 by smoore-a         ###   ########.fr       */
+/*   Updated: 2025/04/17 09:16:47 by smoore-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "Account.hpp"
 #include <iostream>
 #include <ctime>
-// #include <sstream>
 #include <iomanip>
 
 int Account::_nbAccounts = 0;
