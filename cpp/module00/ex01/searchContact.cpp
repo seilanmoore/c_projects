@@ -6,7 +6,7 @@
 /*   By: smoore-a <smoore-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/15 12:54:19 by smoore-a          #+#    #+#             */
-/*   Updated: 2025/04/16 13:15:03 by smoore-a         ###   ########.fr       */
+/*   Updated: 2025/04/17 13:51:25 by smoore-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,12 +27,14 @@ static void displayAttribute(const std::string &attribute)
 
 void PhoneBook::display(void) const
 {
+	int i;
+
 	std::cout << std::right
 			  << std::setw(10) << "index" << "|"
 			  << std::setw(10) << "first name" << "|"
 			  << std::setw(10) << "last name" << "|"
 			  << std::setw(10) << "nickname" << std::endl;
-	int i = -1;
+	i = -1;
 	while (++i < 8 && this->contact_[i].getInUse())
 	{
 		std::cout << std::right
@@ -60,15 +62,19 @@ void PhoneBook::showContact(const int index) const
 			  << this->contact_[index].getDarkestSecret() << std::endl;
 }
 
-void PhoneBook::searchContact(void) const
+int PhoneBook::searchContact(void) const
 {
-	int index = 0;
+	int index;
 	std::string number;
+
 	this->display();
+	index = 0;
 	while (1)
 	{
 		std::cout << "Which contact do you want to display [1-8]: ";
 		getline(std::cin, number);
+		if (std::cin.eof())
+			return 1;
 		std::stringstream(number) >> index;
 		if (index >= 1 && index <= 8)
 		{
@@ -80,4 +86,5 @@ void PhoneBook::searchContact(void) const
 			break;
 		}
 	}
+	return 0;
 }

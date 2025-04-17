@@ -6,37 +6,49 @@
 /*   By: smoore-a <smoore-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/15 11:24:32 by smoore-a          #+#    #+#             */
-/*   Updated: 2025/04/16 13:47:47 by smoore-a         ###   ########.fr       */
+/*   Updated: 2025/04/17 13:49:46 by smoore-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "PhoneBook.hpp"
 
-static void prompt(const std::string &request, std::string *arg)
+static int prompt(const std::string &request, std::string *arg)
 {
 	while (*arg == "")
 	{
 		std::cout << "Enter the " << request << " of the contact: ";
 		getline(std::cin, *arg);
+		if (std::cin.eof())
+			return 1;
 	}
+	return 0;
 }
 
-static void getData(tContact *contact)
+static int getData(tContact *contact)
 {
 	std::string number;
-	prompt("first name", &(contact->firstName));
-	prompt("last name", &(contact->lastName));
-	prompt("nickname", &(contact->nickname));
-	prompt("phone number", &(number));
-	prompt("darkest secret", &(contact->darkestSecret));
+	if (prompt("first name", &(contact->firstName)))
+		return 1;
+	if (prompt("last name", &(contact->lastName)))
+		return 1;
+	if (prompt("nickname", &(contact->nickname)))
+		return 1;
+	if (prompt("phone number", &(number)))
+		return 1;
+	if (prompt("darkest secret", &(contact->darkestSecret)))
+		return 1;
 	std::stringstream(number) >> contact->phoneNumber;
+	return 0;
 }
 
-void PhoneBook::addContact(void)
+int PhoneBook::addContact(void)
 {
 	tContact contact;
-	int index = this->getLastIndex();
-	getData(&contact);
+	int index;
+
+	if (getData(&contact))
+		return 1;
+	index = this->getLastIndex();
 	this->contact_[index].setDarkestSecret(contact.darkestSecret);
 	this->contact_[index].setInUse(true);
 	this->contact_[index].setFirstName(contact.firstName);
@@ -47,4 +59,5 @@ void PhoneBook::addContact(void)
 		this->setLastIndex(0);
 	else
 		this->setLastIndex(++index);
+	return 0;
 }
