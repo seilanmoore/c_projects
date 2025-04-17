@@ -6,14 +6,14 @@
 /*   By: smoore-a <smoore-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/16 19:14:49 by smoore-a          #+#    #+#             */
-/*   Updated: 2025/04/16 23:46:17 by smoore-a         ###   ########.fr       */
+/*   Updated: 2025/04/17 09:13:12 by smoore-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "Account.hpp"
 #include <iostream>
 #include <ctime>
-#include <sstream>
+// #include <sstream>
 #include <iomanip>
 
 int Account::_nbAccounts = 0;
@@ -135,29 +135,20 @@ void Account::displayStatus(void) const
 			  << "withdrawals:" << this->_nbWithdrawals << std::endl;
 }
 
-// void Account::_displayTimestamp(void)
-// {
-// 	std::cout << "[" << "19920104_091532" << "] ";
-// }
-
-static std::string getDateTime(void)
+void Account::_displayTimestamp(void)
 {
 	time_t currentTime;
 	struct tm *tm_info;
-	std::ostringstream oss;
+
 	time(&currentTime);
 	tm_info = localtime(&currentTime);
-	oss << (tm_info->tm_year + 1900)
-		<< std::setw(2) << std::setfill('0') << (tm_info->tm_mon + 1)
-		<< std::setw(2) << std::setfill('0') << tm_info->tm_mday
-		<< "_"
-		<< std::setw(2) << std::setfill('0') << tm_info->tm_hour
-		<< std::setw(2) << std::setfill('0') << tm_info->tm_min
-		<< std::setw(2) << std::setfill('0') << tm_info->tm_sec;
-	return oss.str();
-}
-
-void Account::_displayTimestamp(void)
-{
-	std::cout << "[" << getDateTime() << "] ";
+	std::cout << "["
+			  << (tm_info->tm_year + 1900)
+			  << std::setw(2) << std::setfill('0') << (tm_info->tm_mon + 1)
+			  << std::setw(2) << std::setfill('0') << tm_info->tm_mday
+			  << "_"
+			  << std::setw(2) << std::setfill('0') << tm_info->tm_hour
+			  << std::setw(2) << std::setfill('0') << tm_info->tm_min
+			  << std::setw(2) << std::setfill('0') << tm_info->tm_sec
+			  << "] ";
 }
